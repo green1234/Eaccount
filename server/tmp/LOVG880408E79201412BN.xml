@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Balanza Version="1.0" RFC="LOVG880408E79" TotalCtas="26" Mes="12" Ano="2014">
+  <BCE>
+    <Ctas NumCta="0" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="10" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="100" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="11" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="110" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1101" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1102" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1103" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1104" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="11041" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="11042" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="1106" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="12" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="120" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="121" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="122" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="123" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="2" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="20" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="200" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="21" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="210" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="22" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="220" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+    <Ctas NumCta="221" SaldoIni="0" Debe="0" Haber="0" SaldoFin="0"/>
+  </BCE>
+</Balanza>

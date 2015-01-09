@@ -1,0 +1,482 @@
+root { 
+    display: block;
+}
+
+body
+{
+    margin: auto;
+    background-repeat: repeat;
+}
+
+.blue_link a{
+    color: blue;    
+}
+
+a
+{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.comprobantes
+{
+    border-collapse: collapse;
+    margin-left: 10px;
+}
+
+.comprobantes th
+{
+    padding-right: 15px;
+    font-family: CORBEL;
+    font-size: 11pt;
+    border-bottom: 1px solid red; 
+    color: #0092db;
+}
+
+.comprobantes td
+{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: arial;
+    font-size: 11pt;
+    text-align: center;
+    color: gray;
+    border-bottom: 1px solid;
+/*    border-right: 1px solid;
+    border-left: 1px solid;*/
+}
+
+ol
+{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#listEmitidas,#listRecibidas
+{  
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.top
+{
+    background-color: white;
+}
+
+.top .saavyLogo
+{
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 127px;
+    /*height: 90px;*/
+}
+
+input[type="search"]
+{
+    width: 150px;
+    height: 25px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.subMenu{
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.subMenu img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.subMenu1{
+    width: 30px;
+    height: 30px;
+}
+.subMenu2{
+    width: 30px;
+    height: 30px;
+}
+.subMenu3{
+    width: 30px;
+    height: 30px;
+}
+.subMenu4{
+    width: 50px;
+    height: 50px;
+}
+
+.subMenu4 img{
+    width: 50px;
+    height: 50px;
+}
+
+.center{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.centerLeft{
+    float: left;
+}
+
+.innerCenter{
+    width: 1024px;
+    height: 600px; 
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;   
+}
+
+.boxNotificaciones, .boxAccounts{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    right: 50px;
+    top: 100px;
+    width: 320px;
+    height: 310px;
+    border: 1px solid gray;
+    border-radius: 12px;
+    background-color: white;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+
+.boxNotificaciones tr{
+/*    border-bottom: 1px solid red;*/
+}
+
+.tableNotificacion{
+    width: 100%;
+    border-collapse: collapse;    
+}
+
+.tableNotificacion label{
+    color: darkblue;
+}
+
+.tableNotificacion td{
+    border-bottom: 1px solid lightgray;
+}
+
+.tableNotificacion img{
+    padding-left: 5px;
+}
+
+.tableNotificacion p{
+    padding-left: 5px;
+    padding-bottom: 5px;
+    font-family: "CORBEL";
+}
+
+.notificationIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.notificationDate{
+    font-family: "CORBEL";
+    vertical-align: top;
+}
+
+.blue{
+    color: #2D6595;
+}
+
+.blue_button{
+    cursor: pointer;
+    width: 220px;
+    height: 40px;    
+}
+
+.btnFileUpload
+{
+    cursor: pointer;
+    width: 120px;
+    height: 40px;
+}
+
+.saavyAccordion{
+    font-family: CORBEL;
+    font-size: 10pt;
+}
+
+.saavyAccordion .ui-widget-content{
+    font-family: CORBEL;
+    font-size: 10pt;
+}
+
+.saavyAccordion .title
+{
+    font-weight: bold;
+}
+
+.saavyAccordion h3
+{
+    background: none;
+    border: none;
+}
+
+.saavyAccordion .ui-widget-content
+{
+    background: none;
+    border: none;
+    padding-right: 0px;
+}
+
+.ui-tabs-panel a{
+    color: blue;    
+}
+
+.tabReportes
+{
+    border-collapse: collapse;
+}
+
+#tabs{
+    background: none;
+    background-color: lightgray;
+    font-family: Arial;
+    font-size: 11pt;
+    padding: 0px;
+}
+
+#tabs ul
+{
+    background: none;
+    background-color: white;
+    padding: 0px;
+    border: none;
+}
+
+#tabs li
+{
+    border-radius: 0px;
+    background-color: lightgray;
+}
+
+#tabs .ui-state-active
+{
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    border-top: 1px solid red;
+    border-bottom: none;
+    background: none;
+    background-color: lightgray;
+}
+
+.ui-tabs
+{
+    padding: 0px;
+    border: none;
+}
+
+#fragment-1, #fragment-2, #fragment-3
+{
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;    
+}
+
+.tabMiCuenta, #templateConfiguration{
+    background-color: lightgray;
+    font-family: Arial;
+    font-size: 11pt;
+    border-collapse: collapse;
+}
+
+.modalNoBorder{
+    border: 0px none;
+    border-style: none;
+}
+
+.modalPDF
+{
+    border: 0px none;
+    border-style: none;
+    left: 0px;
+}
+
+.taxDataPanel
+{
+    font-family: "CORBEL";    
+}
+
+.tax-table
+{
+    border: 1px solid;
+}
+
+.tax-table input
+{
+    width: 100%;
+    border-style: none;
+    padding: 0px;
+}
+
+.trAccountData{
+    display: block;
+    border-top: 1px solid gray;
+}
+
+.trAccountData div{
+    margin-left: 50px;
+    font-family: CORBEL;
+}
+
+.icon
+{
+    width: 20px;
+    height: 20px;
+}
+
+#tblComprobantePDF td
+{
+    border: none;
+    border-collapse: initial;
+    text-align: center;
+    font-family: CORBEL;
+}
+
+#tblComprobantePDF th
+{
+    border: none;
+    border-collapse: initial;
+    text-align: center;   
+    font-family: CORBEL; 
+}
+
+#lblSelloSAT
+{
+    font-size: 10px;
+    color: black;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+#lblSelloEmisor
+{
+    font-size: 10px;
+    color: black;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+#lblEmisorRazonSocial
+{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#lblEmisorRFC
+{
+    font-weight: bold;    
+}
+
+#lblIDFactura
+{
+    color: red;    
+}
+
+#lblFolioSAT
+{
+    color: black;    
+}
+
+#lblFechaEmision
+{
+    color: black;    
+}
+
+#lblMetodoPago
+{
+    color: black;    
+}
+
+#lblMoneda
+{
+    color: black;    
+}
+
+#lblTipoCambio
+{
+    color: black;    
+}
+
+#lblFormaPago
+{
+    color: black;    
+}
+
+#lblCondicionesPago
+{
+    color: black;
+}
+
+#lblNoCuenta
+{
+    color: black;    
+}
+
+#lblSubtotal
+{
+    color: black;    
+}
+
+#lblDescuento
+{
+    color: black;    
+}
+
+#lblIVA
+{
+    color: black;
+}
+
+#lblTotal
+{
+    color: black;    
+}
+
+#lblTimbreOriginal
+{
+    color: black;    
+}
+
+.divCalendar
+{
+    display: inline-block;    
+}
+
+.footer{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 30%;
+    font-family: CORBEL;
+    color: #2D6595;
+}
+
+.footer table{
+    width: 100%;
+}
+
+@font-face
+{
+    font-family: BRITANIC;
+    src: url("../img/general/font/BRITANIC.TTF");
+}
+
+@font-face
+{
+    font-family: CORBEL;
+    src: url("../img/general/font/Corbel.TTF");
+}

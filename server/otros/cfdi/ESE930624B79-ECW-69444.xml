@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/TimbreFiscalDigital/TimbreFiscalDigital.xsd" version="3.2" serie="ECW" folio="69444" fecha="2014-07-18T09:24:58" sello="EHPxRE4dg4l5bXfTRzW5aJfFnqNAId5C2j5OFTPYSyv/qZbfDVD6lKrY5Ndd80+lREdklkUFOIDEs2vlvKRKadm5jB3b88IF8UrNmEyj8J57AwY3Kven3NlUISedKJriABwU/PcDFUkUtNNrCvaygJofaz+THBqBntXutfK7rKc=" formaDePago="Pago en una sola exhibicion" noCertificado="00001000000202304336" certificado="MIIElTCCA32gAwIBAgIUMDAwMDEwMDAwMDAyMDIzMDQzMzYwDQYJKoZIhvcNAQEFBQAwggGVMTgwNgYDVQQDDC9BLkMuIGRlbCBTZXJ2aWNpbyBkZSBBZG1pbmlzdHJhY2nDs24gVHJpYnV0YXJpYTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSEwHwYJKoZIhvcNAQkBFhJhc2lzbmV0QHNhdC5nb2IubXgxJjAkBgNVBAkMHUF2LiBIaWRhbGdvIDc3LCBDb2wuIEd1ZXJyZXJvMQ4wDAYDVQQRDAUwNjMwMDELMAkGA1UEBhMCTVgxGTAXBgNVBAgMEERpc3RyaXRvIEZlZGVyYWwxFDASBgNVBAcMC0N1YXVodMOpbW9jMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxPjA8BgkqhkiG9w0BCQIML1Jlc3BvbnNhYmxlOiBDZWNpbGlhIEd1aWxsZXJtaW5hIEdhcmPDrWEgR3VlcnJhMB4XDTEyMTEwODE4NTkxN1oXDTE2MTEwODE4NTkxN1owgdYxKDAmBgNVBAMTH0VTVEFDSU9ORVMgREUgU0VSVklDSU8gU0EgREUgQ1YxKDAmBgNVBCkTH0VTVEFDSU9ORVMgREUgU0VSVklDSU8gU0EgREUgQ1YxKDAmBgNVBAoTH0VTVEFDSU9ORVMgREUgU0VSVklDSU8gU0EgREUgQ1YxJTAjBgNVBC0THEVTRTkzMDYyNEI3OSAvIE1BTEM2NzExMDRIOTMxHjAcBgNVBAUTFSAvIE1BTEM2NzExMDRIVENOUFIwMzEPMA0GA1UECxMGVU5JREFEMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCenBCTVqmEFHbi1lAvrKIXtTpEZwAZCv0JT9zm6F1/kyGLpm2B+ESftYC8ggvsa86nRVLyNXeYtcS459dY4mMTqZAASms5FQ48w6ICcEZqQamj8owQnqsCuYu6+roS2cT5Awrp8Ti/r2ddxE2XU5PXcFY4Vt9vWyKIHQ/iZWuJ8QIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQUFAAOCAQEAXw6HBCX0z3l2CxS8ff9eAOQVlAEhgBHbszZO8iGvJ9HMUoc/09dNERHlGc0Mp2MfZ99FBfumcUzhw3q1g+B+H4HqyXenAHW+ARwaZ2/mBgsmaX4aGg9A+2RQG6JgEBcX/Kra9CYHm5EYDofOqGrPSDJqigo8jmX0qASaP/3xGn/M2AYx3eraFyAIJdwye3pDufieCaAHRFx/kCEQ5yVhg0kd8NogaAkK0u5QU4V2RCVOTtLhLPRhbD1H/EX07CeFlltVpPE1jHwGIZ1DVU0xHu4CrtOiWuq3BCYlidr/Nfe2ISxwvEhvdet8p4tmRZGfCgcbr28MUpaacC7jG/BTIg==" subTotal="816.0677" Moneda="MXN" total="941.7580" tipoDeComprobante="ingreso" metodoDePago="TARJETA DE DEBITO" LugarExpedicion="Queretaro, Queretaro, Mexico" NumCtaPago="5972" FolioFiscalOrig="69444" SerieFolioFiscalOrig="ECW" FechaFolioFiscalOrig="2014-07-18T09:24:58">
+  <cfdi:Emisor rfc="ESE930624B79" nombre="ESTACIONES DE SERVICIO S.A. DE C.V.">
+    <cfdi:DomicilioFiscal calle="AV. 5 DE FEBRERO NTE." noExterior="235" noInterior="0" colonia="FELIPE CARRILLO PUERTO" localidad="QUERETARO" municipio="QUERETARO" estado="QUERETARO" pais="MEXICO" codigoPostal="76138" />
+    <cfdi:ExpedidoEn calle="AV. 5 DE FEBRERO NTE." noExterior="235" noInterior="0" colonia="FELIPE CARRILLO PUERTO" localidad="QUERETARO" municipio="QUERETARO" estado="QUERETARO" pais="MEXICO" codigoPostal="76138" />
+    <cfdi:RegimenFiscal Regimen="REGIMEN GENERAL DE LEY PERSONAS MORALES" />
+  </cfdi:Emisor>
+  <cfdi:Receptor nombre="DESARROLLADORA DE SISTEMAS TECNOLOGICOS DE GUERRERO SA DE CV  " rfc="LOVG880408E79">
+    <cfdi:Domicilio calle="AV. UNIVERSIDAD" noExterior="1958" noInterior="2" colonia="RODRIGO DE TRIANA" localidad="ACAPULCO DE JUAREZ" municipio="ACAPULCO DE JUAREZ" estado="GUERRERO" pais="MEXICO" codigoPostal="39679" />
+  </cfdi:Receptor>
+  <cfdi:Conceptos>
+    <cfdi:Concepto unidad="Litro" descripcion="32012 - PREMIUM" importe="816.0677" valorUnitario="11.7589" cantidad="69.400" />
+  </cfdi:Conceptos>
+  <cfdi:Impuestos totalImpuestosTrasladados="125.6903">
+    <cfdi:Traslados>
+      <cfdi:Traslado impuesto="IVA" tasa="16" importe="125.6903" />
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd" selloCFD="EHPxRE4dg4l5bXfTRzW5aJfFnqNAId5C2j5OFTPYSyv/qZbfDVD6lKrY5Ndd80+lREdklkUFOIDEs2vlvKRKadm5jB3b88IF8UrNmEyj8J57AwY3Kven3NlUISedKJriABwU/PcDFUkUtNNrCvaygJofaz+THBqBntXutfK7rKc=" FechaTimbrado="2014-07-18T09:31:50" UUID="d5b8c207-8885-454b-b07b-fd6e66eb746e" version="1.0" noCertificadoSAT="00001000000202809550" selloSAT="aD+ekA4V1dwzxxpUo6962LFl8eZ6Q+UZtpv1Rgit6Z4vL/RaHuNvadSOqzUffhAfVpNC7LIXT0HB5D8gpBOv3Bod49SKNUgED+V6DjWR8x6V5D5QfpUKcw8B4wy0eTkznDawvuBbzoM2B40jJLTjUX8FLmnmVP+Cr0RCG6awKVQ=" />
+  </cfdi:Complemento>
+</cfdi:Comprobante>
+

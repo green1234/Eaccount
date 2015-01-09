@@ -1,0 +1,217 @@
+root { 
+    display: block;
+}
+
+body
+{
+    margin: auto;
+    background-image: url("../img/general/fondo/wallpaper_1280_720_1334.png");
+    background-repeat: repeat;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+.center{
+    /*margin-top: 100px;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 100%;
+    min-width: 1024px;
+}
+
+.innerCenter{
+    width: 1024px;
+/*    margin-top: 100px;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;   
+}
+
+.innerCenter table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo
+{
+    position: relative;
+    top: 20px;
+    left: 200px;
+    width: 200px;   
+}
+
+.slogan{
+    width: 250px;
+    margin-top: 40px;
+    margin-left: 180px;
+    font-size: larger;
+    font-family: "CORBEL";
+    text-align: center;
+}
+
+.center_right{
+    float: right;
+    margin-right: 300px;
+    margin-top: -230px;
+    font-family: CORBEL;
+    font-size: small;
+    color: #808080;
+}
+
+.loginHeader{
+    font-size: larger;
+    color: black;
+    font-family: "BRITANIC";
+}
+
+.blue{
+    color: #2D6595;
+}
+
+.blue_button{
+    background: none;
+    border: none;
+    cursor: pointer; 
+    margin : 0px;
+    padding : 0px;    
+}
+
+.blue_button img{ 
+}
+
+.detallesCompraBox{
+    width: 600px;    
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detallesCompraBoxDescuentos{
+    width: 290px;
+}
+
+.reciboBox{
+    width: 160px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 20px;
+    font-family: "CORBEL";
+    text-align: right;
+}
+
+.reciboBox p{
+    margin-bottom: 2.5px;
+    margin-top: 2.5px;
+}
+
+.bottom{
+    margin-top: 60px;
+    margin-bottom: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 99%;   
+}
+
+.bottom_center{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 50%;    
+}
+
+.footer{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 60%;
+    font-family: CORBEL;
+    color: #2D6595;
+}
+
+.footer table{
+    border-spacing: 15px;
+}
+input[type="text"], input[type="password"]{
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "CORBEL";   
+}
+
+.loginPanel
+{
+    font-family: "CORBEL";        
+}
+
+.loginPanel a{
+    text-decoration: underline;
+}
+
+.loginPanel .ui-dialog-titlebar{
+    background: none;
+    border: none;
+    border-bottom: 2px solid #fdb09f;
+    font-weight: normal;
+    font-family: "BRITANIC";   
+}
+
+.loginPanel .ui-dialog-title{
+    text-align: center;
+}
+
+.taxDataPanel
+{
+    font-family: "CORBEL";    
+}
+
+.taxDataPanel #txtDataRFC,#txtDataRFCConfirm
+{
+    text-transform: uppercase;    
+}
+
+.tax-table
+{
+    border: 1px solid;
+}
+
+.tax-table input
+{
+    width: 100%;
+    border-style: none;
+    padding: 0px;
+}
+
+.font-14px{
+    font-size: 14px;
+}
+
+table{
+    border: 0px none;
+    border-style: none;
+}
+
+tr{
+    border: 0px none;
+    border-style: none;
+}
+
+td{
+    border: 0px none;
+    border-style: none; 
+}
+
+@font-face
+{
+    font-family: BRITANIC;
+    src: url("../img/general/font/BRITANIC.TTF");
+}
+
+@font-face
+{
+    font-family: CORBEL;
+    src: url("../img/general/font/Corbel.TTF");
+}

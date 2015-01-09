@@ -1,0 +1,140 @@
+body{
+  font-family: Corbel,century gothic, helvetica;
+}
+
+input {
+  width: 100%;
+  border-radius: 5px;
+}
+
+hr{
+  border-top: 1px solid #FC9680;
+}
+
+.grad1 {
+    background: -webkit-linear-gradient(#89A1BD, #456592);
+    background: -o-linear-gradient(#89A1BD, #456592);
+    background: -moz-linear-gradient(#89A1BD, #456592);
+    background: linear-gradient(#89A1BD, #456592);
+}
+.grad2 {
+    background: -webkit-linear-gradient(#CA84A0, #B8527A  );
+    background: -o-linear-gradient(#CA84A0, #B8527A );
+    background: -moz-linear-gradient(#CA84A0, #B8527A );
+    background: linear-gradient(#CA84A0, #B8527A  );
+}
+.title_orden {
+  color: #2C6494;
+}
+
+.navbar {
+  box-shadow: 0px 0px 20px black;
+  margin: 0px;
+}
+
+.header {
+  background: #214B6F;
+  border-bottom: 1px solid black;
+}
+
+.menu_header {
+  color: white;
+  font-size: 16px;
+  padding: 10px 0px;
+}
+
+.img_header {
+  max-width: 36px !important;
+}
+
+.link_header {
+  padding: 10px 2px !important;
+}
+/**/
+.card-container {
+  height: 50px;
+  perspective: 600;
+  position: relative;
+  width: 50px;
+  cursor: pointer;
+}
+.card {
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.6s ease-in-out;
+  width: 100%;
+}
+.card:hover {
+  transform: rotateY(180deg);
+}
+.card .side {
+  backface-visibility: hidden;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.card .back {
+  transform: rotateY(180deg);
+}
+/**/
+
+.titulo_pagina {
+  background: #2C6494;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  padding: 40px 0px;
+}
+
+.container_lines {
+  background: url('http://savvysystems.com.mx/img/general/fondo/wallpaper_1280_720_1334.png');
+}
+
+.container_text {
+  padding: 15px;
+  background: white;
+  color: gray;
+}
+
+.tabla_orden {
+  border-radius: 20px;
+  font-size: 18px;
+  font-family: Arial;
+  color: black;
+  box-shadow: 0px 8px 30px;
+  text-align: center;
+  overflow: hidden;
+  max-width: 300px;
+  color: #4D4D4D;
+}
+
+.td_tabla_orden {
+  background: #DDDDDD;
+}
+
+.link_footer, .link_header {
+  color: white;
+  text-decoration: none;
+}
+
+.link_footer:hover, .link_header:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.footer {
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  margin: 10px 0px;
+  width: 100% !important;
+}
+
+footer {
+  background: #214B6F;
+  border-top: 1px solid black;
+  bottom: 0px;
+  /*position: absolute;*/
+  width: 100%;
+}

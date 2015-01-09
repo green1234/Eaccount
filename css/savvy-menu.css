@@ -1,0 +1,62 @@
+/* 
+    Document   : savvy-menu
+    Created on : Mar 28, 2014, 8:44:13 PM
+    Author     : Dunmord
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.savvyMenu{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    min-width: 1024px;
+    width: 100%;
+    height: 90px;
+    background-color: white;
+    box-shadow: 0px 5px 15px #808080
+}
+
+.savvyMenu .savvyMenuLogo{
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 127px;   
+}
+
+.savvyMenu .subMenu{
+    float: right;
+    margin-top: 30px;
+}
+
+.subMenu td{
+    padding-right: 5px;
+}
+
+.savvyMenu .subMenuImg{
+    width: 60px;
+    height: 60px;
+}
+
+.acercaDeSavvy{
+    display: inline-block;    
+}
+
+.info1{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.planesYPrecios1{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.demosYVideos1{
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+}

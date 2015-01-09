@@ -1,0 +1,26 @@
+/* Define page size. Requires print-area adjustment! */
+body {
+    margin:     0;
+    padding:    0;
+    width:      28cm;
+    height:     18cm;    
+}
+
+table {
+	width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid gray;
+}
+
+.total{
+	font-weight: bold;
+}
+
+.left{
+	text-align: left;
+}
+
