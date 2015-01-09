@@ -25,7 +25,7 @@
         border:1px solid gray;
         position: relative;
         width: 300px;
-        height: auto;
+        height: 354px;        
         background: white;
         border-radius: 15px 15px; 
         margin-left: 2em;
