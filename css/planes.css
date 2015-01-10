@@ -1,217 +1,98 @@
-root { 
-    display: block;
+
+@font-face {
+    font-family: "Corbel-bold";
+    src: url(../fonts/Corbel-Bold.ttf) format("truetype");
+}
+@font-face {
+    font-family: "Corbel-italic";
+    src: url(../fonts/Corbel-Italic.ttf) format("opentype");
 }
 
-body
-{
-    margin: auto;
-    background-image: url("../img/general/fondo/wallpaper_1280_720_1334.png");
-    background-repeat: repeat;
+@font-face{
+    font-family: "Corbel";
+    src: url(../fonts/Corbel.ttf); /* .eot - Internet Explorer */
 }
 
-a:link{
-    text-decoration: none;
-}
-
-.center{
-    /*margin-top: 100px;*/
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 100%;
-    min-width: 1024px;
-}
-
-.innerCenter{
-    width: 1024px;
-/*    margin-top: 100px;*/
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;   
-}
-
-.innerCenter table{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.logo
-{
+  .elem_xs_d
+  {
+    font-family: "Corbel";
+    border:1px solid gray;
     position: relative;
-    top: 20px;
-    left: 200px;
-    width: 200px;   
-}
+    width: 300px;
+    height: 354px;        
+    background: white;
+    border-radius: 15px 15px; 
+    margin-left: 2em;
+    margin-top: 95px;
+    text-align: center;   
+    
+  }     
 
-.slogan{
-    width: 250px;
-    margin-top: 40px;
-    margin-left: 180px;
-    font-size: larger;
-    font-family: "CORBEL";
+  .elem_xs_d a
+  {
+    position: absolute;
+    background-color: #275989;
+    color: white;
+    padding: 0.3em 0.5em;
+    font-size: 1.5em;        
+    border-radius: 10px;
+    box-shadow: none;
+    text-decoration: none;
+    bottom: -1em;
+    left: 3.8em;
+    cursor: pointer;
+  }
+
+  .elem_xs_d img
+  {
+    position: absolute;
+    left: 1em;
+    top: -70px;        
+  }
+
+  .elem_xs_d p
+  {
+    position: relative;
+    margin-top: 140px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .elem_xs_d span
+  {        
+    display: block;
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    padding: 0 3.5em;        
+  }
+
+  .elem_xs_d h3
+  {
+    margin: 0;
+    padding: 0;        
+    font-weight: bold;
+    color: #cc3366;
+  }
+
+  .elem_xs_d h5
+  {
+    margin: 0;
+    padding: 0;        
+    font-weight: bold;
+    color: #cc3366;
+  }
+
+  .container_lines
+  {
+    padding-bottom: 3em;
+    background: #e9e9e9;
+  }
+
+  p.message_footer
+  {        
     text-align: center;
-}
-
-.center_right{
-    float: right;
-    margin-right: 300px;
-    margin-top: -230px;
-    font-family: CORBEL;
-    font-size: small;
-    color: #808080;
-}
-
-.loginHeader{
-    font-size: larger;
-    color: black;
-    font-family: "BRITANIC";
-}
-
-.blue{
-    color: #2D6595;
-}
-
-.blue_button{
-    background: none;
-    border: none;
-    cursor: pointer; 
-    margin : 0px;
-    padding : 0px;    
-}
-
-.blue_button img{ 
-}
-
-.detallesCompraBox{
-    width: 600px;    
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.detallesCompraBoxDescuentos{
-    width: 290px;
-}
-
-.reciboBox{
-    width: 160px;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: white;
-    border: 2px solid gray;
-    border-radius: 20px;
-    font-family: "CORBEL";
-    text-align: right;
-}
-
-.reciboBox p{
-    margin-bottom: 2.5px;
-    margin-top: 2.5px;
-}
-
-.bottom{
-    margin-top: 60px;
-    margin-bottom: 80px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 99%;   
-}
-
-.bottom_center{
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 50%;    
-}
-
-.footer{
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 60%;
-    font-family: CORBEL;
-    color: #2D6595;
-}
-
-.footer table{
-    border-spacing: 15px;
-}
-input[type="text"], input[type="password"]{
-    width: 200px;
-    padding: 5px;
-    border-radius: 5px;
-    font-family: "CORBEL";   
-}
-
-.loginPanel
-{
-    font-family: "CORBEL";        
-}
-
-.loginPanel a{
-    text-decoration: underline;
-}
-
-.loginPanel .ui-dialog-titlebar{
-    background: none;
-    border: none;
-    border-bottom: 2px solid #fdb09f;
-    font-weight: normal;
-    font-family: "BRITANIC";   
-}
-
-.loginPanel .ui-dialog-title{
-    text-align: center;
-}
-
-.taxDataPanel
-{
-    font-family: "CORBEL";    
-}
-
-.taxDataPanel #txtDataRFC,#txtDataRFCConfirm
-{
-    text-transform: uppercase;    
-}
-
-.tax-table
-{
-    border: 1px solid;
-}
-
-.tax-table input
-{
     width: 100%;
-    border-style: none;
-    padding: 0px;
-}
-
-.font-14px{
-    font-size: 14px;
-}
-
-table{
-    border: 0px none;
-    border-style: none;
-}
-
-tr{
-    border: 0px none;
-    border-style: none;
-}
-
-td{
-    border: 0px none;
-    border-style: none; 
-}
-
-@font-face
-{
-    font-family: BRITANIC;
-    src: url("../img/general/font/BRITANIC.TTF");
-}
-
-@font-face
-{
-    font-family: CORBEL;
-    src: url("../img/general/font/Corbel.TTF");
-}
+    margin:4em 0 1em 0;
+    
+  }

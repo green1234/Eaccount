@@ -134,7 +134,7 @@
 				
 				if(isset($val["string"]))
 				{					
-					$vals = $val["string"];
+					$vals = utf8_decode($val["string"]);
 				}
 				else if(isset($val["int"]))
 				{

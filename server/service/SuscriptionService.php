@@ -26,7 +26,11 @@ class SuscriptionService
 		{
 			$ids = $res["data"]["id"];
 			$params = array(
-				model("name", "string"),				
+				model("name", "string"),
+				model("resume", "string"),
+				model("description", "string"),			
+				model("costo", "string"),
+				model("costo_desc", "string"),
 			);
 			$res = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
 
@@ -42,9 +46,11 @@ class SuscriptionService
 						$res["data"][$index]["permisos"] = $permisos["data"];
 					}
 				}
-				logg($res,1);
+				// logg($res,1);
+				return $res;
 			}
 
+			return array("success" => false);
 		}
 	}
 
