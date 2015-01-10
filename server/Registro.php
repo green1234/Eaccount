@@ -67,29 +67,32 @@ $usuario = array(
 	);
 
 
-logg($empresa);
-logg($usuario);
+// logg($empresa);
+// logg($usuario);
 
-$mail = get_mailer();
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}
+// $mail = get_mailer();
+// if(!$mail->send()) {
+//     echo 'Message could not be sent.';
+//     echo 'Mailer Error: ' . $mail->ErrorInfo;
+// } else {
+//     echo 'Message has been sent';
+// }
 
 
 
-logg($res,1);
+// logg($res,1);
 
 $res = $clienteService->registrarCliente($usuario, $empresa);
 if ($res["success"])
 {
-
+	// logg($res,1);
 	echo json_encode($res);
 }
+else
+{
+	echo json_encode(array("success"=>false));	
+}
 
-
-logg($res,1);
+// logg($res,1);
 
 ?>

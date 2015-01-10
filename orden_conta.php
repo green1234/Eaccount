@@ -1,6 +1,13 @@
-<?  
+<?
+  $plan = $name = $resume = $costo = "";  
   if (isset($_POST["plan"]))
     $plan = $_POST['plan'];
+  if (isset($_POST["name"]))
+    $name = $_POST['name'];
+  if (isset($_POST["resume"]))
+    $resume = $_POST['resume'];
+  if (isset($_POST["costo"]))
+    $costo = $_POST['costo'];
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +17,10 @@
     <title>Orden de Compra</title>
     <link href="css/orden_conta.css" rel="stylesheet">
     <script>
-      var plan_id = <? echo $plan; ?> ;      
+      var plan_id = <? echo $plan; ?> ;
+      var name = "<? echo $name; ?>" ;          
+      var resume = "<? echo $resume; ?>" ; 
+      var costo = <? echo $costo; ?> ;
     </script>
   </head>
   <body>
@@ -37,18 +47,22 @@
               </ul>
               <ul class="table_compra_2">
                 <li class="first">
-                  <p><b>Plan Empresarial</b> de contabilidad electrónica con manejo ilimitado de CFDIs y de usuarios para una sola Razón Social.</p>
+                  <p><b><? echo $name; ?></b> <? echo $resume; ?></p>
                 </li>  
                 <li>
-                  <h3>MXN 3,250.00/año</h3>
+                  <h3>MXN <? echo $costo; ?>.00/año</h3>
                 </li>
                 <li>  
-                  <select>
-                    <option>2 años</option>
+                  <select name="period">
+                    <option value="1">1 año</option>
+                    <option value="2">2 años</option>
+                    <option value="3">3 años</option>
+                    <option value="4">4 años</option>
+                    <option value="5">5 años</option>
                   </select>
                 </li>
-                <li>
-                  <h3>MXN 6,500.00/año</h3>
+                <li class="subtotal">                  
+                  <h3>MXN <? echo $costo; ?>.00/año</h3>
                 </li>
               </ul>
               <ul class="table_compra_3">
@@ -59,7 +73,7 @@
               <ul class="table_compra_4">
                 <li class="first">
                   <input type="text"/>
-                  <a href="#">Aplicar</a>
+                  <a class="discount" href="#">Aplicar</a>
                 </li>
                 <li>
                   <p>Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b></p>
@@ -78,10 +92,10 @@
                       de tu empresa y recibiras en tu correo indicaciones de pago.</i>
                     </p>
                   </li>
-                  <li class="last">
-                    <div><span>Subtotal: </span><b>MXN 5,850.00</b></div>
-                    <div><span>IVA 16%:  </span><b>MXN 936.00</b></div>
-                    <div><span>Total:    </span><b>MXN 6,786.00</b></div>
+                  <li class="last resume">
+                    <div class="subtotal"><span>Subtotal: </span><b>MXN 5,850.00</b></div>
+                    <div class="iva"><span>IVA 16%:  </span><b>MXN 936.00</b></div>
+                    <div class="total"><span>Total:    </span><b>MXN 6,786.00</b></div>
                   </li>
                 </ul> 
                 <a class="confirm_compra" href="#">Confirmar Pedido</a> 

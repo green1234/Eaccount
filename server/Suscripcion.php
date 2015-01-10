@@ -17,7 +17,7 @@ if ($res["success"])
 
 	$suscService = new SuscriptionService($usuario_id, $usuario_pw);
 
-	$res = $suscService->obtener_planes();
+	$res = $suscService->obtener_planes_suscription();
 	// logg($res,1);
 	if ($res["success"])
 	{

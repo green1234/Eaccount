@@ -138,14 +138,15 @@ class EmpresaService
 		$keys = prepare_params($params);
 		$res = $this->obtener_empresa_id($params["name"]);
 
-		if ($res["success"]){
+		if ($res["success"] && count($res["data"]["id"]) > 0){
+			// logg($res["data"]);
 			#$res["success"] = false;			
 			#$res["data"]["description"] = "La empresa que quiere registrar ya existe";
 			$id = $res["data"]["id"];
 			$res["data"]["id"] = $id[0];			
 			return $res;
 		}			
-
+		// logg($res,1);
 		$res = $this->obj->create($this->uid, $this->pwd, $this->model, $keys);
 
 		if (!$res["success"]){						
@@ -157,7 +158,7 @@ class EmpresaService
 			$empresa_id = $res["data"]["id"];
 			$this->usuarioService->asociar_empresas($this->uid, $empresa_id);
 
-			$params["catalogo"] = true;
+			$params["catalogo"] = false;
 			if ($params["catalogo"])
 			{
 				$uploadfile = PROYECT_PATH . "/otros/csv/cuentas.csv";

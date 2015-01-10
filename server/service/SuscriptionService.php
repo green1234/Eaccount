@@ -16,9 +16,9 @@ class SuscriptionService
 		$this->obj = new MainObject();
 	}
 
-	function obtener_planes()
+	function obtener_planes_suscription()
 	{
-		$model = "gl.planes";
+		$model = "gl.planes.suscription";
 		$domain = array();
 		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
 		// logg($res,1);

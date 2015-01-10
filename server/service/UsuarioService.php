@@ -317,8 +317,9 @@ class UsuarioService
 	{
 		$keys = prepare_params($params);
 		$res = $this->obtener_usuario_id($params["name"]);
-
-		if ($res["success"]){
+		// logg("Crear Usuario");
+		// logg($res);
+		if ($res["success"] && count($res["data"]["id"])>0){
 			$res["success"] = false;			
 			$res["data"]["description"] = "El usuario que quiere registrar ya existe";
 			return $res;

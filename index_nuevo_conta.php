@@ -1,3 +1,4 @@
+<? require_once "server/conf/constantes.conf"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -154,7 +155,7 @@
         }else{
           $.ajax({
               type: "POST",
-              url: "http://104.236.124.45/eaccount/server/Registro.php",
+              url: "<? echo SERVERNAME; ?>" + "/Registro.php",
               data: dataString+'&tyc=1',
               cache: false,
               success: function(result) {
@@ -162,7 +163,7 @@
                 if (!result.success == true) {
                   alert(result.data.description);
                 }else{
-                  window.location.href = "http://104.236.124.45/eaccount/inbox_nuevo_conta.php?section=";
+                  window.location.href = "<?echo APPNAME; ?>" + "/inbox_nuevo_conta.php?section=";
                 }
                 $("#loader").hide();
                 $("#submit").show();

@@ -27,14 +27,20 @@ class ClienteService
 
 		$res = $this->empresaService->crear_empresa($empresa);
 		$registrado = false;
+		// logg("Empresa");
+		// logg($res["success"]);
 		if ($res["success"])
 		{	
 		 	$empresa_id = $res["data"]["id"];
+		 	// logg($empresa_id);
 		 	$res = $this->usuarioService->crear_usuario($usuario, $empresa_id);
-			
+			// logg("Usuario");
+			// logg($res["success"]);
+
 		 	if ($res["success"])
 		 	{
 		 		$usuario_id = $res["data"]["id"]; 
+		 		// logg($usuario_id);
 		 		$registrado = true;			
 		 	}		 	
 		}		
