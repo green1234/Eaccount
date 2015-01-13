@@ -82,7 +82,7 @@ class EmpresaService
 			// logg($partner,1);
 		}
 // 
-		logg($res,1);
+		// logg($res,1);
 	}
 
 	function obtener_usuarios($empresa_id)
@@ -138,16 +138,17 @@ class EmpresaService
 		$keys = prepare_params($params);
 		$res = $this->obtener_empresa_id($params["name"]);
 
-		if ($res["success"] && count($res["data"]["id"]) > 0){
-			// logg($res["data"]);
-			#$res["success"] = false;			
-			#$res["data"]["description"] = "La empresa que quiere registrar ya existe";
+		if ($res["success"] && count($res["data"]["id"]) > 0)
+		{			
+			$res["success"] = false;			
+			$res["data"]["description"] = "La empresa que quiere registrar ya existe";
 			$id = $res["data"]["id"];
 			$res["data"]["id"] = $id[0];			
 			return $res;
 		}			
-		// logg($res,1);
-		$res = $this->obj->create($this->uid, $this->pwd, $this->model, $keys);
+		
+		$res = $this->obj->create($this->uid, $this->pwd, 
+			$this->model, $keys);
 
 		if (!$res["success"]){						
 			$res["data"]["description"] = "Ocurrio un error al registrar la empresa";
@@ -156,15 +157,19 @@ class EmpresaService
 		else
 		{
 			$empresa_id = $res["data"]["id"];
+			// Asignamos la empresa que acabamos de crear 
+			// al usuario de suscripciones
 			$this->usuarioService->asociar_empresas($this->uid, $empresa_id);
 
-			$params["catalogo"] = false;
-			if ($params["catalogo"])
-			{
-				$uploadfile = PROYECT_PATH . "/otros/csv/cuentas.csv";
-				$accTplService = new AccountTplService($this->uid, $this->pwd);
-				$accTplService->crear_catalogo_template($params["name"], $uploadfile);
-			}
+			// El template de cuentas sera el de openerp
+			// Esta funcionalidad por lo tanto no se utilizara
+			// $params["catalogo"] = false;
+			// if ($params["catalogo"])
+			// {
+			// 	$uploadfile = PROYECT_PATH . "/otros/csv/cuentas.csv";
+			// 	$accTplService = new AccountTplService($this->uid, $this->pwd);
+			// 	$accTplService->crear_catalogo_template($params["name"], $uploadfile);
+			// }
 		}
 
 		return $res;
@@ -202,10 +207,10 @@ class EmpresaService
 		$config_id;			
 		
 		$response = $this->empresa_configurada($company_id);	
-		logg($response);
+		// logg($response);
 		if (!$response)
 		{
-			logg("Configurando Empresa");			
+			// logg("Configurando Empresa");			
 			foreach ($tax_template_ids as $index => $value) 
 			{			
 				if($value["type_tax_use"] == "sale")			
@@ -213,8 +218,8 @@ class EmpresaService
 				else
 					$purchase_tax_id = $value["id"];
 			}
-			logg("chart_template_id");
-			logg($chart_template_id);
+			// logg("chart_template_id");
+			// logg($chart_template_id);
 			$config = array(
 				"chart_template_id" => model($chart_template_id, "int"),
 				"code_digits" => model(6, "int"),
@@ -234,12 +239,12 @@ class EmpresaService
 			$response = $this->obj->create($this->uid, $this->pwd, $model, $config);
 		}		
 
-		logg("Account Config");
-		logg($response);
+		// logg("Account Config");
+		// logg($response);
 		if ($response["success"])
 		{
 			$config_id = $response["data"]["id"];
-			logg($config_id);
+			// logg($config_id);
 			#$config_id = 7;			
 			$ids = array(
 				model($config_id, "int"));

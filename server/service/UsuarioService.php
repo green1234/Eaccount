@@ -216,7 +216,7 @@ class UsuarioService
 			if ($res["success"])
 				$empresa_id = $res["data"]["company_id"];
 			else{
-				logg("Ocurrio un error al desasociar la empresa");
+				// logg("Ocurrio un error al desasociar la empresa");
 				return false;
 			}
 		}
@@ -317,9 +317,8 @@ class UsuarioService
 	{
 		$keys = prepare_params($params);
 		$res = $this->obtener_usuario_id($params["name"]);
-		// logg("Crear Usuario");
-		// logg($res);
-		if ($res["success"] && count($res["data"]["id"])>0){
+		
+		if ($res["success"] && count($res["data"]["id"]) > 0){
 			$res["success"] = false;			
 			$res["data"]["description"] = "El usuario que quiere registrar ya existe";
 			return $res;
@@ -333,7 +332,25 @@ class UsuarioService
 		}
 		else
 		{
-			$usuario_id = $res["data"]["id"];
+			$usuario_id = $res["data"]["id"];			
+			$user_params = array(
+				model("partner_id","string")
+			);
+			// Una vez registrado el usuario debemos de consultar el 
+			// partner_id asociado para poder enviar un mail al usuario
+			$partner = $this->obj->read($this->uid, $this->pwd, 
+				$this->model, array($usuario_id), $user_params);
+
+			if ($partner["success"])
+			{
+				$partner_data = $partner["data"][0];
+				$res["data"]["partner_id"] = $partner_data["partner_id"];			
+			}
+
+			// Por ultimo debemos de asociar la empresa creada al usuario
+			// tambien debemos de eliminar las demas empresas que no sean 
+			// las que le correspondan, esto es porque en un principio se 
+			// le asocia la empresa principal del Landing_user.
 			$this->asociar_empresas($usuario_id, $empresa_id);
 			$this->asignar_empresa($usuario_id, $empresa_id);
 			$this->desasociar_empresas($usuario_id);
