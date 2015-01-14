@@ -1,23 +1,21 @@
-// <?php
+<?php
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/MailService.php";
 
 $admin_id = 1;
 $admin_pw = "admin";
 
-$mailService = new MailService($admin_id, $admin_pw);
-
-// $_POST["partner_id"] = 26;
-	
-
-// $params = array(
-// 	"partner_id" => model($_POST["partner_id"], "int"));
-
-// $params = array(
-// 	"partner_id" => $_POST["partner_id"]);
-// logg($params,1);
-$res = $mailService->enviar_mail($_POST["partner_id"]);
-// logg($res,1);
+$ids = array($_POST["partner_id"]);
+$mail = new MailService($admin_id, $admin_pw);
+$path = APPNAME . "/planes.php";
+$params = array(
+	"partner_ids" => $ids,
+	"message" => "Da click en la siguente liga para confirmar tu suscripcion
+					<a href='$path'>Confirmar</a>
+					",
+	"title" => "Suscripcion"
+);
+$res = $mail->enviar_mail($params);
 echo json_encode($res);
 
 ?>

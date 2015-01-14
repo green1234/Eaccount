@@ -45,7 +45,7 @@ $registrado = false;
 
 $empresa = array(
 	"name" => $empresa_name, 
-	"rfc" => $empresa_rfc, 
+	"gl_rfc" => $empresa_rfc, 
 	"currency_id" => 34, 
 	);
 

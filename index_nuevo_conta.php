@@ -166,15 +166,14 @@
                 if (!result.success == true) {
                   alert(result.data.description);
                 }else{
-                  var usuario_id = result.data.usuario_id;
-                  var partner_id = usuario_id.partner_id[0];
-                  $.post("<? echo SERVERNAME ?>" + "/Mail.php", 
-                    {"partner_id": partner_id}, 
-                    function(data){
-                      console.log(data);
-                      alert("Se te ha enviado un correo de confirmacion. Sigue la liga para continuar con el proceso de registro de tu nueva cuenta");
-                      
-                  });
+                  // var usuario_id = result.data.usuario_id;
+                  // var partner_id = usuario_id.partner_id[0];
+                  // $.post("<? echo SERVERNAME ?>" + "/Mail.php", 
+                  //   {"partner_id": partner_id}, 
+                  //   function(data){
+                  //     console.log(data);
+                  // });
+                  alert("Se te ha enviado un correo de confirmacion. Sigue la liga para continuar con el proceso de registro de tu nueva cuenta");
 
                   // window.location.href = "<?echo APPNAME; ?>" + "/inbox_nuevo_conta.php?section=";
                 }
