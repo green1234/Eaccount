@@ -16,6 +16,33 @@ class SuscriptionService
 		$this->obj = new MainObject();
 	}
 
+	function confirmar_suscripcion($folio){
+
+		$model = "gl.suscripcion";		
+		$domain = array(
+					array(
+							model("name", "string"),
+							model("=", "string"),
+							model($folio, "string")
+						));
+
+		$suscripcion = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		
+		if($suscripcion["success"] && count($suscripcion["data"]["id"]) > 0)
+		{
+			$ids = $suscripcion["data"]["id"];
+			$attrs = prepare_params(array("status" => "confirm"));
+			$activacion = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
+
+			return $activacion;						
+		}
+
+		return array(
+			"success"=>false, 
+			"data" => array(
+				"description" => "El registro buscado no existe"));
+	}
+
 	function obtener_planes_suscription()
 	{
 		$model = "gl.planes.suscription";

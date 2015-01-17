@@ -33,8 +33,8 @@ if (!isset($_POST["nombre"]) || !$_POST["apellido"] || !$_POST["email"]
 
 $empresa_id = 0;
 $empresa_rfc = "XAXX010101000";
-$empresa_name = $usuario_nombre = $_POST["nombre"];
-$usuario_apellido = $_POST["apellido"];
+$usuario_nombre = $_POST["nombre"] . " " . $_POST["apellido"];
+$empresa_nombre = $usuario_nombre;
 $usuario_email = $_POST["email"];
 $usuario_password = $_POST["password"];
 $usuario_password2 = $_POST["password2"];
@@ -44,7 +44,7 @@ $empresa_default = 0;
 $registrado = false;
 
 $empresa = array(
-	"name" => $empresa_name, 
+	"name" => $empresa_nombre, 
 	"gl_rfc" => $empresa_rfc, 
 	"currency_id" => 34, 
 	);
@@ -52,9 +52,10 @@ $empresa = array(
 $usuario = array(
 		"name" => $usuario_nombre, 
 		"login" => $usuario_email,
-		"email" => $usuario_email,		
+		"email" => $usuario_email,	
+		"password" => $usuario_password,		
 	);
 
-$res = $clienteService->registrarCliente($usuario, $empresa);
+$res = $clienteService->registrar_suscripcion($usuario, $empresa);
 echo json_encode($res);
 ?>

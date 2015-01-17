@@ -1,11 +1,32 @@
 <? require_once "server/conf/constantes.conf"; ?>
-<? 
-  $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
-  $planes = array();  
-  if ($res["success"])
+<?
+  $planes = array();
+  $loader = false;
+
+  if (isset($_GET["fk"]))
   {
-    $planes = $res["data"];    
+    $key = $_GET["fk"]; 
+    $activacion = json_decode(file_get_contents(SERVERNAME . '/Activacion.php?fk='.$key), true); 
+    // var_dump("1");
+    if ($activacion["success"])
+    {
+      // var_dump("2");
+      $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
+      $planes = array();  
+      if ($res["success"])
+      {
+        // var_dump("3");
+        $planes = $res["data"];
+        $loader = true;    
+      }
+    }
   }
+  
+  if (!$loader)
+  {
+    header('Location: ' . APPNAME . '/index_nuevo_conta.php');
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
