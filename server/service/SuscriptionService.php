@@ -1,6 +1,7 @@
 <?php
 
 require_once PROYECT_PATH . "/server/Main.php";
+require_once PROYECT_PATH . "/service/ClienteService.php";
 
 class SuscriptionService
 {
@@ -14,6 +15,74 @@ class SuscriptionService
 		$this->uid = $uid;
 		$this->pwd = $pwd;
 		$this->obj = new MainObject();
+	}
+
+	function registrar_suscripcion($usuario, $empresa)
+	{
+		date_default_timezone_set("America/Mexico_City");
+		$clienteService = new ClienteService($this->uid, $this->pwd);
+
+		$model = "gl.suscripcion";
+		$folio = md5($usuario["email"] . $usuario["name"]);
+		$data = array(
+			"name" => $folio,
+			"nombre" => $usuario["name"],
+			"email" => $usuario["email"],
+			"password" => $usuario["password"],
+			"date" => date("Y-m-d"),
+			"status" => "draft");
+		
+		$data = prepare_params($data);
+		$registro = $this->obj->create($this->uid, $this->pwd, $model, $data);
+
+		if ($registro["success"])
+		{
+			$registro_id = $registro["data"]["id"];
+			$res = $clienteService->registrar_cliente($usuario, $empresa);
+			if ($res["success"])
+			{
+				$usuario_data = $res["data"]["usuario_id"];
+				$user_id = $usuario_data["id"];
+				$company_id = $res["data"]["empresa_id"];
+
+				$attrs = prepare_params(array(
+										"user_id" => $user_id, 
+										"company_id" => $company_id));
+
+				$this->obj->write($this->uid, $this->pwd, 
+					$model, array($registro_id), $attrs);
+
+				$this->enviar_confirmacion($usuario_data["partner_id"][0], $folio);
+			}
+
+			return $res;
+		}
+
+		return array(
+			"success"=>false, 
+			"data"=>array(
+				"description" => "Occurrio un error al realizar el registro de suscripcion"
+			));
+
+	}
+
+	function enviar_confirmacion($partner_id, $folio)
+	{
+		// $ids = array($partner_id);		
+		$path = APPNAME . "/planes.php?fk=$folio";
+		$params = array(
+			"partner_ids" => array($partner_id),
+			"message" => "Da click en la siguente liga para confirmar tu suscripcion
+							<a href='$path'>Confirmar</a>
+							",
+			"title" => "Suscripcion"			
+		);
+
+		$mail = new MailService($this->uid, $this->pwd);
+		$mail->enviar_mail($params);
+		// $mail->enviar_mail($params);
+
+		return array("success"=>true);
 	}
 
 	function confirmar_suscripcion($folio){

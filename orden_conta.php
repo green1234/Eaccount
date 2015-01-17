@@ -1,3 +1,4 @@
+<? require_once "server/conf/constantes.conf"; ?>
 <?
   $plan = $name = $resume = $costo = "";  
   if (isset($_POST["plan"]))
@@ -33,8 +34,9 @@
       var name = "<? echo $name; ?>" ;          
       var resume = "<? echo $resume; ?>" ; 
       var costo = <? echo $costo; ?> ;
-      var desc = "<? echo $descuentos["name"]; ?>";
+      var desc = "<? echo $descuentos['name']; ?>";
       var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
+
     </script>
   </head>
   <body>

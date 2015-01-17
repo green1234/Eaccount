@@ -155,7 +155,7 @@
         }else{
           $.ajax({
               type: "POST",
-              url: "<? echo SERVERNAME; ?>" + "/Registro.php",
+              url: "<? echo SERVERNAME; ?>" + "/Suscripcion.php?action=registro",
               data: dataString+'&tyc=1',
               cache: false,
               success: function(result) {

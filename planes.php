@@ -6,12 +6,15 @@
   if (isset($_GET["fk"]))
   {
     $key = $_GET["fk"]; 
-    $activacion = json_decode(file_get_contents(SERVERNAME . '/Activacion.php?fk='.$key), true); 
+    $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
     // var_dump("1");
     if ($activacion["success"])
     {
       // var_dump("2");
       $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
+      // echo "<pre>";
+      // var_dump($res); exit();
+      // echo "</pre>";
       $planes = array();  
       if ($res["success"])
       {
@@ -49,10 +52,14 @@
       <div class="container" style="background:#e9e9e9">
           <? $i = 1; ?>
           <? foreach ($planes as $index => $plan) { ?>
-            
+            <?
+              // echo "<pre>";
+              // var_dump($plan); #exit();
+              // echo "</pre>";
+            ?>
             <div class="col-md-4">
               <form id="plan_domicilio" action="orden_conta.php" method="post">
-                <input type="hidden" name="plan" id="plan" value="1" />
+                <input type="hidden" name="plan" id="plan" value="<? echo $plan['id'];?>" />
                 <input type="hidden" name="name" id="name" value="<? echo $plan['name'];?>" />
                 <input type="hidden" name="resume" id="resume" value="<? echo $plan['resume'];?>" />
                 <input type="hidden" name="costo" id="costo" value="<? echo $plan["costo"];?>" />

@@ -79,5 +79,16 @@ $(function(){
 		e.preventDefault();
 	});
 
+	$("a.confirm_compra").on("click", function(e)
+	{
+		e.preventDefault();
+		var action = "server/Registro.php?action=compra";
+		var period_id = $("select[name=period]").val();
+		$.post(action, 
+			{"plan" : plan_id, "period" : period_id}, function(data){
+			log(data)
+		});
+	})
+
 
 });

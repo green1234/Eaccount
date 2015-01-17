@@ -1,4 +1,16 @@
 <?php
+
+	function verificar_datos($origin, $values)
+	{
+		foreach ($values as $idx => $value) {
+			if (!isset($origin[$value]))
+			{
+				return false;
+			}
+			continue;
+		}
+		return true;
+	}
 	
 	function logg($value, $exit=false){
 		echo "<pre>";
