@@ -69,7 +69,7 @@ class ClienteService
 			"email" => $usuario["email"],
 			"password" => $usuario["password"],
 			"date" => date("Y-m-d"),
-			"status" => "pendient");
+			"status" => "draft");
 		
 		$data = prepare_params($data);
 		$registro = $this->obj->create($this->uid, $this->pwd, $model, $data);

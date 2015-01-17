@@ -8,6 +8,18 @@
     $resume = $_POST['resume'];
   if (isset($_POST["costo"]))
     $costo = $_POST['costo'];
+
+  // $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos'), true);
+  // $descuentos = array();
+  // if ($res["success"])
+  // {
+  //   $descuentos = $res["data"];
+  // }
+
+  $descuentos = array(
+    "name" => "Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b>",
+    "porcentaje" => "0.05");
+
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +33,8 @@
       var name = "<? echo $name; ?>" ;          
       var resume = "<? echo $resume; ?>" ; 
       var costo = <? echo $costo; ?> ;
+      var desc = "<? echo $descuentos["name"]; ?>";
+      var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
     </script>
   </head>
   <body>
@@ -70,16 +84,16 @@
                 <li>PROMOCIONES VIGENTES</li>
                 <li class="last">DESCUENTOS</li>
               </ul>
-              <ul class="table_compra_4">
+              <ul class="table_compra_4 descuentos">
                 <li class="first">
                   <input type="text"/>
                   <a class="discount" href="#">Aplicar</a>
                 </li>
-                <li>
-                  <p>Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b></p>
+                <li class="description">
+                  <p>Sin descuento</p>                  
                 </li>
-                <li class="last">
-                  <h3>MXN 650.00</h3>
+                <li class="last amount">
+                  <h3>MXN 0.00</h3>
                 </li>
               </ul>
               </div>
