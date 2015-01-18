@@ -2,15 +2,17 @@
 <?
   $planes = array();
   $loader = false;
-
+  $susc_id = 0;
   if (isset($_GET["fk"]))
   {
-    $key = $_GET["fk"]; 
+    $key = $_GET["fk"];
+    $partner = $_GET["ptr"];    
     $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
     // var_dump("1");
     if ($activacion["success"])
     {
-      // var_dump("2");
+      $susc_id = $activacion["data"]["id"][0];       
+      // var_dump($activacion["data"]);
       $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
       // echo "<pre>";
       // var_dump($res); exit();
@@ -59,6 +61,8 @@
             ?>
             <div class="col-md-4">
               <form id="plan_domicilio" action="orden_conta.php" method="post">
+                <input type="hidden" name="key" id="key" value="<? echo $susc_id; ?>" />
+                <input type="hidden" name="ptr" id="ptr" value="<? echo $partner; ?>" />
                 <input type="hidden" name="plan" id="plan" value="<? echo $plan['id'];?>" />
                 <input type="hidden" name="name" id="name" value="<? echo $plan['name'];?>" />
                 <input type="hidden" name="resume" id="resume" value="<? echo $plan['resume'];?>" />

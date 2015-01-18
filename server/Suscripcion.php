@@ -88,7 +88,16 @@ if ($res["success"])
 							);
 				}
 
-				$res = array("plan" => $_POST["plan"], "period" => $_POST["period"]);				
+				$partner_id = $_POST["ptr"];
+				$params = array(
+					"period" => $_POST["period"], 					
+					"plan_id" => $_POST["plan"], 
+					"discount_id" => $_POST["discount"],			
+					"suscription_id" => $_POST["key"]); 
+
+				$res = $suscriptionService->comprar_plan($params, $partner_id);
+
+
 			break;
 		}
 

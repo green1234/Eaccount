@@ -1,6 +1,6 @@
 <? require_once "server/conf/constantes.conf"; ?>
 <?
-  $plan = $name = $resume = $costo = "";  
+  $plan = $name = $resume = $costo = $key = $partner = "";  
   if (isset($_POST["plan"]))
     $plan = $_POST['plan'];
   if (isset($_POST["name"]))
@@ -9,6 +9,10 @@
     $resume = $_POST['resume'];
   if (isset($_POST["costo"]))
     $costo = $_POST['costo'];
+  if (isset($_POST["key"]))
+    $key = $_POST['key'];
+  if (isset($_POST["ptr"]))
+    $partner = $_POST['ptr'];
 
   // $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos'), true);
   // $descuentos = array();
@@ -18,6 +22,7 @@
   // }
 
   $descuentos = array(
+    "id" => 1,
     "name" => "Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b>",
     "porcentaje" => "0.05");
 
@@ -31,6 +36,9 @@
     <link href="css/orden_conta.css" rel="stylesheet">
     <script>
       var plan_id = <? echo $plan; ?> ;
+      var desc_id = "<? echo $descuentos['id']; ?>";
+      var ptr = "<? echo $partner; ?>" ; 
+      var key = "<? echo $key; ?>" ;          
       var name = "<? echo $name; ?>" ;          
       var resume = "<? echo $resume; ?>" ; 
       var costo = <? echo $costo; ?> ;

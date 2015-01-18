@@ -82,11 +82,29 @@ $(function(){
 	$("a.confirm_compra").on("click", function(e)
 	{
 		e.preventDefault();
-		var action = "server/Registro.php?action=compra";
+		var action = "server/Suscripcion.php?action=compra";
 		var period_id = $("select[name=period]").val();
-		$.post(action, 
-			{"plan" : plan_id, "period" : period_id}, function(data){
-			log(data)
+		var values = 
+			{
+				"key" : key, 
+				"ptr" : ptr, 
+				"plan" : plan_id, 
+				"period" : period_id, 
+				"discount" : desc_id
+			}
+		$.post(action, values, function(result){
+			result = JSON.parse(result);
+			
+			if (result.success)
+			{
+				alert("Se ha enviado un correo con los datos para el deposito");
+
+				window.location.href = "inbox_nuevo_conta.php?section=";
+			}
+			else
+			{
+				log(result.data);
+			}
 		});
 	})
 

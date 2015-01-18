@@ -17,6 +17,26 @@ class SuscriptionService
 		$this->obj = new MainObject();
 	}
 
+	function comprar_plan($params, $partner_id)
+	{
+		$model = "gl.compras.sucripcion";
+		$data = prepare_params($params);
+		$compra = $this->obj->create($this->uid, $this->pwd, $model, $data);
+
+		if ($compra["success"])
+		{
+			$this->enviar_datos_compra($partner_id);		
+			return $compra;
+		}
+
+		return array(
+			"success"=>false, 
+			"data"=>array(
+				"description" => "Occurrio un error al realizar el registro de la compra"
+			));
+
+	}
+
 	function registrar_suscripcion($usuario, $empresa)
 	{
 		date_default_timezone_set("America/Mexico_City");
@@ -69,7 +89,7 @@ class SuscriptionService
 	function enviar_confirmacion($partner_id, $folio)
 	{
 		// $ids = array($partner_id);		
-		$path = APPNAME . "/planes.php?fk=$folio";
+		$path = APPNAME . "/planes.php?fk=$folio&ptr=$partner_id";
 		$params = array(
 			"partner_ids" => array($partner_id),
 			"message" => "Da click en la siguente liga para confirmar tu suscripcion
@@ -81,6 +101,20 @@ class SuscriptionService
 		$mail = new MailService($this->uid, $this->pwd);
 		$mail->enviar_mail($params);
 		// $mail->enviar_mail($params);
+
+		return array("success"=>true);
+	}
+
+	function enviar_datos_compra($partner_id)
+	{		
+		$params = array(
+			"partner_ids" => array($partner_id),
+			"message" => "Aqui van los datos de pago",							
+			"title" => "Datos de Pago"			
+		);
+
+		$mail = new MailService($this->uid, $this->pwd);
+		$mail->enviar_mail($params);	
 
 		return array("success"=>true);
 	}
@@ -103,7 +137,7 @@ class SuscriptionService
 			$attrs = prepare_params(array("status" => "confirm"));
 			$activacion = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
 
-			return $activacion;						
+			return $suscripcion;						
 		}
 
 		return array(
