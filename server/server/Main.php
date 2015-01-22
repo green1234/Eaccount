@@ -24,16 +24,17 @@
 			$sock->setSSLVerifyPeer(0);
 			$response = $sock->send($msg);
 
-			#logg($response, true);
+			// logg($response, true);
 
 			$response = $this->verificar($response, $error);
-			//var_dump($response); exit();
+			// logg($response, true);
 			return $response;
 		}
 
 		function verificar($response, $error)
 		{			
-			//var_dump($response); exit();
+			$values = $response->value()->scalarval();
+			// logg($values,1);
 			if ($response->errno != 0 || $response->faultCode()){        		
 				$response = $this->prepare_error(
 					$response->faultCode(),
@@ -41,8 +42,15 @@
 					//"Ocurrio un error al conectarse a la aplicacion"
 				);        		
 			}
-			else {
-				$values = $response->value()->scalarval();
+			else if (isset($values["error"]))
+			{
+				$response = $this->prepare_error(
+					"0", 
+					$values["description"]->me["string"]					
+					//"Ocurrio un error al conectarse a la aplicacion"
+				);	
+			}
+			else {				
 
 				if (is_array($values) && count($values) > 0) {   
 					#logg("IF"); 				

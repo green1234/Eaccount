@@ -1,4 +1,5 @@
-<? $res = json_decode(file_get_contents('http://104.236.124.45/eaccount/server/Configuracion.php'), true); ?>
+<? require_once "server/conf/constantes.conf"; ?>
+<? $res = json_decode(file_get_contents(SERVERNAME . '/Configuracion.php'), true); ?>
 <? $usuario = $res["data"][0]; ?>
 <div role="tabpanel" class="tab-pane fade in active" id="cuentas" style="padding-top: 20px;">
             <div class="col-md-2">

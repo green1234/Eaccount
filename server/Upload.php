@@ -2,18 +2,38 @@
 
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
-
+// var_dump ($_FILES);
 if(count($_FILES) > 0)
 {    
 	$uid = 1;
-	$pass = "admin";
+	$pwd = "admin";
 	$empresa_name = "MI EMPRESA";
 
-	$uploaddir = PROYECT_PATH . '/tmp/';
+	$uploaddir = '/tmp/';
 	$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
-	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {		
-		
+	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {	
+
+        $type = 1;
+        $service = new InvoiceService($uid, $pwd);      	
+        $response = $service->importar_xml($_FILES['userfile']['name'], $uploadfile, 1);
+        // $response = json_decode($response);
+        // logg($response["success"],1);
+        if ($response["success"])
+        {
+            $msj = "Cargada"; 
+        }
+        else
+        {
+            $msj = $response["data"]["description"];
+        }
+
+        header('Location: ../inbox_nuevo_conta.php?msj=' . $msj);
+
+
+        // var_dump($response); exit();
+        echo json_encode($response);
+		/*
 		$xml = simplexml_load_file($uploadfile, "SimpleXMLElement", LIBXML_PARSEHUGE | LIBXML_NOEMPTYTAG);
 		
 		$dom = new DOMDocument();
@@ -59,7 +79,7 @@ if(count($_FILES) > 0)
                 
                 $response = $service->importar_xml($_FILES['userfile']['name'], $uploadfile, $type);
             }
-        }
+        }*/
 	}	
 }
 

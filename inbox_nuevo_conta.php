@@ -3,10 +3,7 @@
   <head>
     <? require 'fijos/head.php'; ?>
     <link rel="stylesheet" href="css/inbox.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/inbox.js"></script>
-
+    
     <link rel="stylesheet" type="text/css" media="screen" href="css/site.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">
     <title>INICIO</title>
@@ -82,7 +79,47 @@
       border: 0px;
       color: #666666;
     }
+
+    #barra_principal
+    {
+      overflow: auto;
+      padding-left: 2em;
+    }
+
+    #yourBtn, #yourBtn2
+    {   
+      display: block;
+      float: left;   
+      width:50px;
+      height:40px;
+      max-width:50px;
+      margin-right:10px;
+      /*margin-right:10px;      */
+      cursor:pointer;
+      background: url("img/upload.png");
+      background-size: 50px 40px;
+      background-repeat: no-repeat;
+      /*overflow: auto;*/
+    }     
+    
+    #yourBtn2
+    {
+      background: url("img/actualizar_naranja.png");
+      background-size: 50px 40px;
+      background-repeat: no-repeat;
+    }
+
     </style>
+  <script>
+  
+  var msj = "<? echo $_GET["msj"]; ?>";
+  if (msj != "")
+  {
+    alert(msj);
+  }
+  
+  </script>
+
   </head>
   <body>
     
@@ -92,10 +129,20 @@
 
     <div class="container" style="padding:30px 0px;">
       <div class="col-md-2">
-
+        <i><a class="file_upload" href="#"></a></i>
         <div style="text-align:center;margin-bottom:15px;">
-          <img src="img/upload.png" style="max-width:50px;margin-right:10px;">
-          <img src="img/actualizar_naranja.png" style="max-width:50px;">
+          
+          <form id="barra_principal" name="myForm" action="server/Upload.php" method="POST" enctype="multipart/form-data">
+            <div id="yourBtn"/>&nbsp;</div>
+            <div id="yourBtn2"/>&nbsp;</div>
+            <div style='height: 0px;width:0px; overflow:hidden;'>
+              <input type="file" id="upfile" name="userfile">              
+            </div>
+            <!-- <button type="submit">Enviar</button>          -->
+
+            <!-- <img src="img/upload.png" style="max-width:50px;margin-right:10px;"> -->
+            <!-- <img src="img/actualizar_naranja.png" style="max-width:50px;"> -->
+          </form>
         </div>
 
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -109,11 +156,6 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
-                    
-
-
-
-
                 <div class="panel-group" id="subAccordion" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading subPanel" role="tab" id="headingOne">
@@ -403,7 +445,7 @@
         </div>
 
 
-        <button class="btn btn-primary">
+        <button class="submit_main btn btn-primary">
           GUARDAR Y SALIR
         </button>
 
@@ -451,44 +493,12 @@
       </div>
     </div>
 
-      <footer>
-          <? require 'fijos/footer.php'; ?>
-      </footer>
-
-      <script type="text/javascript">
-        function muestraporque () {
-          $("#porque").show("slow");
-        }
-
-        var openOrClosed = true;
-
-        function rotaflecha(obj) {
-          var id_fleacha = obj.children[0].id;
-          
-
-          //$("#"+id_fleacha).toggle(openOrClosed);
-
-
-          if ( openOrClosed === true ) {
-            console.log("Open");
-            openOrClosed = false;
-          } else if ( openOrClosed === false ) {
-            console.log("Closed");
-            openOrClosed = true;
-          }
-
-        }
-      </script>
-
-    
-    <script type="text/javascript">
-      jQuery(document).ready(function() {
-        jQuery('.popover-1').tooltip({
-          trigger: "hover",
-            animation: true,
-            placement: 'bottom'
-        })
-      });
-  </script>
+    <footer>
+        <? require 'fijos/footer.php'; ?>
+    </footer>
+     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/inbox.js"></script>    
   </body>
 </html>

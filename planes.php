@@ -29,7 +29,7 @@
   
   if (!$loader)
   {
-    header('Location: ' . APPNAME . '/index_nuevo_conta.php');
+    header('Location: ' . APPNAME . '/registro.php');
   }
 
 ?>

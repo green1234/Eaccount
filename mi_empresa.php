@@ -1,6 +1,5 @@
 <? require_once "server/conf/constantes.conf"; ?>
 <? $res = json_decode(file_get_contents(SERVERNAME . '/Configuracion.php'), true); ?>
-<? var_dump($res); exit();?>
 <? $empresa = $res["data"][0]["empresa"]; ?>
 
 <div role="tabpanel" class="tab-pane fade" id="empresas" style="padding-top: 20px;">

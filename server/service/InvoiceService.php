@@ -109,7 +109,7 @@ class InvoiceService
 
 		$response = $this->obj->create($this->uid, $this->pwd, $this->model, $params);
 
-		return json_encode($response);
+		return $response;
 	}
 	
 }

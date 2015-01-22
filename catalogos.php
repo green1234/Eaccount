@@ -10,11 +10,11 @@
     </ul>
 
     <div class="tab-content container" style="width: auto;background: #e6e6e6;font-family: Arial;font-size: 11px;">
-    	<? require 'clientes.php' ?>
-    	<? require 'proveedores.php' ?>
-    	<? require 'productos.php' ?>
-    	<? require 'cuentas_contables.php' ?>
-    	<? require 'otros_causantes.php' ?>
-    	<? require 'sucursales.php' ?>
+    	<? #require 'clientes.php' ?>
+    	<? #require 'proveedores.php' ?>
+    	<? #require 'productos.php' ?>
+    	<? #require 'cuentas_contables.php' ?>
+    	<? #require 'otros_causantes.php' ?>
+    	<? #require 'sucursales.php' ?>
     </div>
 </div>
