@@ -1,0 +1,100 @@
+body {
+  font-family: Arial, Helvetica;
+}
+.navbar {
+  background: #cc3366;
+}
+.tab_sucursales {
+  display: none !important;
+}
+hr{
+  border: 1px solid #cc3366;
+  width: 100%;
+}
+.panel-default {
+  border-color: white;
+}
+.list-group-item {
+  border: 0px;
+}
+.header_azul {
+  float: right;
+  background: url('http://savvysystems.com.mx/img/barra_azul_header.png');
+  height: 100px;
+  background-size: 100%;
+  /* padding-left: 270px; */
+  background-repeat: no-repeat;
+}
+.table {
+  background: #e6e6e6;
+  background-color: #e6e6e6 !important;
+  font-family: Arial;
+  font-size: 11px;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  font-size: 12px;
+  font-family: Corbel,century gothic, helvetica;
+  background: #e6e6e6;
+  font-weight: bold;
+}
+
+span[id="^_open"] {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+  transform: rotate(90deg);
+}
+
+span[id="^_closed"] {
+  -ms-transform: rotate(0deg); /* IE 9 */
+  -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+  transform: rotate(0deg);
+}
+.panel-heading {
+  border-radius: 10px;
+  border: 1px solid #b3b3b3;
+  background: #f7f7f7;
+  padding: 15px;
+}
+.subLista {
+  padding-left: 10px;
+}
+.subLista li {
+  list-style-type: circle;
+  width: 100%;
+  font-size: 12px;
+}
+.subPanel {
+  padding: 2px;
+  border-radius: 0px;
+  border: 0px;
+  color: #666666;
+}
+
+#barra_principal
+{
+  overflow: auto;
+  padding-left: 2em;
+}
+
+#yourBtn, #yourBtn2
+{   
+  display: block;
+  float: left;   
+  width:50px;
+  height:40px;
+  max-width:50px;
+  margin-right:10px;
+  /*margin-right:10px;      */
+  cursor:pointer;
+  background: url("../img/upload.png");
+  background-size: 50px 40px;
+  background-repeat: no-repeat;
+  /*overflow: auto;*/
+}     
+
+#yourBtn2
+{
+  background: url("../img/actualizar_naranja.png");
+  background-size: 50px 40px;
+  background-repeat: no-repeat;
+}
