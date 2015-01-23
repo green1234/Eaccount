@@ -32,25 +32,28 @@
 		}
 
 		function verificar($response, $error)
-		{			
-			$values = $response->value()->scalarval();
-			// logg($values,1);
+		{	
+			
 			if ($response->errno != 0 || $response->faultCode()){        		
 				$response = $this->prepare_error(
 					$response->faultCode(),
 					$response->faultString()
 					//"Ocurrio un error al conectarse a la aplicacion"
 				);        		
-			}
-			else if (isset($values["error"]))
-			{
-				$response = $this->prepare_error(
-					"0", 
-					$values["description"]->me["string"]					
-					//"Ocurrio un error al conectarse a la aplicacion"
-				);	
-			}
+			}			
 			else {				
+
+				$values = $response->value()->scalarval();
+
+				if (isset($values["error"]))
+				{
+					$response = $this->prepare_error(
+						"0", 
+						$values["description"]->me["string"]					
+						//"Ocurrio un error al conectarse a la aplicacion"
+					);
+					return $response;
+				}
 
 				if (is_array($values) && count($values) > 0) {   
 					#logg("IF"); 				

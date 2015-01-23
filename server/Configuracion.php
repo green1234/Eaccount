@@ -112,7 +112,7 @@ else
 {
 	$usuarioService = new UsuarioService(1, "admin");
 	$res = $usuarioService->obtener_datos(1);
-	#logg($res,1);
+	// logg($res,1);
 	echo json_encode($res);
 }
 

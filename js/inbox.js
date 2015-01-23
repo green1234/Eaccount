@@ -31,6 +31,10 @@ $(function(){
         console.log("data");
     })
 
+    $(".nav.nav-tabs li a").on("click", function(){
+        // alert("LOL")
+    })
+
 });
 
 // var chkRowChecked = 0;
