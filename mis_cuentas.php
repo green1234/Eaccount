@@ -252,8 +252,9 @@
           <button class="btn btn-primary">Guardar Cambios</button>
           <button class="btn btn-primary">Salir sin Cambios</button>
         </div>      
-
-        <div class="col-md-2">
+      </div>
+    </div>
+        <!-- <div class="col-md-2">
           <b>Perfil y accesos de cuenta adicional 1:</b>
           <a href="#">Editar perfil y permisos</a>
           <a href="#">Eliminar esta cuenta</a>
@@ -438,15 +439,15 @@
             </tr>
           </table>
 
-        </div>
+        </div> 
 
         <?//AQUI TERMINA EL FOR PARA MOSTRAR A LOS USUARIOS ?>
 
         <div class="col-md-12" style="text-align:center;margin-bottom:15px;">
           <button class="btn btn-primary">Guardar Cambios</button>
           <button class="btn btn-primary">Salir sin Cambios</button>
-        </div>
+        </div>-->
 
-      </div>
+
 
  

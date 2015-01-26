@@ -12,7 +12,7 @@ $company_id = 1;
 $fiscalyear_id = 1;
 $period_start_id = 1;
 $period_end_id = 13;
-$report_type = "catalogo";
+$report_type = "balanza";
 $params = array("month" => "Enero", "year" => "2014", "version" => "1.0");
 
 $service = new ReportesService(1, "admin");

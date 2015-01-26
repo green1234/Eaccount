@@ -4,8 +4,8 @@
     <a href="#cuentas" aria-controls="cuentas" role="tab" data-toggle="tab">MIS CUENTAS</a></li>
   <li role="presentation">
     <a href="#empresas" aria-controls="empresas"role="tab" data-toggle="tab">MI EMPRESA</a></li>
-  <!-- <li role="presentation">
-    <a href="#catalogos" aria-controls="catalogos" role="tab" data-toggle="tab">CATÁLOGOS</a></li> -->
+  <li role="presentation">
+    <a href="#catalogos" aria-controls="catalogos" role="tab" data-toggle="tab">CATÁLOGOS</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -20,6 +20,6 @@
   <!--FIN TAB "MI EMPRESA"-->
 
   <!--INICIA TAB "CATALOGOS"-->
-  <? #require 'catalogos.php' ?>
+  <? require 'catalogos.php'; ?>
   <!--FIN TAB "CATALOGOS"-->
 </div>

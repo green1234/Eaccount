@@ -8,7 +8,7 @@ $company_id = 1;
 $fiscalyear_id = 1;
 $period_start_id = 1;
 $period_end_id = 13;
-$report_type = "polizas";
+$report_type = "catalogo";
 $params = array("version" => "1.0");
 
 $service = new ReportesService(1, "admin");
@@ -20,21 +20,27 @@ if ($data["success"])
 	$xml = $service->render_xml($report_type, $data);
 	
 
+	// $file_path = PROYECT_PATH . "/tmp/";
+	$file_path = "/tmp/";	
 	$filename = $data["data"]["RFC"] . $data["data"]["Ano"] . $data["data"]["Mes"];
 
 	if ($report_type == "catalogo")
 	{
-		$file_path = PROYECT_PATH . "/tmp/" . $filename . "CT.xml"; 	
+		$filename = $filename . "CT.xml"; 	
 	}
 	else if($report_type == "balanza")
 	{
-		$file_path = PROYECT_PATH . "/tmp/" . $filename . "BN.xml";	
+		$filename = $filename . "BN.xml"; 	
+		// $file_path = PROYECT_PATH . "/tmp/" . $filename . "BN.xml";	
 	}
 	else if($report_type == "polizas")
 	{
-		$file_path = PROYECT_PATH . "/tmp/" . $filename . "PL.xml";	
+		$filename = $filename . "PL.xml"; 	
+		// $file_path = PROYECT_PATH . "/tmp/" . $filename . "PL.xml";	
 	}
 	
+	$file_path = $file_path . $filename;
+
 	$file=fopen($file_path,"w") or die("Problemas al construir el archivo");
 	fputs($file, $xml);	
 
