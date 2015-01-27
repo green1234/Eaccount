@@ -7,17 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">	
 	<style>	
 
-	@font-face{
+	/*@font-face{
 	    font-family: "Corbel";
-	    src: url(fonts/Corbel.ttf); /* .eot - Internet Explorer */
-	}
+	    src: url(fonts/Corbel.ttf); 
+	}*/
 
 	a
 	{
 		text-decoration: none;
 	}
 
-	article.description
+	body
+	{
+		/*background-color: #ededed;*/
+		font-family: "Arial";
+		font-size: 18px;
+		margin: 0;
+		padding: 0;	
+		width: 782px;
+		height: 100%;
+		min-height: 100%;
+	}
+	
+	div.description
 	{
 		background-color: white;
 		box-shadow: 5px 5px 10px #a1a1a1;
@@ -33,18 +45,22 @@
 
 	}
 
-	article.description > p
+	div.description > p
 	{
 		padding: 1em;		
 	}
 
-	article.description > p.datos
+	div.description > p.datos
 	{
 		padding: 1em;		
 		margin-bottom: 1.5em;		
 	}	
+	div.description > p.submit
+	{
+		text-align: center;
+	}
 
-	article.description > a.button
+	div.description > p.submit > a.button
 	{
 		border: 1px solid #224d71;
 		background-color: #2c6494;
@@ -62,7 +78,7 @@
 		position: absolute;
 	}
 
-	article.footer
+	div.footer
 	{
 		/*position: absolute;*/
 		width: 782px;
@@ -71,7 +87,7 @@
 		/*top: 100%;*/
 		/*right: 0;*/
 	}
-	article.footer > ul
+	div.footer > ul
 	{
 		background-color: #2c6494;		
 		list-style-type: none;
@@ -81,7 +97,7 @@
 
 	}
 
-	article.redirect
+	div.redirect
 	{
 		padding: 1em;
 		text-align: center;
@@ -90,7 +106,7 @@
 		margin-bottom: 1.5em;
 	}
 	
-	article.redirect > a
+	div.redirect > a
 	{
 		color: #2c6494;
 		display: block;
@@ -98,42 +114,33 @@
 		/*text-decoration: none;*/
 	}
 	
-	article.aplicaciones
+	div.aplicaciones
 	{
 		background-color: white;
 		/*position: absolute;*/
 		width: 100%;
 		padding: 0.5em 0 0.5em 0;
+		overflow: auto;
 	}
 
-	article.aplicaciones > picture
+	div.aplicaciones > .picture
 	{
 		margin-left: 3.5em;
+		/*width: 30%;*/
+		float: left;
 	}
 
-	article.footer > ul > li
+	div.footer > ul > li
 	{
 		display: inline;
 		margin-left: 0.5em;
 	}
 
-	article.footer > ul > li > a
+	div.footer > ul > li > a
 	{
 		color: white;
 	/*	display: block;
 		float: left;		*/
-	}
-
-	body
-	{
-		/*background-color: #ededed;*/
-		font-family: "Corbel";
-		font-size: 18px;
-		margin: 0;
-		padding: 0;	
-		width: 782px;
-		height: 100%;
-		min-height: 100%;
 	}
 
 	h1, p
@@ -141,21 +148,23 @@
 		margin: 0;
 		padding: 0;
 	}
-	header
+	div.header
 	{		
 		position: relative;
 		background-color: #2c6494;
 		color: white;
 		height: 150px;
+		text-align: center;
 	}
-	header > h1
+	div.header > h1
 	{
 		font-weight: normal;
-		left: 4em;		
-		position: absolute;
-		top: 1.5em;
+		padding: 1.5em 0 0 0;
+		/*left: 2.8em;		*/
+		/*position: absolute;*/
+		/*top: 1.5em;*/
 	}
-	section
+	div.section
 	{		
 		background-color: #ededed;
 		color: #4d4d4d;
@@ -177,11 +186,11 @@
 	</style>
 </head>
 <body>
-	<header>
+	<div class="header">
 		<h1>BIENVENIDO A SAVVY SYSTEMS!</h1>
-	</header>
-	<section>
-		<article class="description">
+	</div>
+	<div class="section">
+		<div class="article description">
 			<p>
 				Gracias por crear una cuenta con nosotros, con ella podrás iniciar sesion en nuestro sistema para utilizar todas las aplicaciones que desarrollamos para facilitarte la administración de tu negocio.
 			</p>
@@ -193,32 +202,38 @@
 				<br>
 				Tu nombre de usuario: <b>&lt;nombre de usuario&gt;</b>	
 			</p>
-			<a class="button" href="#"><span>ACTIVAR MI CUENTA AHORA</span></a>			
-		</article>
-		<article class="redirect">
+			<p class="submit">
+				<a class="button" target="_blank" href="http://savvysystems.com.mx">
+					<span>ACTIVAR MI CUENTA AHORA</span></a>							
+			</p>
+		</div>
+		<div class="article redirect">
 			<p>
 				Si el botón no abre una nueva ventana, copie y pegue la siguiente liga en su navegador:
 			</p>
-			<a href="#">http://savvysystems.com.mx/ejemplo-de-liga/para-confirmar-cuenta</a>
-		</article>
-		<article class="aplicaciones">			
-			<picture>
-				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
-			</picture>
-			<picture>
-				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
-			</picture>
-			<picture>
-				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
-			</picture>
-		</article>
-		<article class="footer">
+			<a href="http://savvysystems.com.mx">http://savvysystems.com.mx/ejemplo-de-liga/para-confirmar-cuenta</a>
+		</div>
+		<div class="article aplicaciones">			
+			<div class="picture">
+				<a class="logos" target="_blank" href="http://savvysystems.com.mx">
+					<img src="http://104.236.124.45/eaccount/img/savvy_logo_1.png" alt=""></a>
+			</div>
+			<div class="picture">
+				<a class="logos" target="_blank" href="http://savvysystems.com.mx">
+					<img src="http://104.236.124.45/eaccount/img/savvy_logo_2.png" alt=""></a>
+			</div>
+			<div class="picture">
+				<a class="logos" target="_blank" href="http://savvysystems.com.mx">
+					<img src="http://104.236.124.45/eaccount/img/savvy_logo_3.png" alt=""></a>
+			</div>
+		</div>
+		<div class="footer">
 			<ul>
-				<li ><a href="">Savvy Systems ©</a></li>
-				<li ><a href="">Centro de Ayuda</a></li>
-				<li ><a href="">Terminos y Privacidad</a></li>
+				<li ><a href="http://savvysystems.com.mx">Savvy Systems ©</a></li>
+				<li ><a href="http://savvysystems.com.mx">Centro de Ayuda</a></li>
+				<li ><a href="http://savvysystems.com.mx">Terminos y Privacidad</a></li>
 			</ul>
-		</article>
-	</section>	
+		</div>
+	</div>	
 </body>
 </html>
