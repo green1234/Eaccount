@@ -4,8 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Email Template</title>
 	<meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="css/inbox_custom.css"/>  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">	
 	<style>	
 
 	@font-face{
@@ -127,7 +126,7 @@
 
 	body
 	{
-		background-color: #ededed;
+		/*background-color: #ededed;*/
 		font-family: "Corbel";
 		font-size: 18px;
 		margin: 0;
@@ -158,6 +157,7 @@
 	}
 	section
 	{		
+		background-color: #ededed;
 		color: #4d4d4d;
 		padding-top: 1.2em;
 		/*padding-bottom: 12em;*/
@@ -201,16 +201,15 @@
 			</p>
 			<a href="#">http://savvysystems.com.mx/ejemplo-de-liga/para-confirmar-cuenta</a>
 		</article>
-		<article class="aplicaciones">
-			<? $url = "http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png"; ?>
+		<article class="aplicaciones">			
 			<picture>
-				<a class="logos" href="#"><img src="<? echo $url; ?>" alt=""></a>
+				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
 			</picture>
 			<picture>
-				<a class="logos" href="#"><img src="<? echo $url; ?>" alt=""></a>
+				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
 			</picture>
 			<picture>
-				<a class="logos" href="#"><img src="<? echo $url; ?>" alt=""></a>
+				<a class="logos" href="#"><img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" alt=""></a>
 			</picture>
 		</article>
 		<article class="footer">
@@ -220,14 +219,6 @@
 				<li ><a href="">Terminos y Privacidad</a></li>
 			</ul>
 		</article>
-	</section>
-	<!-- <footer>
-		<ul>
-			<li ><a href="">Savvy Systems ©</a></li>
-			<li ><a href="">Centro de Ayuda</a></li>
-			<li ><a href="">Terminos y Privacidad</a></li>
-		</ul>
-	</footer> -->
-	
+	</section>	
 </body>
 </html>
