@@ -52,8 +52,8 @@ class SuscriptionService
 			"date" => date("Y-m-d"),
 			"status" => "draft");
 		
-		$data = prepare_params($data);
-		$registro = $this->obj->create($this->uid, $this->pwd, $model, $data);
+		$_data = prepare_params($data);
+		$registro = $this->obj->create($this->uid, $this->pwd, $model, $_data);
 
 		if ($registro["success"])
 		{
@@ -72,7 +72,15 @@ class SuscriptionService
 				$this->obj->write($this->uid, $this->pwd, 
 					$model, array($registro_id), $attrs);
 
-				$this->enviar_confirmacion($usuario_data["partner_id"][0], $folio);
+				$data["partner_id"] = $usuario_data["partner_id"][0];
+				$data["folio"] = $folio;
+				$data["path"] = APPNAME;
+				$this->confirmar_registro($data);
+				// $mail = new MailService($this->uid, $this->pwd);
+				// $mail->send_mail($data);
+
+				// $this->enviar_confirmacion($data, $folio);
+
 			}
 
 			return $res;
@@ -86,12 +94,21 @@ class SuscriptionService
 
 	}
 
+	function confirmar_registro($data)
+	{
+		$data["tipo_mail"] = "confirmacion";
+		$mail = new MailService($this->uid, $this->pwd);
+		$mail->send_mail($data);
+	}
+
 	function enviar_confirmacion($partner_id, $folio)
 	{
-		// $ids = array($partner_id);		
-		$path = APPNAME . "/planes.php?fk=$folio&ptr=$partner_id";
+		// $ids = array($partner_id);
+		$id_partner = $partner_id['partner_id'];
+		$path = APPNAME . "/planes.php?fk=$folio&ptr=$id_partner";
 		$params = array(
-			"partner_ids" => array($partner_id),
+			"partner_ids" => array($id_partner),
+			"email" => $partner_id["email"],
 			"message" => "Da click en la siguente liga para confirmar tu suscripcion
 							<a href='$path'>Confirmar</a>
 							",
