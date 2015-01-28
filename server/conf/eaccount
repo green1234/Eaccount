@@ -1,0 +1,7 @@
+<?php
+
+	define("USER", "username");
+	define("PASS", "password");
+	define("DB", "database");
+	define("HOST", "xmlrpc_host");
+?>
