@@ -51,6 +51,7 @@ class MailService
 		// );
 
 		$tipo_mail = $params["tipo_mail"];
+
 		switch ($tipo_mail) 
 		{
 			case 'confirmacion':
@@ -67,19 +68,45 @@ class MailService
 					"nombre" => model($nombre, "string"),
 					"folio" => model($folio, "string"),
 					"path" => model($path, "string"),				
-				);
-
-				$response = $this->obj->call($this->uid, $this->pwd, 
-					$this->model, $method, null, $params);
-
-				return array("success"=>true);
+				);			
 				
 				break;
-			
-			default:
-				# code...
-				break;
+
+			case "compra":
+				$method = "mail_compra";
+				$partner_id = $params["partner_id"];
+				$usuario = $params["value"]["usuario"];
+				$plan = $params["value"]["plan"];				
+				$app = $params["value"]["app"];
+				$period = $params["value"]["period"];
+				$subtotal = $params["value"]["subtotal"];
+				$descuento = $params["value"]["descuento"];
+				$iva = $params["value"]["iva"];
+				$total = $params["value"]["total"];
+				$cuenta = $params["value"]["cuenta"];
+				$cliente = $params["value"]["cliente"];
+
+				$params = array(
+					"partner_id" => model($partner_id, "int"),
+					"usuario" => model($usuario, "string"),
+					"plan" => model($plan, "string"),
+					"app" => model($app, "string"),
+					"period" => model($period, "string"),
+					"cuenta" => model($cuenta, "string"),
+					"subtotal" => model($subtotal, "string"),
+					"descuento" => model($descuento, "string"),
+					"iva" => model($iva, "string"),
+					"total" => model($total, "string"),
+					"cliente" => model($cliente, "int"),
+				);
+				
+				break;										
 		}
+
+		$response = $this->obj->call($this->uid, $this->pwd, 
+					$this->model, $method, null, $params);
+
+		return array("success"=>true);
 
 		// $method = "mail_confirmacion";
 		// $partner_id = $params["partner_id"];

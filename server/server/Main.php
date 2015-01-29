@@ -23,11 +23,10 @@
 			$sock = new xmlrpc_client($this->server_url.$this->ws);
 			$sock->setSSLVerifyPeer(0);
 			$response = $sock->send($msg);
-
-			// logg($response, true);
-
+			// logg($response);
+			// logg("===========");
 			$response = $this->verificar($response, $error);
-			// logg($response, true);
+			// logg($response);
 			return $response;
 		}
 
@@ -171,12 +170,24 @@
 		function create($uid, $pass, $model, $params)
 		{			
 			$msg = $this->prepare_create_msg($uid, $pass, $model, $params);			
+			// logg("===========>");
 			$response = $this->ejecutar($msg);
-
+			// logg($response);
 			if ($response["success"])
 			{
 				$id = $response["data"][0];
-				$response["data"] = array("id" => $id);
+				$value = array();
+
+				if(isset($response["data"][1]))
+				{
+					$id = $id->me["int"];
+					$value = $response["data"][1];
+					$value = $value->me["struct"];
+					$value = prepare_response($value);
+				}
+				$response["data"] = array("id" => $id, "value" => $value);
+				// logg($response);
+				
 			}
 			return $response;
 		}

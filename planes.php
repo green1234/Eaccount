@@ -8,11 +8,11 @@
     $key = $_GET["fk"];
     $partner = $_GET["ptr"];    
     $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
-    // var_dump("1");
+    var_dump("1");
     if ($activacion["success"])
     {
       $susc_id = $activacion["data"]["id"][0];       
-      // var_dump($activacion["data"]);
+      var_dump($activacion["data"]);
       $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
       // echo "<pre>";
       // var_dump($res); exit();
@@ -20,7 +20,7 @@
       $planes = array();  
       if ($res["success"])
       {
-        // var_dump("3");
+        var_dump("3");
         $planes = $res["data"];
         $loader = true;    
       }

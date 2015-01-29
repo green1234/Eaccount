@@ -19,13 +19,18 @@ class SuscriptionService
 
 	function comprar_plan($params, $partner_id)
 	{
+		$desc_ids = array(2,3);
 		$model = "gl.compras.sucripcion";
+		$params["partner_id"] = $partner_id;
 		$data = prepare_params($params);
+		$data["discounts"] = prepare_tupla($desc_ids);
 		$compra = $this->obj->create($this->uid, $this->pwd, $model, $data);
-
+		// logg($compra);
 		if ($compra["success"])
 		{
-			$this->enviar_datos_compra($partner_id);		
+			// $compra["data"]["partner_id"] = $partner_id;
+			// $this->confirmar_compra($compra["data"]);
+			// $this->enviar_datos_compra($partner_id);		
 			return $compra;
 		}
 
@@ -93,7 +98,7 @@ class SuscriptionService
 			));
 
 	}
-
+	// Envio de Email de Registro
 	function confirmar_registro($data)
 	{
 		$data["tipo_mail"] = "confirmacion";
@@ -101,26 +106,34 @@ class SuscriptionService
 		$mail->send_mail($data);
 	}
 
-	function enviar_confirmacion($partner_id, $folio)
+	// Envio de Email de Compra
+	function confirmar_compra($data)
 	{
-		// $ids = array($partner_id);
-		$id_partner = $partner_id['partner_id'];
-		$path = APPNAME . "/planes.php?fk=$folio&ptr=$id_partner";
-		$params = array(
-			"partner_ids" => array($id_partner),
-			"email" => $partner_id["email"],
-			"message" => "Da click en la siguente liga para confirmar tu suscripcion
-							<a href='$path'>Confirmar</a>
-							",
-			"title" => "Suscripcion"			
-		);
-
+		$data["tipo_mail"] = "compra";
 		$mail = new MailService($this->uid, $this->pwd);
-		$mail->enviar_mail($params);
-		// $mail->enviar_mail($params);
-
-		return array("success"=>true);
+		$mail->send_mail($data);	
 	}
+
+	// function enviar_confirmacion($partner_id, $folio)
+	// {
+	// 	// $ids = array($partner_id);
+	// 	$id_partner = $partner_id['partner_id'];
+	// 	$path = APPNAME . "/planes.php?fk=$folio&ptr=$id_partner";
+	// 	$params = array(
+	// 		"partner_ids" => array($id_partner),
+	// 		"email" => $partner_id["email"],
+	// 		"message" => "Da click en la siguente liga para confirmar tu suscripcion
+	// 						<a href='$path'>Confirmar</a>
+	// 						",
+	// 		"title" => "Suscripcion"			
+	// 	);
+
+	// 	$mail = new MailService($this->uid, $this->pwd);
+	// 	$mail->enviar_mail($params);
+	// 	// $mail->enviar_mail($params);
+
+	// 	return array("success"=>true);
+	// }
 
 	function enviar_datos_compra($partner_id)
 	{		
@@ -136,6 +149,7 @@ class SuscriptionService
 		return array("success"=>true);
 	}
 
+	// Activar Suscripcion
 	function confirmar_suscripcion($folio){
 
 		$model = "gl.suscripcion";		

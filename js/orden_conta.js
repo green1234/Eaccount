@@ -93,13 +93,16 @@ $(function(){
 				"discount" : desc_id
 			}
 		$.post(action, values, function(result){
+
+			console.log(result)
+
 			result = JSON.parse(result);
 			
 			if (result.success)
 			{
 				alert("Se ha enviado un correo con los datos para el deposito");
 
-				window.location.href = "inbox_nuevo_conta.php?section=";
+				window.location.href = "inbox.php?section=";
 			}
 			else
 			{
