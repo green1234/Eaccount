@@ -40,7 +40,7 @@
               <table class="table">
                 <tr>
                   <td>
-                    <input type="checkbox" name="tyc" id="tyc"/>
+                    <input type="checkbox" style="display:block; width:auto;" name="tyc" id="tyc"/>
                   </td>
                   <td style="text-align: left;">
                     Acepto los <a href="http://docs.google.com/viewer?url=www.savvysystems.com.mx%2Fdocs%2FSAVVY%2520-%2520Terminos%2520y%2520Condiciones.odt" class="blue">Términos de Privacidad</a>
