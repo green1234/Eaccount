@@ -26,7 +26,11 @@
         </div>
         <div class="col-md-6">
           <div class="box_form">
-            <!--form action="http://104.236.124.45/eaccount/server/Registro.php" method="GET"-->
+            
+            <form action="<? echo SERVERNAME.'/Suscripcion.php?action=registro'; ?>"
+              method="POST">
+              <input type="text" id="username" name="username" pattern="^[a-z0-9_-]{3,15}$" required="true" placeholder="Username " />
+              <br><br>
               <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
               <br><br>
               <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
@@ -52,7 +56,7 @@
                 <img src="img/ajax_loader_registrar.gif">
               </div>
               <span><a href="login.php" class="blue">o ingresa a tu cuenta</a></span>
-              <!--/form-->
+              </form>
           </div>
         </div>
       </div>
@@ -121,10 +125,10 @@
       </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-    $("#submit").click(function(){
+    $("#submitS").click(function(){
       $("#submit").hide();
       $("#loader").show();
       var nombre = $("#nombre").val();
