@@ -15,6 +15,9 @@ class SuscriptionService
 		$this->uid = $uid;
 		$this->pwd = $pwd;
 		$this->obj = new MainObject();
+		$this->clienteService = new ClienteService($uid, $pwd);
+		$this->usuarioService = new UsuarioService($uid, $pwd);
+		$this->empresaService = new EmpresaService($uid, $pwd);
 	}
 
 	function comprar_plan($params, $partner_id)
@@ -42,10 +45,32 @@ class SuscriptionService
 
 	}
 
+	function verificar_existe($usuario, $empresa)
+	{
+		// $res = $this->empresaService->obtener_empresa_id($empresa);
+		
+		// if ($res["success"] && count($res["data"]["id"]) > 0){
+		// 	return array("description" => "Ya existe un registro con ese nombre.");
+		// }	
+
+		$res = $this->usuarioService->obtener_usuario_id($usuario);
+
+		if ($res["success"] && count($res["data"]["id"]) > 0){
+			return array("description" => "Ya existe un usuario con ese nombre.");
+		}
+
+		$res = $this->usuarioService->obtener_usuario_id_email($usuario);
+
+		if ($res["success"] && count($res["data"]["id"]) > 0){
+			return array("description" => "El email registrado ya existe para otro usuario.");
+		}
+
+		return false;
+	}
+
 	function registrar_suscripcion($usuario, $empresa)
 	{
-		date_default_timezone_set("America/Mexico_City");
-		$clienteService = new ClienteService($this->uid, $this->pwd);
+		date_default_timezone_set("America/Mexico_City");		
 
 		$model = "gl.suscripcion";
 		$folio = md5($usuario["email"] . $usuario["name"]);
@@ -63,7 +88,7 @@ class SuscriptionService
 		if ($registro["success"])
 		{
 			$registro_id = $registro["data"]["id"];
-			$res = $clienteService->registrar_cliente($usuario, $empresa);
+			$res = $this->clienteService->registrar_cliente($usuario, $empresa);
 			if ($res["success"])
 			{
 				$usuario_data = $res["data"]["usuario_id"];

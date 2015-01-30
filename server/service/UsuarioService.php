@@ -299,14 +299,28 @@ class UsuarioService
  		}	 	
 	}
 
-	function obtener_usuario_id($usuario_name)
+	function obtener_usuario_id($usuario)
 	{		
 		//logg($empresa_name);
 		$domain = array(
 					array(
 						model("login", "string"),
 						model("=", "string"),
-						model($usuario_name, "string"),
+						model($usuario["name"], "string"),
+						));
+
+		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
+		return $res;		
+	}
+
+	function obtener_usuario_id_email($usuario)
+	{		
+		//logg($empresa_name);
+		$domain = array(
+					array(
+						model("email", "string"),
+						model("=", "string"),
+						model($usuario["email"], "string"),
 						));
 
 		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
@@ -316,13 +330,13 @@ class UsuarioService
 	function crear_usuario($params, $empresa_id)
 	{
 		$keys = prepare_params($params);
-		$res = $this->obtener_usuario_id($params["name"]);
+		// $res = $this->obtener_usuario_id($params["name"]);
 		
-		if ($res["success"] && count($res["data"]["id"]) > 0){
-			$res["success"] = false;			
-			$res["data"]["description"] = "El usuario que quiere registrar ya existe";
-			return $res;
-		}			
+		// if ($res["success"] && count($res["data"]["id"]) > 0){
+		// 	$res["success"] = false;			
+		// 	$res["data"]["description"] = "El usuario que quiere registrar ya existe";
+		// 	return $res;
+		// }			
 
 		$res = $this->obj->create($this->uid, $this->pwd, $this->model, $keys);
 

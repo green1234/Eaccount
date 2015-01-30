@@ -28,9 +28,10 @@ class ClienteService
 	// El proceso de suscripcion y registro de un cliente nuevo
 	// implica realizar los registros en los distintos modelos
 	// Usuario "res.users",
-	// Empresa "res.company"
-	function registrar_cliente($usuario, $empresa){
+	// Empresa "res.company"	
 
+	function registrar_cliente($usuario, $empresa){
+		
 		$res = $this->empresaService->crear_empresa($empresa);		
 		$registrado = false;
 		

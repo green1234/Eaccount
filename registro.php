@@ -27,19 +27,22 @@
         <div class="col-md-6">
           <div class="box_form">
             
-            <form action="<? echo SERVERNAME.'/Suscripcion.php?action=registro'; ?>"
+            <form id="form_registro" action="<? echo SERVERNAME.'/Suscripcion.php?action=registro'; ?>"
               method="POST">
-              <input type="text" id="username" name="username" pattern="^[a-z0-9_-]{3,15}$" required="true" placeholder="Username " />
-              <br><br>
-              <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+
+              <input type="hidden" name="action" value="registro"/>
+              
+             <!--  <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
               <br><br>
               <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
+              <br><br> -->
+              <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{6,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
               <br><br>
-              <input type="text" id="email" name="email" placeholder="Email" />
+              <input required="true" type="email" id="email" name="email" placeholder="Email" />
               <br><br>
-              <input type="password" id="password" name="password" placeholder="Contraseña" />
+              <input required="true" type="password" id="password" name="password" placeholder="Contraseña" />
               <br><br>
-              <input type="password" id="password2" name="password2" placeholder="Confirmar Contraseña" />
+              <input required="true" type="password" id="password2" name="password2" placeholder="Confirmar Contraseña" />
               <br><br>
               <table class="table">
                 <tr>
@@ -56,7 +59,7 @@
                 <img src="img/ajax_loader_registrar.gif">
               </div>
               <span><a href="login.php" class="blue">o ingresa a tu cuenta</a></span>
-              </form>
+              <!-- </form> -->
           </div>
         </div>
       </div>
@@ -120,74 +123,13 @@
       </div>
     </div>
 
-      <footer>
-          <? require 'fijos/footer.php'; ?>
-      </footer>
-
+    <footer>
+        <? require 'fijos/footer.php'; ?>
+    </footer>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/registro.js"></script>
 
-    <script type="text/javascript">
-    $("#submitS").click(function(){
-      $("#submit").hide();
-      $("#loader").show();
-      var nombre = $("#nombre").val();
-      var apellido = $("#apellido").val();
-      var email = $("#email").val();
-      var password = $("#password").val();
-      var password2 = $("#password2").val();
-      // Returns successful data submission message when the entered information is stored in database.
-      var dataString = 'nombre='+ nombre + '&apellido='+ apellido  + '&email='+ email + '&password='+ password + '&password2='+ password2;
-      if(nombre==''||apellido==''||email==''||password==''||password2=='')
-      {
-        alert("Por favor llena todos los campos");
-        $("#loader").hide();
-        $("#submit").show();
-      }
-      else
-      {
-        if (!$('#tyc').is(":checked")) {
-          alert("Debes aceptar los terminos y condiciones.");
-          $("#loader").hide();
-          $("#submit").show();
-          return false;
-        };
-        if (password != password2) {
-          alert("Las contraseñas no coinciden.");
-          $("#loader").hide();
-          $("#submit").show();
-        }else{
-          $.ajax({
-              type: "POST",
-              url: "<? echo SERVERNAME; ?>" + "/Suscripcion.php?action=registro",
-              data: dataString+'&tyc=1',
-              cache: false,
-              success: function(result) {
-                console.log(result);
-                
-                result = JSON.parse(result);
-
-                if (!result.success == true) {
-                  alert(result.data.description);
-                }else{
-                  // var usuario_id = result.data.usuario_id;
-                  // var partner_id = usuario_id.partner_id[0];
-                  // $.post("<? echo SERVERNAME ?>" + "/Mail.php", 
-                  //   {"partner_id": partner_id}, 
-                  //   function(data){
-                  //     console.log(data);
-                  // });
-                  alert("Se te ha enviado un correo de confirmacion. Sigue la liga para continuar con el proceso de registro de tu nueva cuenta");
-
-                  // window.location.href = "<?echo APPNAME; ?>" + "/inbox_nuevo_conta.php?section=";
-                }
-                $("#loader").hide();
-                $("#submit").show();
-              }
-          });
-        }
-      }
-    });
-    </script>
   </body>
 </html>

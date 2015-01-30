@@ -14,8 +14,9 @@ $res = $loginService->acceder($usuario_name, $usuario_pw);
 function registrar($data, $service)
 {
 	$empresa_id = 0;
-	$usuario_nombre = $data["nombre"] . " " . $data["apellido"];
-	$empresa_nombre = $usuario_nombre;
+	// $usuario_nombre = $data["nombre"] . " " . $data["apellido"];
+	$username = $data["username"];
+	$empresa_nombre = $username;
 	$empresa_rfc = "XAXX010101000";
 	$usuario_email = $data["email"];
 	$usuario_password = $data["password"];
@@ -29,13 +30,27 @@ function registrar($data, $service)
 	);
 
 	$usuario = array(
-		"name" => $usuario_nombre, 
-		"login" => $usuario_email,
+		"name" => $username, 
+		"login" => $username,
 		"email" => $usuario_email,	
 		"password" => md5($usuario_password),		
 	);
 
-	return $service->registrar_suscripcion($usuario, $empresa);	
+	$res = $service->verificar_existe($usuario, $empresa);
+
+	if(!$res)
+	{
+		return $service->registrar_suscripcion($usuario, $empresa);	
+	}
+	else
+	{
+		return array("success" => false, 
+			"data" => array(
+				"description" => $res["description"]));
+	}
+
+
+
 }
 
 if ($res["success"])
@@ -51,7 +66,7 @@ if ($res["success"])
 			case "registro": 
 
 				$verificacion = verificar_datos($_POST, 
-					array("nombre", "apellido", "email", "password"));
+					array("username", "email", "password"));
 
 				if (!$verificacion)
 				{

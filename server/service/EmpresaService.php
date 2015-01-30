@@ -24,14 +24,14 @@ class EmpresaService
 
 	}
 
-	function obtener_empresa_id($empresa_name)
+	function obtener_empresa_id($empresa)
 	{		
 		//logg($empresa_name);
 		$domain = array(
 					array(
 						model("name", "string"),
 						model("=", "string"),
-						model($empresa_name, "string"),
+						model($empresa["name"], "string"),
 						));
 
 		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
@@ -136,16 +136,16 @@ class EmpresaService
 	function crear_empresa($params)
 	{
 		$keys = prepare_params($params);
-		$res = $this->obtener_empresa_id($params["name"]);
+		// $res = $this->obtener_empresa_id($params["name"]);
 
-		if ($res["success"] && count($res["data"]["id"]) > 0)
-		{			
-			$res["success"] = false;			
-			$res["data"]["description"] = "La empresa que quiere registrar ya existe";
-			$id = $res["data"]["id"];
-			$res["data"]["id"] = $id[0];			
-			return $res;
-		}			
+		// if ($res["success"] && count($res["data"]["id"]) > 0)
+		// {			
+		// 	$res["success"] = false;			
+		// 	$res["data"]["description"] = "La empresa que quiere registrar ya existe";
+		// 	$id = $res["data"]["id"];
+		// 	$res["data"]["id"] = $id[0];			
+		// 	return $res;
+		// }			
 		
 		$res = $this->obj->create($this->uid, $this->pwd, 
 			$this->model, $keys);
