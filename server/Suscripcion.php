@@ -32,7 +32,7 @@ function registrar($data, $service)
 		"name" => $usuario_nombre, 
 		"login" => $usuario_email,
 		"email" => $usuario_email,	
-		"password" => $usuario_password,		
+		"password" => md5($usuario_password),		
 	);
 
 	return $service->registrar_suscripcion($usuario, $empresa);	

@@ -36,7 +36,8 @@ class ClienteService
 		
 		if ($res["success"])
 		{	
-		 	$empresa_id = $res["data"]["id"];		 	
+		 	$empresa_id = $res["data"]["id"];	
+		 	unset($usuario["password"]);	 	
 		 	$res = $this->usuarioService->crear_usuario($usuario, $empresa_id);
 			
 		 	if ($res["success"])
