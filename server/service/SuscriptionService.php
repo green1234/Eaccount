@@ -20,13 +20,43 @@ class SuscriptionService
 		$this->empresaService = new EmpresaService($uid, $pwd);
 	}
 
-	function comprar_plan($params, $partner_id)
+	function obtener_descuentos()
 	{
-		$desc_ids = array(2,3);
+		$model = "gl.descuentos.sucripcion";
+		$periodo = obtener_periodo();
+		$domain = array(
+					array(
+							model("periodo", "string"),
+							model("=", "string"),
+							model($periodo, "string")
+						));	
+
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		
+		if ($res["success"])
+		{
+			$ids = $res["data"]["id"];
+			$params = array(
+				model("name","string"), 
+				model("description","string"),
+				model("periodo","string"),
+				model("porcentaje","string"));
+			$res = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
+
+			return $res;
+		}
+		
+		return array("success" => false, 
+			"data" => array(
+				"description" => "No se encontraron descuentos disponibles."));
+	}
+
+	function comprar_plan($params, $partner_id)
+	{		
 		$model = "gl.compras.sucripcion";
 		$params["partner_id"] = $partner_id;
 		$data = prepare_params($params);
-		$data["discounts"] = prepare_tupla($desc_ids);
+		$data["discounts"] = prepare_tupla($params["discount_id"]);
 		$compra = $this->obj->create($this->uid, $this->pwd, $model, $data);
 		// logg($compra);
 		if ($compra["success"])

@@ -1,4 +1,5 @@
 <? require_once "server/conf/constantes.conf"; ?>
+<? #require_once "server/lib/common.php"; ?>
 <?
   $plan = $name = $resume = $costo = $key = $partner = "";  
   if (isset($_POST["plan"]))
@@ -14,17 +15,21 @@
   if (isset($_POST["ptr"]))
     $partner = $_POST['ptr'];
 
-  // $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos'), true);
-  // $descuentos = array();
-  // if ($res["success"])
-  // {
-  //   $descuentos = $res["data"];
-  // }
+  $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos'), true);
+  // var_dump($res);
+  $descuentos = array();
+  if ($res["success"])
+  {
+    $descuentos = $res["data"][0];
+  }
 
-  $descuentos = array(
-    "id" => 1,
-    "name" => "Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b>",
-    "porcentaje" => "0.05");
+  // var_dump($res); exit();
+
+  // $descuentos = array(
+  //   "id" => 1,
+  //   "periodo" => "02",
+  //   "description" => "Ahorra el 5% al hacer tu compra en el mes de <b>Septiembre</b>",
+  //   "porcentaje" => "0.05");
 
 ?>
 
@@ -34,16 +39,44 @@
     <? require 'fijos/head.php'; ?>    
     <title>Orden de Compra</title>
     <link href="css/orden_conta.css" rel="stylesheet">
-    <script>
+    <script> 
+
+      var obtener_periodo = function(id)
+      {
+        var periodos = 
+        {
+          "01" : "Enero",
+          "02" : "Febrero",
+          "03" : "Marzo",
+          "04" : "Abril",
+          "05" : "Mayo",
+          "06" : "Junio",
+          "07" : "Julio",
+          "08" : "Agosto",
+          "09" : "Septiembre",
+          "10" : "Octubre",
+          "11" : "Noviembre",
+          "12" : "Diciembre",
+        };
+
+        return periodos[id];
+      }      
+
       var plan_id = <? echo $plan; ?> ;
-      var desc_id = "<? echo $descuentos['id']; ?>";
+      var desc_id = parseInt("<? echo $descuentos['id']; ?>");
+      var periodo = "<? echo $descuentos['periodo']; ?>";
+      var desc_periodo = obtener_periodo(periodo);
+
       var ptr = "<? echo $partner; ?>" ; 
       var key = "<? echo $key; ?>" ;          
       var name = "<? echo $name; ?>" ;          
       var resume = "<? echo $resume; ?>" ; 
       var costo = <? echo $costo; ?> ;
-      var desc = "<? echo $descuentos['name']; ?>";
+      
       var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
+
+      var desc = "<? echo $descuentos['description']; ?>";
+      var desc = "Ahorra el <b>" + descuento_rate + "%</b> al hacer tu compra en <b>" + desc_periodo + "</b>.";
 
     </script>
   </head>

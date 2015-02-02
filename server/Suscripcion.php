@@ -107,7 +107,7 @@ if ($res["success"])
 				$params = array(
 					"period" => $_POST["period"], 					
 					"plan_id" => $_POST["plan"], 
-					"discount_id" => $_POST["discount"],			
+					"discount_id" => array($_POST["discount"]),
 					"suscription_id" => $_POST["key"]); 
 
 				$res = $suscriptionService->comprar_plan($params, $partner_id);
@@ -118,6 +118,20 @@ if ($res["success"])
 
 		echo json_encode($res);
 	}
+
+	else if(isset($_GET["get"]))
+	{
+
+		switch($_GET["get"])
+		{
+			case "descuentos": 				
+				$res = $suscriptionService->obtener_descuentos();
+			break;
+		}
+
+		echo json_encode($res);
+	}
+
 	else
 	{		
 		$suscService = new SuscriptionService($usuario_id, $usuario_pw);

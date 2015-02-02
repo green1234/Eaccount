@@ -1,10 +1,10 @@
 var log = function(msg)
 {
-    console.log(msg);
+    console.log();
 }
 
 $(function(){
-
+	descuento_rate = descuento_rate / 100;
 	var subtotal = costo.toFixed(2);
 	var descuento = (subtotal * descuento_rate).toFixed(2);	
 	var subtotal_desc = (subtotal - descuento).toFixed(2);
