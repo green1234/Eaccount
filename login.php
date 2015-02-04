@@ -1,5 +1,4 @@
 <? require_once "server/conf/constantes.conf"; ?>
-<? session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,38 +27,20 @@
         <div class="col-md-6">
           <div class="box_form">
             
-            <form id="form_registro" action="<? echo SERVERNAME.'/Suscripcion.php?action='; ?>"
+            <form id="form_login" action="<? echo SERVERNAME.'/Suscripcion.php?action='; ?>"
               method="POST">
-
-              <input type="hidden" id="action" name="action" value="registro"/>
-              
-             <!--  <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
-              <br><br>
-              <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
-              <br><br> -->
+              <input type="hidden" id="action" name="action" value="login"/>
               <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{6,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
-              <br><br>
-              <input required="true" type="email" id="email" name="email" placeholder="Email" />
-              <br><br>
-              <input required="true" type="password" id="password" name="password" placeholder="Contraseña" />
-              <br><br>
+              <br><br>              
               <input required="true" type="password" id="password2" name="password2" placeholder="Confirmar Contraseña" />
               <br><br>
-              <table class="table tyc">
-                <tr>
-                  <td>
-                    <input type="checkbox" style="display:block; width:auto;" name="tyc" id="tyc"/>
-                  </td>
-                  <td style="text-align: left;">
-                    Acepto los <a href="http://docs.google.com/viewer?url=www.savvysystems.com.mx%2Fdocs%2FSAVVY%2520-%2520Terminos%2520y%2520Condiciones.odt" class="blue">Términos de Privacidad</a>
-                  </td>
-                </tr>
-              </table>
+
               <input type="submit" class="btn btn-primary" id="submit"></input>
               <div id="loader" style="display:none;">
                 <img src="img/ajax_loader_registrar.gif">
               </div>
-              <span><a class="signin" href="login.php" class="blue">o ingresa a tu cuenta</a></span>
+              
+              <span><a class="signup" href="registro.php" class="blue">o crea una nueva cuenta</a></span>
               <!-- </form> -->
           </div>
         </div>
@@ -130,7 +111,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
-    <script src="js/registro.js"></script>
+    <script src="js/login.js"></script>
 
   </body>
 </html>

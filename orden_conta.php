@@ -1,5 +1,7 @@
 <? require_once "server/conf/constantes.conf"; ?>
-<? #require_once "server/lib/common.php"; ?>
+<? session_start();
+   // var_dump($_SESSION["login"]);
+  #require_once "server/lib/common.php"; ?>
 <?
   $plan = $name = $resume = $costo = $key = $partner = "";  
   if (isset($_POST["plan"]))
@@ -15,8 +17,9 @@
   if (isset($_POST["ptr"]))
     $partner = $_POST['ptr'];
 
-  $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos'), true);
-  // var_dump($res);
+  $var = 'uid=' . $_SESSION["login"]["uid"] . '&pwd=' . $_SESSION["login"]["pwd"];
+  $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos&'.$var), true);
+  
   $descuentos = array();
   if ($res["success"])
   {
@@ -62,6 +65,8 @@
         return periodos[id];
       }      
 
+      var uid = <? echo $_SESSION["login"]["uid"]; ?>;
+      var pwd = "<? echo $_SESSION["login"]["pwd"]; ?>";
       var plan_id = <? echo $plan; ?> ;
       var desc_id = parseInt("<? echo $descuentos['id']; ?>");
       var periodo = "<? echo $descuentos['periodo']; ?>";

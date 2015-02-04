@@ -30,14 +30,19 @@
 
 	function verificar_datos($origin, $values)
 	{
+		$data = array();
 		foreach ($values as $idx => $value) {
 			if (!isset($origin[$value]))
 			{
 				return false;
 			}
-			continue;
+			else
+			{
+				$data[$value] = $origin[$value];
+				continue;
+			}
 		}
-		return true;
+		return $data;
 	}
 	
 	function logg($value, $exit=false){

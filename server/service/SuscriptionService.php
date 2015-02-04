@@ -98,54 +98,91 @@ class SuscriptionService
 		return false;
 	}
 
-	function registrar_suscripcion($usuario, $empresa)
+	function registrar_suscripcion($data/*$usuario, $empresa*/)
 	{
-		date_default_timezone_set("America/Mexico_City");		
+		$username = $data["username"];
+		$empresa_nombre = $username;
+		$empresa_rfc = "XAXX010101000";
+		$usuario_email = $data["email"];
+		$usuario_password = $data["password"];	
 
-		$model = "gl.suscripcion";
-		$folio = md5($usuario["email"] . $usuario["name"]);
-		$data = array(
-			"name" => $folio,
-			"nombre" => $usuario["name"],
-			"email" => $usuario["email"],
-			"password" => $usuario["password"],
-			"date" => date("Y-m-d"),
-			"status" => "draft");
+		$empresa = array(
+			"name" => $empresa_nombre, 
+			"gl_rfc" => $empresa_rfc, 
+			"currency_id" => 34, #MXN
+		);
+
+		$usuario = array(
+			"name" => $username, 
+			"login" => $username,
+			"email" => $usuario_email,	
+			"password" => md5($usuario_password),		
+		);
+
+		$res = $this->verificar_existe($usuario, $empresa);
 		
-		$_data = prepare_params($data);
-		$registro = $this->obj->create($this->uid, $this->pwd, $model, $_data);
-
-		if ($registro["success"])
+		if (!$res)
 		{
-			$registro_id = $registro["data"]["id"];
-			$res = $this->clienteService->registrar_cliente($usuario, $empresa);
-			if ($res["success"])
+			date_default_timezone_set("America/Mexico_City");		
+
+			$model = "gl.suscripcion";
+			$folio = md5($usuario["email"] . $usuario["name"]);
+			$data = array(
+				"name" => $folio,
+				"nombre" => $usuario["name"],
+				"email" => $usuario["email"],
+				"password" => $usuario["password"],
+				"date" => date("Y-m-d"),
+				"status" => "draft");
+			
+			$_data = prepare_params($data);
+			$registro = $this->obj->create($this->uid, $this->pwd, $model, $_data);
+
+			if ($registro["success"])
 			{
-				$usuario_data = $res["data"]["usuario_id"];
-				$user_id = $usuario_data["id"];
-				$company_id = $res["data"]["empresa_id"];
-
-				$attrs = prepare_params(array(
-										"user_id" => $user_id, 
-										"company_id" => $company_id));
-
-				$this->obj->write($this->uid, $this->pwd, 
-					$model, array($registro_id), $attrs);
-
-				$data["partner_id"] = $usuario_data["partner_id"][0];
+				$data["rid"] = $registro["data"]["id"];
 				$data["folio"] = $folio;
 				$data["path"] = APPNAME;
-				$this->confirmar_registro($data);
-				// $mail = new MailService($this->uid, $this->pwd);
-				// $mail->send_mail($data);
+				// $rid = $registro["data"]["id"];
+				$res = $this->registrar_cliente($usuario, $empresa, $data, $model);
 
-				// $this->enviar_confirmacion($data, $folio);
+				// $registro_id = $registro["data"]["id"];
+				// $res = $this->clienteService->registrar_cliente($usuario, $empresa);
+				// if ($res["success"])
+				// {
+				// 	$company_id = $res["data"]["empresa_id"];
+				// 	$usuario_data = $res["data"]["usuario_id"];
+				// 	$user_id = $usuario_data["id"];
 
+				// 	$attrs = prepare_params(array(
+				// 							"user_id" => $user_id, 
+				// 							"company_id" => $company_id));
+
+				// 	$this->obj->write($this->uid, $this->pwd, 
+				// 		$model, array($registro_id), $attrs);
+
+				// 	$data["partner_id"] = $usuario_data["partner_id"][0];
+				// 	$data["folio"] = $folio;
+				// 	$data["path"] = APPNAME;
+				// 	$this->confirmar_registro($data);
+				// 	// $mail = new MailService($this->uid, $this->pwd);
+				// 	// $mail->send_mail($data);
+
+				// 	// $this->enviar_confirmacion($data, $folio);
+
+				// }
+
+				return $res;
 			}
 
-			return $res;
 		}
-
+		else
+		{
+			return array("success" => false, 
+				"data" => array(
+					"description" => $res["description"]));
+		}
+			
 		return array(
 			"success"=>false, 
 			"data"=>array(
@@ -153,6 +190,41 @@ class SuscriptionService
 			));
 
 	}
+
+	#Registro del cliente despues de registrar la suscripcion
+	function registrar_cliente($usuario, $empresa, $data, $model)
+	{
+		$rid = $data["rid"]; #Id del registro.
+
+		$res = $this->clienteService->registrar_cliente($usuario, $empresa);
+		
+		if ($res["success"])
+		{
+			$company_id = $res["data"]["empresa_id"];
+			$usuario_data = $res["data"]["usuario_id"];
+			$user_id = $usuario_data["id"];
+
+			$attrs = prepare_params(array(
+									"user_id" => $user_id, 
+									"company_id" => $company_id));
+
+			$this->obj->write($this->uid, $this->pwd, 
+				$model, array($rid), $attrs);
+
+			$data["partner_id"] = $usuario_data["partner_id"][0];
+			// $data["folio"] = $data["folio"];
+			// $data["path"] = APPNAME;
+			# Enviar mail de confirmacion.
+			$this->confirmar_registro($data);
+			// $mail = new MailService($this->uid, $this->pwd);
+			// $mail->send_mail($data);
+
+			// $this->enviar_confirmacion($data, $folio);
+		}
+
+		return $res;
+	}
+
 	// Envio de Email de Registro
 	function confirmar_registro($data)
 	{
@@ -161,7 +233,7 @@ class SuscriptionService
 		$mail->send_mail($data);
 	}
 
-	// Envio de Email de Compra
+	// Envio de Email de Compra /*deprecated*/
 	function confirmar_compra($data)
 	{
 		$data["tipo_mail"] = "compra";
@@ -236,12 +308,10 @@ class SuscriptionService
 					$ids = array($data["user_id"][0]); #Id del Ususario relacionado
 					$attrs = prepare_params(array("password" => $data["password"]));
 					$user_activation = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
+					$suscripcion["data"]["uid"] = $ids[0];
+					$suscripcion["data"]["pwd"] = $data["password"];
 				}
-
-				
 			}
-
-			
 			// $attrs = prepare_params(array("password" => "confirm"));
 
 			return $suscripcion;						

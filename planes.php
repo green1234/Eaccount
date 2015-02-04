@@ -1,5 +1,9 @@
 <? require_once "server/conf/constantes.conf"; ?>
-<?
+<? 
+  // session_destroy();
+  session_start();
+  // $session_id = session_id();
+
   $planes = array();
   $loader = false;
   $susc_id = 0;
@@ -8,19 +12,30 @@
     $key = $_GET["fk"];
     $partner = $_GET["ptr"];    
     $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
-    // var_dump("1");
+    
+    $usuario_id = $activacion["data"]["uid"];
+    $usuario_pwd = $activacion["data"]["pwd"];  
+
+    $_SESSION["login"] = array(
+      "uid" => $usuario_id,
+      "pwd" => $usuario_pwd
+    );
+
+    // var_dump($activacion);
+    
     if ($activacion["success"])
     {
-      $susc_id = $activacion["data"]["id"][0];       
-      // var_dump($activacion["data"]);
-      $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php'), true); 
-      // echo "<pre>";
-      // var_dump($res); exit();
-      // echo "</pre>";
+      $susc_id = $activacion["data"]["id"][0]; 
+      $variables = 'uid=' . $usuario_id . '&pwd=' . $usuario_pwd;
+      $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=planes&'. $variables), true); 
+      
+      // var_dump("3");
+      // var_dump("3");
+      
       $planes = array();  
       if ($res["success"])
       {
-        // var_dump("3");
+        // var_dump("4");
         $planes = $res["data"];
         $loader = true;    
       }
@@ -29,7 +44,7 @@
   
   if (!$loader)
   {
-    header('Location: ' . APPNAME . '/registro.php');
+    // header('Location: ' . APPNAME . '/registro.php');
   }
 
 ?>
