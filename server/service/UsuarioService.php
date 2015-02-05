@@ -329,7 +329,9 @@ class UsuarioService
 
 	function crear_usuario($params, $empresa_id)
 	{
+		$permisos = array(3,7,8,9,10,22,23,24,27);
 		$keys = prepare_params($params);
+		$keys["groups_id"] = prepare_tupla($permisos);
 		// $res = $this->obtener_usuario_id($params["name"]);
 		
 		// if ($res["success"] && count($res["data"]["id"]) > 0){
