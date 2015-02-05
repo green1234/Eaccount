@@ -12,12 +12,16 @@
     $key = $_GET["fk"];
     $partner = $_GET["ptr"];    
     $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
-    
+    // var_dump($activacion);
     $usuario_id = $activacion["data"]["uid"];
-    $usuario_pwd = $activacion["data"]["pwd"];  
+    $usuario_pwd = $activacion["data"]["pwd"];
+    $usuario_username = $activacion["data"]["username"];
+    // $usuario_email = $activacion["data"]["email"];  
 
     $_SESSION["login"] = array(
       "uid" => $usuario_id,
+      "username" => $usuario_username,
+      // "email" => $usuario_email,
       "pwd" => $usuario_pwd
     );
 

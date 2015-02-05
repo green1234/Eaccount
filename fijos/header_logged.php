@@ -1,3 +1,4 @@
+<? $a = session_id(); if (empty($a)) session_start(); ?>
 <div class="navbar" role="navigation" style="z-index: 3;">
   <div class="container" style="z-index: -2;">
     <div class="navbar-header">
@@ -109,7 +110,7 @@
     </div>
   </div>
   <div style="margin-top: -20px;margin-left: 400px;color: white;position: absolute;font-size: 11px;">
-    SAVVY <span class="glyphicon glyphicon-play" id="icon_estatus_open"></span>
+    <? if (isset($_SESSION["login"])) echo $_SESSION["login"]["username"]; ?> <span class="glyphicon glyphicon-play" id="icon_estatus_open"></span>
   </div>
   <div id="bg_azul" style="background: #12334F;height: 73px;top: 0px;width: 500px;float: right;position: absolute;right: -1px;z-index: -1;"></div>
 </div>

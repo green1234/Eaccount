@@ -291,24 +291,30 @@ class SuscriptionService
 		
 		if($suscripcion["success"] && count($suscripcion["data"]["id"]) > 0)
 		{
+			// return $suscripcion;
 			$ids = array($suscripcion["data"]["id"][0]); #Es un array de 1 elemento por lo menos
 			$attrs = prepare_params(array("status" => "confirm"));
 			$activacion = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
-
+			// return $activacion;
 			if ($activacion["success"])
 			{
 
 				$params = array(model("user_id","string"), model("password","string"));
 				$query = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
-				
+				// return $query;
 				if ($query["success"])
 				{
 					$model = "res.users";
 					$data = $query["data"][0];
 					$ids = array($data["user_id"][0]); #Id del Ususario relacionado
+					// 
 					$attrs = prepare_params(array("password" => $data["password"]));
 					$user_activation = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
-					$suscripcion["data"]["uid"] = $ids[0];
+					
+					// $usuario = $this->usuarioService->obtener_datos($ids[0]);					
+					// $suscripcion["data"]["email"] = $usuario["data"][0]["email"];
+					$suscripcion["data"]["uid"] = $data["user_id"][0];
+					$suscripcion["data"]["username"] = $data["user_id"][1];
 					$suscripcion["data"]["pwd"] = $data["password"];
 				}
 			}

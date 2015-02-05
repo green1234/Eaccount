@@ -32,8 +32,8 @@ class UsuarioService
 		// logg($res,1);
 
 		$params = array(
-				#model("name", "string"),
-				#model("email", "string"),
+				model("name", "string"),
+				model("email", "string"),
 				model("login", "string"),
 				model("partner_id", "string"),
 				model("company_id", "string"),
