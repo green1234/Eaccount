@@ -1,13 +1,4 @@
-$(function(){
-
-	$("a.signin").on("click", function(e){
-		e.preventDefault();		
-		// $("input[name$='action']").val("login");
-		// $("input[name$='email']").hide();
-		// $("input[name$='password2']").hide();
-		// $("table.tyc").hide();
-
-	});
+$(function(){	
 
 	$("#form_registro").on("submit", function(e){
 		

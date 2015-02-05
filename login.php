@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="css/login.css">
     <style type="text/css">
       .box_form{
         box-shadow: 0px 4px 40px black;
@@ -26,7 +27,8 @@
         </div>
         <div class="col-md-6">
           <div class="box_form">
-            
+            <div class="left">Ingresar con mi cuenta:</div>
+            <br><br>
             <form id="form_login" action="<? echo SERVERNAME.'/Suscripcion.php?action='; ?>"
               method="POST">
               <input type="hidden" id="action" name="action" value="login"/>
@@ -34,13 +36,16 @@
               <br><br>              
               <input required="true" type="password" id="password2" name="password2" placeholder="Confirmar Contraseña" />
               <br><br>
-
-              <input type="submit" class="btn btn-primary" id="submit"></input>
+              <label class="left"><input type="checkbox">&nbsp;&nbsp;Recordar mi cuenta.</label>
+              <br><br>
+              <input type="submit" class="btn btn-primary" id="submit" value="Ingresar">
               <div id="loader" style="display:none;">
                 <img src="img/ajax_loader_registrar.gif">
               </div>
-              
-              <span><a class="signup" href="registro.php" class="blue">o crea una nueva cuenta</a></span>
+              <br><br>
+              <span><a class="signup" href="registro.php" class="blue">Olvide mi contraseña</a></span>
+              <br>
+              <span><a class="signup" href="registro.php" class="blue">Crear una nueva cuenta</a></span>
               <!-- </form> -->
           </div>
         </div>

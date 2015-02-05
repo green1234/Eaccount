@@ -23,6 +23,7 @@
   $descuentos = array();
   if ($res["success"])
   {
+    var_dump($res);
     $descuentos = $res["data"][0];
   }
 

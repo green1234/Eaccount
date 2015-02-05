@@ -55,10 +55,11 @@
                   </td>
                 </tr>
               </table>
-              <input type="submit" class="btn btn-primary" id="submit"></input>
+              <input type="submit" class="btn btn-primary" id="submit" value="Registrate">
               <div id="loader" style="display:none;">
                 <img src="img/ajax_loader_registrar.gif">
               </div>
+              <br><br>
               <span><a class="signin" href="login.php" class="blue">o ingresa a tu cuenta</a></span>
               <!-- </form> -->
           </div>
