@@ -37,7 +37,7 @@
             <div id="yourBtn"/>&nbsp;</div>
             <div id="yourBtn2"/>&nbsp;</div>
             <div style='height: 0px;width:0px; overflow:hidden;'>
-              <input type="file" id="upfile" name="userfile">              
+              <input type="file" id="upfile" name="userfile[]" accept="*.xml" multiple>              
             </div>
             <!-- <button type="submit">Enviar</button>          -->
 

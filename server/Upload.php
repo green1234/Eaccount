@@ -1,15 +1,30 @@
-<?php	
+// <?php	
 
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
-// var_dump ($_FILES);
+// logg($_FILES); exit();
 if(count($_FILES) > 0)
 {    
+    // logg($_FILES); exit();
 	$uid = 1;
-	$pwd = "admin";
-	$empresa_name = "MI EMPRESA";
+	$pwd = md5("admin");
+	// $empresa_name = "MI EMPRESA";
 
 	$uploaddir = '/tmp/';
+
+    foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
+    {
+        $uploadfile = $uploaddir . basename($_FILES['userfile']['name'][$index]);        
+        if (move_uploaded_file($_FILES['userfile']['tmp_name'][$index], $uploadfile)) { 
+            $type = 1;
+            $service = new InvoiceService($uid, $pwd);          
+            $response = $service->importar_xml($_FILES['userfile']['name'][$index], $uploadfile, 1);
+
+            echo json_encode($response);
+        }
+    }
+
+    exit();
 	$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {	
