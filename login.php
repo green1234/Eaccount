@@ -29,16 +29,14 @@
           <div class="box_form">
             <div class="left">Ingresar con mi cuenta:</div>
             <br><br>
-            <form id="form_login" action="<? echo SERVERNAME.'/Suscripcion.php?action='; ?>"
-              method="POST">
-              <input type="hidden" id="action" name="action" value="login"/>
-              <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{6,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
+            <form id="form_login" action="<? echo SERVERNAME.'/Login.php?'; ?>">              
+              <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{5,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
               <br><br>              
-              <input required="true" type="password" id="password2" name="password2" placeholder="Confirmar Contraseña" />
+              <input required="true" type="password" id="password" name="password" placeholder="Confirmar Contraseña" />
               <br><br>
               <label class="left"><input type="checkbox">&nbsp;&nbsp;Recordar mi cuenta.</label>
               <br><br>
-              <input type="submit" class="btn btn-primary" id="submit" value="Ingresar">
+              <input type="submit" class="login_button btn btn-primary" id="submit" value="Ingresar">
               <div id="loader" style="display:none;">
                 <img src="img/ajax_loader_registrar.gif">
               </div>
@@ -46,7 +44,7 @@
               <span><a class="signup" href="registro.php" class="blue">Olvide mi contraseña</a></span>
               <br>
               <span><a class="signup" href="registro.php" class="blue">Crear una nueva cuenta</a></span>
-              <!-- </form> -->
+            </form>
           </div>
         </div>
       </div>
