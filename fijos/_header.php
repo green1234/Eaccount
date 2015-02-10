@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="http://savvysystems.com.mx/">
-        <img src="http://savvysystems.com.mx/img/logo2.png" style="max-width: 120px;">
+        <img src="http://savvysystems.com.mx/img/header_externo/HEADER%20EXTERNO.%20LOGO%20FACTURAS.png" style="max-width: 120px;">
       </a>
     </div>
     <div class="navbar-collapse collapse" style="float:right">
