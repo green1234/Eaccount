@@ -23,7 +23,7 @@
     <div style="text-align:center;background:white;min-height: 450px;padding-top:50px;">
       <div class="container">
         <div class="col-md-6">
-            <img src="http://savvysystems.com.mx/img/logo_conta_home.png" style="height:100%;width:100%;max-width: 300px;">
+            <img src="img/logo_home.png" style="height:100%;width:100%;max-width: 300px;">
         </div>
         <div class="col-md-6">
           <div class="box_form">
