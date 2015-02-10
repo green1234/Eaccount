@@ -88,7 +88,7 @@
   </head>
   <body>
     <div class="navbar-wrapper">
-      <? require 'fijos/header_conta.php' ?>
+      <? require 'fijos/header.php' ?>
       <div class="titulo_pagina">
         <div class="container_titulo_pagina">
           ORDEN DE COMPRA
