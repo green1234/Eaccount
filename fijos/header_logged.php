@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" onclick="getRecientes();">
-        <img width="130px" height="80px" src="img/logo_contabilidad_blanco.png" class="saavyLogo" style="max-width:85%">
+        <img width="130px" height="80px" src="img/logo_header_blanco.png" class="saavyLogo" style="max-width:85%">
       </a>
     </div>
     <div class="navbar-collapse collapse">
