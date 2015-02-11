@@ -6,27 +6,30 @@ require_once PROYECT_PATH . "/service/LoginService.php";
 require_once PROYECT_PATH . "/service/ClienteService.php";
 require_once PROYECT_PATH . "/service/UsuarioService.php";
 
-$usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
-$res = $usuario->obtener_datos(58);
-logg($res,1);
+// $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
+// $res = $usuario->obtener_datos(58);
+// logg($res,1);
 
 $uid = 1;
 $pwd = "admin";
 
-$login = new LoginService();
-$res = $login->acceder(USER, md5(PASS));
-logg($res);
-if ($res["success"])
-{
-	$uid = $res["data"][0]["id"];
-	$pwd = md5(PASS);
-}
+// $login = new LoginService();
+// $res = $login->acceder(USER, md5(PASS));
+// // logg($res);
+// if ($res["success"])
+// {
+// 	$uid = $res["data"][0]["id"];
+// 	$pwd = md5(PASS);
+// }
 
-logg($uid);
-logg($pwd);
+// logg($uid);
+// logg($pwd);
 
 $obj = new MainObject();
-$suscription = new SuscriptionService($uid, $pwd);
+$suscription = new SuscriptionService($uid, md5($pwd));
+
+$res = $suscription->obtener_planes_suscription();
+logg($res,1);
 
 $data = array("username"=>"mcgalv", "email" => "mcgalv@gmail.com", "password" => md5(1));
 

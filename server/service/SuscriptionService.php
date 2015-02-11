@@ -332,8 +332,14 @@ class SuscriptionService
 	function obtener_planes_suscription()
 	{
 		$model = "gl.planes.suscription";
-		$domain = array();
+		$domain = array(
+			array(
+				model("application", "string"),
+				model("=", "string"),
+				model("EACCOUNT", "string")
+		));
 		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		// return $res;
 		// logg($res,1);
 		if ($res["success"])
 		{
