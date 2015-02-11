@@ -1,5 +1,9 @@
 $(function(){	
 
+	$(".card").on("click", function(){
+		$(this).find(".back").toggle();
+	});
+
 	$("#form_registro").on("submit", function(e){
 		
 		e.preventDefault();	

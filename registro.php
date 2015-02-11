@@ -74,12 +74,13 @@
         <div class="col-md-2">
           <div class="card-container">
             <div class="card">
-              <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/INFO%201.png">
+              <div class="side ">
+                <img src="img/home_info_desc.png" width="101px" height="101px">
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png">
+                <img src="img/home_info.png">
               </div>
+              
             </div>
           </div>
         </div>
