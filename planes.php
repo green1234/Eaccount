@@ -79,7 +79,7 @@
               // echo "</pre>";
             ?>
             <div class="col-md-4">
-              <form id="plan_domicilio" action="orden_conta.php" method="post">
+              <form id="plan_domicilio" action="compra.php" method="post">
                 <input type="hidden" name="key" id="key" value="<? echo $susc_id; ?>" />
                 <input type="hidden" name="ptr" id="ptr" value="<? echo $partner; ?>" />
                 <input type="hidden" name="plan" id="plan" value="<? echo $plan['id'];?>" />

@@ -133,6 +133,7 @@ class SuscriptionService
 				"email" => $usuario["email"],
 				"password" => $usuario["password"],
 				"date" => date("Y-m-d"),
+				"application" => "EACCOUNT",
 				"status" => "draft");
 			
 			$_data = prepare_params($data);
