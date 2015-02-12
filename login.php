@@ -57,11 +57,28 @@
         <div class="col-md-2">
           <div class="card-container">
             <div class="card">
-              <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/INFO%201.png">
+              <div class="side ">
+                <a href="info.php">
+                  <img src="img/home_info_desc.png" width="101px" height="101px">
+                </a>
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png">
+                <img src="img/home_info.png">
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card-container">
+            <div class="card">
+              <div class="side">
+                <a href="info_planes.php">
+                  <img src="img/home_planes_desc.png" width="101px" height="101px">
+                </a>
+              </div>
+              <div class="side back">
+                <img src="img/home_planes.png">
               </div>
             </div>
           </div>
@@ -70,10 +87,10 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/PLANES%20PRECIOS%201.png">
+                <img src="img/home_videos_desc.png" width="101px" height="101px">
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png">
+                <img src="img/home_videos.png">
               </div>
             </div>
           </div>
@@ -82,22 +99,12 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%201.png">
+                <a href="info_nosotros.php">
+                  <img src="img/home_nosotros_desc.png" width="101px" height="101px">
+                </a>
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="card-container">
-            <div class="card">
-              <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%201.png">
-              </div>
-              <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png">
+                <img src="img/home_nosotros.png">
               </div>
             </div>
           </div>
@@ -114,6 +121,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/base.js"></script>
     <script src="js/login.js"></script>
 
   </body>
