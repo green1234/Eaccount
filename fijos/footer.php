@@ -6,12 +6,12 @@
       Savvy Systems ©
     </div>
     <div class="col-md-2">
-      <a href="http://savvysystems.com.mx/contactaadministrador.php" class="link_footer">
+      <a href="info.php" class="link_footer">
         Centro de Ayuda
       </a>
     </div>
     <div class="col-md-2">
-      <a href="http://savvysystems.com.mx/planes.php" class="link_footer">
+      <a href="info_planes.php" class="link_footer">
         Planes y Precios
       </a>
     </div>

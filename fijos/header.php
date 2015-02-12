@@ -1,3 +1,4 @@
+<? require_once "server/conf/constantes.conf"; ?>
 <div class="navbar" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -17,10 +18,13 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/INFO%201.png" class="img_header">
+                <a href="info.php">
+                  <img src="img/home_info_desc.png" class="img_header">
+                </a>
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/INFO%202.png" class="img_header">
+                <img src="img/home_info.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/INFO%202.png" class="img_header"> -->
               </div>
             </div>
           </div>
@@ -29,10 +33,14 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/PLANES%20PRECIOS%201.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/PLANES%20PRECIOS%201.png" class="img_header"> -->
+                <a href="info_planes.php">
+                  <img src="img/home_planes_desc.png" class="img_header">
+                </a>
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/PLANES Y PRECIOS 2.png" class="img_header">
+                <img src="img/home_planes.png" class="img_header">                
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/PLANES Y PRECIOS 2.png" class="img_header"> -->
               </div>
             </div>
           </div>
@@ -41,10 +49,12 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%201.png" class="img_header">
+                <img src="img/home_videos_desc.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%201.png" class="img_header"> -->
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png" class="img_header">
+                <img src="img/home_videos.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/DEMO%20Y%20VIDEOS%202.png" class="img_header"> -->
               </div>
             </div>
           </div>
@@ -53,10 +63,12 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%201.png" class="img_header">
+                <img src="img/home_nosotros_desc.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%201.png" class="img_header"> -->
               </div>
               <div class="side back">
-                <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%202.png" class="img_header">
+                <img src="img/home_nosotros.png" class="img_header">
+                <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%202.png" class="img_header"> -->
               </div>
             </div>
           </div>
@@ -78,9 +90,9 @@
         <h4 class="modal-title" id="myModalLabel">INGRESA CON TU CUENTA</h4>
       </div>
       <div class="modal-body">
-        <form>
-          <input type="email" placeholder="Email" style="width:49%;" required/>
-          <input type="password" placeholder="Contraseña" style="width:49%;" required/>
+        <form id="form_login" action="<? echo SERVERNAME.'/Login.php?'; ?>">
+          <input id="username" name="username" type="text" placeholder="Username" style="width:49%;" required/>
+          <input id="password" name="password" type="password" placeholder="Contraseña" style="width:49%;" required/>
           <br>
           <div class="col-md-12" style="padding:0px;">
             <div class="col-md-9" style="padding:0px;">
@@ -93,7 +105,7 @@
             </div>
           </div>
           <br>
-          ¿No tienes cuenta? <a href="http://savvysystems.com.mx/">Regístrate aquí</a>
+          ¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a>
         </form>        
       </div>
     </div>

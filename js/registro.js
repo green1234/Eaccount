@@ -1,8 +1,12 @@
 $(function(){	
 
-	$(".card").on("click", function(){
-		$(this).find(".back").toggle();
-	});
+	// $(".card").on("mouseenter", function(){
+	// 	$(this).find(".back").hide();
+	// });
+
+	// $(".card").on("mouseleave", function(){
+	// 	$(this).find(".back").show();
+	// });
 
 	$("#form_registro").on("submit", function(e){
 		
