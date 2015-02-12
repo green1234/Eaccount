@@ -3,7 +3,9 @@
   </div>
   <div class="col-md-10 footer">
     <div class="col-md-2">
-      Savvy Systems ©
+      <a href="info_nosotros.php">
+        Savvy Systems ©
+      </a>
     </div>
     <div class="col-md-2">
       <a href="info.php" class="link_footer">

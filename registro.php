@@ -116,7 +116,9 @@
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="img/home_nosotros_desc.png" width="101px" height="101px">
+                <a href="info_nosotros.php">
+                  <img src="img/home_nosotros_desc.png" width="101px" height="101px">
+                </a>
               </div>
               <div class="side back">
                 <img src="img/home_nosotros.png">

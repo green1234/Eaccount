@@ -14,7 +14,7 @@
     </div>
     <div class="navbar-collapse collapse" style="float:right">
       <ul class="nav navbar-nav">
-        <li onClick="window.open('http://savvysystems.com.mx/info.php','_self');" class="link_header" style="padding-top: 19px !important;">
+        <li class="link_header" style="padding-top: 19px !important;">
           <div class="card-container">
             <div class="card">
               <div class="side">
@@ -29,7 +29,7 @@
             </div>
           </div>
         </li>
-        <li onClick="window.open('http://savvysystems.com.mx/planes.php','_self');" class="link_header" style="padding-top: 19px !important;">
+        <li class="link_header" style="padding-top: 19px !important;">
           <div class="card-container">
             <div class="card">
               <div class="side">
@@ -59,11 +59,13 @@
             </div>
           </div>
         </li>
-        <li onClick="window.open('http://savvysystems.com.mx/acercadesavvy.php','_self');" class="active link_header" style="padding-top: 19px !important;">
+        <li class="active link_header" style="padding-top: 19px !important;">
           <div class="card-container">
             <div class="card">
               <div class="side">
-                <img src="img/home_nosotros_desc.png" class="img_header">
+                <a href="info_nosotros">
+                  <img src="img/home_nosotros_desc.png" class="img_header">
+                </a>
                 <!-- <img src="http://savvysystems.com.mx/img/pagina_inicio/NOSOTROS%201.png" class="img_header"> -->
               </div>
               <div class="side back">
