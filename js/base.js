@@ -1,10 +1,10 @@
 $(function(){
    
-    $(".card").on("mouseenter", function(){
+    $(".card").not(".inheader").on("mouseenter", function(){
       $(this).find(".back").hide();
     });
 
-    $(".card").on("mouseleave", function(){
+    $(".card").not(".inheader").on("mouseleave", function(){
       $(this).find(".back").show();
     });
     
