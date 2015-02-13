@@ -56,11 +56,11 @@
             <div class="card inheader">
               
               <div class="side">
-                <a href="info_nosotros">
+                <a href="info_nosotros.php">
                   <img src="img/home_nosotros.png" class="img_header">
                 </a>                
               </div>
-              
+
             </div>
           </div>
         </li>

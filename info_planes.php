@@ -20,7 +20,7 @@
   <head>
     <? require 'fijos/head.php'; ?>
     <title>SOBRE SAVVY SYSTEMS</title>
-    <link href="css/base.css" rel="stylesheet">
+    <link href="css/planes.css" rel="stylesheet">
   </head>
   <body>
     <div class="navbar-wrapper">

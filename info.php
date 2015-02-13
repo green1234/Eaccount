@@ -17,7 +17,7 @@
     </div>
 
     <div class="container_lines">
-      <div class="container" >
+      <div class="container">
         <div class="col-md-12" style="text-align:center;">
           <? $i = 1; 
           $planes = array(1,2,3,4,5);
