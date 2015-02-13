@@ -20,7 +20,7 @@
   <head>
     <? require 'fijos/head.php'; ?>
     <title>SOBRE SAVVY SYSTEMS</title>
-    <link href="css/planes.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
   </head>
   <body>
     <div class="navbar-wrapper">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="container_lines">
-      <div class="container" style="background:#e9e9e9">
+      <div class="container">
           <? $i = 1; ?>
           <? foreach ($planes as $index => $plan) { ?>
             

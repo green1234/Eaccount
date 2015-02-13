@@ -1,5 +1,5 @@
 body{
-  font-family: Corbel,century gothic, helvetica;
+  font-family: Corbel,century gothic, helvetica;  
 }
 
 input {
@@ -93,7 +93,7 @@ hr{
 
 .container_text {
   padding: 15px;
-  background: white;
+  /*background: white;*/
   color: gray;
 }
 

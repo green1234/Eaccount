@@ -86,7 +86,7 @@
   .container_lines
   {
     padding-bottom: 3em;
-    background: #e9e9e9;
+    background-image: url("../img/fondo.png");
   }
 
   .container_lines p
