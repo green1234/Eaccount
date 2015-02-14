@@ -1,11 +1,11 @@
 $(function(){
    
     $(".card").not(".inheader").on("mouseenter", function(){
-      $(this).find(".back").hide();
+      $(this).find(".back").show();
     });
 
     $(".card").not(".inheader").on("mouseleave", function(){
-      $(this).find(".back").show();
+      $(this).find(".back").hide();
     });
     
     $("#form_login").on("submit", function(e){

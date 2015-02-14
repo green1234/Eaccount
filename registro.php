@@ -32,11 +32,6 @@
               method="POST">
 
               <input type="hidden" id="action" name="action" value="registro"/>
-              
-             <!--  <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
-              <br><br>
-              <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
-              <br><br> -->
               <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{6,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
               <br><br>
               <input required="true" type="email" id="email" name="email" placeholder="Email" />
@@ -61,7 +56,7 @@
               </div>
               <br><br>
               <span><a class="signin" href="login.php" class="blue">o ingresa a tu cuenta</a></span>
-              <!-- </form> -->
+            </form>
           </div>
         </div>
       </div>
