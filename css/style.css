@@ -53,6 +53,7 @@ hr{
 /**/
 .card-container {
   height: 50px;
+  -webkit-perspective: 600;
   perspective: 600;
   position: relative;
   width: 50px;
@@ -61,20 +62,27 @@ hr{
 .card {
   height: 100%;
   position: absolute;
+  -webkit-transform-style: preserve-3d; /* Chrome, Safari, Opera */
   transform-style: preserve-3d;
+  -webkit-transition: all 0.6s ease-in-out;
   transition: all 0.6s ease-in-out;
   width: 100%;
 }
 .card:hover {
-  transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg); /* IE 9 */
+  -webkit-transform: rotateY(180deg); /* Chrome, Safari, Opera */
+  transform: rotateY(180deg);  
 }
 .card .side {
+  -webkit-backface-visibility: hidden; /* Chrome, Safari, Opera */
   backface-visibility: hidden;
   height: 100%;
   position: absolute;
   width: 100%;
 }
 .card .back {
+  -ms-transform: rotateY(180deg); /* IE 9 */
+  -webkit-transform: rotateY(180deg); /* Chrome, Safari, Opera */
   transform: rotateY(180deg);
 }
 /**/

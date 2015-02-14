@@ -67,57 +67,67 @@
           &nbsp;
         </div>
         <div class="col-md-2">
-          <div class="card-container">
+          <div class="card-container" style="width:101px;height:101px">
             <div class="card">
-              <div class="side ">
+              
+              <div class="side">
+                <img src="img/home_info.png">
+              </div>
+
+              <div class="side back">
                 <a href="info.php">
                   <img src="img/home_info_desc.png" width="101px" height="101px">
                 </a>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card-container" style="width:101px;height:101px">
+            <div class="card">
+              
+              <div class="side">
+                <img src="img/home_planes.png">
+              </div>
+              
               <div class="side back">
-                <img src="img/home_info.png">
+                <a href="info_planes.php">
+                  <img src="img/home_planes_desc.png" width="101px" height="101px">
+                </a>
               </div>
               
             </div>
           </div>
         </div>
         <div class="col-md-2">
-          <div class="card-container">
-            <div class="card">
+          <div class="card-container" style="width:101px;height:101px">
+            <div class="card" >
+                
               <div class="side">
-                <a href="info_planes.php">
-                  <img src="img/home_planes_desc.png" width="101px" height="101px">
-                </a>
-              </div>
-              <div class="side back">
-                <img src="img/home_planes.png">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="card-container">
-            <div class="card">
-              <div class="side">
-                <img src="img/home_videos_desc.png" width="101px" height="101px">
-              </div>
-              <div class="side back">
                 <img src="img/home_videos.png">
               </div>
+
+              <div class="side back">
+                <img src="img/home_videos_desc.png" width="101px" height="101px">
+              </div>
+              
             </div>
           </div>
         </div>
         <div class="col-md-2">
-          <div class="card-container">
+          <div class="card-container" style="width:101px;height:101px">
             <div class="card">
+              
               <div class="side">
+                <img src="img/home_nosotros.png">
+              </div>
+
+              <div class="side back">
                 <a href="info_nosotros.php">
                   <img src="img/home_nosotros_desc.png" width="101px" height="101px">
                 </a>
               </div>
-              <div class="side back">
-                <img src="img/home_nosotros.png">
-              </div>
+
             </div>
           </div>
         </div>

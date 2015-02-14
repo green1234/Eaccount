@@ -1,12 +1,18 @@
 $(function(){
    
-    $(".card").not(".inheader").on("mouseenter", function(){
-      $(this).find(".back").show();
-    });
+    // $(".back").hide();
 
-    $(".card").not(".inheader").on("mouseleave", function(){
-      $(this).find(".back").hide();
-    });
+    // $(".card-container").not(".inheader").on("mouseenter", function(){
+    //   $(this).find(".back").show();
+    //   console.log("in")
+    //   // $(this).find(".side").not(".back").hide();
+    // });
+
+    // $(".card-container").not(".inheader").on("mouseleave", function(){
+    //   $(this).find(".back").hide();
+    //   console.log("out")
+    //   // $(this).find(".side").not(".back").show();
+    // });
     
     $("#form_login").on("submit", function(e){
         e.preventDefault();
