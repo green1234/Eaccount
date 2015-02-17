@@ -10,6 +10,30 @@ $(function(){
 
     // alert("LOL")
 
+    $('#profileModal').on('shown.bs.modal', function () {
+        // $('#myInput').focus()
+        console.log("LOL")
+
+        var login = $("#idata_login").text();        
+        var email = $("#idata_email").text();
+        var phone = $("#idata_phone").text();
+        var mobile = $("#idata_mobile").text();
+
+        console.log(login)
+        console.log(email)
+        console.log(phone)
+        
+
+        var form = $(this).find("form");
+
+        console.log(form.find("[name=username]"))
+        form.find("[name=username]").val(login);
+        form.find("[name=email]").val(email);
+        form.find("[name=phone]").val(phone);
+        form.find("[name=mobile]").val(mobile);
+
+      })
+
     $("#yourBtn").on("click", function(){
         console.log("LOL")
         $("#upfile").click();

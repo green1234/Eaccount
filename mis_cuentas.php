@@ -1,20 +1,71 @@
-<? require_once "server/conf/constantes.conf"; ?>
-<? $res = json_decode(file_get_contents(SERVERNAME . '/Configuracion.php'), true); ?>
-<? #var_dump($res); exit(); ?>
-<? $usuario = $res["data"][0]; ?>
+<? 
+require_once "server/conf/constantes.conf";
+
+if (isset($_SESSION["login"]))
+{
+  $uid = $_SESSION["login"]["uid"];
+  $pwd = $_SESSION["login"]["pwd"];
+  
+  // var_dump($uid);
+  // var_dump($pwd);
+
+  $path = SERVERNAME . "/Configuracion.php?uid=" . $uid . "&pwd=" . $pwd;
+  $res = json_decode(file_get_contents($path), true);
+  $usuario = $res["data"][0];
+  // echo "<pre>";
+  // var_dump($res["data"][0]["planes"]);
+  // echo "</pre>";
+  // exit();
+   
+  $planes = $usuario["planes"];
+}
+?>
 <div role="tabpanel" class="tab-pane fade in active" id="cuentas" style="padding-top: 20px;">
     <div class="col-md-2">
       <b>Cuenta Principal:</b>
       <br>
-      <a href="#">Editar perfil</a>
+      <!-- Button trigger modal -->
+      <a href="#" data-toggle="modal" data-target="#profileModal">Editar perfil</a>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form action="">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Editar Perfil</h4>
+            </div>
+            <div class="modal-body">
+              <label for="username">Usuario:</label>
+              <input type="text" name="username" placeholder="username">
+              <br><br>
+              <label for="email">Email:</label>
+              <input type="text" name="email" placeholder="email">
+              <br><br>
+              <label for="phone">Teléfono:</label>
+              <input type="text" name="phone" placeholder="phone">
+              <br><br>
+              <label for="mobile">Teléfono Móvil:</label>
+              <input type="text" name="mobile" placeholder="mobile">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div class="col-md-10">
       <table class="table">
         <tr>
           <td>
             Usuario:
           </td>
-          <td style="font-weight:bold;">
+          <td style="font-weight:bold;" id="idata_login">
             <? echo $usuario["login"]; ?>
           </td>
         </tr>
@@ -23,7 +74,7 @@
           <td>
             Correo Electrónico:
           </td>
-          <td style="font-weight:bold;">
+          <td style="font-weight:bold;" id="idata_email">
             <? echo $usuario["partner_id"]["email"]; ?>
           </td>
         </tr>
@@ -32,7 +83,7 @@
           <td>
             Teléfono fijo:
           </td>
-          <td style="font-weight:bold;">
+          <td style="font-weight:bold;" id="idata_phone">
             <? echo $usuario["partner_id"]["phone"]; ?>
           </td>
         </tr>
@@ -41,7 +92,7 @@
           <td>
             Teléfono móvil:
           </td>
-          <td style="font-weight:bold;">
+          <td style="font-weight:bold;" id="idata_mobile">
             <? echo $usuario["partner_id"]["mobile"]; ?>
           </td>
         </tr>
@@ -56,83 +107,65 @@
     </div>
     <div class="col-md-10">
       <table class="table">
-        <tr>
-          <td>
-            <b>FACTURACIÓN ELECTRÓNICA</b> - Por el momento no cuentas con este servicio, <a href="#">contrátalo aquí</a>.
-          </td>
-        </tr>
 
-        <tr>
-          <td>
-            <b>VALIDACIÓN Y RESGUARDO</b> 
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table class="table">
-              <tr>
-                <td>
-                  Plan contratado:
-                </td>
-                <td style="font-weight:bold;">
-                  Plan contratado
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Capacidad:
-                </td>
-                <td style="font-weight:bold;">
-                  Capacidad
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Vigente hasta:
-                </td>
-                <td style="font-weight:bold;">
-                  Vigente hasta
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+        <? if (count($planes) > 0){
 
-        <tr>
-          <td>
-            <b>CONTABILIDAD ELECTRÓNICA</b>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table class="table">
-              <tr>
-                <td>
-                  Plan contratado:
-                </td>
-                <td style="font-weight:bold;">
-                  Plan contratado
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Capacidad:
-                </td>
-                <td style="font-weight:bold;">
-                  Capacidad
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Vigente hasta:
-                </td>
-                <td style="font-weight:bold;">
-                  Vigente hasta
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+          $tipo_planes = array(
+            "micro" => "Micro Empresa",
+            "empresa" => "Empresarial",
+            "despacho" => "Despacho Contable",
+            );
+
+          foreach ($planes as $idx => $plan) { ?>
+            
+            <tr>
+              <td>
+                <b><? echo $plan["plan_id"][1]; ?></b> 
+                <? if ($plan["contratado"] === "Pendiente") { ?>
+                  - Por el momento no cuentas con este servicio, 
+                  <a href="info_planes.php">contrátalo aquí</a>.
+                <? } ?>
+              </td>
+            </tr>
+            <? if ($plan["contratado"] === true) { ?>
+            <tr>
+              <td>
+                <table class="table">
+                  <tr>
+                    <td>
+                      Plan contratado:
+                    </td>
+                    <td style="font-weight:bold;">
+                      <?  
+                        
+                        $plan_idx = $plan["tipo_plan"]; 
+                        echo $tipo_planes[$plan_idx];
+                      ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Capacidad:
+                    </td>
+                    <td style="font-weight:bold;">
+                      <?  echo $plan["capacity"]; ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Vigente hasta:
+                    </td>
+                    <td style="font-weight:bold;">
+                      <?  echo $plan["date"]; ?>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <? } ?>
+        <? } 
+        } ?>
+
       </table>
     </div>
 

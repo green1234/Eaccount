@@ -112,17 +112,23 @@ if (isset($_GET["action"]))
 
 		case "compra": 
 
-			// if (isset($_GET["uid"]) && isset($_GET["pwd"]))
-			// {
-			// 	$usuario_id = $_GET["uid"];
-			// 	$usuario_pwd = $_GET["pwd"];
+			if (isset($_GET["uid"]) && isset($_GET["pwd"]))
+			{
+				$uid = $_GET["uid"];
+				$pwd = $_GET["pwd"];
 
-			if ($res = login(1))
-			{	
-				$usuario_id = $res["data"][0]["id"];
-				$usuario_pwd = $res["data"][0]["pwd"];
+				// $loginService = new LoginService();
+				// $res = $loginService->acceder($uid, $pwd);
+				// echo "<pre>";
+				// var_dump($res); 
+				// echo "</pre>";
+			// }
+			// if ($res = login(1))
+			// {	
+			// 	$usuario_id = $res["data"][0]["id"];
+			// 	$usuario_pwd = $res["data"][0]["pwd"];
 
-				$suscriptionService = new SuscriptionService($usuario_id, $usuario_pwd);
+				$suscriptionService = new SuscriptionService($uid, $pwd);
 
 				if (!verificar_datos($_GET, array("plan", "period", "discount")))
 				{
@@ -133,14 +139,15 @@ if (isset($_GET["action"]))
 				}
 				else
 				{
-					$partner_id = $_GET["ptr"];
+					// $partner_id = $_GET["ptr"];
 					$params = array(
 						"period" => $_GET["period"], 					
 						"plan_id" => $_GET["plan"], 
-						"discount_id" => array($_GET["discount"]),
-						"suscription_id" => $_GET["key"]); 
-									
-					$res = $suscriptionService->comprar_plan($params, $partner_id);					
+						"discount_id" => array($_GET["discount"]));
+						// "suscription_id" => $_GET["key"]); 
+					
+					$res = $suscriptionService->comprar_plan($params);								
+					// $res = $suscriptionService->comprar_plan($params, $partner_id);					
 				}			
 
 			}

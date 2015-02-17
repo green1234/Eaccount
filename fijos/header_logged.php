@@ -33,7 +33,9 @@
 
         <li class="link_header" style="margin-top: 15px;padding: 10px 10px !important;">
           <span class="subMenu1">
-            <img style="cursor: pointer;" id="btnConfiguration" src="img/pagina_inbox/InboxHeader_Config.png"/>
+            <a href="?section=config">
+              <img style="cursor: pointer;" id="btnConfiguration" src="img/pagina_inbox/InboxHeader_Config.png"/>
+            </a>
           </span>
         </li>
 

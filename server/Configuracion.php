@@ -6,6 +6,7 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 $admin_user = "admin";
 $admin_pw = "admin";
 $_POST["Action"] = "add";
+
 function verificar_post($data, $post)
 {
 	$tmp = array();
@@ -110,10 +111,16 @@ if (isset($_GET["section"]))
 }
 else
 {
-	$usuarioService = new UsuarioService(1, "admin");
-	$res = $usuarioService->obtener_datos(1);
-	// logg($res,1);
-	echo json_encode($res);
+	if (isset($_GET["uid"]) && isset($_GET["pwd"]))
+	{
+		$uid = $_GET["uid"];
+  		$pwd = $_GET["pwd"];
+
+		$usuarioService = new UsuarioService($uid, $pwd);
+		$res = $usuarioService->obtener_datos($uid);		
+		
+		echo json_encode($res);		
+	}
 }
 
 

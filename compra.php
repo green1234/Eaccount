@@ -42,7 +42,8 @@
   <head>
     <? require 'fijos/head.php'; ?>    
     <title>Orden de Compra</title>
-    <link href="css/orden_conta.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/compra.css" rel="stylesheet">
     <script> 
 
       var obtener_periodo = function(id)
@@ -67,7 +68,7 @@
       }      
 
       var uid = <? echo $_SESSION["login"]["uid"]; ?>;
-      var pwd = "<? echo $_SESSION["login"]["pwd"]; ?>";
+      var pwd = "<? echo $_SESSION['login']['pwd']; ?>";
       var plan_id = <? echo $plan; ?> ;
       var desc_id = parseInt("<? echo $descuentos['id']; ?>");
       var periodo = "<? echo $descuentos['periodo']; ?>";

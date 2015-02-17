@@ -40,7 +40,7 @@ class UsuarioService
 		);
 
 		$res = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
-
+		// return $res;
 		if ($res["success"])
 		{
 			foreach ($res["data"] as $index => $value) {

@@ -51,10 +51,10 @@ class SuscriptionService
 				"description" => "No se encontraron descuentos disponibles."));
 	}
 
-	function comprar_plan($params, $partner_id)
+	function comprar_plan($params)
 	{		
 		$model = "gl.compras.sucripcion";
-		$params["partner_id"] = $partner_id;
+		// $params["partner_id"] = $partner_id;
 		$data = prepare_params($params);
 		$data["discounts"] = prepare_tupla($params["discount_id"]);
 		$compra = $this->obj->create($this->uid, $this->pwd, $model, $data);
@@ -466,6 +466,8 @@ class SuscriptionService
 				model("name", "string"),
 				model("capacity", "string"),
 				model("date", "string"),
+				model("tipo_plan", "string"),
+				model("contratado", "string"),
 				model("perm_ids", "string")
 			);
 			
@@ -480,6 +482,8 @@ class SuscriptionService
 				$result[$index]["name"] = $value["name"];
 				$result[$index]["capacity"] = $value["capacity"];
 				$result[$index]["date"] = $value["date"];
+				$result[$index]["tipo_plan"] = $value["tipo_plan"];
+				$result[$index]["contratado"] = $value["contratado"];
 				$datos_permisos = $this->obtener_datos_permisos($value["perm_ids"]); 
 
 				if ($datos_permisos["success"])

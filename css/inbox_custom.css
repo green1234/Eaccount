@@ -69,6 +69,10 @@ span[id="^_closed"] {
   border: 0px;
   color: #666666;
 }
+#profileModal
+{
+  font-size: 18px !important;
+}
 
 #barra_principal
 {
