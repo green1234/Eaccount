@@ -55,9 +55,9 @@ $(function(){
         var phone = $("#idata_phone").text();
         var mobile = $("#idata_mobile").text();
 
-        console.log(login)
-        console.log(email)
-        console.log(phone)
+        // console.log(login)
+        // console.log(email)
+        // console.log(phone)
         
 
         var form = $(this).find("form");
