@@ -66,6 +66,7 @@ class SuscriptionService
 			// $this->enviar_datos_compra($partner_id);		
 			return $compra;
 		}
+		// return $compra;
 
 		return array(
 			"success"=>false, 
@@ -105,6 +106,7 @@ class SuscriptionService
 		$empresa_rfc = "XAXX010101000";
 		$usuario_email = $data["email"];
 		$usuario_password = $data["password"];	
+		$app = $data["app"];
 
 		$empresa = array(
 			"name" => $empresa_nombre, 
@@ -133,7 +135,7 @@ class SuscriptionService
 				"email" => $usuario["email"],
 				"password" => $usuario["password"],
 				"date" => date("Y-m-d"),
-				"application" => "EACCOUNT",
+				"application" => $app,
 				"status" => "draft");
 			
 			$_data = prepare_params($data);
@@ -205,6 +207,8 @@ class SuscriptionService
 			$usuario_data = $res["data"]["usuario_id"];
 			$user_id = $usuario_data["id"];
 
+			$res = $this->registrar_planes_usuario($user_id);
+			// return $res;
 			$attrs = prepare_params(array(
 									"user_id" => $user_id, 
 									"company_id" => $company_id));
@@ -224,6 +228,17 @@ class SuscriptionService
 		}
 
 		return $res;
+	}
+
+	function registrar_planes_usuario($uid)
+	{
+		$model = "gl.planes.usuarios";
+		$method = "add_planes_usuario";
+		$params = array(
+			"usuario_id" => model($uid, "int"));
+		$response = $this->obj->call($this->uid, $this->pwd, $model, $method, null, $params);
+
+		return $response;
 	}
 
 	// Envio de Email de Registro
@@ -310,7 +325,7 @@ class SuscriptionService
 					$ids = array($data["user_id"][0]); #Id del Ususario relacionado
 					// 
 					$attrs = prepare_params(array("password" => $data["password"]));
-					$user_activation = $this->obj->write($this->uid, $this->pwd, $model, $ids, $attrs);
+					$user_activation = $this->obj->write(USER_ID, md5(PASS), $model, $ids, $attrs);
 					
 					// $usuario = $this->usuarioService->obtener_datos($ids[0]);					
 					// $suscripcion["data"]["email"] = $usuario["data"][0]["email"];
@@ -330,14 +345,14 @@ class SuscriptionService
 				"description" => "El registro buscado no existe"));
 	}
 
-	function obtener_planes_suscription()
+	function obtener_planes_suscription($app)
 	{
 		$model = "gl.planes.suscription";
 		$domain = array(
 			array(
 				model("application", "string"),
 				model("=", "string"),
-				model("EACCOUNT", "string")
+				model($app, "string")
 		));
 		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
 		// return $res;
@@ -462,6 +477,8 @@ class SuscriptionService
 		{
 			$params = array(
 				model("id", "string"),
+				model("app_id", "string"),
+				model("app_path", "string"),
 				model("plan_id", "string"),
 				model("name", "string"),
 				model("capacity", "string"),
@@ -478,6 +495,8 @@ class SuscriptionService
 
 			foreach ($res["data"] as $index => $value) {			
 				$result[$index]["id"] = $value["id"];
+				$result[$index]["app_id"] = $value["app_id"];
+				$result[$index]["app_path"] = $value["app_path"];
 				$result[$index]["plan_id"] = $value["plan_id"];
 				$result[$index]["name"] = $value["name"];
 				$result[$index]["capacity"] = $value["capacity"];

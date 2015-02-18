@@ -58,7 +58,7 @@ if (isset($_GET["action"]))
 					// $_SESSION["login"] = array(
 					// 	"uid"=>$usuario_id,
 					// 	"pwd"=>md5(PASS));
-					
+					$data["app"] = "EACCOUNT";
 					$suscriptionService = new SuscriptionService($usuario_id, $usuario_pwd);
 					$res = $suscriptionService->registrar_suscripcion($data);	
 					$suscriptionService = NULL;			
@@ -141,6 +141,7 @@ if (isset($_GET["action"]))
 				{
 					// $partner_id = $_GET["ptr"];
 					$params = array(
+						"application" => "EACCOUNT",
 						"period" => $_GET["period"], 					
 						"plan_id" => $_GET["plan"], 
 						"discount_id" => array($_GET["discount"]));
@@ -177,7 +178,7 @@ else if(isset($_GET["get"]))
 				$res = $suscriptionService->obtener_descuentos();
 			break;
 			case "planes":
-				$res = $suscriptionService->obtener_planes_suscription();
+				$res = $suscriptionService->obtener_planes_suscription("EACCOUNT");
 			break;
 		}
 

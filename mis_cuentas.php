@@ -120,10 +120,12 @@ if (isset($_SESSION["login"]))
             
             <tr>
               <td>
-                <b><? echo $plan["plan_id"][1]; ?></b> 
-                <? if ($plan["contratado"] === "Pendiente") { ?>
+                <b><? echo $plan["app_id"][1]; ?></b> 
+                <? if ($plan["contratado"] === "Pendiente") { 
+
+                ?>
                   - Por el momento no cuentas con este servicio, 
-                  <a href="info_planes.php">contrátalo aquí</a>.
+                  <a href="<? echo $plan['app_path']; ?>/info_planes.php">contrátalo aquí</a>.
                 <? } ?>
               </td>
             </tr>
@@ -138,8 +140,9 @@ if (isset($_SESSION["login"]))
                     <td style="font-weight:bold;">
                       <?  
                         
-                        $plan_idx = $plan["tipo_plan"]; 
-                        echo $tipo_planes[$plan_idx];
+                        // $plan_idx = $plan["tipo_plan"]; 
+                        // echo $tipo_planes[$plan_idx];
+                        echo $plan["plan_id"][1]; 
                       ?>
                     </td>
                   </tr>

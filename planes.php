@@ -24,9 +24,10 @@
       // "email" => $usuario_email,
       "pwd" => $usuario_pwd
     );
-
-    // var_dump($activacion);
-    
+    // echo "<pre>";
+    // var_dump($_SESSION["login"]);
+    // echo "</pre>";
+    // exit();
     if ($activacion["success"])
     {
       $susc_id = $activacion["data"]["id"][0]; 
