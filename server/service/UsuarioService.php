@@ -19,6 +19,17 @@ class UsuarioService
 		$this->obj = new MainObject();
 	}
 
+	function actualizar_perfil($params)
+	{
+		$ids = array($this->uid);
+		// $attrs = array("name" => $params["name"]);
+		$attrs = prepare_params($params);
+		$model = "res.users";
+		#logg($ids,1);
+		$res = $this->obj->write(USER_ID, md5(PASS), $model, $ids, $attrs);
+		return $res;
+	}
+
 	function obtener_datos($usuario_id)
 	{
 		$model = $this->model;

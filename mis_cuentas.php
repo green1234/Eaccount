@@ -32,7 +32,11 @@ if (isset($_SESSION["login"]))
     <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <form action="">
+          <?
+          $path = SERVERNAME . "/Configuracion.php?update=perfil";
+          $path = $path . "&uid=" . $uid . "&pwd=" . $pwd;
+          ?>
+          <form id="ProfileForm" action="<? echo $path; ?>">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Editar Perfil</h4>
@@ -52,7 +56,7 @@ if (isset($_SESSION["login"]))
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
           </form>
         </div>

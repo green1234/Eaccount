@@ -10,9 +10,45 @@ $(function(){
 
     // alert("LOL")
 
+    $("#ProfileForm").on("submit", function(e){
+        e.preventDefault();
+        
+        // var data = $(this).serialize();
+
+        var inputs = $(this).find("input[type=text]");
+        // console.log(inputs)
+        vals = "";
+        var results = [];
+        var rvals = [];
+        $.each(inputs, function(idx){
+            var name = $(this).attr("name");
+            var val = $(this).val();
+            results[idx] = name;
+            rvals[idx] = $.trim(val);
+            var value = name + "=" + $.trim(val);
+            vals = vals + "&" + value;            
+        });
+        
+        var path = $(this).attr("action");
+        path = path + vals;
+        // console.log(path + vals);
+        $.getJSON(path, function(data){
+            // console.log(data)
+            // console.log(results.length)
+            // console.log(rvals.length)
+            $.each(results, function(i){
+
+                // console.log("#idata_" + results[i])
+                // console.log(rvals[i])
+                $("#idata_" + results[i]).text(rvals[i])
+                $('#profileModal').modal("hide");
+            });
+        });
+    });
+
     $('#profileModal').on('shown.bs.modal', function () {
         // $('#myInput').focus()
-        console.log("LOL")
+        // console.log("LOL")
 
         var login = $("#idata_login").text();        
         var email = $("#idata_email").text();
@@ -27,11 +63,17 @@ $(function(){
         var form = $(this).find("form");
 
         console.log(form.find("[name=username]"))
-        form.find("[name=username]").val(login);
-        form.find("[name=email]").val(email);
-        form.find("[name=phone]").val(phone);
-        form.find("[name=mobile]").val(mobile);
+        input_login = form.find("[name=username]")
+        input_login.val(login).data("valor", login);
 
+        input_email = form.find("[name=email]")
+        input_email.val(email).data("valor", email);
+        
+        input_phone = form.find("[name=phone]");
+        input_phone.val(phone).data("valor", phone);
+        
+        input_mobile = form.find("[name=mobile]");
+        input_mobile.val(mobile).data("valor", mobile);
       })
 
     $("#yourBtn").on("click", function(){

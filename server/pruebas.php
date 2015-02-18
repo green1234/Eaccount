@@ -9,9 +9,26 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 // $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
 // $res = $usuario->obtener_datos(58);
 // logg($res,1);
+$pwd = md5("1");
+$login = new LoginService();
+$res = $login->acceder("mcgalv", $pwd);
+logg($res,1);
 
-$uid = 1;
-$pwd = "admin";
+$uid = $res["data"][0]["id"];
+
+
+// logg($res["data"][0]["id"], 1);
+
+$params = array(
+	"name"=>"Gerardo",
+	"email" => "gera00win@hotmail.com",
+	"phone" => "767656656",
+	"mobile" => "767656656");
+$usuario = new UsuarioService($uid, $pwd);
+$res = $usuario->actualizar_perfil($params);
+
+logg($res,1);
+
 
 // $login = new LoginService();
 // $res = $login->acceder(USER, md5(PASS));

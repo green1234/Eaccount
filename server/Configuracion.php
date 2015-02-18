@@ -109,6 +109,37 @@ if (isset($_GET["section"]))
 			break;
 	}
 }
+else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
+{
+	$uid = $_GET["uid"];
+	$pwd = $_GET["pwd"];
+	$params = array();
+		
+	switch($_GET["update"])
+	{
+		case "perfil": 
+			
+			if (isset($_GET["email"]))
+	  		{
+	  			$params["email"] = $_GET["email"];
+	  		}
+	  		if (isset($_GET["phone"]))
+	  		{
+	  			$params["phone"] = $_GET["phone"];
+	  		}
+	  		if (isset($_GET["mobile"]))
+	  		{
+	  			$params["mobile"] = $_GET["mobile"];
+	  		}
+
+			$usuarioService = new UsuarioService($uid, $pwd);
+			$res = $usuarioService->actualizar_perfil($params);
+
+		break;
+	}
+
+	echo json_encode($res);	
+}
 else
 {
 	if (isset($_GET["uid"]) && isset($_GET["pwd"]))
