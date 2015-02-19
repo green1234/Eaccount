@@ -136,6 +136,17 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 			$res = $usuarioService->actualizar_perfil($params);
 
 		break;
+
+		case "empresa":
+
+			if (isset($_GET["email"]))
+	  		{
+	  			$params["name"] = $_GET["empresa_name"];
+	  		}
+
+	  		$usuarioService = new UsuarioService($uid, $pwd);
+			$res = $usuarioService->actualizar_empresa($params);
+		break;
 	}
 
 	echo json_encode($res);	

@@ -69,7 +69,7 @@ span[id="^_closed"] {
   border: 0px;
   color: #666666;
 }
-#profileModal
+#profileModal, #empresaModal
 {
   font-size: 18px !important;
 }

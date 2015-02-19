@@ -8,7 +8,36 @@
     <b>Nombre de mi Empresa:</b>
   </div>
   <div class="col-md-10">
-    Nombre comercial: <b><? echo $empresa["name"];?></b> - <a href="#">Cambiar</a>
+    Nombre comercial: <b id="idata_empresa_name">LOL<? echo $empresa["name"];?></b> - 
+    <a href="#" data-toggle="modal" data-target="#empresaModal">Cambiar</a>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="empresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <?
+          $path = SERVERNAME . "/Configuracion.php?update=empresa";
+          $path = $path . "&uid=" . $uid . "&pwd=" . $pwd;
+          ?>
+          <form id="EmpresaForm" class="form-modal" action="<? echo $path; ?>">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Nombre de mi empresa</h4>
+            </div>
+            <div class="modal-body">
+              <label for="empresa_name">Ingrese un alias o el nombre comercial de su empresa:</label>
+              <input type="text" name="empresa_name" placeholder="Nombre Empresa">
+              <br><br>              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <br>
     <table class="table">
       <tr>

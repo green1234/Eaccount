@@ -8,14 +8,13 @@ function sub(obj){
 
 $(function(){
 
-    // alert("LOL")
-
-    $("#ProfileForm").on("submit", function(e){
+    $(".form-modal").on("submit", function(e){
+        console.log("XD")
         e.preventDefault();
         
         // var data = $(this).serialize();
-
-        var inputs = $(this).find("input[type=text]");
+        var form = $(this);
+        var inputs = form.find("input[type=text]");
         // console.log(inputs)
         vals = "";
         var results = [];
@@ -41,19 +40,28 @@ $(function(){
                 // console.log("#idata_" + results[i])
                 // console.log(rvals[i])
                 $("#idata_" + results[i]).text(rvals[i])
-                $('#profileModal').modal("hide");
+                // $('#profileModal').modal("hide");
+                form.parents(".modal").modal("hide");
             });
         });
+    });
+    
+    $('#empresaModal').on('shown.bs.modal', function () {
+        
+        var empresa_name = $.trim($("#idata_empresa_name").text());        
+        var form = $(this).find("form");
+        input_name = form.find("[name=empresa_name]")
+        input_name.val(empresa_name).data("valor", empresa_name);
     });
 
     $('#profileModal').on('shown.bs.modal', function () {
         // $('#myInput').focus()
         // console.log("LOL")
 
-        var login = $("#idata_login").text();        
-        var email = $("#idata_email").text();
-        var phone = $("#idata_phone").text();
-        var mobile = $("#idata_mobile").text();
+        var login = $.trim($("#idata_login").text());        
+        var email = $.trim($("#idata_email").text());
+        var phone = $.trim($("#idata_phone").text());
+        var mobile = $.trim($("#idata_mobile").text());
 
         // console.log(login)
         // console.log(email)

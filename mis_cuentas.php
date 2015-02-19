@@ -36,7 +36,7 @@ if (isset($_SESSION["login"]))
           $path = SERVERNAME . "/Configuracion.php?update=perfil";
           $path = $path . "&uid=" . $uid . "&pwd=" . $pwd;
           ?>
-          <form id="ProfileForm" action="<? echo $path; ?>">
+          <form id="ProfileForm" class="form-modal" action="<? echo $path; ?>">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Editar Perfil</h4>
@@ -107,7 +107,7 @@ if (isset($_SESSION["login"]))
     <div class="col-md-2">
       <b>Configuración de planes de tus aplicaciones de Savvy Systems:</b>
       <br>
-      <a href="#">Editar Planes contratados</a>
+      <!-- <a href="#">Editar Planes contratados</a> -->
     </div>
     <div class="col-md-10">
       <table class="table">
