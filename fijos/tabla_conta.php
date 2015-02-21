@@ -37,6 +37,19 @@
     overflow: scroll;
   }
 </style>
+
+<? 
+require_once "server/conf/constantes.conf"; 
+
+if (isset($_SESSION["login"]))
+{
+  $uid = $_SESSION["login"]["uid"];
+  $pwd = $_SESSION["login"]["pwd"];
+  $cid = $_SESSION["login"]["cid"];
+  // var_dump($_SESSION["login"]);
+}
+?>
+
 <div class="grad1">
   <p>
     Factura de honorarios <b>Folio</b> recibida con fecha <b>Comp_fecha</b>
@@ -63,12 +76,14 @@
       </tr>
     </thead>
     <tbody>
-      <? $facturas = json_decode(file_get_contents('http://104.236.124.45/eaccount/server/Facturas.php'), true); ?>
-      <? /*
-      <pre>
-      <? print_r($facturas['data']);?>
-      </pre>
-      */ ?>
+      <? 
+      $path = SERVERNAME . '/Facturas.php?';
+      $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+      $facturas = json_decode(file_get_contents($path), true);
+        
+        //var_dump($facturas); exit();    
+
+      ?>
       <? foreach ($facturas['data'] as $factura):
       ?>
         <tr>

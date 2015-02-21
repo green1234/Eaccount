@@ -3,22 +3,30 @@
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
 // logg($_FILES); exit();
-if(count($_FILES) > 0)
+if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_GET["cid"]))
 {    
     // logg($_FILES); exit();
-	$uid = 1;
-	$pwd = md5("admin");
+	$uid = $_GET["uid"];
+	$pwd = $_GET["pwd"];
+    $cid = $_GET["cid"];
 	// $empresa_name = "MI EMPRESA";
 
-	$uploaddir = '/tmp/';
+	// $uploaddir = '/tmp/';
+    $uploaddir = 'C:\wamp\tmp';
+
 
     foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
     {
         $uploadfile = $uploaddir . basename($_FILES['userfile']['name'][$index]);        
         if (move_uploaded_file($_FILES['userfile']['tmp_name'][$index], $uploadfile)) { 
             $type = 1;
-            $service = new InvoiceService($uid, $pwd);          
-            $response = $service->importar_xml($_FILES['userfile']['name'][$index], $uploadfile, 1);
+            $service = new InvoiceService($uid, $pwd); 
+            $params = array(
+                "filename" => $_FILES['userfile']['name'][$index],
+                "file" => $uploadfile,
+                "cid"=> $cid);
+            //$response = $service->importar_xml($_FILES['userfile']['name'][$index], $uploadfile, 1);
+            $response = $service->importar_xml($params, 1);
 
             echo json_encode($response);
         }

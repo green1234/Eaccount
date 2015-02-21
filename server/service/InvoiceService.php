@@ -16,15 +16,15 @@ class InvoiceService
 		$this->obj = new MainObject();
 	}
 
-	function obtener_facturas($partner_id = 0)
+	function obtener_facturas($company_id, $partner_id=0)
 	{
 		$model = "account.invoice";
-		$empresa_id = 1;
+		/*$empresa_id = 1;*/
 		$domain = array(
 					array(
 						model("company_id", "string"),
 						model("=", "string"),
-						model($empresa_id, "int"),
+						model($company_id, "int"),
 						));
 
 		if ($partner_id != 0)
@@ -92,8 +92,12 @@ class InvoiceService
 		return $res;
 	}
 
-	function importar_xml($file_name, $file, $type=1){	
+	function importar_xml($params, $type=1){	
 
+		$filename = $params["filename"];
+		$file = $params["file"];
+		$cid = $params["cid"];
+		
 		$file_data = fopen($file,'rb');
 		$data = fread($file_data,filesize($file));
 		fclose($file_data);
@@ -104,7 +108,8 @@ class InvoiceService
 		$params = array(
 			"string_file" => model($encodedFile, "string"),
 			"file" => model($file, "string"),
-			"type" => model($type, "int")
+			"type" => model($type, "int"),
+			"cid" => model($cid, "int")
 		);
 
 		$response = $this->obj->create($this->uid, $this->pwd, $this->model, $params);

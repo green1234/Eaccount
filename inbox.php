@@ -1,4 +1,6 @@
-<? session_start(); ?>
+<? 
+require_once "server/conf/constantes.conf"; 
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +14,7 @@
   <script>
     <? if (isset($_GET["msj"])){?>
 
-    var msj = "<? echo $_GET["msj"]; ?>";
+    var msj = "<? echo $_GET['msj']; ?>";
     if (msj != "")
     {
       alert(msj);
@@ -33,7 +35,19 @@
         <i><a class="file_upload" href="#"></a></i>
         <div style="text-align:center;margin-bottom:15px;">
           
-          <form id="barra_principal" name="myForm" action="server/Upload.php" method="POST" enctype="multipart/form-data">
+          <?
+          if (isset($_SESSION["login"]))
+          {
+            $uid = $_SESSION["login"]["uid"];
+            $pwd = $_SESSION["login"]["pwd"];
+            $cid = $_SESSION["login"]["cid"];
+            $path = SERVERNAME . "/Upload.php?";
+            $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+            //var_dump($path);
+          }
+          ?>
+
+          <form id="barra_principal" name="myForm" action="<? echo $path; ?>" method="POST" enctype="multipart/form-data">
             <div id="yourBtn"/>&nbsp;</div>
             <div id="yourBtn2"/>&nbsp;</div>
             <div style='height: 0px;width:0px; overflow:hidden;'>

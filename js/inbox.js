@@ -8,6 +8,11 @@ function sub(obj){
 
 $(function(){
 
+    $("#myForm").on("submit", function(e){
+        e.preventDefault();
+        
+    });
+
     $(".form-modal").on("submit", function(e){        
         e.preventDefault();
         
