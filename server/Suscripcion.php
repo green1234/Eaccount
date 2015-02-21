@@ -73,7 +73,7 @@ if (isset($_GET["action"]))
 			// $res = login(); #$loginService->acceder(USER, md5(PASS));
 			
 			if ($res = login(1))
-			{				
+			{
 				$usuario_id = $res["data"][0]["id"];
 				$usuario_pwd = $res["data"][0]["pwd"];
 			
@@ -88,23 +88,8 @@ if (isset($_GET["action"]))
 				}
 				else
 				{
-					$res = $suscriptionService->confirmar_suscripcion($_GET["fk"]);
-					// echo json_encode("json"); exit();
+					$res = $suscriptionService->confirmar_suscripcion($_GET["fk"]);					
 					$suscriptionService = NULL;
-
-					// if ($res["success"])
-					// {
-						// $usuario_id = $res["data"]["uid"];
-						// $usuario_pwd = $res["data"]["pwd"];
-
-						// $_SESSION["login"] = array(
-						// 	"uid"=>$usuario_id,
-						// 	"pwd"=>$usuario_pwd);
-						// unset($res["data"]["uid"]);
-						// unset($res["data"]["pwd"]);
-						// echo json_encode($_SESSION["login"]);exit();
-					// 	$suscriptionService = NULL;
-					// }
 				}
 			}
 			
@@ -130,7 +115,7 @@ if (isset($_GET["action"]))
 
 				$suscriptionService = new SuscriptionService($uid, $pwd);
 
-				if (!verificar_datos($_GET, array("plan", "period", "discount")))
+				if (!verificar_datos($_GET, array("plan", "period")))
 				{
 					$res = array("success"=>false,
 							"data" => array(
@@ -143,10 +128,12 @@ if (isset($_GET["action"]))
 					$params = array(
 						"application" => "EACCOUNT",
 						"period" => $_GET["period"], 					
-						"plan_id" => $_GET["plan"], 
-						"discount_id" => array($_GET["discount"]));
+						"plan_id" => $_GET["plan"]);
 						// "suscription_id" => $_GET["key"]); 
 					
+					if (isset($_GET["discount"]))
+						$params["discount_id"] = array($_GET["discount"]);
+
 					$res = $suscriptionService->comprar_plan($params);								
 					// $res = $suscriptionService->comprar_plan($params, $partner_id);					
 				}			

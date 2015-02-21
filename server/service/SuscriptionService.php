@@ -56,7 +56,10 @@ class SuscriptionService
 		$model = "gl.compras.sucripcion";
 		// $params["partner_id"] = $partner_id;
 		$data = prepare_params($params);
-		$data["discounts"] = prepare_tupla($params["discount_id"]);
+
+		if (isset($params["discount_id"]))
+			$data["discounts"] = prepare_tupla($params["discount_id"]);
+		
 		$compra = $this->obj->create($this->uid, $this->pwd, $model, $data);
 		// logg($compra);
 		if ($compra["success"])
@@ -314,7 +317,7 @@ class SuscriptionService
 			// return $activacion;
 			if ($activacion["success"])
 			{
-
+				// Obtengo los datos de la suscripcion
 				$params = array(model("user_id","string"), model("password","string"));
 				$query = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
 				// return $query;
@@ -323,7 +326,11 @@ class SuscriptionService
 					$model = "res.users";
 					$data = $query["data"][0];
 					$ids = array($data["user_id"][0]); #Id del Ususario relacionado
-					// 
+					// Obtengo company_id para complementar los datos a devolver
+					$params = array(model("company_id","string"));
+					$res = $this->obj->read(USER_ID, md5(PASS), $model, $ids, $params);						
+					$res = $res["data"][0];
+					// Asigno Password para activar la cuenta
 					$attrs = prepare_params(array("password" => $data["password"]));
 					$user_activation = $this->obj->write(USER_ID, md5(PASS), $model, $ids, $attrs);
 					
@@ -332,6 +339,7 @@ class SuscriptionService
 					$suscripcion["data"]["uid"] = $data["user_id"][0];
 					$suscripcion["data"]["username"] = $data["user_id"][1];
 					$suscripcion["data"]["pwd"] = $data["password"];
+					$suscripcion["data"]["cid"] = $res["company_id"][0];
 				}
 			}
 			// $attrs = prepare_params(array("password" => "confirm"));

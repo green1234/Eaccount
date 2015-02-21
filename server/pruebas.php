@@ -9,13 +9,26 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 // $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
 // $res = $usuario->obtener_datos(58);
 // logg($res,1);
-$pwd = md5("1");
-$login = new LoginService();
-$res = $login->acceder("mcgalv", $pwd);
+$uid = USER_ID;
+$pwd = md5(PASS);
+#logg($uid, 1);
+#$login = new LoginService();
+#$res = $login->acceder("admin", $pwd);
+#$uid = $res["data"][0]["id"];
+
+$params = array(model("company_id", "string"));
+$obj = new MainObject();
+$res = $obj->read($uid, $pwd, "res.users", array($uid), $params);
+logg($res["data"][0]["company_id"],1);
+
+
+logg($res["data"][0],1);
+
+
+$suscription = new SuscriptionService($uid, $pwd);
+
+$res = $suscription->obtener_planes_suscription("EACCOUNT");
 logg($res,1);
-
-$uid = $res["data"][0]["id"];
-
 
 // logg($res["data"][0]["id"], 1);
 

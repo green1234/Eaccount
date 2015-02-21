@@ -13,6 +13,7 @@ if (isset($_GET["username"]) && isset($_GET["password"]))
 	
 	$_SESSION["login"] = array(
 		"uid" => $res["data"][0]["id"],
+		"cid" => $res["data"][0]["company_id"],
 		"username" => $username,
 		"pwd" => md5($password)
 		);

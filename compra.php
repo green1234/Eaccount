@@ -27,6 +27,7 @@
     $descuentos = $res["data"][0];
   }
 
+
   // var_dump($res); exit();
 
   // $descuentos = array(
@@ -69,10 +70,7 @@
 
       var uid = <? echo $_SESSION["login"]["uid"]; ?>;
       var pwd = "<? echo $_SESSION['login']['pwd']; ?>";
-      var plan_id = <? echo $plan; ?> ;
-      var desc_id = parseInt("<? echo $descuentos['id']; ?>");
-      var periodo = "<? echo $descuentos['periodo']; ?>";
-      var desc_periodo = obtener_periodo(periodo);
+      var plan_id = <? echo $plan; ?> ;      
 
       var ptr = "<? echo $partner; ?>" ; 
       var key = "<? echo $key; ?>" ;          
@@ -80,10 +78,25 @@
       var resume = "<? echo $resume; ?>" ; 
       var costo = <? echo $costo; ?> ;
       
-      var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
+      var desc_id = 0;
+      var periodo = "";
+      var desc_periodo = "";
+      var descuento_rate = 0;
+      var desc = "No hay descuentos";
+      
+      <? if (count($descuentos) > 0){ ?>
 
-      var desc = "<? echo $descuentos['description']; ?>";
+      var desc_id = parseInt("<? echo $descuentos['id']; ?>");
+      var periodo = "<? echo $descuentos['periodo']; ?>";
+      var desc_periodo = obtener_periodo(periodo);
+      var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
       var desc = "Ahorra el <b>" + descuento_rate + "%</b> al hacer tu compra en <b>" + desc_periodo + "</b>.";
+      
+      <? } ?>
+
+
+
+      //var desc = "<? echo $descuentos['description']; ?>";
 
     </script>
   </head>

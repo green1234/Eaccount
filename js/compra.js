@@ -89,10 +89,13 @@ $(function(){
 				"key" : key, 
 				"ptr" : ptr, 
 				"plan" : plan_id, 
-				"period" : period_id, 
-				"discount" : desc_id
+				"period" : period_id				
 			}
-		var values = '&key=' + key + '&ptr=' + ptr + '&plan=' + plan_id + '&period=' + period_id + '&discount=' + desc_id; 
+		
+		if (desc_id != 0)
+			values["discount"] = desc_id;
+
+		//var values = '&key=' + key + '&ptr=' + ptr + '&plan=' + plan_id + '&period=' + period_id + '&discount=' + desc_id; 
 		var action = "server/Suscripcion.php?action=compra&uid="+uid+"&pwd="+pwd;
 		$.get(action, values, function(result){
 

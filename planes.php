@@ -12,22 +12,25 @@
     $key = $_GET["fk"];
     $partner = $_GET["ptr"];    
     $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true); 
-    // var_dump($activacion);
+    #var_dump($activacion);
     $usuario_id = $activacion["data"]["uid"];
     $usuario_pwd = $activacion["data"]["pwd"];
     $usuario_username = $activacion["data"]["username"];
+    $usuario_cid = $activacion["data"]["cid"];
     // $usuario_email = $activacion["data"]["email"];  
 
     $_SESSION["login"] = array(
       "uid" => $usuario_id,
       "username" => $usuario_username,
       // "email" => $usuario_email,
-      "pwd" => $usuario_pwd
+      "pwd" => $usuario_pwd,
+      "cid" => $usuario_cid 
     );
-    // echo "<pre>";
-    // var_dump($_SESSION["login"]);
-    // echo "</pre>";
-    // exit();
+    #echo "<pre>";
+    #var_dump($_SESSION["login"]);
+    #echo "</pre>";
+    #exit();
+    #var_dump($_SESSION["login"]);
     if ($activacion["success"])
     {
       $susc_id = $activacion["data"]["id"][0]; 
