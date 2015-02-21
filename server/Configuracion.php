@@ -139,9 +139,50 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 
 		case "empresa":
 
-			if (isset($_GET["email"]))
+			if (isset($_GET["cid"]))
 	  		{
-	  			$params["name"] = $_GET["empresa_name"];
+	  			
+	  			$params["id"] = $_GET["cid"][0];
+
+	  			switch ($_GET["tipo"]) 
+	  			{
+	  				case 'profile':
+	  					$params["name"] = $_GET["empresa_name"];
+	  					break;
+
+	  				case 'fiscales':
+	  					$params["gl_razon_social"] = $_GET["razon_social"];
+	  					$params["gl_rfc"] = $_GET["rfc"];
+	  					$params["gl_regimen"] = $_GET["regimen"];
+	  					$params["gl_giro"] = $_GET["giro"];
+	  					$params["street"] = $_GET["domicilio"];	  					
+	  					break;
+
+	  				case 'representante':
+	  					$params["gl_rlegal_name"] = $_GET["rep_nombre"];
+	  					$params["gl_rlegal_rfc"] = $_GET["rep_rfc"];
+	  					$params["gl_rlegal_curp"] = $_GET["rep_curp"];	  					  					
+	  					break;
+
+	  				case 'registros':
+	  					$params["gl_rpatronal"] = $_GET["patronal"];
+	  					$params["gl_restatal"] = $_GET["estatal"];	  						  					
+	  					break;
+
+	  				case 'adicionales':
+	  					$params["gl_curp"] = $_GET["ad_curp"];
+	  					$params["gl_imss"] = $_GET["ad_imss"];	  										
+	  					break;
+
+
+	  				
+	  				default:
+	  					# code...
+	  					break;
+	  			}
+	  			
+
+	  			
 	  		}
 
 	  		$usuarioService = new UsuarioService($uid, $pwd);
@@ -153,7 +194,19 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 }
 else
 {
-	if (isset($_GET["uid"]) && isset($_GET["pwd"]))
+	if (isset($_GET["uid"]) && isset($_GET["pwd"]) &&  isset($_GET["cid"]))
+	{
+		$uid = $_GET["uid"];
+  		$pwd = $_GET["pwd"];
+  		$cid = $_GET["cid"];
+
+		$empresaService = new EmpresaService(USER_ID, md5(PASS));
+		$res = $empresaService->obtener_datos_empresa($cid);		
+		
+		echo json_encode($res);		
+	}
+
+	else if (isset($_GET["uid"]) && isset($_GET["pwd"]))
 	{
 		$uid = $_GET["uid"];
   		$pwd = $_GET["pwd"];

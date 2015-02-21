@@ -6,12 +6,16 @@ if (isset($_SESSION["login"]))
   $uid = $_SESSION["login"]["uid"];
   $pwd = $_SESSION["login"]["pwd"];
   
-  // var_dump($uid);
-  // var_dump($pwd);
+  #var_dump($uid);
+  #var_dump($pwd);
 
   $path = SERVERNAME . "/Configuracion.php?uid=" . $uid . "&pwd=" . $pwd;
   $res = json_decode(file_get_contents($path), true);
   $usuario = $res["data"][0];
+  #var_dump($res);
+  #var_dump($_SESSION["login"]);
+
+  $_SESSION["login"]["data"] = $usuario;
   // echo "<pre>";
   // var_dump($res["data"][0]["planes"]);
   // echo "</pre>";
@@ -199,96 +203,97 @@ if (isset($_SESSION["login"]))
       <br>
     </div>
 
-    <?//AQUI EMPIEZA EL FOR PARA MOSTRAR A LOS USUARIOS ?>
-
-    <? foreach ($usuario["usuarios"] as $index => $value) { ?>
+    <?//AQUI EMPIEZA EL FOR PARA MOSTRAR A LOS USUARIOS
+    if (count($usuarios)>0){   
+      foreach ($usuario["usuarios"] as $index => $value) { ?>
     <? //var_dump($value); exit(); ?>
-    <div class="col-md-2">
-      <b>Perfil y accesos de cuenta adicional 1:</b>
-      <a href="#">Editar perfil y permisos</a>
-      <a href="#">Eliminar esta cuenta</a>
-    </div>
+      <div class="col-md-2">
+        <b>Perfil y accesos de cuenta adicional 1:</b>
+        <a href="#">Editar perfil y permisos</a>
+        <a href="#">Eliminar esta cuenta</a>
+      </div>
 
-    <div class="col-md-10">
-      <table class="table">
-        <tr>
-          <td>
-            Usuario:
-          </td>
-          <td style="font-weight:bold;">
-            <? echo $value["login"]; ?>
-          </td>
-        </tr>
+      <div class="col-md-10">
+        <table class="table">
+          <tr>
+            <td>
+              Usuario:
+            </td>
+            <td style="font-weight:bold;">
+              <? echo $value["login"]; ?>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            Nombre de la persona a cargo:
-          </td>
-          <td style="font-weight:bold;">
-            <? echo $value["partner_id"]["name"]; ?>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              Nombre de la persona a cargo:
+            </td>
+            <td style="font-weight:bold;">
+              <? echo $value["partner_id"]["name"]; ?>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            Correo Electrónico:
-          </td>
-          <td style="font-weight:bold;">
-            <? echo $value["partner_id"]["email"]; ?>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              Correo Electrónico:
+            </td>
+            <td style="font-weight:bold;">
+              <? echo $value["partner_id"]["email"]; ?>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            Teléfono fijo:
-          </td>
-          <td style="font-weight:bold;">
-            <? echo $value["partner_id"]["phone"]; ?>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              Teléfono fijo:
+            </td>
+            <td style="font-weight:bold;">
+              <? echo $value["partner_id"]["phone"]; ?>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            Teléfono móvil:
-          </td>
-          <td style="font-weight:bold;">
-            <? echo $value["partner_id"]["mobile"]; ?>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              Teléfono móvil:
+            </td>
+            <td style="font-weight:bold;">
+              <? echo $value["partner_id"]["mobile"]; ?>
+            </td>
+          </tr>
 
-      </table>
+        </table>
 
-      <table class="table">
-    
-      <?foreach ($value["planes"] as $idx => $val) { ?>        
-        <tr>
-          <td>
-            <b><? echo $val["plan_id"][1]; ?></b> - Usuario tiene acceso a la Aplicación.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table class="table">
-            <? #var_dump($val["perm_ids"]); exit();?>
-            <? foreach ($val["perm_ids"] as $i => $v) {?>
-                  <tr>
-                    <td>
-                      <input type="checkbox">
-                    </td>
-                    <td>
-                      <? echo $v["name"]; ?>
-                    </td>
-                  </tr>
-                   
-            <? } ?>
-            </table>
-          </td>
-        </tr>
-    
-      <? } ?>
-      </table>
-    </div>
-    <?} ?>
+        <table class="table">
+      
+        <?foreach ($value["planes"] as $idx => $val) { ?>        
+          <tr>
+            <td>
+              <b><? echo $val["plan_id"][1]; ?></b> - Usuario tiene acceso a la Aplicación.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table class="table">
+              <? #var_dump($val["perm_ids"]); exit();?>
+              <? foreach ($val["perm_ids"] as $i => $v) {?>
+                    <tr>
+                      <td>
+                        <input type="checkbox">
+                      </td>
+                      <td>
+                        <? echo $v["name"]; ?>
+                      </td>
+                    </tr>
+                     
+              <? } ?>
+              </table>
+            </td>
+          </tr>
+      
+        <? } ?>
+        </table>
+      </div>
+      <?} 
+    }?>
 
       <!-- <div class="col-md-12" style="text-align:center;margin-bottom:15px;">
         <button class="btn btn-primary">Guardar Cambios</button>

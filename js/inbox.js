@@ -8,31 +8,34 @@ function sub(obj){
 
 $(function(){
 
-    $(".form-modal").on("submit", function(e){
-        console.log("XD")
+    $(".form-modal").on("submit", function(e){        
         e.preventDefault();
         
         // var data = $(this).serialize();
         var form = $(this);
-        var inputs = form.find("input[type=text]");
-        // console.log(inputs)
+        var inputs = form.find("input[type=text]:enabled");
+        
         vals = "";
         var results = [];
         var rvals = [];
-        $.each(inputs, function(idx){
+        $.each(inputs, function(idx, val){
+            
+            //console.log(idx)
             var name = $(this).attr("name");
             var val = $(this).val();
             results[idx] = name;
             rvals[idx] = $.trim(val);
             var value = name + "=" + $.trim(val);
-            vals = vals + "&" + value;            
+            vals = vals + "&" + value; 
+            
         });
-        
+        var tipo = $('#empresaModal').data("tipo");
         var path = $(this).attr("action");
-        path = path + vals;
-        // console.log(path + vals);
+        path = path + vals + "&tipo=" + tipo;
+        console.log(path);
+        //return
         $.getJSON(path, function(data){
-            // console.log(data)
+            console.log(data)
             // console.log(results.length)
             // console.log(rvals.length)
             $.each(results, function(i){
@@ -45,13 +48,60 @@ $(function(){
             });
         });
     });
+
+    $("a.openModal").on("click", function(){
+        
+        if ($(this).hasClass("profile"))
+        {
+            $('#empresaModal').data("tipo", "profile");        
+            var tipo = "profile";
+        }
+        else if ($(this).hasClass("fiscales"))
+        {
+            $('#empresaModal').data("tipo", "fiscales");        
+            var tipo = "fiscales";
+        }
+        else if ($(this).hasClass("representante"))
+        {
+            $('#empresaModal').data("tipo", "representante");        
+            var tipo = "representante";
+        }
+        else if ($(this).hasClass("registros"))
+        {
+            $('#empresaModal').data("tipo", "registros");        
+            var tipo = "registros";
+        }
+        else if ($(this).hasClass("adicionales"))
+        {
+            $('#empresaModal').data("tipo", "adicionales");        
+            var tipo = "adicionales";
+        }
+
+        $(".hid_input").find("input").attr("disabled", true);
+        $(".hid_input").hide();
+        $(".hid_input." + tipo).find("input").attr("disabled", false);
+        $(".hid_input." + tipo).show();
+    });
     
     $('#empresaModal').on('shown.bs.modal', function () {
-        
-        var empresa_name = $.trim($("#idata_empresa_name").text());        
+
+        var valores = $("#empresas").find("[id^='idata_']");        
+        // console.log(valores)
+        // var empresa_name = $.trim($("#idata_empresa_name").text());        
         var form = $(this).find("form");
-        input_name = form.find("[name=empresa_name]")
-        input_name.val(empresa_name).data("valor", empresa_name);
+
+        $.each(valores, function(index, value){
+            var valor = $(this);
+            var text = $.trim(valor.text());
+            var id = valor.attr("id");
+            id = id.replace("idata_", "");
+            console.log(id)
+            input_name = form.find("[name=" + id + "]");
+            input_name.val(text).data("valor", text);
+        });
+
+        
+        
     });
 
     $('#profileModal').on('shown.bs.modal', function () {

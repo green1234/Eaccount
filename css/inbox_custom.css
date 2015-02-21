@@ -74,6 +74,11 @@ span[id="^_closed"] {
   font-size: 18px !important;
 }
 
+#empresaModal .hid_input
+{
+  display: none;
+}
+
 #barra_principal
 {
   overflow: auto;

@@ -40,6 +40,7 @@ class EmpresaService
 
 	function obtener_datos_empresa($empresa_id)
 	{
+		#return $empresa_id;		
 		$ids = array($empresa_id);
 		$params = array(				
 				model("name", "string"),
@@ -81,7 +82,7 @@ class EmpresaService
 			// 	$res["data"][0]["partner_id"] = $partner["data"][0];
 			// logg($partner,1);
 		}
-// 
+	 	return $res;
 		// logg($res,1);
 	}
 
