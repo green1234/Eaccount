@@ -1,9 +1,36 @@
 function sub(obj){
     var file = obj.value;
     var fileName = file.split("\\");
-    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
-    document.myForm.submit();
-    event.preventDefault();
+
+    //console.log($('#upfile')[0].files); return
+
+    var formData = new FormData($("#barra_principal")[0]);
+    //formData.append('userfile', $('#upfile')[0].files);
+    
+    var path = $("#barra_principal").attr("action")
+    console.log("p:" + path)
+    console.log(formData)
+    //return
+    $.ajax({
+        url : path,
+        message : "",
+        data : formData,       
+        processData: false,
+        contentType: false,
+        cache : false,
+        method : "POST",
+        success: function(data){            
+            //alert("Facturas cargadas.");        
+            window.location = "?section=table";
+        },
+        error: function(data){            
+            console.log("data");
+        }
+    });
+
+    //document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
+    //document.myForm.submit();
+    //event.preventDefault();
   }
 
 $(function(){
@@ -13,9 +40,9 @@ $(function(){
         alert("Esta funcion aun esta en desarrollo. Pronto estara disponible.")
     });
 
-    $("#myForm").on("submit", function(e){
+    $("#barra_principal").on("submit", function(e){
         e.preventDefault();
-        
+        console.log("LOL")
     });
 
     $(".form-modal").on("submit", function(e){        
@@ -144,30 +171,14 @@ $(function(){
         input_mobile.val(mobile).data("valor", mobile);
       })
 
-    $("#yourBtn").on("click", function(){
-        console.log("LOL")
+    $("#yourBtn").on("click", function(){        
         $("#upfile").click();
     });
 
-    $("#upfile").on("change", function(){
-        console.log($(this).val())
+    $("#upfile").on("change", function(){        
         // $(".file_upload").text($(this).val());
         sub(this);
     });
-
-    $(".submit_main").on("click", function(){
-        $("#barra_principal").submit();        
-    });
-
-    $("#barra_principal").on("submit", function(e){
-        // e.preventDefault();
-        // data = $(this).serialize();
-        console.log("data");
-    })
-
-    $(".nav.nav-tabs li a").on("click", function(){
-        // alert("LOL")
-    })
 
 });
 

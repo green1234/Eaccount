@@ -1,4 +1,4 @@
-// <?php	
+<?php	
 
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
@@ -17,6 +17,7 @@ if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_G
 
     foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
     {
+        logg($file_name);
         $uploadfile = $uploaddir . basename($_FILES['userfile']['name'][$index]);        
         if (move_uploaded_file($_FILES['userfile']['tmp_name'][$index], $uploadfile)) { 
             $type = 1;
