@@ -180,12 +180,12 @@ if (isset($_SESSION["login"]))
       </table>
     </div>
 
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
       <b>Método de Pago:</b>
     </div>
     <div class="col-md-10">
       Cuenta de Cheques BANORTE con terminacion *1230. - <a href="#">Cambie método de pago</a> - <a href="#">Bloquear uso de cuenta bancaria</a>.
-    </div>
+    </div> -->
 
     <div class="col-md-12">
       <hr>
@@ -196,7 +196,7 @@ if (isset($_SESSION["login"]))
     </div>
     <div class="col-md-10">
       Puedes crear cuentas adicionales para darle acceso a otras personas de tu empresa a una o varias aplicaciones, con las restricciones y accesos que tú configures para cada quien. 
-      <a href="#">Crear nueva cuenta Adicional</a>.
+      <a class="new_account" href="#">Crear nueva cuenta Adicional</a>.
     </div>
 
     <div class="col-md-12">
@@ -204,7 +204,7 @@ if (isset($_SESSION["login"]))
     </div>
 
     <?//AQUI EMPIEZA EL FOR PARA MOSTRAR A LOS USUARIOS
-    if (count($usuarios)>0){   
+    if (isset($usuarios) && count($usuarios) > 0){   
       foreach ($usuario["usuarios"] as $index => $value) { ?>
     <? //var_dump($value); exit(); ?>
       <div class="col-md-2">
@@ -300,6 +300,7 @@ if (isset($_SESSION["login"]))
         <button class="btn btn-primary">Salir sin Cambios</button>
       </div>   -->    
     <!-- </div> -->
+    <!-- Cuentas de Usuario
     <div class="col-md-2">
       <b>Perfil y accesos de cuenta adicional 1:</b>
       <a href="#">Editar perfil y permisos</a>
@@ -486,6 +487,7 @@ if (isset($_SESSION["login"]))
       </table>
 
     </div> 
+    Cuentas de Usuario --> 
 
     <?//AQUI TERMINA EL FOR PARA MOSTRAR A LOS USUARIOS ?>
 

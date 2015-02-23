@@ -8,6 +8,11 @@ function sub(obj){
 
 $(function(){
 
+    $(".new_account").on("click", function(e){
+        e.preventDefault();
+        alert("Esta funcion aun esta en desarrollo. Pronto estara disponible.")
+    });
+
     $("#myForm").on("submit", function(e){
         e.preventDefault();
         
