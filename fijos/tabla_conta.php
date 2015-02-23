@@ -48,6 +48,11 @@ if (isset($_SESSION["login"]))
   $cid = $_SESSION["login"]["cid"];
   // var_dump($_SESSION["login"]);
 }
+$type = "sale";
+if(isset($_GET["type"]))
+{
+  $type = $_GET["type"];
+}
 ?>
 
 <div class="grad1">
@@ -79,9 +84,11 @@ if (isset($_SESSION["login"]))
       <? 
       $path = SERVERNAME . '/Facturas.php?';
       $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+      $path = $path . "&type=" . $type;
+
       $facturas = json_decode(file_get_contents($path), true);
-        
-        //var_dump($facturas); exit();    
+      //var_dump($path);  
+      //var_dump($facturas); exit();    
 
       ?>
       <? foreach ($facturas['data'] as $factura):

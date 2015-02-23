@@ -84,7 +84,7 @@ session_start(); ?>
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="#">
+                            <a href="?section=table&type=sale">
                               Ventas (0)
                             </a>
                           </li>
@@ -384,7 +384,7 @@ session_start(); ?>
             case 'alerts':
               require 'fijos/alerts.php';
             break;
-            case 'table':
+            case 'table':              
               require 'fijos/tabla_conta.php';
             break;
             case 'poliza':

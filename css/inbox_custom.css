@@ -19,7 +19,7 @@ hr{
 }
 .header_azul {
   float: right;
-  background: url('http://savvysystems.com.mx/img/barra_azul_header.png');
+  /*background: url('../img/inbox_barra_azul.png');*/
   height: 100px;
   background-size: 100%;
   /* padding-left: 270px; */

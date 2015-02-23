@@ -1,4 +1,18 @@
 <? $a = session_id(); if (empty($a)) session_start(); ?>
+<style>
+  #bg_azul
+  {
+    border-radius: 30px 0 0 30px;
+    background: #12334F;
+    height: 73px;
+    top: 0;
+    width: 75%;
+    float: right;
+    position: absolute;
+    right: -1px; 
+    z-index: -1;
+  }
+</style>
 <div class="navbar" role="navigation" style="z-index: 3;">
   <div class="container" style="z-index: -2;">
     <div class="navbar-header">
@@ -114,5 +128,5 @@
   <div style="margin-top: -20px;margin-left: 400px;color: white;position: absolute;font-size: 11px;">
     <? if (isset($_SESSION["login"])) echo $_SESSION["login"]["username"]; else echo "SAVVY"; ?> <span class="glyphicon glyphicon-play" id="icon_estatus_open"></span>
   </div>
-  <div id="bg_azul" style="background: #12334F;height: 73px;top: 0px;width: 500px;float: right;position: absolute;right: -1px;z-index: -1;"></div>
+  <div id="bg_azul"></div>
 </div>
