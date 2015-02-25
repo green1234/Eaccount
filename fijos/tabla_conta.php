@@ -103,7 +103,7 @@ if(isset($_GET["type"]))
           <td><?=$factura['lines']['quantity']?></td>
           <td><?=$factura['amount_total']?></td>
           <td><?=$factura['currency_id']['1']?></td>
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" id="<?=$factura['id']?>"></td>
         </tr>
       <? endforeach; ?>
       <!--tr>

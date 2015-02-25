@@ -1,35 +1,52 @@
 <?php
-
+session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/AccountTplService.php";
 
-if(count($_FILES) > 0)
+if (isset($_SESSION["login"]))
 {
-	$uid = 1;
-	$pass = "admin";
-	$empresa_name = "MI EMPRESA";
+	if(count($_FILES) > 0)
+	{		
+		$uid = $_SESSION["login"]["uid"];
+		$pwd = $_SESSION["login"]["pwd"];
+		$cid = $_SESSION["login"]["cid"][0];
+		$cname = $_SESSION["login"]["cid"][1];
 
-	$uploaddir = PROYECT_PATH . '/tmp/';
-	$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+		$uploaddir = PROYECT_PATH . '/tmp/';
+		$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
-	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {		
-		$service = new AccountTplService($uid, $pass);
-		$response = $service->crear_catalogo_template($empresa_name, $uploadfile);		
-	}	
+		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {			
+			$service = new AccountTplService($uid, $pwd, $cid);
+			$response = $service->crear_catalogo_template($cname, $uploadfile);		
+			echo json_encode($response);
+		}
+		else
+		{
+			echo json_encode(array(
+				"success"=>false, 
+				"data"=>array(
+					"description"=>"Error al subir el archivo")
+				));	
+		}	
 
-	var_dump($response);
+		//var_dump($response);
+	}
+	else
+	{
+		echo json_encode(array(
+			"success"=>false, 
+			"data"=>array(
+				"description"=>"No se recibieron datos")
+			));			
+	}
 }
 else
 {
-?>
-	<form enctype="multipart/form-data" action="" method="POST">
-	    <!-- MAX_FILE_SIZE debe preceder el campo de entrada de archivo -->
-	    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-	    <!-- El nombre del elemento de entrada determina el nombre en el array $_FILES -->
-	    Enviar este archivo: <input name="userfile" type="file" />
-	    <input type="submit" value="Send File" />
-	</form>
-
-<?php
+	echo json_encode(array(
+		"success"=>false, 
+		"data"=>array(
+			"description"=>"Datos de Acceso Incorrectos")
+		));	
 }
+
 ?>

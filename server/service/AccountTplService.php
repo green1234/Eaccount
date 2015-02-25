@@ -2,6 +2,7 @@
 
 #require_once "../conf/constantes.conf";
 require_once PROYECT_PATH . "/service/CommonService.php";
+require_once PROYECT_PATH . "/service/EmpresaService.php";
 
 class AccountTplService
 {
@@ -25,10 +26,11 @@ class AccountTplService
 					"Vista de Pasivo"  => 13,
 					);
 
-	function __construct($uid, $pwd)
+	function __construct($uid, $pwd, $cid)
 	{
 		$this->uid = $uid;
 		$this->pwd = $pwd;
+		$this->cid = $cid;
 		$this->obj = new MainObject();
 	}
 
@@ -94,6 +96,9 @@ class AccountTplService
 		return $result;		
 	}
 
+	// Funcion que va registrando las cuentas en el template
+	// el parametro chart es un array que va guardando los registros 
+	// cada vez que se crea unn nuevo registro, se agrega al chart
 	function crear_cuenta_template($empresa, $account, $chart)
 	{
 		$model = $this->model;
@@ -124,7 +129,7 @@ class AccountTplService
 	function crear_catalogo_template($empresa, $uploadfile)
 	{
 		$registros = CommonService::leer_catalogo_csv($uploadfile);
-		#var_dump($registros); exit();
+		
 		if(count($registros) > 0)
 		{
 			$chart = array();
@@ -135,7 +140,9 @@ class AccountTplService
 	        	"user_type" => 1); #model(1, "int"));
 				// "parent_id" => null);
 			
+			// Crear Primera Cuenta del Template
 			$response = $this->crear_cuenta_template($empresa, $main_account, $chart);
+			
 			$chart = $response["chart"];
 			$defaults = array();
 
@@ -170,7 +177,20 @@ class AccountTplService
 	    			$defaults[$default_type] = $response["id"];
 	    		}
 			}
-			$this->crear_account_chart_tpl($chart[$empresa], $empresa, $defaults);
+			
+			$response = $this->crear_account_chart_tpl($chart[$empresa], $empresa, $defaults);
+
+			if ($response["success"])
+			{				
+				$chart_id = $response["data"]["id"];
+				$tax_tpl_ids = $this->crear_tax_tpl($account_chart_tpl_id, $defaults);
+				
+				$eService = new EmpresaService($this->uid, $this->pwd);
+				$res = $eService->contabilidad_empresa($chart_id, $this->cid, $tax_tpl_ids);
+				return $res;
+			}
+
+
 		}
 		return $chart;
 	}
@@ -185,19 +205,21 @@ class AccountTplService
 			$account_chart_tpl = array(
 				"name" => model($empresa_account_name, "string"),	
 				"account_root_id" => model($empresa_account_id, "int"),
-				"bank_account_view_id" => model($empresa_account_id, "int"),
+				"bank_account_view_id" => model($defaults["bancos"], "int"),
 				"tax_code_root_id" => model($tax_code_tpl_id, "int"),
-				"visible" => model(true, "boolean"),					
+				"visible" => model(true, "boolean"),
+				"property_account_receivable" => model($defaults["cliente"], "int"),
+				"property_account_payable" => model($defaults["proveedor"], "int"),
+				"property_account_expense_categ" => model($defaults["ingreso"], "int"),
+				"property_account_income_categ" => model($defaults["gasto"], "int"),
+				"property_account_income_opening" => model($defaults["apertura"], "int"),
+				"property_account_expense_opening" => model($defaults["apertura"], "int"),
 			);
 
 			$model = "account.chart.template";
 			$response = $this->obj->create($this->uid, $this->pwd, $model, $account_chart_tpl);
 
-			if ($response["success"])
-			{
-				$account_chart_tpl_id = $response["data"]["id"];
-				$this->crear_tax_tpl($account_chart_tpl_id, $defaults);
-			}
+			return $response;
 		}
 
 		return true;
@@ -255,11 +277,41 @@ class AccountTplService
 		$tax_tpl_model = "account.tax.template";
 		$tax_tpl_sale = array(
 			"name" => model("IVA DE VENTA 16%", "string"),
+			"description" => model("IVA", "string"),
+			"tax_type" => model("trasladado", "string"),
 			"chart_template_id" => model($chart_tpl_id, "int"),
 			"type" => model("percent", "string"),
 			"type_tax_use" => model("sale", "string"),
 			"applicable_type" => model("true", "string"),
-			"amount" => model(16, "int"),
+			"amount" => model(0.16, "double"),
+			"sequence" => model(1, "int"),
+			"account_collected_id" => model($iva_venta, "int"),
+			"account_paid_id" => model($iva_venta, "int"),
+		);
+
+		$tax_iva_sale_ret = array(
+			"name" => model("IVA RETENIDO", "string"),
+			"description" => model("IVA", "string"),
+			"tax_type" => model("retenido", "string"),
+			"chart_template_id" => model($chart_tpl_id, "int"),
+			"type" => model("percent", "string"),
+			"type_tax_use" => model("sale", "string"),
+			"applicable_type" => model("true", "string"),
+			"amount" => model(0.1066667, "double"),
+			"sequence" => model(1, "int"),
+			"account_collected_id" => model($iva_venta, "int"),
+			"account_paid_id" => model($iva_venta, "int"),
+		);
+
+		$tax_isr_sale_ret = array(
+			"name" => model("ISR RETENIDO", "string"),
+			"description" => model("ISR", "string"),
+			"tax_type" => model("retenido", "string"),
+			"chart_template_id" => model($chart_tpl_id, "int"),
+			"type" => model("percent", "string"),
+			"type_tax_use" => model("sale", "string"),
+			"applicable_type" => model("true", "string"),
+			"amount" => model(0.10, "double"),
 			"sequence" => model(1, "int"),
 			"account_collected_id" => model($iva_venta, "int"),
 			"account_paid_id" => model($iva_venta, "int"),
@@ -267,20 +319,24 @@ class AccountTplService
 
 		$tax_tpl_purchase = array(
 			"name" => model("IVA DE COMPRA 16%", "string"),
+			"description" => model("IVA", "string"),
+			"tax_type" => model("trasladado", "string"),
 			"chart_template_id" => model($chart_tpl_id, "int"),
 			"type" => model("percent", "string"),
 			"type_tax_use" => model("purchase", "string"),
 			"applicable_type" => model("true", "string"),
-			"amount" => model(16, "int"),
+			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
 			"account_collected_id" => model($iva_compra, "int"),
 			"account_paid_id" => model($iva_compra, "int"),
 		);
 
-		$response = $this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_sale);					
-		$response = $this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_purchase);
+		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_sale);					
+		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_purchase);
+		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_iva_sale_ret);
+		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_isr_sale_ret);
 
-		return true;
+		return $this->obtener_impuestos_template($chart_tpl_id);
 	}
 
 	function crear_tax_code_tpl($empresa)

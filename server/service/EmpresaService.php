@@ -197,7 +197,7 @@ class EmpresaService
 		return false;
 	}
 
-	function contabilidad_empresa($chart_template_id, $company_id, $tax_template_ids)
+	function contabilidad_empresa($chart_id, $company_id, $tax_template_ids)
 	{
 		$model = "account.config.settings";
 		$date_start = "2014-01-01";
@@ -205,8 +205,8 @@ class EmpresaService
 		$currency_id = 34; #MXN
 		$sale_tax_id;
 		$purchase_tax_id;
-		$config_id;			
-		
+		$config_id;	
+
 		$response = $this->empresa_configurada($company_id);	
 		// logg($response);
 		if (!$response)
@@ -214,15 +214,15 @@ class EmpresaService
 			// logg("Configurando Empresa");			
 			foreach ($tax_template_ids as $index => $value) 
 			{			
-				if($value["type_tax_use"] == "sale")			
+				if($value["type_tax_use"] == "sale" )			
 					$sale_tax_id = $value["id"];			
 				else
 					$purchase_tax_id = $value["id"];
 			}
-			// logg("chart_template_id");
-			// logg($chart_template_id);
+			// logg("chart_id");
+			// logg($chart_id);
 			$config = array(
-				"chart_template_id" => model($chart_template_id, "int"),
+				"chart_template_id" => model($chart_id, "int"),
 				"code_digits" => model(6, "int"),
 				"company_id" => model($company_id, "int"),
 				"complete_tax_set" => model(true, "boolean"),
@@ -232,9 +232,9 @@ class EmpresaService
 				"decimal_precision" => model(2, "int"),
 				"period" => model("month", "string"),
 				"purchase_tax" => model($purchase_tax_id, "int"),
-				"purchase_tax_rate" => model(16, "int"),
+				"purchase_tax_rate" => model(0.16, "double"),
 				"sale_tax" => model($sale_tax_id, "int"),
-				"sale_tax_rate" => model(16, "int"),
+				"sale_tax_rate" => model(0.16, "double"),
 				);
 
 			$response = $this->obj->create($this->uid, $this->pwd, $model, $config);

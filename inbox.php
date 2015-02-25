@@ -10,8 +10,8 @@ session_start(); ?>
     <link rel="stylesheet" type="text/css" media="screen" href="css/site.css">
     <link rel="stylesheet" href="css/inbox_custom.css"/> 
     <title>INICIO</title>
-    
-  <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>    
+    <script>
     <? if (isset($_GET["msj"])){?>
 
     var msj = "<? echo $_GET['msj']; ?>";
@@ -21,7 +21,7 @@ session_start(); ?>
     }
     <?}?>
   
-  </script>
+    </script>
 
   </head>
   <body>
@@ -114,7 +114,7 @@ session_start(); ?>
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="#">
+                            <a href="?section=table&type=purchase">
                               Compras (0)
                             </a>
                           </li>
@@ -412,7 +412,7 @@ session_start(); ?>
         <? require 'fijos/footer.php'; ?>
     </footer>
      
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/inbox.js"></script>    
   </body>
