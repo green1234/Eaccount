@@ -90,22 +90,24 @@ if(isset($_GET["type"]))
       //var_dump($path);  
       //var_dump($facturas); exit();    
 
-      ?>
-      <? foreach ($facturas['data'] as $factura):
-      ?>
-        <tr>
-          <td><?=$factura['type']?></td>
-          <td><?=$factura['date_invoice']?></td>
-          <td><?=$factura['id']?></td>
-          <td><?=$factura['partner_id']['1']?></td>
-          <td><?=$factura['amount_total']?></td>
-          <td><?=$factura['lines']['name']?></td>
-          <td><?=$factura['lines']['quantity']?></td>
-          <td><?=$factura['amount_total']?></td>
-          <td><?=$factura['currency_id']['1']?></td>
-          <td><input type="checkbox" id="<?=$factura['id']?>"></td>
-        </tr>
-      <? endforeach; ?>
+      if ($facturas["success"] && count($facturas['data']["id"]) > 0)
+      {
+        foreach ($facturas['data'] as $factura):
+        ?>
+          <tr>
+            <td><?=$factura['type']?></td>
+            <td><?=$factura['date_invoice']?></td>
+            <td><?=$factura['id']?></td>
+            <td><?=$factura['partner_id']['1']?></td>
+            <td><?=$factura['amount_total']?></td>
+            <td><?=$factura['lines']['name']?></td>
+            <td><?=$factura['lines']['quantity']?></td>
+            <td><?=$factura['amount_total']?></td>
+            <td><?=$factura['currency_id']['1']?></td>
+            <td><input type="checkbox" id="<?=$factura['id']?>"></td>
+          </tr>
+        <? endforeach; 
+      }?>
       <!--tr>
         <td>Id_poliza</td>
         <td>14.03.2015</td>

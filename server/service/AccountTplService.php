@@ -183,7 +183,7 @@ class AccountTplService
 			if ($response["success"])
 			{				
 				$chart_id = $response["data"]["id"];
-				$tax_tpl_ids = $this->crear_tax_tpl($account_chart_tpl_id, $defaults);
+				$tax_tpl_ids = $this->crear_tax_tpl($chart_id, $defaults);
 				
 				$eService = new EmpresaService($this->uid, $this->pwd);
 				$res = $eService->contabilidad_empresa($chart_id, $this->cid, $tax_tpl_ids);
@@ -260,7 +260,9 @@ class AccountTplService
 			$params = array(
 				model("name", "string"),
 				model("amount", "string"),
-				model("type_tax_use", "string")
+				model("type_tax_use", "string"),
+				model("description", "string"),
+				model("tax_type", "string"),
 				);
 
 			$tax_template_ids = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
@@ -273,6 +275,8 @@ class AccountTplService
 	{
 		$iva_venta = $defaults["iva_venta"];
 		$iva_compra = $defaults["iva_compra"];
+		$iva_ret = $defaults["iva_ret"];
+		$isr_ret = $defaults["isr_ret"];
 
 		$tax_tpl_model = "account.tax.template";
 		$tax_tpl_sale = array(
@@ -299,8 +303,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.1066667, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_venta, "int"),
-			"account_paid_id" => model($iva_venta, "int"),
+			"account_collected_id" => model($iva_ret, "int"),
+			"account_paid_id" => model($iva_ret, "int"),
 		);
 
 		$tax_isr_sale_ret = array(
@@ -313,8 +317,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.10, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_venta, "int"),
-			"account_paid_id" => model($iva_venta, "int"),
+			"account_collected_id" => model($isr_ret, "int"),
+			"account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_tpl_purchase = array(

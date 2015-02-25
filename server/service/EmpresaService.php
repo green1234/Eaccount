@@ -200,48 +200,62 @@ class EmpresaService
 	function contabilidad_empresa($chart_id, $company_id, $tax_template_ids)
 	{
 		$model = "account.config.settings";
-		$date_start = "2014-01-01";
-		$date_stop = "2014-12-31";
+		$date_start = "2015-01-01";
+		$date_stop = "2015-12-31";
 		$currency_id = 34; #MXN
 		$sale_tax_id;
 		$purchase_tax_id;
 		$config_id;	
+		$iva_ret_id;
+		$isr_ret_id;
 
-		$response = $this->empresa_configurada($company_id);	
-		// logg($response);
-		if (!$response)
-		{
-			// logg("Configurando Empresa");			
-			foreach ($tax_template_ids as $index => $value) 
-			{			
-				if($value["type_tax_use"] == "sale" )			
-					$sale_tax_id = $value["id"];			
-				else
-					$purchase_tax_id = $value["id"];
-			}
-			// logg("chart_id");
-			// logg($chart_id);
-			$config = array(
-				"chart_template_id" => model($chart_id, "int"),
-				"code_digits" => model(6, "int"),
-				"company_id" => model($company_id, "int"),
-				"complete_tax_set" => model(true, "boolean"),
-				"currency_id" => model($currency_id, "int"),
-				"date_start" => model($date_start, "string"),
-				"date_stop" => model($date_stop, "string"),
-				"decimal_precision" => model(2, "int"),
-				"period" => model("month", "string"),
-				"purchase_tax" => model($purchase_tax_id, "int"),
-				"purchase_tax_rate" => model(0.16, "double"),
-				"sale_tax" => model($sale_tax_id, "int"),
-				"sale_tax_rate" => model(0.16, "double"),
-				);
+		// $response = $this->empresa_configurada($company_id);	
+		
+		// if (!$response)
+		// {
+			// logg("Configurando Empresa");
 
-			$response = $this->obj->create($this->uid, $this->pwd, $model, $config);
-		}		
+		// logg($tax_template_ids, 1);			
+		foreach ($tax_template_ids["data"] as $index => $value) 
+		{			
+			if($value["type_tax_use"] == "sale")
+				if ($value["tax_type"] == "trasladado")			
+					$sale_tax_id = $value["id"];
+				// else if ($value["tax_type"] == "retenido")
+				// {
+				// 	if ($value["description"] == "ISR")
+				// 		$isr_ret_id = $value["id"];
+				// 	else
+				// 		$iva_ret_id = $value["id"];
+				// }
+
+			else
+				$purchase_tax_id = $value["id"];
+		}
+		
+		// logg($sale_tax_id);
+		// logg($purchase_tax_id,1);
+		$config = array(
+			"chart_template_id" => model($chart_id, "int"),
+			"code_digits" => model(6, "int"),
+			"company_id" => model($company_id, "int"),
+			"complete_tax_set" => model(true, "boolean"),
+			"currency_id" => model($currency_id, "int"),
+			"date_start" => model($date_start, "string"),
+			"date_stop" => model($date_stop, "string"),
+			"decimal_precision" => model(2, "int"),
+			"period" => model("month", "string"),
+			"purchase_tax" => model($purchase_tax_id, "int"),
+			"purchase_tax_rate" => model(0.16, "double"),
+			"sale_tax" => model($sale_tax_id, "int"),
+			"sale_tax_rate" => model(0.16, "double"),
+			);
+
+		$response = $this->obj->create(USER_ID, md5(PASS), $model, $config);
+		//}		
 
 		// logg("Account Config");
-		// logg($response);
+		logg($response);
 		if ($response["success"])
 		{
 			$config_id = $response["data"]["id"];
@@ -273,7 +287,7 @@ class EmpresaService
 	function configurar_plan_contable($ids, $method)
 	{
 		$model = "account.config.settings";		
-		$response = $this->obj->call($this->uid, $this->pwd, $model, $method, $ids);		
+		$response = $this->obj->call(USER_ID, md5(PASS), $model, $method, $ids);		
 
 		//logg($response, 1);
 		return $response;
