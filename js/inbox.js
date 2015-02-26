@@ -19,8 +19,10 @@ function sub(obj){
         contentType: false,
         cache : false,
         method : "POST",
-        success: function(data){            
+        dataType : "json",
+        success: function(data){   
             console.log(data);
+            console.log(data.success);
 
             if (data.success)
             {
