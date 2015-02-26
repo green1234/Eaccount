@@ -5,6 +5,7 @@ require_once "lib/common.php";
 require_once PROYECT_PATH . "/service/LoginService.php";
 require_once PROYECT_PATH . "/service/ClienteService.php";
 require_once PROYECT_PATH . "/service/UsuarioService.php";
+require_once PROYECT_PATH . "/service/EmpresaService.php";
 
 // $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
 // $res = $usuario->obtener_datos(58);
@@ -15,6 +16,11 @@ $pwd = md5(PASS);
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+
+$service = new EmpresaService($uid, $pwd);
+$res = $service->empresa_configurada(13);
+
+logg($res,1);
 
 $params = array(model("company_id", "string"));
 $obj = new MainObject();

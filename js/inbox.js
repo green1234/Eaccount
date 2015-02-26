@@ -20,8 +20,17 @@ function sub(obj){
         cache : false,
         method : "POST",
         success: function(data){            
-            //alert("Facturas cargadas.");        
-            window.location = "?section=table";
+            console.log(data);
+
+            if (data.success)
+            {
+                alert("Facturas cargadas.");        
+                window.location = "?section=table";                
+            }
+            else
+            {
+                alert("Ocurrio un error al subir la factura, verifique que su RFC este correcto.");
+            }
         },
         error: function(data){            
             console.log("data");
@@ -34,6 +43,10 @@ function sub(obj){
   }
 
 $(function(){
+
+    $(".close").on("click", function(){
+        window.location = "login.php";
+    });
 
     $(".new_account").on("click", function(e){
         e.preventDefault();

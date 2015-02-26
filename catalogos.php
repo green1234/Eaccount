@@ -5,6 +5,7 @@ if (isset($_SESSION["login"]))
   $uid = $_SESSION["login"]["uid"];
   $pwd = $_SESSION["login"]["pwd"];
   $cid = $_SESSION["login"]["cid"];
+  $cfg = $_SESSION["login"]["config"];
 }
 ?>
 <div role="tabpanel" class="tab-pane fade" id="catalogos" style="padding-top: 20px;">

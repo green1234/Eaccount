@@ -15,7 +15,8 @@ if (isset($_GET["username"]) && isset($_GET["password"]))
 		"uid" => $res["data"][0]["id"],
 		"cid" => $res["data"][0]["company_id"],
 		"username" => $username,
-		"pwd" => md5($password)
+		"pwd" => md5($password),
+		"config" => $res["data"][0]["empresa"]["config"]
 		);
 
 	echo json_encode($res);

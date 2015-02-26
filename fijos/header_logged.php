@@ -85,7 +85,7 @@
           </span>
         </li>
 
-        <li class="link_header" style="margin-top: 15px;padding: 10px 10px !important;">
+        <li class="link_header close" style="margin-top: 15px;padding: 10px 10px !important;">
           <span class="subMenu4">
             <img id="btnAccounts" src="img/pagina_inbox/InboxHeader_User Pic.png" style="width: 55%;margin-top: -12px;cursor:pointer;"/>
           </span>

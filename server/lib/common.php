@@ -89,8 +89,10 @@
 			if (is_string($value))
 				$keys[$index] = model($value, "string");
 			else if (is_int($value))
-				$keys[$index] = model($value, "int");			
-		}	
+				$keys[$index] = model($value, "int");	
+			elseif (is_bool($value))		
+				$keys[$index] = model($value, "boolean");
+		}		
 		
 		return $keys;
 	}

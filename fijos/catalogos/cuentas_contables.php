@@ -1,10 +1,13 @@
 <? 
-// var_dump($cid);
+$cfg = $_SESSION["login"]["config"];
 $path = SERVERNAME . "/Catalogo.php?";
-$path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+//$path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
 
 ?>
 <div role="tabpanel" class="tab-pane fade in" id="cuentas_contables" style="padding-top: 20px;">
+  
+  <? if (!$cfg){ ?>
+
   <form id="chart_form" action="<?=$path?>" enctype="multipart/form-data"  method="POST">
       <!-- MAX_FILE_SIZE debe preceder el campo de entrada de archivo -->
       <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
@@ -18,6 +21,65 @@ $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
       </div>
   </form>
 
+  <? } 
+
+  else{
+    $path = SERVERNAME . '/Catalogo.php?get=cuentas';
+    $path = $path . "&uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+    //var_dump($path);
+    $cuentas = json_decode(file_get_contents($path), true);
+    //var_dump($cuentas["data"][1]);
+    if ($cuentas["success"] && count($cuentas["data"]) > 0)
+    {
+    ?>
+  
+      <table class="table">
+        <tr>
+          <td>Codigo</td>
+          <td>Nombre</td>
+          <td>Padre</td>
+          <td>Naturaleza</td>
+          <td>Tipo</td>
+          <td>Clase</td>
+          <td>SAT</td>
+        </tr>
+
+        <? foreach ($cuentas["data"] as $idx => $value) { 
+
+          $parent = $value["parent_id"];
+          if (is_array($parent))
+          {
+            $parent = $parent[1];
+          }
+
+          $clase = $value["user_type"];
+          if (is_array($clase))
+          {
+            $clase = $clase[1];
+          }
+
+        ?>
+          
+          <tr>
+            <td><?=$value["code"]?></td>
+            <td><?=$value["name"]?></td>
+            <td><?=$parent?></td>
+            <td><?=$value["nature"]?></td>            
+            <td><?=$value["type"]?></td>
+            <td><?=$clase?></td>            
+            <td><?=$value["codagrup"]?></td>            
+          </tr>
+
+        <?}?>
+
+        
+      </table>
+
+  <?
+    }
+
+
+  }?> <!-- ELSE -->
 </div>
 
 <script>
@@ -41,9 +103,9 @@ $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
         cache : false,
         method : "POST",
         success: function(data){            
-            //alert("Facturas cargadas.");        
-            //location.reload();
             console.log(data)
+            alert("Facturas cargadas.");        
+            location.reload();
         },
         error: function(data){            
             console.log("data");

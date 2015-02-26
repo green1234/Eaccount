@@ -142,7 +142,7 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 			if (isset($_GET["cid"]))
 	  		{
 	  			
-	  			$params["id"] = $_GET["cid"][0];
+	  			$params["id"] = $_GET["cid"];
 
 	  			switch ($_GET["tipo"]) 
 	  			{
@@ -184,6 +184,8 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 
 	  			
 	  		}
+
+	//  		echo json_encode($params);
 
 	  		$usuarioService = new UsuarioService($uid, $pwd);
 			$res = $usuarioService->actualizar_empresa($params);

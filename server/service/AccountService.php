@@ -16,9 +16,8 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
-	function obtener_cuentas()
-	{
-		$empresa_id = 1;
+	function obtener_cuentas($empresa_id)
+	{		
 		$domain = array(
 					array(
 						model("company_id", "string"),

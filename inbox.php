@@ -1,6 +1,17 @@
 <? 
 require_once "server/conf/constantes.conf"; 
-session_start(); ?>
+session_start(); 
+
+if (!isset($_SESSION["login"]))
+{
+  header('Location: login.php');
+}
+else
+{
+  //var_dump($_SESSION["login"]["cid"]);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,7 +54,7 @@ session_start(); ?>
             $cid = $_SESSION["login"]["cid"];
             $path = SERVERNAME . "/Upload.php?";
             $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
-            //var_dump($path);
+            //var_dump($_SESSION["login"]);
           }
           ?>
 
@@ -399,8 +410,11 @@ session_start(); ?>
             case 'cuentas':
               require 'fijos/cuenta_conta.php';
             break;
+            case 'close':
+              session_destroy();
+              echo '<script>parent.window.location.reload(true);</script>';                 
+            break;
             default:
-              echo "Bienvenidos!";
               break;
           }
         endif;

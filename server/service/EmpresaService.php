@@ -178,21 +178,21 @@ class EmpresaService
 
 	function empresa_configurada($empresa_id)
 	{		
-		$model = "account.config.settings";		
-		$domain = array(
-					array(
-							model("company_id", "string"),
-							model("=", "string"),
-							model($empresa_id, "int")
-						));	
-		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		$model = "res.company";		
+		$ids = array($empresa_id);
+		$params = array(
+				model("gl_configurada", "string")
+		);
 		
-		if($res["success"])
+		$res = $this->obj->read($this->uid, $this->pwd, $this->model, $ids, $params);
+		
+		if($res["success"])					
 		{
-			$id_empresa = $res["data"]["id"][0];
-			$res["data"] = array("id" => $id_empresa);
-			return $res;	
-		}		
+			//return $res;
+			$data = $res["data"][0];
+			if ($data["gl_configurada"] === true)
+				return true;
+		}
 
 		return false;
 	}
@@ -255,7 +255,7 @@ class EmpresaService
 		//}		
 
 		// logg("Account Config");
-		logg($response);
+		// logg($response);
 		if ($response["success"])
 		{
 			$config_id = $response["data"]["id"];
@@ -279,6 +279,13 @@ class EmpresaService
 					if ($res["success"])
 						$method = "set_default_dp";
 						$res = $this->configurar_plan_contable($ids, $method);
+
+						if ($res["success"])
+							$ids = array($company_id);
+							$attrs = array("gl_configurada" => true);
+							$attrs = prepare_params($attrs);
+							#logg($ids,1);
+							$res = $this->obj->write(USER_ID, md5(PASS), $this->model, $ids, $attrs);
 		}			
 
 		return $response; 

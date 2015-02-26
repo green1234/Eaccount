@@ -69,7 +69,10 @@ class UsuarioService
 			foreach ($res["data"] as $index => $value) {
 				$partner_id = $res["data"][$index]["partner_id"][0];
 				$company_id = $res["data"][$index]["company_id"][0];
+				
 				$empresa = $empresa_service->obtener_datos_empresa($company_id);
+				$config = $empresa_service->empresa_configurada($company_id);
+				
 				$partner = $partner_service->obtener_datos_partner($partner_id);
 				$usuarios = $empresa_service->obtener_usuarios($company_id);
 				$planes = $suscription_service->obtener_planes_usuario($this->uid);
@@ -77,6 +80,8 @@ class UsuarioService
 				$res["data"][$index]["usuarios"] = $usuarios["data"];
 				$res["data"][$index]["planes"] = $planes["data"];
 				$res["data"][$index]["empresa"] = $empresa["data"];
+				$res["data"][$index]["empresa"]["config"] = $config;
+				
 				foreach ($usuarios["data"] as $idx => $usuario) {
 					$planes_usuario = $suscription_service->obtener_planes_usuario($usuario["id"]);
 					if ($planes_usuario["success"])
