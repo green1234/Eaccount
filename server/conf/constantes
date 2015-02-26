@@ -1,4 +1,5 @@
 <?php
+	define("TEMP", "/tmp");
 	define("SERVER", "host");	
 	define("APP", "/eaccount");
 	define("NAME", "/eaccount/server");
