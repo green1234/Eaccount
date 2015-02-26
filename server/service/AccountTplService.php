@@ -120,10 +120,10 @@ class AccountTplService
 		if ($response["success"])
 		{
 			$chart[$name] = $response["data"]["id"];
-			$result = array("id" => $chart[$name], "name" => $name, "chart" => $chart);
+			$response = array("id" => $chart[$name], "name" => $name, "chart" => $chart);
 		}		
 		
-		return $result;
+		return $response;
 	}
 
 	function crear_catalogo_template($empresa, $uploadfile)
@@ -169,6 +169,8 @@ class AccountTplService
 		        );
 
 		        $response = $this->crear_cuenta_template($empresa, $account, $chart);
+		        //logg($response);
+		        return $response;
 		        $chart = $response["chart"];
 
 		        if ($registros[$i]["default"] != "")
