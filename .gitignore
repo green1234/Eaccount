@@ -1,2 +1,2 @@
 *.conf
-/server/tmp/*
+tmp/
