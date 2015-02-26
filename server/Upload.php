@@ -11,7 +11,7 @@ if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_G
     $cid = $_GET["cid"];
 	// $empresa_name = "MI EMPRESA";
 
-	// $uploaddir = '/tmp/';
+    //$uploaddir = '/tmp/';
     $uploaddir = 'C:\wamp\tmp';
 
 
