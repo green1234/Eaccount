@@ -87,8 +87,8 @@ if(isset($_GET["type"]))
       $path = $path . "&type=" . $type;
 
       $facturas = json_decode(file_get_contents($path), true);
-      //var_dump($path);  
-      //var_dump($facturas); 
+      var_dump($path);  
+      var_dump($facturas); 
       if ($facturas["success"] && count($facturas['data']) > 0)
       {
         foreach ($facturas['data'] as $factura):
