@@ -1,8 +1,13 @@
 function sub(obj){
-    var file = obj.value;
-    var fileName = file.split("\\");
+    /*var file = obj.value;
+    var fileName = file.split("\\");*/
 
     //console.log($('#upfile')[0].files); return
+
+    if (obj.value == "" || obj.value == null)
+    {
+        return
+    }
 
     var formData = new FormData($("#barra_principal")[0]);
     //formData.append('userfile', $('#upfile')[0].files);
@@ -22,8 +27,8 @@ function sub(obj){
         dataType : "json",
         success: function(data){   
             console.log(data);
-            console.log(data.success);
-
+            //console.log(data.success);
+            $("#upfile").val(null);
             if (data.success)
             {
                 alert("Facturas cargadas.");        
@@ -31,11 +36,12 @@ function sub(obj){
             }
             else
             {
-                alert("Ocurrio un error al subir la factura, verifique que su RFC este correcto.");
+                console.log(data.data.description);
+                alert(data.data.description);
             }
         },
         error: function(data){            
-            console.log("data");
+            console.log(data);
         }
     });
 
