@@ -68,7 +68,7 @@
 					$response = array('success' => true, 'data' => array($values)); 
 				}
 				else if ($values) {					
-					$response = array('success' => truee, 'data' => array()); 	
+					$response = array('success' => true, 'data' => array()); 	
 				}
 				else {    						
 					if (is_array($values) && count($values) == 0)
