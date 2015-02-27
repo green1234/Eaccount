@@ -58,6 +58,8 @@ $path = SERVERNAME . "/Catalogo.php?";
             $clase = $clase[1];
           }
 
+          $code = (is_array($value["codagrup"])) ? $value["codagrup"][1] : $value["codagrup"];
+
         ?>
           
           <tr>
@@ -67,7 +69,7 @@ $path = SERVERNAME . "/Catalogo.php?";
             <td><?=$value["nature"]?></td>            
             <td><?=$value["type"]?></td>
             <td><?=$clase?></td>            
-            <td><?=$value["codagrup"]?></td>            
+            <td><?=$code?></td>            
           </tr>
 
         <?}?>

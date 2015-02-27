@@ -3,6 +3,7 @@
 #require_once "../conf/constantes.conf";
 require_once PROYECT_PATH . "/service/CommonService.php";
 require_once PROYECT_PATH . "/service/EmpresaService.php";
+require_once PROYECT_PATH . "/service/AccountService.php";
 
 class AccountTplService
 {
@@ -10,6 +11,7 @@ class AccountTplService
 	var $pwd;
 	var $model = "account.account.template";	
 	var $obj;
+	var $sat;
 	var $tipos = array(
 					"Raiz"      => 1,
 					"Cliente"   => 2,
@@ -24,14 +26,30 @@ class AccountTplService
 					"Vista de Gasto"   => 11,
 					"Vista de Activo"  => 12,
 					"Vista de Pasivo"  => 13,
-					);
+					);	
+
+	function obtener_codigos_sat()
+	{
+		$service = new AccountService(USER_ID, md5(PASS));
+		$res = $service->obtener_sat_ids();
+		if ($res["success"])
+			return $res["data"];
+		else return array();
+	}
 
 	function __construct($uid, $pwd, $cid)
 	{
 		$this->uid = $uid;
 		$this->pwd = $pwd;
 		$this->cid = $cid;
+		$this->sat = $this->obtener_codigos_sat();
 		$this->obj = new MainObject();
+	}
+
+	function obtener_sat_id($code)
+	{
+		//return $this->sat;
+		return $this->sat[$code];
 	}
 
 	function obtener_tipo_cuenta($registro)
@@ -114,6 +132,12 @@ class AccountTplService
 		if(isset($account["parent_id"]))
 			$account_tpl["parent_id"] = model($account["parent_id"], "int");
 
+		if(isset($account["codagrup"]))
+			$account_tpl["codagrup"] = model($account["codagrup"], "int");
+
+		if(isset($account["nature"]))
+			$account_tpl["nature"] = model($account["nature"], "string");
+
 		$response = $this->obj->create($this->uid, $this->pwd, $model, $account_tpl);
 		$result = array();
 
@@ -149,7 +173,8 @@ class AccountTplService
 			for ($i = 0; $i < count($registros); $i++)
 			{				
 				$name = $registros[$i]["name"];
-				$parent = $registros[$i]["parent"];				
+				$parent = $registros[$i]["parent"];	
+				$sat_code = $registros[$i]["sat"];			
 
 				if (isset($chart[$parent]))
 					$parent_id = $chart[$parent];
@@ -160,12 +185,16 @@ class AccountTplService
 				// logg($parent_id);
 
 				$result = $this->obtener_tipo_cuenta($registros[$i]);
+				$code_id = $this->obtener_sat_id($sat_code);
+
 				$account = array(
 		        	"code" => $registros[$i]["code"], #model($registros[$i]["code"], "string"),
 		        	"name" => $name, #model($name, "string"),
 		        	"type" => $result["type"], #model($result["type"], "string"),
 		        	"user_type" => $result["user_type"], #model($result["user_type"], "int"),
-		        	"parent_id" => $parent_id #model($parent_id, "int")
+		        	"parent_id" => $parent_id, #model($parent_id, "int")
+		        	"nature" => $registros[$i]["nature"],
+		        	"codagrup" => $code_id,
 		        );
 
 		        $response = $this->crear_cuenta_template($empresa, $account, $chart);
