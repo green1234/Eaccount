@@ -107,3 +107,8 @@ span[id="^_closed"] {
   background-size: 50px 40px;
   background-repeat: no-repeat;
 }
+
+.container
+{
+  width: 80%;
+}

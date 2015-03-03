@@ -39,7 +39,8 @@
 </style>
 
 <? 
-require_once "server/conf/constantes.conf"; 
+require_once "server/conf/constantes.conf";
+require_once "server/lib/common.php"; 
 
 $band = false;
 if (isset($_SESSION["login"]))
@@ -65,7 +66,7 @@ if ($band){
     <br>
     Recibida de <b><?=$cfdi["partner_id"][1]?></b> en <b><?=$cfdi["currency_id"][1]?></b>, por un total de $<b><?=$cfdi["amount_total"]?></b> 
     <br>
-    Concepto: <b>Concepto_poliza<b>
+    <!-- Concepto: <b>Concepto_poliza<b> -->
   </p>
 </div>
 <div class="table-responsive">
@@ -74,37 +75,37 @@ if ($band){
       <tr>
         <th style="border: 0px;">&nbsp;</th>
         <th>PÓLIZA</th>
-        <th>CONCEPTO</th>
+        <th>CONCEPTO</th>        
+        <th>CANTIDAD</th>
+        <th>UDM</th>
+        <th>PRECIO UNITARIO</th>
+        <th>DESCUENTO</th>        
         <th>CUENTA</th>
-        <th>NOMBRE</th>
-        <th>SALDO ANT.</th>
-        <th>DEBE</th>
-        <th>HABER</th>
-        <th>SALDO NUEVO</th>
-        <th>UUID</th>
+        <th>NOMBRE</th>        
         <th style="border: 0px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       
       <?
-      var_dump($cfdi['lines']);
+      //logg($cfdi['lines']);
       foreach ($cfdi['lines'] as $factura){
         $id = $factura['id'];
-        $cuenta = split(" ", $cfdi['account_expense_income'][1]);
+        $cuenta = split(" ", $factura['account_expense_income'][1]);
+        //var_dump($cuenta);
+        
       ?>
         <tr>
-          <td><input id="<?=$id?>" type="checkbox"></td>
+          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
           <td><?=$cfdi['id']?></td>
           <td><?=$factura['name']?></td>          
-          <td><?=[0]?></td>
-          <td><?=split(" ", $cfdi['account_expense_income'][1])[1]?></td>
-          <td><?=$factura['amount_total']?></td>
-          <td><?=$factura['lines']['name']?></td>
-          <td><?=$factura['lines']['quantity']?></td>
-          <td><?=$factura['amount_total']?></td>
-          <td><?=$factura['currency_id']['1']?></td>
-          <td><input id="<?=$id?>" type="checkbox"></td>
+          <td><?=$factura['quantity']?></td>
+          <td><?=$factura['product_uom_id'][1]?></td>
+          <td><?=$factura['price_unit']?></td>
+          <td><?=$factura['discount']?></td>          
+          <td><?=$cuenta[0]?></td>
+          <td><?=$cuenta[1]?></td>          
+          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
         </tr>
       <? }?>
       
@@ -112,9 +113,6 @@ if ($band){
   </table>
 </div>
 
-<div class="col-md-1">
-  <img src="../img/menu_rosa.png" style="max-width: 25px;float:left;cursor:pointer;" onClick="showHideSubTabla()">
-</div>
 <div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
   <div class="col-md-3" id="sub_tabla1" class="sub_tablas">
     <ul class="list-group" id="lista_sub_tabla1">

@@ -15,7 +15,7 @@ if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_G
 	//$uploaddir = '/tmp/';
     //$uploaddir = 'C:\wamp\tmp';
 
-    $uploaddir = TEMP; //'/tmp/';
+    $uploaddir = TEMP . "/"; //'/tmp/';
 
     foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
     {

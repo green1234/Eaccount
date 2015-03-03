@@ -69,6 +69,8 @@ if(isset($_GET["type"]))
     <thead>
       <tr>
         <th style="border: 0px;">&nbsp;</th>
+        <th>VER</th>
+        <th>VAL</th>
         <th>EMISION</th>
         <th>FOLIO</th>
         <th>EMISOR</th>
@@ -79,6 +81,9 @@ if(isset($_GET["type"]))
         <th>UUID</th>
         <th>ESTADO</th>
         <th>MONEDA</th>
+        <th><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></th>
+        <th><img src="img/pdf_azul.png" width="20px" height="20px" alt=""></th>
+        <th><img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>
         <th style="border: 0px;">&nbsp;</th>
       </tr>
     </thead>
@@ -91,7 +96,8 @@ if(isset($_GET["type"]))
       $facturas = json_decode(file_get_contents($path), true);
       //var_dump($path);  
       //var_dump($facturas); 
-      if ($facturas["success"] && count($facturas['data']) > 0)
+      //count($facturas['data']) > 0
+      if ($facturas["success"] && !isset($facturas['data']['id']))
       {
         foreach ($facturas['data'] as $factura):
           //var_dump($factura);
@@ -100,7 +106,11 @@ if(isset($_GET["type"]))
           $_SESSION["cfdi"][$id] = $factura;
         ?>
           <tr class="cfdi_row">
-            <td><input id="<?=$id;?>" class="id_row" type="checkbox" style="display:block;width:auto;"></td>
+            <td><input id="<?=$id;?>" name="selector" class="id_row" type="radio" style="display:block;width:auto;"></td>
+            
+            <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
+            <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
+            
             <td><?=$factura['date_invoice']?></td>
             <td><?=$factura['folio']?></td>
             <td><?=$factura['partner_id']['1']?></td>
@@ -111,7 +121,10 @@ if(isset($_GET["type"]))
             <td><?=$factura['uuid']?></td>
             <td><?=$estado?></td>
             <td><?=$factura['currency_id'][1]?></td>
-            <td><input id="<?=$id;?>" class="id_row" type="checkbox" style="display:block;width:auto;"></td>
+            <td><input id="<?=$id;?>" name="selector2" class="id_row2" type="radio" style="display:block;width:auto;"></td>
+            <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
+            <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
+            
           </tr>
         <? endforeach; 
       }?>
@@ -206,7 +219,55 @@ if(isset($_GET["type"]))
       var id = $(this).parents("tr").find(".id_row").attr("id")
       location.href = "?section=detail&cfdi=" + id;
       /*console.log(id)*/
+     });
+
+    $("input[type='radio']").click(function()
+    {
+      var previousValue = $(this).attr('previousValue');
+      var name = $(this).attr('name');
+
+      if (previousValue == 'checked')
+      {
+        $(this).removeAttr('checked');
+        $(this).attr('previousValue', false);
+
+        if ($(this).hasClass("id_row"))
+        {
+          $(this).parents("tr").find(".id_row2")
+            .removeAttr("checked")
+            .attr('previousValue', false);
+        }
+        else
+        {
+          $(this).parents("tr").find(".id_row")
+            .removeAttr("checked")
+            .attr('previousValue', false);         
+        }
+      }
+      else
+      {
+        $("input[name="+name+"]:radio").attr('previousValue', false);
+        $(this).attr('previousValue', 'checked');
+        
+        if ($(this).hasClass("id_row"))
+        {
+          $(this).parents("tr").find(".id_row2")
+            .attr('previousValue', false)
+            .attr('previousValue', 'checked')
+            .attr("checked", true)          
+        }
+        else
+        {
+          $(this).parents("tr").find(".id_row")
+            .attr('previousValue', false)
+            .attr('previousValue', 'checked')
+            .attr("checked", true)          
+        }
+      }
     });
+
+    
+
   });
 
 </script>
