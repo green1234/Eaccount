@@ -16,6 +16,91 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	function obtener_sat_ids()
+	{
+		$tipo = array(
+				model("tipo", "string"),
+				model("=", "string"),
+				model("account", "string"),
+			);
+
+		$model = "gl.cat.sat";
+		$domain = array($tipo);	
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+
+		if ($res["success"])
+		{
+			$sat_ids = $res["data"]["id"];
+			//return $sat_ids;
+			if (count($sat_ids) > 0)
+			{
+				$params = array(
+					model("code","string"), 
+				);
+
+				$res = $this->obj->read($this->uid, $this->pwd, $model, $sat_ids, $params);
+				if ($res["success"])
+				{
+					// Genero array asociativo de Ids con Code SAT.
+					$codes = array();
+					foreach ($res["data"] as $idx => $sat) {
+						$codes[$sat["code"]] = $sat["id"];
+					}
+					$res["data"] = $codes;
+				}
+				return $res;
+			}
+		}
+
+		return array(
+			"success" => false, 
+			"data" => array(
+				"id" => 0,
+				"description" => "No se encontraron datos"));
+	}
+
+	// Devuelve el Id de un codigo SAT a paartir de su codigo.
+	function obtener_codesat_id($codesat)
+	{		
+		$name = array(
+				model("code", "string"),
+				model("=", "string"),
+				model($codesat, "string"),
+			);
+
+		$tipo = array(
+				model("tipo", "string"),
+				model("=", "string"),
+				model("account", "string"),
+			);
+
+		$model = "gl.cat.sat";
+		$domain = array($name, $tipo);
+		//$domain = array($name);
+		//$domain = array($tipo);
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		
+		if ($res["success"])
+		{
+			$sat_ids = $res["data"]["id"];
+
+			if (count($sat_ids) > 0)
+			{
+				return array(
+					"success" => true, 
+					"data" => array(
+						"id" => $sat_ids[0],
+						"description" => "No se encontraron datos"));
+			}
+		}
+
+		return array(
+			"success" => false, 
+			"data" => array(
+				"id" => 0,
+				"description" => "No se encontraron datos"));
+	}
+
 	function obtener_cuentas($empresa_id)
 	{		
 		$domain = array(

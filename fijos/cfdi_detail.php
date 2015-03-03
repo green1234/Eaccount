@@ -41,25 +41,29 @@
 <? 
 require_once "server/conf/constantes.conf"; 
 
+$band = false;
 if (isset($_SESSION["login"]))
 {
+
   $uid = $_SESSION["login"]["uid"];
   $pwd = $_SESSION["login"]["pwd"];
   $cid = $_SESSION["login"]["cid"];
-  // var_dump($_SESSION["login"]);
+
+  if (isset($_SESSION["cfdi"]) && isset($_GET["cfdi"]))
+  {
+    $cfdi = $_SESSION["cfdi"][$_GET["cfdi"]];  
+    $band = true;
+  }
+  //var_dump($cfdi);
 }
-$type = "sale";
-if(isset($_GET["type"]))
-{
-  $type = $_GET["type"];
-}
+if ($band){
 ?>
 
 <div class="grad1">
   <p>
-    Factura de honorarios <b>Folio</b> recibida con fecha <b>Comp_fecha</b>
+    Factura de honorarios <b><?=$cfdi["folio"]?></b> recibida con fecha <b><?=$cfdi["date_invoice"]?></b>
     <br>
-    Recibida de <b>Emisor_Razon_Social</b> en <b>Moneda</b>, por un total de <b>Comp_Total</b> 
+    Recibida de <b><?=$cfdi["partner_id"][1]?></b> en <b><?=$cfdi["currency_id"][1]?></b>, por un total de $<b><?=$cfdi["amount_total"]?></b> 
     <br>
     Concepto: <b>Concepto_poliza<b>
   </p>
@@ -68,8 +72,9 @@ if(isset($_GET["type"]))
   <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
-        <th style="border: 0px;">PÓLIZA</th>
-        <th>FECHA</th>
+        <th style="border: 0px;">&nbsp;</th>
+        <th>PÓLIZA</th>
+        <th>CONCEPTO</th>
         <th>CUENTA</th>
         <th>NOMBRE</th>
         <th>SALDO ANT.</th>
@@ -77,72 +82,32 @@ if(isset($_GET["type"]))
         <th>HABER</th>
         <th>SALDO NUEVO</th>
         <th>UUID</th>
-        <th style="border: 0px;"><img src="../img/check_negro.png" style="max-width: 20px;"></th>
+        <th style="border: 0px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      <? 
-      $path = SERVERNAME . '/Facturas.php?';
-      $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
-      $path = $path . "&type=" . $type;
-
-      $facturas = json_decode(file_get_contents($path), true);
-      //var_dump($path);  
-      //var_dump($facturas); 
-      if ($facturas["success"] && count($facturas['data']) > 0)
-      {
-        foreach ($facturas['data'] as $factura):
-        ?>
-          <tr>
-            <td><?=$factura['type']?></td>
-            <td><?=$factura['date_invoice']?></td>
-            <td><?=$factura['id']?></td>
-            <td><?=$factura['partner_id']['1']?></td>
-            <td><?=$factura['amount_total']?></td>
-            <td><?=$factura['lines']['name']?></td>
-            <td><?=$factura['lines']['quantity']?></td>
-            <td><?=$factura['amount_total']?></td>
-            <td><?=$factura['currency_id']['1']?></td>
-            <td><input type="checkbox" id="<?=$factura['id']?>"></td>
-          </tr>
-        <? endforeach; 
-      }?>
-      <!--tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr>
-      <tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr>
-      <tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr-->
+      
+      <?
+      var_dump($cfdi['lines']);
+      foreach ($cfdi['lines'] as $factura){
+        $id = $factura['id'];
+        $cuenta = split(" ", $cfdi['account_expense_income'][1]);
+      ?>
+        <tr>
+          <td><input id="<?=$id?>" type="checkbox"></td>
+          <td><?=$cfdi['id']?></td>
+          <td><?=$factura['name']?></td>          
+          <td><?=[0]?></td>
+          <td><?=split(" ", $cfdi['account_expense_income'][1])[1]?></td>
+          <td><?=$factura['amount_total']?></td>
+          <td><?=$factura['lines']['name']?></td>
+          <td><?=$factura['lines']['quantity']?></td>
+          <td><?=$factura['amount_total']?></td>
+          <td><?=$factura['currency_id']['1']?></td>
+          <td><input id="<?=$id?>" type="checkbox"></td>
+        </tr>
+      <? }?>
+      
     </tbody>
   </table>
 </div>
@@ -230,3 +195,8 @@ $("#lista_sub_tabla3 li").click(function () {
   }
 
 </script>
+
+<? } 
+else{ ?>
+  NO SE RECIBIERON DATOS
+<?}?>

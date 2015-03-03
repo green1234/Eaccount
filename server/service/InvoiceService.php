@@ -20,7 +20,8 @@ class InvoiceService
 	{		
 		if (isset($params["cid"]))
 		{
-			$model = "account.invoice";
+			$model = "invoice.import";
+			//$model = "account.invoice";
 			$domain = array();
 			$domain[] = array(
 				model("company_id", "string"),
@@ -103,14 +104,22 @@ class InvoiceService
 							model("amount_untaxed", "string"),
 							model("amount_total", "string"),
 							model("type", "string"),					
-							model("state", "string")
+							model("state", "string"),
+							model("folio", "string"),
+							model("serie", "string"),
+							model("discount", "string"),
+							model("uuid", "string"),
+							model("state", "string"),
+							model("error_sat", "string"),
+							model("amount_untaxed", "string"),
 						);
 
 					$res = $this->obj->read($this->uid, $this->pwd, $model, $facturas_id, $params);
 					$model = "account.invoice.line";
+					$model = "invoice.import.line";
 
 					foreach ($res["data"] as $idx => $factura) {
-
+						$res["data"][$idx]["currency_id"] = array(1, "MXN");
 						$domain = array(
 							array(
 								model("invoice_id", "string"),
@@ -118,19 +127,25 @@ class InvoiceService
 								model($factura["id"], "int"),
 								));
 
-						$line_facturas_id = $this->obj->search($this->uid, $this->pwd, $model, $domain);
 
-						$params = array(
-							model("product_id", "string"),
+						$line_facturas_id = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+						//return $line_facturas_id;
+
+						$params = array(							
 							model("name", "string"),
 							model("price_unit", "string"),
+							model("account_expense_income", "string"),
 							model("price_subtotal", "string"),
-							model("quantity", "string"),
 							model("discount", "string"),
+							model("product_uom_id", "string"),
+							model("quantity", "string"),
+							model("product_id", "string"),
+							
 						);
-
-						$line_facturas = $this->obj->read($this->uid, $this->pwd, $model, array($factura["id"]), $params);
-						#logg($line_facturas["data"], 1);
+						$line_ids = $line_facturas_id["data"]["id"];
+						$line_facturas = $this->obj->read($this->uid, $this->pwd, $model, $line_ids, $params);
+						//return $line_facturas;
+						//logg($line_facturas["data"], 1);
 						if ($line_facturas["success"])
 							$res["data"][$idx]["lines"] = $line_facturas["data"];
 					}			

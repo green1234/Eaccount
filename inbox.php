@@ -385,35 +385,38 @@ else
           switch ($_GET['section']) {
             case 'config':
               require 'fijos/config_conta.php';
-            break;
+              break;
             case 'agregar_empresa':
               require 'fijos/agregar_empresa_conta.php';
-            break;
+              break;
             case 'progress':
               require 'fijos/progress_bar.php';
-            break;
+              break;
             case 'alerts':
               require 'fijos/alerts.php';
-            break;
+              break;
             case 'table':              
-              require 'fijos/tabla_conta.php';
-            break;
+              require 'fijos/tabla_cfdi.php';
+              break;
+            case 'detail':              
+              require 'fijos/cfdi_detail.php';                            
+              break;
             case 'poliza':
               require 'fijos/poliza.php';
-            break;
+              break;
             case 'clientes':
               require 'fijos/clientes_conta.php';
-            break;
+              break;
             case 'proveedores':
               require 'fijos/proveedor_conta.php';
-            break;
+              break;
             case 'cuentas':
               require 'fijos/cuenta_conta.php';
-            break;
+              break;
             case 'close':
               session_destroy();
               echo '<script>parent.window.location.reload(true);</script>';                 
-            break;
+              break;
             default:
               break;
           }

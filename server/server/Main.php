@@ -23,7 +23,7 @@
 			$sock = new xmlrpc_client($this->server_url.$this->ws);
 			$sock->setSSLVerifyPeer(0);
 			$response = $sock->send($msg);
-			// logg($response);
+			//logg($response,1);
 			// logg("===========");
 			$response = $this->verificar($response, $error);
 			// logg($response);
@@ -43,12 +43,14 @@
 			else {				
 
 				$values = $response->value()->scalarval();
-
+				//return $values["error"]->me["string"];				
+				//return array("success" => false, "data"=>array("description" => $description));
+				//return $values->me["struct"]["error"];
 				if (isset($values["error"]))
 				{
 					$response = $this->prepare_error(
 						"0", 
-						$values["description"]->me["string"]					
+						$values["error"]->me["string"]					
 						//"Ocurrio un error al conectarse a la aplicacion"
 					);
 					return $response;
@@ -173,7 +175,7 @@
 			// logg("===========>");
 			$response = $this->ejecutar($msg);
 			// logg($response);
-			if ($response["success"])
+			if (is_array($response) && $response["success"])
 			{
 				$id = $response["data"][0];
 				$value = array();

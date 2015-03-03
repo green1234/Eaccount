@@ -46,7 +46,7 @@ if (isset($_SESSION["login"]))
   $uid = $_SESSION["login"]["uid"];
   $pwd = $_SESSION["login"]["pwd"];
   $cid = $_SESSION["login"]["cid"];
-  // var_dump($_SESSION["login"]);
+  //var_dump($_SESSION["login"]);
 }
 $type = "sale";
 if(isset($_GET["type"]))
@@ -55,7 +55,7 @@ if(isset($_GET["type"]))
 }
 ?>
 
-<div class="grad1">
+<!-- <div class="grad1">
   <p>
     Factura de honorarios <b>Folio</b> recibida con fecha <b>Comp_fecha</b>
     <br>
@@ -63,21 +63,23 @@ if(isset($_GET["type"]))
     <br>
     Concepto: <b>Concepto_poliza<b>
   </p>
-</div>
-<div class="table-responsive">
+</div> -->
+<div class="table-responsive" id="listado_cfdi">
   <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
-        <th style="border: 0px;">PÓLIZA</th>
-        <th>FECHA</th>
-        <th>CUENTA</th>
-        <th>NOMBRE</th>
-        <th>SALDO ANT.</th>
-        <th>DEBE</th>
-        <th>HABER</th>
-        <th>SALDO NUEVO</th>
+        <th style="border: 0px;">&nbsp;</th>
+        <th>EMISION</th>
+        <th>FOLIO</th>
+        <th>EMISOR</th>
+        <th>SUBTOTAL</th>
+        <th>DESCUENTO</th>
+        <th>IMPUESTOS</th>
+        <th>TOTAL</th>
         <th>UUID</th>
-        <th style="border: 0px;"><img src="../img/check_negro.png" style="max-width: 20px;"></th>
+        <th>ESTADO</th>
+        <th>MONEDA</th>
+        <th style="border: 0px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -92,18 +94,24 @@ if(isset($_GET["type"]))
       if ($facturas["success"] && count($facturas['data']) > 0)
       {
         foreach ($facturas['data'] as $factura):
+          //var_dump($factura);
+          $estado = ($factura['state'] == "validate") ? "Validado" : "Sin Validar";
+          $id = $factura['id'];
+          $_SESSION["cfdi"][$id] = $factura;
         ?>
-          <tr>
-            <td><?=$factura['type']?></td>
+          <tr class="cfdi_row">
+            <td><input id="<?=$id;?>" class="id_row" type="checkbox" style="display:block;width:auto;"></td>
             <td><?=$factura['date_invoice']?></td>
-            <td><?=$factura['id']?></td>
+            <td><?=$factura['folio']?></td>
             <td><?=$factura['partner_id']['1']?></td>
+            <td><?=$factura['amount_untaxed']?></td>
+            <td><?=$factura['discount']?></td>
+            <td><?=$factura['amount_tax']?></td>
             <td><?=$factura['amount_total']?></td>
-            <td><?=$factura['lines']['name']?></td>
-            <td><?=$factura['lines']['quantity']?></td>
-            <td><?=$factura['amount_total']?></td>
-            <td><?=$factura['currency_id']['1']?></td>
-            <td><input type="checkbox" id="<?=$factura['id']?>"></td>
+            <td><?=$factura['uuid']?></td>
+            <td><?=$estado?></td>
+            <td><?=$factura['currency_id'][1]?></td>
+            <td><input id="<?=$id;?>" class="id_row" type="checkbox" style="display:block;width:auto;"></td>
           </tr>
         <? endforeach; 
       }?>
@@ -146,10 +154,10 @@ if(isset($_GET["type"]))
     </tbody>
   </table>
 </div>
-
+<!-- 
 <div class="col-md-1">
   <img src="../img/menu_rosa.png" style="max-width: 25px;float:left;cursor:pointer;" onClick="showHideSubTabla()">
-</div>
+</div> -->
 <div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
   <div class="col-md-3" id="sub_tabla1" class="sub_tablas">
     <ul class="list-group" id="lista_sub_tabla1">
@@ -190,8 +198,22 @@ if(isset($_GET["type"]))
 </div>
 
 
+<script>
+  
+  $(function(){
+    $(".cfdi_row td").on("dblclick", function(){
+      /*alert("LOL")*/
+      var id = $(this).parents("tr").find(".id_row").attr("id")
+      location.href = "?section=detail&cfdi=" + id;
+      /*console.log(id)*/
+    });
+  });
+
+</script>
+
+
 <script type="text/javascript">
-$('#tabla_conta td').click(function () {
+/*$('#tabla_conta td').click(function () {
   var valor_input = this.innerHTML;
   if (valor_input.indexOf("<input") > -1) {
   }else{
@@ -227,6 +249,6 @@ $("#lista_sub_tabla3 li").click(function () {
 
   function showHideSubTabla () {
     $("#sub_tabla").toggle(800);
-  }
+  }*/
 
 </script>
