@@ -123,7 +123,7 @@ if (isset($_SESSION["login"]))
             "empresa" => "Empresarial",
             "despacho" => "Despacho Contable",
             );
-
+          //var_dump($planes);
           foreach ($planes as $idx => $plan) { ?>
             
             <tr>
