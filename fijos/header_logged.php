@@ -28,7 +28,7 @@
     </div>
     <div class="navbar-collapse collapse">
       <div class="header_azul">
-        <div style="float:left;margin-right: 85px;">
+        <div style="float:left;">
           <div style="color:white;padding: 23px 0px 0px 20px;font-size: 20px;">
             BIENVENIDO
           </div>
