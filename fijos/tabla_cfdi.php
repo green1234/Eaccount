@@ -36,6 +36,32 @@
     height: 100px;
     overflow: scroll;
   }
+  .title
+  {
+    background-color: #4d4d4d;
+    color: white;
+  }
+  .title th
+  {
+    border: 0;
+  }
+  .input
+  {
+    display: inline-block;    
+    margin: 0.6em 1.5em;
+    width: 40%;
+  }
+
+  .input label
+  {
+    display: block;
+  }
+
+  .input select, .input input
+  {
+    height: 30px;
+    width: 100%;
+  }
 </style>
 
 <? 
@@ -55,18 +81,74 @@ if(isset($_GET["type"]))
 }
 ?>
 
-<!-- <div class="grad1">
-  <p>
-    Factura de honorarios <b>Folio</b> recibida con fecha <b>Comp_fecha</b>
-    <br>
-    Recibida de <b>Emisor_Razon_Social</b> en <b>Moneda</b>, por un total de <b>Comp_Total</b> 
-    <br>
-    Concepto: <b>Concepto_poliza<b>
-  </p>
-</div> -->
+<!-- Modal -->
+<div class="modal fade" id="PaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Información del Pago</h4>
+      </div>
+      <div class="modal-body">
+        <form id="PaymentForm" action="">
+          <div class="input">
+            <label for="pago_fecha">Fecha en que se efectuo el pago:</label>
+            <input type="date" name="pago_fecha" id="pago_fecha">
+          </div>
+          <div class="input">
+            <label for="pago_fecha">Método de pago:</label>
+            <select name="pago_metodo" id="pago_metodo">
+              <option selected="selected">Metodo de Pago</option>
+              <option>Transferencia Electrónica</option>
+              <option>Cheque</option>
+              <option>Tarjeta de Crédito</option>
+              <option>Tarjeta de Debito</option>
+              <option>Efectivo</option>              
+            </select>
+          </div>
+          <div class="input">
+            <label for="pago_fecha_cheque">Fecha del cheque:</label>
+            <input type="date" name="pago_fecha_cheque" id="pago_fecha_cheque">
+          </div>
+          <div class="input">
+            <label for="pago_no_cheque">Numero de cheque:</label>
+            <input type="text" name="pago_no_cheque" id="pago_no_cheque" placeholder="Ingresar">
+          </div>
+          <div class="input">
+            <label for="pago_no_cuenta">Cuenta en la que se deposito:</label>            
+            <select name="pago_no_cuenta" id="pago_no_cuenta">
+              <option selected="selected">Seleccione una de sus Cuentas</option>                           
+            </select>
+          </div>
+          <div class="input">
+            <label for="pago_banco">Banco de origen:</label>            
+            <select name="pago_banco" id="pago_banco">
+              <option selected="selected">Seleccione una Opción</option>                           
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="table-responsive" id="listado_cfdi">
+  
   <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
     <thead>
+      <tr class="title">
+        <th style="border-radius: 10px 10px 0 0;" colspan="10">
+          DATOS DEL COMPROBANTE FISCAL
+        </th>
+        <th style="border-radius: 10px 10px 0 0;" colspan="6">
+          DATOS DEL PAGO
+        </th>
+      </tr>
       <tr>
         <th style="border: 0px;">&nbsp;</th>
         <th>VER</th>
@@ -78,13 +160,13 @@ if(isset($_GET["type"]))
         <th>DESCUENTO</th>
         <th>IMPUESTOS</th>
         <th>TOTAL</th>
-        <th>UUID</th>
-        <th>ESTADO</th>
-        <th>MONEDA</th>
-        <th><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></th>
+        <th>FECHA</th>
+        <th>CUENTA</th>
+        <th>METODO</th>
+        <th><a href="#" data-toggle="modal" data-target="#PaymentModal"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
         <th><img src="img/pdf_azul.png" width="20px" height="20px" alt=""></th>
-        <th><img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>
-        <th style="border: 0px;">&nbsp;</th>
+        <th style="border: 0px;">&nbsp;<img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>
+        <!-- <th style="border: 0px;">&nbsp;</th> -->
       </tr>
     </thead>
     <tbody>
@@ -118,12 +200,13 @@ if(isset($_GET["type"]))
             <td><?=$factura['discount']?></td>
             <td><?=$factura['amount_tax']?></td>
             <td><?=$factura['amount_total']?></td>
-            <td><?=$factura['uuid']?></td>
-            <td><?=$estado?></td>
-            <td><?=$factura['currency_id'][1]?></td>
+            <td class="pago_fecha"></td>
+            <td class="pago_cuenta"></td>
+            <td class="pago_metodo"></td>            
             <td><input id="<?=$id;?>" name="selector2" class="id_row2" type="radio" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
+            
             
           </tr>
         <? endforeach; 
