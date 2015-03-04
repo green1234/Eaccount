@@ -91,40 +91,54 @@ if(isset($_GET["type"]))
       </div>
       <div class="modal-body">
         <form id="PaymentForm" action="">
-          <div class="input">
+          <div class="input def">
             <label for="pago_fecha">Fecha en que se efectuo el pago:</label>
             <input type="date" name="pago_fecha" id="pago_fecha">
           </div>
-          <div class="input">
+          <div class="input def">
             <label for="pago_fecha">Método de pago:</label>
             <select name="pago_metodo" id="pago_metodo">
               <option selected="selected">Metodo de Pago</option>
-              <option>Transferencia Electrónica</option>
-              <option>Cheque</option>
-              <option>Tarjeta de Crédito</option>
-              <option>Tarjeta de Debito</option>
-              <option>Efectivo</option>              
+              <option class="trans">Transferencia Electrónica</option>
+              <option class="cheque">Cheque</option>
+              <option class="credit">Tarjeta de Crédito</option>
+              <option class="debit">Tarjeta de Debito</option>
+              <option class="cash">Efectivo</option>              
             </select>
           </div>
-          <div class="input">
+          <div class="input cheque">
             <label for="pago_fecha_cheque">Fecha del cheque:</label>
             <input type="date" name="pago_fecha_cheque" id="pago_fecha_cheque">
           </div>
-          <div class="input">
+          <div class="input cheque">
             <label for="pago_no_cheque">Numero de cheque:</label>
             <input type="text" name="pago_no_cheque" id="pago_no_cheque" placeholder="Ingresar">
           </div>
-          <div class="input">
+          <div class="input cheque">
             <label for="pago_no_cuenta">Cuenta en la que se deposito:</label>            
             <select name="pago_no_cuenta" id="pago_no_cuenta">
               <option selected="selected">Seleccione una de sus Cuentas</option>                           
             </select>
           </div>
-          <div class="input">
+          <div class="input trans credit debit">
             <label for="pago_banco">Banco de origen:</label>            
             <select name="pago_banco" id="pago_banco">
               <option selected="selected">Seleccione una Opción</option>                           
             </select>
+          </div>
+          <div class="input trans">
+            <label for="pago_no_cuenta_origen">Numero de cuenta origen:</label>
+            <input type="text" name="pago_no_cuenta_origen" id="pago_no_cuenta_origen" placeholder="Ingresar">
+          </div>
+          <div class="input trans credit debit cash">
+            <label for="pago_banco_deposito">Numero de cuenta deposito:</label>            
+            <select name="pago_banco_deposito" id="pago_banco_deposito">
+              <option selected="selected">Seleccione una de sus cuentas</option>                           
+            </select>
+          </div>
+          <div class="input trans credit debit">
+            <label for="pago_no_transaccion">Numero de transaccion:</label>
+            <input type="text" name="pago_no_transaccion" id="pago_no_transaccion" placeholder="Ingresar">
           </div>
         </form>
       </div>
@@ -297,6 +311,23 @@ if(isset($_GET["type"]))
 <script>
   
   $(function(){
+
+    $("#PaymentForm").find(".input").not(".def").hide()
+      .find("input").attr("disabled",true).end()
+      .find("select").attr("disabled",true);
+
+    $("#pago_metodo").on("change", function(){
+      var c = $(this).find("option:selected").attr("class");
+      var inputs_hide = $("#PaymentForm").find(".input").not(".def").not("."+c);
+      var inputs = $("#PaymentForm").find(".input."+c);
+      console.log(inputs_hide)
+      inputs_hide.find("input").attr("disabled", true).end().hide();
+      inputs_hide.find("select").attr("disabled", true).end().hide();
+      inputs.find("input").removeAttr("disabled").end().show();
+
+
+    });
+
     $(".cfdi_row td").on("dblclick", function(){
       /*alert("LOL")*/
       var id = $(this).parents("tr").find(".id_row").attr("id")
