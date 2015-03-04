@@ -164,6 +164,21 @@ class InvoiceService
 		}
 	}
 
+	// $params incluye el id de la factura y la informacion del pago.
+	function registrar_infopago($id, $params){
+
+		// $attrs = prepare_params(
+		// 	array(
+		// 		"user_id" => $user_id, 
+		// 		"company_id" => $company_id));
+		$attrs = prepare_params($params);
+
+		$response = $this->obj->write($this->uid, $this->pwd, 
+					$this->model, array($id), $attrs);		
+		
+		return $response;
+	}
+
 	function importar_xml($params, $type=1){	
 
 		$filename = $params["filename"];

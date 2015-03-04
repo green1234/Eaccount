@@ -8,6 +8,7 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 require_once PROYECT_PATH . "/service/EmpresaService.php";
 require_once PROYECT_PATH . "/service/AccountService.php";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
+require_once PROYECT_PATH . "/service/PaymentService.php";
 
 // $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
 // $res = $usuario->obtener_datos(58);
@@ -19,6 +20,25 @@ $cid = 1;
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+$service = new PaymentService($uid, $pwd);
+$r = $service->obtener_bancos();
+logg($r,1);
+
+$id = 41;
+$params = array(
+			"pgo_fecha"=>"2015-02-02",
+			"pgo_metodo"=>"trans",
+			//"pgo_fechacheque"=>"1",
+			"pgo_nocheque"=>"2015-02-02",
+			"pgo_ctadestino"=>"1",
+			"pgo_ctaorigen"=>"1",
+			"pgo_banorigen"=>100,
+			"pgo_transaccion"=>"1",);
+$service = new InvoiceService($uid, $pwd);
+$r = $service->registrar_infopago($id, $params);
+logg($r,1);
+
+$service = new AccountService($uid, $pwd);
 
 $params = array("cid" => $cid, "type" => "sale");
 

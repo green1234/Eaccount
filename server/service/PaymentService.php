@@ -16,6 +16,41 @@ class PaymentService
 		$this->obj = new MainObject();
 	}
 
+	function obtener_bancos()
+	{
+		$model = "res.bank";
+		$domain = array();
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+
+		if ($res["success"])
+		{
+			$ids = $res["data"]["id"];
+			if (count($ids)>0)
+			{
+				$params = array(
+						model("name", "string"),
+						model("bic", "string"));
+
+				$res = $this->obj->read($this->uid, $this->pwd, $model, $ids, $params);
+				$bancos = array();
+				if ($res["success"])
+				{
+					foreach ($res["data"] as $index => $banco) {
+						$id = $banco["id"];
+						$bancos[$id] = $banco;
+					}
+					$res["data"] = $bancos;
+					return $res;
+				}
+			}
+		}
+
+		return array(
+			"success"=>false, 
+			"data"=>array(
+				"description" => "No se encontraron registros"));
+	}
+
 	function obtener_pagos($partner_id = 0)
 	{		
 		$model = $this->model;

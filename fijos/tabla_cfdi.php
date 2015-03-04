@@ -89,63 +89,60 @@ if(isset($_GET["type"]))
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Información del Pago</h4>
       </div>
-      <div class="modal-body">
-        <form id="PaymentForm" action="">
-          <div class="input def">
-            <label for="pago_fecha">Fecha en que se efectuo el pago:</label>
-            <input type="date" name="pago_fecha" id="pago_fecha">
-          </div>
-          <div class="input def">
-            <label for="pago_fecha">Método de pago:</label>
-            <select name="pago_metodo" id="pago_metodo">
-              <option selected="selected">Metodo de Pago</option>
-              <option class="trans">Transferencia Electrónica</option>
-              <option class="cheque">Cheque</option>
-              <option class="credit">Tarjeta de Crédito</option>
-              <option class="debit">Tarjeta de Debito</option>
-              <option class="cash">Efectivo</option>              
-            </select>
-          </div>
-          <div class="input cheque">
-            <label for="pago_fecha_cheque">Fecha del cheque:</label>
-            <input type="date" name="pago_fecha_cheque" id="pago_fecha_cheque">
-          </div>
-          <div class="input cheque">
-            <label for="pago_no_cheque">Numero de cheque:</label>
-            <input type="text" name="pago_no_cheque" id="pago_no_cheque" placeholder="Ingresar">
-          </div>
-          <div class="input cheque">
-            <label for="pago_no_cuenta">Cuenta en la que se deposito:</label>            
-            <select name="pago_no_cuenta" id="pago_no_cuenta">
-              <option selected="selected">Seleccione una de sus Cuentas</option>                           
-            </select>
-          </div>
-          <div class="input trans credit debit">
-            <label for="pago_banco">Banco de origen:</label>            
-            <select name="pago_banco" id="pago_banco">
-              <option selected="selected">Seleccione una Opción</option>                           
-            </select>
-          </div>
-          <div class="input trans">
-            <label for="pago_no_cuenta_origen">Numero de cuenta origen:</label>
-            <input type="text" name="pago_no_cuenta_origen" id="pago_no_cuenta_origen" placeholder="Ingresar">
-          </div>
-          <div class="input trans credit debit cash">
-            <label for="pago_banco_deposito">Numero de cuenta deposito:</label>            
-            <select name="pago_banco_deposito" id="pago_banco_deposito">
-              <option selected="selected">Seleccione una de sus cuentas</option>                           
-            </select>
-          </div>
-          <div class="input trans credit debit">
-            <label for="pago_no_transaccion">Numero de transaccion:</label>
-            <input type="text" name="pago_no_transaccion" id="pago_no_transaccion" placeholder="Ingresar">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
-        <button type="button" class="btn btn-primary">Guardar Cambios</button>
-      </div>
+      <form id="PaymentForm" action="">
+        <div class="modal-body">          
+            <div class="input def">
+              <label for="pago_fecha">Fecha en que se efectuo el pago:</label>
+              <input type="date" required name="pago_fecha" id="pago_fecha">
+            </div>
+            <div class="input def">
+              <label for="pago_metodo">Método de pago:</label>
+              <select name="pago_metodo" id="pago_metodo">
+                <option selected="selected">Metodo de Pago</option>
+                <option value="trans" class="trans">Transferencia Electrónica</option>
+                <option value="cheque" class="cheque">Cheque</option>
+                <option value="credit" class="credit">Tarjeta de Crédito</option>
+                <option value="debit" class="debit">Tarjeta de Debito</option>
+                <option value="cash" class="cash">Efectivo</option>              
+              </select>
+            </div>
+            <div class="input cheque">
+              <label for="pago_fecha_cheque">Fecha del cheque:</label>
+              <input type="date" required name="pago_fecha_cheque" id="pago_fecha_cheque">
+            </div>
+            <div class="input cheque">
+              <label for="pago_no_cheque">Numero de cheque:</label>
+              <input type="text" name="pago_no_cheque" id="pago_no_cheque" placeholder="Ingresar">
+            </div>   
+            <div class="input trans cheque credit debit cash">
+              <label for="pago_ctadep">Cuenta Banco Deposito:</label>            
+              <select name="pago_ctadep" id="pago_ctadep">
+                <option selected="selected">Seleccione una de sus cuentas</option>                           
+                <option value="cash" class="cash">Efectivo</option>
+              </select>
+            </div>      
+            
+            <div class="input trans">
+              <label for="pago_cta">Numero de cuenta origen:</label>
+              <input type="text" name="pago_cta" id="pago_cta" placeholder="Ingresar">
+            </div>
+            <div class="input trans credit debit">
+              <label for="pago_banco">Banco de origen:</label>            
+              <select name="pago_banco" id="pago_banco">
+                <option selected="selected">Seleccione una Opción</option>                           
+                <!-- <option value="1" class="1">Efectivo</option> -->
+              </select>
+            </div>
+            <div class="input trans credit debit">
+              <label for="pago_trans">Numero de transaccion:</label>
+              <input type="text" name="pago_trans" id="pago_trans" placeholder="Ingresar">
+            </div>        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -177,7 +174,8 @@ if(isset($_GET["type"]))
         <th>FECHA</th>
         <th>CUENTA</th>
         <th>METODO</th>
-        <th><a href="#" data-toggle="modal" data-target="#PaymentModal"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
+        <!-- data-toggle="modal" data-target="#PaymentModal" -->
+        <th><a class="payment_modal" href="#"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
         <th><img src="img/pdf_azul.png" width="20px" height="20px" alt=""></th>
         <th style="border: 0px;">&nbsp;<img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>
         <!-- <th style="border: 0px;">&nbsp;</th> -->
@@ -189,8 +187,12 @@ if(isset($_GET["type"]))
       $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
       $path = $path . "&type=" . $type;
 
+      $path2 = SERVERNAME . '/Pagos.php?action=bancos';
+      $path2 = $path2 . "&uid=" . $uid . "&pwd=" . $pwd;      
+
       $facturas = json_decode(file_get_contents($path), true);
-      //var_dump($path);  
+      $bancos = json_decode(file_get_contents($path2), true);
+      //var_dump($bancos);  
       //var_dump($facturas); 
       //count($facturas['data']) > 0
       if ($facturas["success"] && !isset($facturas['data']['id']))
@@ -310,7 +312,102 @@ if(isset($_GET["type"]))
 
 <script>
   
+  var uid = <?=$uid?>;
+  var cid = <?=$cid[0]?>;
+  var pwd = "<?=$pwd?>";  
+  var bancos = {};
+
+  obtener_bancos = function()
+  {
+    var path = "server/Pagos.php?action=bancos";
+    path = path + "&uid=" + uid + "&pwd=" + pwd;
+    $.getJSON(path, function(res){
+      if (res.success)
+      {
+        //console.log(res)
+        bancos = res.data;
+        //return res.data;
+      }
+    });
+  }  
+
+
+
   $(function(){
+
+    obtener_bancos();
+
+    $(".payment_modal").on("click", function(e){
+      var rows = $("[name='selector2']:checked");      
+      if (rows.length > 0)
+      {
+        $('#PaymentModal').modal("show");        
+      }
+      else
+      {
+        alert("Debe seleccionar un registro");
+      }
+    });
+
+    $('#PaymentModal').on('show.bs.modal', function (e) {      
+      
+      //console.log(bancos)
+      var options = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $.each(bancos, function(i, v){
+        options += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
+      });
+
+      $("#pago_banco").html(options);
+    });
+
+    $("#PaymentForm").on("submit", function(e){
+      e.preventDefault();
+
+      var metodo = $("#pago_metodo").find("option:selected").attr("class")
+      if(metodo != undefined)
+      {
+        var data = $(this).find("input").serialize();
+        var selects = $(this).find("select").not(":disabled");
+        var validate = true;
+
+        $.each(selects, function(i, v){
+          var valor = $(this).find("option:selected").val()//.attr("class")
+          if (valor != undefined)
+          {
+            if (!isNaN(valor))
+            {
+              valor = parseInt(valor);
+            }
+            data = data + "&" + $(this).attr("name") + "=" + valor;
+          }
+          else
+          {
+            alert("Debe seleccionar una opcion");
+            $(this).focus();
+            return false;
+          }
+
+          if (i == selects.length - 1 && validate){
+            var cfdi = $("[name='selector2']:checked").attr("id");
+            var vals = "&uid=" + uid + "&cid=" + cid + "&pwd=" + pwd;
+            var path = "server/Facturas.php?action=payment&cfdi="+cfdi;
+            path = path + "&" + data + vals;
+            $.getJSON(path, function(res)
+            {
+              console.log(res);
+              $('#PaymentModal').modal("hide");
+            });         
+            //console.log(path);
+          }
+        });        
+      }
+      else
+      {
+        alert("Debe seleccionar un metodo de pago");
+        $("#pago_metodo").focus();
+      }      
+
+    });
 
     $("#PaymentForm").find(".input").not(".def").hide()
       .find("input").attr("disabled",true).end()
@@ -324,8 +421,11 @@ if(isset($_GET["type"]))
       inputs_hide.find("input").attr("disabled", true).end().hide();
       inputs_hide.find("select").attr("disabled", true).end().hide();
       inputs.find("input").removeAttr("disabled").end().show();
+      inputs.find("select").removeAttr("disabled");
+    });
 
-
+    $("#pago_fecha").on("change", function(){
+      //alert($(this).val());
     });
 
     $(".cfdi_row td").on("dblclick", function(){
