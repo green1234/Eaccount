@@ -112,6 +112,14 @@ class InvoiceService
 							model("state", "string"),
 							model("error_sat", "string"),
 							model("amount_untaxed", "string"),
+							model("pgo_fecha", "string"),
+							model("pgo_metodo", "string"),
+							model("pgo_banorigen", "string"),
+							model("pgo_ctaorigen", "string"),
+							model("pgo_ctadestino", "string"),
+							model("pgo_transaccion", "string"),
+							model("pgo_fechacheque", "string"),
+							model("pgo_nocheque", "string"),
 						);
 
 					$res = $this->obj->read($this->uid, $this->pwd, $model, $facturas_id, $params);

@@ -79,6 +79,20 @@ if(isset($_GET["type"]))
 {
   $type = $_GET["type"];
 }
+
+function _metodo($id)
+{
+  $metodos = array(
+    "cash" => "Efectivo",
+    "trans" => "Transferencia",
+    "credit" => "T. Credito",
+    "debit" => "T. Debito",
+    "cheque" => "Cheque");
+
+  return $metodos[$id];
+}
+
+
 ?>
 
 <!-- Modal -->
@@ -216,9 +230,9 @@ if(isset($_GET["type"]))
             <td><?=$factura['discount']?></td>
             <td><?=$factura['amount_tax']?></td>
             <td><?=$factura['amount_total']?></td>
-            <td class="pago_fecha"></td>
-            <td class="pago_cuenta"></td>
-            <td class="pago_metodo"></td>            
+            <td class="pgo_fecha"><?=$factura['pgo_fecha']?></td>
+            <td class="pgo_cuenta">Cuenta de banco de prueba</td>
+            <td class="pgo_metodo"><?=_metodo($factura['pgo_metodo'])?></td>            
             <td><input id="<?=$id;?>" name="selector2" class="id_row2" type="radio" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
@@ -395,6 +409,15 @@ if(isset($_GET["type"]))
             $.getJSON(path, function(res)
             {
               console.log(res);
+              var active_row = $("#"+cfdi+".id_row2").parents("tr");
+              console.log("#"+cfdi+".id_row2");
+              console.log(active_row);
+              console.log($("#pago_fecha").val());
+              console.log($("#pago_metodo").text());
+              console.log($("#pago_ctadep").text());
+              active_row.find("td.pgo_fecha").text($("#pago_fecha").val());
+              active_row.find("td.pgo_metodo").text($("#pago_metodo").find("option:selected").text());
+              active_row.find("td.pgo_cuenta").text($("#pago_ctadep").find("option:selected").text());
               $('#PaymentModal').modal("hide");
             });         
             //console.log(path);
