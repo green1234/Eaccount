@@ -15,11 +15,29 @@ require_once PROYECT_PATH . "/service/PaymentService.php";
 // logg($res,1);
 $uid = USER_ID;
 $pwd = md5(PASS);
-$cid = 1;
+$cid = 44;
 #logg($uid, 1);
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+
+$model = "res.company";		
+$method = "obtener_cuentas_bancarias";
+$params = array("cid" => model($cid, "int"));
+
+$obj = new MainObject();
+$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);		
+foreach ($response["data"] as $index => $value) 
+{
+	$data = $value->me["struct"];					
+	$vals[$index] = prepare_response($data);					
+	/*$vals[$index] = codificar_utf8($vals[$index]);*/
+}
+/*$vals = codificar_utf8($vals);*/
+$response["data"] = $vals;
+
+logg($response["data"],1);
+
 $service = new PaymentService($uid, $pwd);
 $r = $service->obtener_bancos();
 logg($r,1);

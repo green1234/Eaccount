@@ -38,6 +38,15 @@ class InvoiceService
 				);
 			}
 
+			if (isset($params["estatus"]))
+			{
+				$domain[] = array(
+					model("savvy_estatus", "string"),
+					model("=", "string"),
+					model($params["estatus"], "string"),
+				);
+			}
+
 			if (isset($params["type"]))
 			{				
 				if ($params["type"] == "sale")
@@ -48,13 +57,17 @@ class InvoiceService
 						model("out_invoice", "string"),
 					);					
 				}
-				else
+				else if ($params["type"] == "purchase")
 				{
 					$domain[] = array(
 						model("type", "string"),
 						model("=", "string"),
 						model("in_invoice", "string"),
 					);	
+				}
+				else
+				{
+					$domain[] = array();
 				}
 			}
 			else

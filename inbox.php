@@ -82,55 +82,35 @@ else
             </div>
             <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
-                <div class="panel-group" id="subAccordion" role="tablist" aria-multiselectable="true">
-                  <div class="panel panel-default">
-                    <div class="panel-heading subPanel" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#subAccordion" href="#" aria-expanded="true" aria-controls="">
-                          Por contabilizar
-                        </a>
-                      </h4>
-                    </div>
-                  </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading subPanel" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#subAccordion" href="#" aria-expanded="true" aria-controls="">
-                          Apocrifos
-                        </a>
-                      </h4>
-                    </div>
-                  </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading subPanel" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#subAccordion" href="#" aria-expanded="true" aria-controls="">
-                          Datos Incorrectos
-                        </a>
-                      </h4>
-                    </div>
-                  </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading subPanel" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#subAccordion" href="#" aria-expanded="true" aria-controls="">
-                          Error al procesar
-                        </a>
-                      </h4>
-                    </div>
-                  </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading subPanel" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#subAccordion" href="#" aria-expanded="true" aria-controls="">
-                          Contabilizados
-                        </a>
-                      </h4>
-                    </div>
-                  </div>
-                </div>
+                <ul class="subLista">
+                  <li>
+                    <a href="?section=table&estatus=vali">
+                      Por contabilizar
+                    </a>
+                  </li>
+                  <li>
+                    <a href="?section=table&estatus=apoc">
+                      Apocrifos
+                    </a>
+                  </li>
+                  <li>
+                    <a href="?section=table&estatus=inco">
+                      Datos Incorrectos
+                    </a>
+                  </li>
+                  <li>
+                    <a href="?section=table&estatus=erro">
+                      Error al procesar
+                    </a>
+                  </li>
+                  <li>
+                    <a href="?section=table&estatus=cont">
+                      Contabilizados
+                    </a>
+                  </li>
               </div>
-            </div>
+            </div>           
+                
             <div class="panel-heading" role="tab" id="headingOne">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

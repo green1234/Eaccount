@@ -74,10 +74,16 @@ if (isset($_SESSION["login"]))
   $cid = $_SESSION["login"]["cid"];
   //var_dump($_SESSION["login"]);
 }
-$type = "sale";
+$type = "";
 if(isset($_GET["type"]))
 {
   $type = $_GET["type"];
+}
+
+$estatus = "vali";
+if(isset($_GET["estatus"]))
+{
+  $estatus = $_GET["estatus"];
 }
 
 function _metodo($id)
@@ -199,7 +205,7 @@ function _metodo($id)
       <? 
       $path = SERVERNAME . '/Facturas.php?';
       $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
-      $path = $path . "&type=" . $type;
+      $path = $path . "&type=" . $type . "&estatus=" . $estatus;
 
       $path2 = SERVERNAME . '/Pagos.php?action=bancos';
       $path2 = $path2 . "&uid=" . $uid . "&pwd=" . $pwd;      

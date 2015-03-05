@@ -15,6 +15,10 @@
 		if (isset($_GET["type"]))
 		{
 			$params["type"] = $_GET["type"];
+		}	
+		if (isset($_GET["estatus"]))
+		{
+			$params["estatus"] = $_GET["estatus"];
 		}		
 
 		//exit();
