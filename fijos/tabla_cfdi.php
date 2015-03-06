@@ -213,7 +213,7 @@ function _metodo($id)
       $facturas = json_decode(file_get_contents($path), true);
       $bancos = json_decode(file_get_contents($path2), true);
       //var_dump($bancos);  
-      var_dump($facturas); 
+      //var_dump($facturas); 
       //count($facturas['data']) > 0
       if ($facturas["success"] && !isset($facturas['data']['id']))
       {
