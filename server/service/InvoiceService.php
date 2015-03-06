@@ -64,20 +64,8 @@ class InvoiceService
 						model("=", "string"),
 						model("in_invoice", "string"),
 					);	
-				}
-				else
-				{
-					$domain[] = array();
-				}
-			}
-			else
-			{
-				$domain[] = array(
-					model("type", "string"),
-					model("=", "string"),
-					model("out_invoice", "string"),
-				);	
-			}
+				}				
+			}			
 
 			//logg($domain);
 
