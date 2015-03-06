@@ -357,6 +357,7 @@ function _metodo($id)
     var path = "server/Master.php?cat=cuentas";
     
     $.getJSON(path, function(res){
+      console.log(res);    
       if (res.success)
       {    
         //console.log(res.data);    
@@ -392,8 +393,14 @@ function _metodo($id)
       $.each(bancos, function(i, v){
         options += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
       });
-
       $("#pago_banco").html(options);
+
+      var optCtas = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $.each(cuentas, function(i, v){
+        optCtas += "<option value='" + v.id + "'>" + v.bank[1] + " - " + v.acc_number + "</option>" ;
+      });
+      $("#pago_ctadep").html(optCtas);
+      
     });
 
     $("#PaymentForm").on("submit", function(e){

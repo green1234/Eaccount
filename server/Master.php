@@ -20,7 +20,8 @@ function obtener_cuentas($cid)
 			$data = $value->me["struct"];					
 			$vals[$index] = prepare_response($data);										
 		}
-		return $vals;
+		$response["data"] = $vals;
+		return $response;
 	}
 
 	return array(
