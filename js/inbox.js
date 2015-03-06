@@ -53,7 +53,7 @@ function sub(obj){
 $(function(){
 
     $(".close").on("click", function(){
-        window.location = "login.php";
+        //window.location = "login.php";
     });
 
     $(".new_account").on("click", function(e){
