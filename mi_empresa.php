@@ -13,6 +13,26 @@ $res = json_decode(file_get_contents($path), true);
 $empresa = $res["data"];
 // var_dump($empresa);
 ?>
+<style>
+   .input
+  {
+    display: inline-block;  
+    font-size: 1.2em;  
+    margin: 0.6em 1.5em;
+    width: 40%;
+  }
+
+  .input label
+  {
+    display: block;
+  }
+
+  .input select, .input input
+  {
+    height: 30px;
+    width: 100%;
+  }
+</style>
 <div role="tabpanel" class="tab-pane fade" id="empresas" style="padding-top: 20px;">
   <div class="col-md-2">
     <b>Nombre de mi Empresa:</b>
@@ -86,7 +106,7 @@ $empresa = $res["data"];
                 <label for="ad_imss">IMSS:</label>
                 <input type="text" name="ad_imss" placeholder="IMSS">
                 <br><br>
-              </div>
+              </div>             
 
             </div>
             <div class="modal-footer">
@@ -349,7 +369,7 @@ $empresa = $res["data"];
   <div class="col-md-2">
     <b>Cuenta de Pago:</b>
     <br>
-    <a href="#">Agregar o Editar cuentas</a>
+    <a href="#" data-toggle="modal" data-target="#CtaBantModal" class="openModal ctaban">Agregar o Editar cuentas</a>
   </div>
   <div class="col-md-10">
     Cuenta de Cheques BANORTE *1230.
@@ -362,5 +382,79 @@ $empresa = $res["data"];
   <div class="col-md-12" style="text-align:center;margin-bottom:15px;">
     <button class="btn btn-primary">Guardar Cambios</button>
     <button class="btn btn-primary">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="CtaBantModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nueva cuenta bancaria</h4>
+      </div>
+      <form id="CtaBanForm" action="">
+        <div class="modal-body">          
+            <div class="input def">
+              <label for="cta_nac">Nacionalidad del banco:</label>              
+              <select name="cta_nac" id="cta_nac">
+                <option value="" seleced>Selecciona una opcion</option>
+                <option value="1" seleced>Mexicana</option>
+                <option value="2" seleced>Exranjera</option>
+              </select>
+            </div>
+            <div class="input def">
+              <label for="cta_nac">País de origen del banco:</label>              
+              <select name="cta_nac" id="cta_pais">
+                <option value="" seleced>Selecciona una opcion</option>
+                <option value="1" seleced>Mexico</option>
+                <option value="2" seleced>Otro</option>
+              </select>
+            </div>
+            <div class="input def">
+              <label for="cta_banco">Nombre del banco:</label>              
+              <select name="cta_banco" id="cta_banco">
+                <option value="" seleced>Selecciona una opcion</option>
+                <option value="1" seleced>Banamex</option>
+                <option value="2" seleced>Otro</option>
+              </select>
+            </div>
+            <div class="input def">
+              <label for="cta_moneda">Moneda:</label>              
+              <select name="cta_moneda" id="cta_moneda">
+                <option value="" seleced>Selecciona una opcion</option>
+                <option value="1" seleced>MXN</option>
+                <option value="2" seleced>Otro</option>
+              </select>
+            </div>
+            <div class="input def">
+              <label for="cta_tipo">Tipo de Cuenta:</label>              
+              <select name="cta_tipo" id="cta_tipo">
+                <option value="" seleced>Selecciona una opcion</option>
+                <option value="1" seleced>Cuenta de Cheques</option>
+                <option value="2" seleced>CLABE</option>
+                <option value="3" seleced>Tarjeta de débito</option>
+                <option value="4" seleced>Tarjeta de crédito</option>
+              </select>
+            </div>
+            <div class="input def">
+              <label style="color:purple;">
+                Cuenta de Cheques, CLABE, Tarjeta de Débito, Tarjeta de Crédito.</label>
+            </div>
+            <div class="input def">
+              <label for="cta_numero">Numero de cuenta:</label>              
+              <input type="text" name="cta_numero" id="cta_numero">                
+            </div>
+            <div class="input def">
+              <label for="cta_clabe">CLABE:</label>              
+              <input type="text" name="cta_clabe" id="cta_clabe">                
+            </div>        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Regresar</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
