@@ -336,6 +336,7 @@ function _metodo($id)
   var cid = <?=$cid[0]?>;
   var pwd = "<?=$pwd?>";  
   var bancos = {};
+  var cuentas = {};
 
   obtener_bancos = function()
   {
@@ -351,11 +352,25 @@ function _metodo($id)
     });
   }  
 
+  obtener_cuentas = function()
+  {
+    var path = "server/Master.php?cat=cuentas";
+    
+    $.getJSON(path, function(res){
+      if (res.success)
+      {    
+        //console.log(res.data);    
+        cuentas = res.data;
+      }
+    });
+  }  
+
 
 
   $(function(){
 
     obtener_bancos();
+    obtener_cuentas();
 
     $(".payment_modal").on("click", function(e){
       var rows = $("[name='selector2']:checked");      
@@ -371,7 +386,8 @@ function _metodo($id)
 
     $('#PaymentModal').on('show.bs.modal', function (e) {      
       
-      //console.log(bancos)
+      console.log(bancos)
+      console.log(cuentas)
       var options = "<option selected disabled='disabled'>Seleccione una opción</option>";
       $.each(bancos, function(i, v){
         options += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
