@@ -469,6 +469,8 @@ $empresa = $res["data"];
   var monedas = {};
   var paises = {};
 
+  var optPaises = "";
+
   obtener_bancos = function()
   {
     var path = "server/Master.php?cat=bancos";
@@ -547,11 +549,26 @@ $empresa = $res["data"];
       });
       $("#cta_banco").html(optBancos);
 
-      var optPaises = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      optPaises = "<option selected disabled='disabled'>Seleccione una opción</option>";
       $.each(paises, function(i, v){
         optPaises += "<option value='" + v.id + "'>" + v.code + " - " + v.name + "</option>" ;
       });
       $("#cta_pais").html(optPaises);
+
+    });
+
+    $("#cta_nac").on("change", function()
+    {
+      var value = $(this).find("option:selected").val();
+      console.log(value)
+      if (value == 1)
+      {
+        $("#cta_pais").html("<option selected value='157'>MX - México</option>");
+      }
+      else
+      {
+        $("#cta_pais").html(optPaises); 
+      }
 
     });
 
