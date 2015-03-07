@@ -432,14 +432,13 @@ $empresa = $res["data"];
               <select name="cta_tipo" id="cta_tipo">
                 <option value="" seleced>Selecciona una opcion</option>
                 <option value="1" seleced>Cuenta de Cheques</option>
-                <option value="2" seleced>CLABE</option>
+                <!-- <option value="2" seleced>CLABE</option> -->
                 <option value="3" seleced>Tarjeta de débito</option>
                 <option value="4" seleced>Tarjeta de crédito</option>
               </select>
             </div>
             <div class="input def">
-              <label style="color:purple;">
-                Cuenta de Cheques, CLABE, Tarjeta de Débito, Tarjeta de Crédito.</label>
+              <label style="color:purple;">&nbsp;</label>
             </div>
             <div class="input def">
               <label for="cta_numero">Numero de cuenta:</label>              
