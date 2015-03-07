@@ -369,7 +369,7 @@ $empresa = $res["data"];
   <div class="col-md-2">
     <b>Cuenta de Pago:</b>
     <br>
-    <a href="#" data-toggle="modal" data-target="#CtaBantModal" class="openModal ctaban">Agregar o Editar cuentas</a>
+    <a href="#" data-toggle="modal" data-target="#CtaBanModal" class="openModal ctaban">Agregar o Editar cuentas</a>
   </div>
   <div class="col-md-10">
     Cuenta de Cheques BANORTE *1230.
@@ -386,7 +386,7 @@ $empresa = $res["data"];
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="CtaBantModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="CtaBanModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -404,8 +404,8 @@ $empresa = $res["data"];
               </select>
             </div>
             <div class="input def">
-              <label for="cta_nac">País de origen del banco:</label>              
-              <select name="cta_nac" id="cta_pais">
+              <label for="cta_pais">País de origen del banco:</label>              
+              <select name="cta_pais" id="cta_pais">
                 <option value="" seleced>Selecciona una opcion</option>
                 <option value="1" seleced>Mexico</option>
                 <option value="2" seleced>Otro</option>
@@ -458,3 +458,103 @@ $empresa = $res["data"];
     </div>
   </div>
 </div>
+<script>
+  
+  var uid = <?=$uid?>;
+  var pwd = "<?=$pwd?>";
+  var cid = <?=$cid[0]?>;
+
+  var cuentas = {};
+  var bancos = {};
+  var monedas = {};
+  var paises = {};
+
+  obtener_bancos = function()
+  {
+    var path = "server/Master.php?cat=bancos";
+    
+    $.getJSON(path, function(res){
+
+      if (res.success)
+      {
+        //console.log(res)
+        bancos = res.data;
+        //return res.data;
+      }
+    });
+  }  
+
+  obtener_cuentas = function()
+  {
+    var path = "server/Master.php?cat=cuentas";
+    
+    $.getJSON(path, function(res){
+      
+      if (res.success)
+      {    
+        //console.log(res.data);    
+        cuentas = res.data;
+      }
+    });
+  }
+
+  obtener_monedas = function()
+  {
+    var path = "server/Master.php?cat=monedas";
+    
+    $.getJSON(path, function(res){
+      
+      if (res.success)
+      {    
+        //console.log(res.data);    
+        monedas = res.data;
+      }
+    });
+  }
+
+  obtener_paises = function()
+  {
+    var path = "server/Master.php?cat=paises";
+    
+    $.getJSON(path, function(res){
+      
+      if (res.success)
+      {    
+        //console.log(res.data);    
+        paises = res.data;
+      }
+    });
+  }
+
+  $(function(){
+
+    obtener_cuentas();
+    obtener_bancos();
+    obtener_monedas();
+    obtener_paises();
+
+    $('#CtaBanModal').on('show.bs.modal', function (e) {
+      
+      var optMonedas = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $.each(monedas, function(i, v){
+        optMonedas += "<option value='" + v.id + "'>" + v.name + " - " + v.description + "</option>" ;
+      });
+      $("#cta_moneda").html(optMonedas);
+
+      var optBancos = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $.each(bancos, function(i, v){
+        optBancos += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
+      });
+      $("#cta_banco").html(optBancos);
+
+      var optPaises = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $.each(paises, function(i, v){
+        optPaises += "<option value='" + v.id + "'>" + v.code + " - " + v.name + "</option>" ;
+      });
+      $("#cta_pais").html(optPaises);
+
+    });
+
+  });
+
+</script>

@@ -340,8 +340,8 @@ function _metodo($id)
 
   obtener_bancos = function()
   {
-    var path = "server/Pagos.php?action=bancos";
-    path = path + "&uid=" + uid + "&pwd=" + pwd;
+    var path = "server/Master.php?cat=bancos";
+    
     $.getJSON(path, function(res){
       if (res.success)
       {
@@ -357,7 +357,7 @@ function _metodo($id)
     var path = "server/Master.php?cat=cuentas";
     
     $.getJSON(path, function(res){
-      console.log(res);    
+       
       if (res.success)
       {    
         //console.log(res.data);    

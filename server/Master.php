@@ -3,6 +3,121 @@ session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
 
+function obtener_paises()
+{
+	$model = "res.country";
+	$domain = array();	
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+					model("name", "string"),
+					model("code", "string"));
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$paises = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $pais) {
+					$id = $pais["id"];
+					$paises[$id] = $pais;
+				}
+				$res["data"] = $paises;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
+function obtener_monedas()
+{
+	$model = "gl.cat.sat";
+	$domain = array();
+	$domain[] = array(
+		model("tipo", "string"),
+		model("=", "string"),
+		model("moneda", "string"));
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+					model("name", "string"),
+					model("description", "string"));
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$monedas = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $moneda) {
+					$id = $moneda["id"];
+					$monedas[$id] = $moneda;
+				}
+				$res["data"] = $monedas;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
+function obtener_bancos()
+{
+	$model = "res.bank";
+	$domain = array();
+
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+					model("name", "string"),
+					model("bic", "string"));
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$bancos = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $banco) {
+					$id = $banco["id"];
+					$bancos[$id] = $banco;
+				}
+				$res["data"] = $bancos;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
 function obtener_cuentas($cid)
 {
 	$model = "res.company";		
@@ -27,7 +142,7 @@ function obtener_cuentas($cid)
 	return array(
 		"success"=>false, 
 		"data"=>array(
-			"description" => "Datos de Acceso incorrectos"));
+			"description" => "No se encontraron registros."));
 }
 
 if (isset($_SESSION["login"]))
@@ -43,6 +158,18 @@ if (isset($_SESSION["login"]))
 		if ($_GET["cat"] == "cuentas")
 		{
 			$res = obtener_cuentas($cid[0]);
+		}
+		else if($_GET["cat"] == "bancos")
+		{
+			$res = obtener_bancos();	
+		}
+		else if($_GET["cat"] == "monedas")
+		{
+			$res = obtener_monedas();	
+		}
+		else if($_GET["cat"] == "paises")
+		{
+			$res = obtener_paises();	
 		}
 	}
 
