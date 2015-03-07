@@ -114,7 +114,7 @@ $path = SERVERNAME . "/Catalogo.php?";
         <p class="instructions">        
           <b>Selecciona un archivo para cargar tu Catalogo</b>
           <br>
-          <b>*Prepara tu archivo de la siguiente manera:</b> <a href="#">Ver instucciones</a>
+          <a href="?section=instrucciones">Ver instucciones</a>
           <br>
         </p>
       </div>
@@ -124,9 +124,7 @@ $path = SERVERNAME . "/Catalogo.php?";
         <a href="#">Mostrar Catalogo</a>
         <p class="instructions">        
           <b>Ya has agregado un Catálogo de Cuentas Contables</b> – <a href="#">Sustituir Catálogo</a>
-          <br>
-          <b>*Prepara tu archivo de la siguiente manera:</b> <a href="#">Ver instucciones</a>
-          <br>
+          <br>          
         </p>
       </div>
       <!-- <input type="submit" value="Send File" /> -->

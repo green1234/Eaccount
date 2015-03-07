@@ -451,6 +451,9 @@ else
             case 'cuentas':
               require 'fijos/cuenta_conta.php';
               break;
+            case 'instrucciones':
+              require 'fijos/catalogos/instrucciones.php';
+              break;
             case 'close':
               session_destroy();
               echo '<script>parent.window.location.reload(true);</script>';                 
