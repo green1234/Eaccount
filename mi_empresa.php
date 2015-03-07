@@ -544,7 +544,7 @@ $empresa = $res["data"];
 
       var optBancos = "<option selected disabled='disabled'>Seleccione una opción</option>";
       $.each(bancos, function(i, v){
-        optBancos += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
+        optBancos += "<option value='" + v.id + "'>" + v.name + "</option>" ;
       });
       $("#cta_banco").html(optBancos);
 
