@@ -15,7 +15,7 @@ else
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <? require 'fijos/head.php'; ?>
+    <? require 'view/head.php'; ?>
     <link rel="stylesheet" href="css/inbox.css"/>    
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/site.css">
@@ -38,7 +38,7 @@ else
   <body>
     
     <div class="navbar-wrapper">
-      <? require 'fijos/header_logged.php' ?>
+      <? require 'view/header_logged.php' ?>
     </div>
 
     <div class="container" style="padding:30px 0px;">
@@ -422,7 +422,7 @@ else
 
           switch ($_GET['section']) {
             case 'config':
-              require 'fijos/config/index.php';
+              require 'view/config/index.php';
               break;
             /*case 'agregar_empresa':
               require 'fijos/agregar_empresa_conta.php';
@@ -440,16 +440,16 @@ else
               require 'fijos/cfdi_detail.php';                            
               break;*/
             case 'cfdi':              
-              require 'fijos/cfdi/tabla_cfdi.php';
+              require 'view/cfdi/tabla_cfdi.php';
               break;
             case 'cfdi_detail':              
-              require 'fijos/cfdi/cfdi_detail.php';                            
+              require 'view/cfdi/cfdi_detail.php';                            
               break;
             case 'poliza':              
-              require 'fijos/polizas/tabla_poliza.php';
+              require 'view/polizas/tabla_poliza.php';
               break;
             case 'poliza_detail':              
-              require 'fijos/polizas/poliza_detail.php';                            
+              require 'view/polizas/poliza_detail.php';                            
               break;
             /*case 'poliza':
               require 'fijos/poliza.php';
@@ -479,7 +479,7 @@ else
     </div>
 
     <footer>
-        <? require 'fijos/footer.php'; ?>
+        <? require 'view/footer.php'; ?>
     </footer>
      
     
