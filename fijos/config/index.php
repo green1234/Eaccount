@@ -20,6 +20,6 @@
   <!--FIN TAB "MI EMPRESA"-->
 
   <!--INICIA TAB "CATALOGOS"-->
-  <? require 'catalogos.php'; ?>
+  <? require 'mis_catalogos.php'; ?>
   <!--FIN TAB "CATALOGOS"-->
 </div>

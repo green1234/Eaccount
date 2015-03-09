@@ -84,27 +84,27 @@ else
               <div class="panel-body">
                 <ul class="subLista">
                   <li>
-                    <a href="?section=table&estatus=vali">
+                    <a href="?section=cfdi&estatus=vali">
                       Por contabilizar
                     </a>
                   </li>
                   <li>
-                    <a href="?section=table&estatus=apoc">
+                    <a href="?section=cfdi&estatus=apoc">
                       Apocrifos
                     </a>
                   </li>
                   <li>
-                    <a href="?section=table&estatus=inco">
+                    <a href="?section=cfdi&estatus=inco">
                       Datos Incorrectos
                     </a>
                   </li>
                   <li>
-                    <a href="?section=table&estatus=erro">
+                    <a href="?section=cfdi&estatus=erro">
                       Error al procesar
                     </a>
                   </li>
                   <li>
-                    <a href="?section=table&estatus=cont">
+                    <a href="?section=cfdi&estatus=cont">
                       Contabilizados
                     </a>
                   </li>
@@ -133,7 +133,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="?section=table&type=sale">
+                            <a href="?section=poliza&type=sale">
                               Ventas (0)
                             </a>
                           </li>
@@ -163,7 +163,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="?section=table&type=purchase">
+                            <a href="?section=poliza&type=purchase">
                               Compras (0)
                             </a>
                           </li>
@@ -422,9 +422,9 @@ else
 
           switch ($_GET['section']) {
             case 'config':
-              require 'fijos/config_conta.php';
+              require 'fijos/config/index.php';
               break;
-            case 'agregar_empresa':
+            /*case 'agregar_empresa':
               require 'fijos/agregar_empresa_conta.php';
               break;
             case 'progress':
@@ -432,14 +432,26 @@ else
               break;
             case 'alerts':
               require 'fijos/alerts.php';
-              break;
-            case 'table':              
+              break;*/
+            /*case 'table':              
               require 'fijos/tabla_cfdi.php';
               break;
             case 'detail':              
               require 'fijos/cfdi_detail.php';                            
+              break;*/
+            case 'cfdi':              
+              require 'fijos/cfdi/tabla_cfdi.php';
               break;
-            case 'poliza':
+            case 'cfdi_detail':              
+              require 'fijos/cfdi/cfdi_detail.php';                            
+              break;
+            case 'poliza':              
+              require 'fijos/polizas/tabla_poliza.php';
+              break;
+            case 'poliza_detail':              
+              require 'fijos/polizas/poliza_detail.php';                            
+              break;
+            /*case 'poliza':
               require 'fijos/poliza.php';
               break;
             case 'clientes':
@@ -453,7 +465,7 @@ else
               break;
             case 'instrucciones':
               require 'fijos/catalogos/instrucciones.php';
-              break;
+              break;*/
             case 'close':
               session_destroy();
               echo '<script>parent.window.location.reload(true);</script>';                 
