@@ -152,9 +152,11 @@ if ($band){
   <button class="btn btn-primary">CONTABILIZAR</button>
 </div>
 
+<script type="text/javascript" src="view/polizas/poliza.js"></script>
 
 <script type="text/javascript">
-$('#tabla_conta td').click(function () {
+
+/*$('#tabla_conta td').click(function () {
   var valor_input = this.innerHTML;
   if (valor_input.indexOf("<input") > -1) {
   }else{
@@ -191,7 +193,7 @@ $("#lista_sub_tabla3 li").click(function () {
   function showHideSubTabla () {
     $("#sub_tabla").toggle(800);
   }
-
+*/
 </script>
 
 <? } 

@@ -1,13 +1,41 @@
 <?php
-	
-	require_once "conf/constantes.conf";
-	require_once PROYECT_PATH . "/service/AccountService.php";
+session_start();	
+require_once "conf/constantes.conf";
+require_once PROYECT_PATH . "/service/AccountService.php";
 
-	$usuario = $password = "admin";	
+if (isset($_SESSION["login"]))
+{
+	$uid = $_SESSION["login"]["uid"];
+	$cid = $_SESSION["login"]["cid"];
+	$pwd = $_SESSION["login"]["pwd"];
+
+	$res = array();
+
+	if (isset($_GET["action"]))
+	{
+		if ($_GET["action"] == "get")
+		{
+			$service = new AccountService($uid, $pwd);
+			$res = $service->obtener_cuentas($cid[0]);
+		}
+	}
+
+	echo json_encode($res);
+}
+else
+{
+	echo json_encode(
+		array(
+			"success"=>false, 
+			"data"=>array(
+				"description" => "Datos de Acceso incorrectos")));
+}
+
+	/*$usuario = $password = "admin";	
 	$service = new AccountService(1, "admin");			
-	$res = $service->obtener_cuentas();	
+	$res = $service->obtener_cuentas();	*/
 	/*logg($res["data"],1);*/
-	echo json_encode($res);		
+	/*echo json_encode($res);	*/	
 	
 
 	

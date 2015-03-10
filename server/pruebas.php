@@ -22,6 +22,18 @@ $cid = 44;
 #$uid = $res["data"][0]["id"];
 
 $model = "res.company";		
+$method = "registrar_cuenta_bancaria";
+$params = array(
+	"cid" => model($cid, "int"),
+	"banco" => model(94, "int"),
+	"cuenta" => model("755", "string"));
+
+$obj = new MainObject();
+$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);		
+
+logg($response,1);
+
+$model = "res.company";		
 $method = "obtener_cuentas_bancarias";
 $params = array("cid" => model($cid, "int"));
 

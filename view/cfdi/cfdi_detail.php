@@ -154,7 +154,7 @@ if ($band){
 
 
 <script type="text/javascript">
-$('#tabla_conta td').click(function () {
+/*$('#tabla_conta td').click(function () {
   var valor_input = this.innerHTML;
   if (valor_input.indexOf("<input") > -1) {
   }else{
@@ -190,7 +190,7 @@ $("#lista_sub_tabla3 li").click(function () {
 
   function showHideSubTabla () {
     $("#sub_tabla").toggle(800);
-  }
+  }*/
 
 </script>
 
