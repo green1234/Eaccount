@@ -58,6 +58,24 @@ if (isset($_SESSION["login"]))
 			}
 			else
 				$res = get_error();
+		}
+		else if($_GET["action"] == "update" && isset($_GET["id"]))
+		{
+			$id = $_GET["id"];
+			$data = array();
+			if(isset($_GET["account_id"]))
+			{
+				$data["account_id"] = intval($_GET["account_id"]);
+			}
+
+			$res = $service->update_poliza_line($id, $data);
+
+			if ($res["success"])
+			{
+				$res = $res;
+			}
+			else
+				$res = get_error();
 		}		
 	}
 	echo json_encode($res);

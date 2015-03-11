@@ -86,12 +86,12 @@
 		$keys = array();
 		
 		foreach ($params as $index => $value) {
-			if (is_string($value))
-				$keys[$index] = model($value, "string");
-			else if (is_int($value))
+			if (is_int($value))
 				$keys[$index] = model($value, "int");	
-			elseif (is_bool($value))		
+			else if (is_bool($value))		
 				$keys[$index] = model($value, "boolean");
+			else if (is_string($value))
+				$keys[$index] = model($value, "string");
 		}		
 		
 		return $keys;

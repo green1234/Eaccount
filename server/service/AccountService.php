@@ -16,6 +16,25 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	function update_poliza_line($line_id, $data)
+	{
+		$model = "account.move.line";
+		//$method = "actualizar_poliza_line";
+		$attrs = prepare_params($data);
+
+		/*$params = array(
+			"cid" => model($cid, "int"),
+			"banco" => model(94, "int"),
+			"cuenta" => model("755", "string"));*/
+
+		/*$obj = new MainObject();
+		$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);	*/
+
+		$response = $this->obj->write(USER_ID, md5(PASS), 
+			$model, array($line_id), $attrs);
+		return $response;	
+	}
+
 	function obtener_sat_ids()
 	{
 		$tipo = array(

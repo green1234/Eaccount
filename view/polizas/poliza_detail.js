@@ -11,13 +11,21 @@ get_lines = function(pid, fn)
 	});
 }
 
+update_line = function(line_id, values)
+{
+	$.getJSON("server/Polizas.php?action=update&id="+line_id, values, function(res)
+	{
+		console.log(res)
+	})
+}
+
 mostrar_lineas = function(fn)
 {
 	var rows = ""
 	$.each(lines, function(index, line)
 	{
 		rows += "<tr>";
-		rows += "<td><input type='checkbox' id='" + line.id + "'/></td>";
+		rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
 		rows += "<td>" + line.ref + "</td>";
 		rows += "<td>" + line.name + "</td>";
 		rows += "<td width='200px' class='editable'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
@@ -49,7 +57,18 @@ asignar_eventos = function()
 
 	$("td.editable select").on("change", function()
 	{
+		var cuenta_id = $(this).val();
+		var line_id = $(this).parents("tr").find(".line_id").attr("id");
 		var cuenta = $(this).find("option:selected").text();
+
+		console.log(cuenta_id)
+		console.log(line_id)
+
+		var params = {
+			"account_id" : cuenta_id,			
+		}
+
+		update_line(line_id, params)
 		$(this).hide().parent("td").find("span").text(cuenta).css("visibility", "visible");		
 	});
 }
