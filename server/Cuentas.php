@@ -17,6 +17,22 @@ if (isset($_SESSION["login"]))
 		{
 			$service = new AccountService($uid, $pwd);
 			$res = $service->obtener_cuentas($cid[0]);
+
+			if ($res["success"])
+			{
+				$cuentas = array();
+				foreach ($res["data"] as $index => $cta) {
+					$cuentas[$cta["id"]] = $cta;
+				}
+				$res["data"] = $cuentas;
+			}
+			else
+			{
+				$res = array(
+					"success"=>false, 
+					"data"=>array(
+						"description" => "No se encontraron datos"));
+			}
 		}
 	}
 

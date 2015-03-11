@@ -5,6 +5,23 @@
   ul {
     list-style: none;
   }
+  
+ input[type=checkbox]
+  {
+    display: block;
+    width: auto;
+  }
+  .editable
+  {
+    position: relative;
+  }
+  .editable select
+  {
+    position: absolute;
+    width: 180px;
+    left: 0.5em;
+  }
+  
   .li_activa {
     background: gray;
     color: white;
@@ -39,10 +56,11 @@
 </style>
 
 <? 
+//session_start();
 require_once "server/conf/constantes.conf";
 require_once "server/lib/common.php"; 
 
-$band = false;
+/*$band = false;
 if (isset($_SESSION["login"]))
 {
 
@@ -54,10 +72,10 @@ if (isset($_SESSION["login"]))
   {
     $cfdi = $_SESSION["cfdi"][$_GET["cfdi"]];  
     $band = true;
-  }
+  }*/
   //var_dump($cfdi);
-}
-if ($band){
+/*}
+if ($band){*/
 ?>
 
 <div class="grad1">
@@ -70,44 +88,22 @@ if ($band){
   </p>
 </div>
 <div class="table-responsive">
-  <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
+  <table class="table table-bordered table-striped" id="poliza_detalle" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
         <th style="border: 0px;">&nbsp;</th>
         <th>PÓLIZA</th>
         <th>CONCEPTO</th>        
-        <th>CANTIDAD</th>
-        <th>UDM</th>
-        <th>PRECIO UNITARIO</th>
-        <th>DESCUENTO</th>        
         <th>CUENTA</th>
-        <th>NOMBRE</th>        
-        <th style="border: 0px;">&nbsp;</th>
+        <!-- <th>NOMBRE</th> -->
+        <th>SALDO ANTERIOR</th>
+        <th>DEBE</th>        
+        <th>HABER</th>
+        <th>SALDO NUEVO</th>
+        <th>UUID</th>        
       </tr>
     </thead>
     <tbody>
-      
-      <?
-      //logg($cfdi['lines']);
-      foreach ($cfdi['lines'] as $factura){
-        $id = $factura['id'];
-        $cuenta = split(" ", $factura['account_expense_income'][1]);
-        //var_dump($cuenta);
-        
-      ?>
-        <tr>
-          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
-          <td><?=$cfdi['id']?></td>
-          <td><?=$factura['name']?></td>          
-          <td><?=$factura['quantity']?></td>
-          <td><?=$factura['product_uom_id'][1]?></td>
-          <td><?=$factura['price_unit']?></td>
-          <td><?=$factura['discount']?></td>          
-          <td><?=$cuenta[0]?></td>
-          <td><?=$cuenta[1]?></td>          
-          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
-        </tr>
-      <? }?>
       
     </tbody>
   </table>
@@ -151,8 +147,10 @@ if ($band){
 <div class="col-md-2" style="float:right;">
   <button class="btn btn-primary">CONTABILIZAR</button>
 </div>
-
-<script type="text/javascript" src="view/polizas/poliza.js"></script>
+<script>
+  var pid = <?=$_GET["pid"]?>;
+</script>
+<script type="text/javascript" src="view/polizas/poliza_detail.js"></script>
 
 <script type="text/javascript">
 
@@ -196,7 +194,4 @@ $("#lista_sub_tabla3 li").click(function () {
 */
 </script>
 
-<? } 
-else{ ?>
-  NO SE RECIBIERON DATOS
-<?}?>
+

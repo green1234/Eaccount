@@ -15,11 +15,14 @@ require_once PROYECT_PATH . "/service/PaymentService.php";
 // logg($res,1);
 $uid = USER_ID;
 $pwd = md5(PASS);
-$cid = 44;
+$cid = 6;
 #logg($uid, 1);
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+$service = new AccountService($uid, $pwd);
+$res = $service->obtener_poliza_lines(1);
+logg($res["data"][0],1);
 
 $model = "res.company";		
 $method = "registrar_cuenta_bancaria";

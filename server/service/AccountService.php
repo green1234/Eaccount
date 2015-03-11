@@ -139,12 +139,67 @@ class AccountService
 		return $res;
 	}
 
-	function obtener_polizas()
+	function leer_poliza_lines($line_move_ids)
+	{
+		$model = "account.move.line";
+		$params = array(
+			model("account_id", "string"),
+			model("statement_id", "string"),
+			model("journal_id", "string"),
+			model("currency_id", "string"),
+			model("partner_id", "string"),
+			model("credit", "string"),
+			model("debit", "string"),
+			model("tax_code_id", "string"),
+			model("state", "string"),
+			model("ref", "string"),
+			model("date", "string"),
+			model("name", "string"),
+			model("tax_amount", "string"),
+			model("product_id", "string"),
+			model("account_tax_id", "string"),
+			model("product_uom_id", "string"),
+			model("amount_currency", "string"),
+			model("quantity", "string"),
+			model("amount_base", "string"),
+			model("tax_id_secondary", "string"),
+			model("tax_id", "string"),
+			model("tax_voucher_id", "string"),
+		);
+
+		$res = $this->obj->read($this->uid, $this->pwd, $model, $line_move_ids, $params);
+		
+		return $res;
+	}
+
+	function obtener_poliza_lines($poliza_id)
+	{
+		$model = "account.move.line";
+		$domain = array(
+					array(
+						model("move_id", "string"),
+						model("=", "string"),
+						model($poliza_id, "int"),
+						));
+
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+
+		if ($res["success"])
+		{
+			$res = $this->leer_poliza_lines($res["data"]["id"]);
+			return $res;			
+		}	
+
+		return array("success"=>false);
+
+	}
+
+	function obtener_polizas($empresa_id)
 	{
 		$move_model = "account.move";
 		$move_line_model = "account.move.line";
 
-		$empresa_id = 1;
+		//$empresa_id = 1;
 		$domain = array(
 					array(
 						model("company_id", "string"),
@@ -180,16 +235,18 @@ class AccountService
 
 				foreach ($res["data"] as $index => $move_line) {
 
-					$domain = array(
+					/*$domain = array(
 						array(
 							model("move_id", "string"),
 							model("=", "string"),
 							model($move_line["id"], "int"),
-							));
+							));*/
 
-					$line_move_ids = $this->obj->search($this->uid, $this->pwd, $move_line_model, $domain);
+					//$line_move_ids = $this->obj->search($this->uid, $this->pwd, $move_line_model, $domain);
+					$line_moves = $this->obtener_poliza_lines($move_line["id"]);
+					//$line_moves = $this->leer_poliza_lines($line_move_ids);
 
-					$params = array(
+					/*$params = array(
 						model("statement_id", "string"),
 						model("journal_id", "string"),
 						model("currency_id", "string"),
@@ -213,22 +270,32 @@ class AccountService
 						model("tax_voucher_id", "string"),
 					);
 
-					$line_moves = $this->obj->read($this->uid, $this->pwd, $move_line_model, $line_move_ids["data"]["id"], $params);
+					$line_moves = $this->obj->read($this->uid, $this->pwd, $move_line_model, $line_move_ids["data"]["id"], $params);*/
 					
 					/*logg($line_move_ids["data"]["id"], 1);*/
 
 
 					if ($line_moves["success"])
-						$res["data"][$index]["lines"] = $line_moves["data"];
+					{
+						//$res["data"][$index]["lines"] = $line_moves["data"];
+						$debit = 0;
+						$credit = 0;
+						foreach ($line_moves["data"] as $id => $line) {
+							$debit = $debit + $line["debit"];
+							$credit = $credit + $line["credit"];
+						}
+						if ($debit == $credit)
+							$res["data"][$index]["total"] = $debit;
+					}
 				}
 
-				logg($res["data"][0]["lines"],1);
+				//logg($res["data"][0]["lines"],1);
 			} 
 		}
 		/*logg($res,1);*/
 		return $res;
 
-		logg($res["data"],1);
+		//logg($res["data"],1);
 	}
 }
 

@@ -170,119 +170,38 @@ function _metodo($id)
 
 <div class="table-responsive" id="listado_cfdi">
   
-  <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
+  <table class="table table-bordered table-striped" id="tabla_polizas" style="border: 0px;border-radius:10px;">
     <thead>
       <tr class="title">
         <th style="border-radius: 10px 10px 0 0;" colspan="10">
-          DATOS DEL COMPROBANTE FISCAL
+          DATOS DE LA POLIZA
         </th>
-        <th style="border-radius: 10px 10px 0 0;" colspan="6">
+        <!-- <th style="border-radius: 10px 10px 0 0;" colspan="6">
           DATOS DEL PAGO
-        </th>
+        </th> -->
       </tr>
       <tr>
         <th style="border: 0px;">&nbsp;</th>
-        <th>VER</th>
-        <th>VAL</th>
-        <th>EMISION</th>
+       <!--  <th>VER</th>
+       <th>VAL</th> -->
         <th>FOLIO</th>
-        <th>EMISOR</th>
-        <th>SUBTOTAL</th>
-        <th>DESCUENTO</th>
-        <th>IMPUESTOS</th>
-        <th>TOTAL</th>
+        <th>CONCEPTO</th>
         <th>FECHA</th>
-        <th>CUENTA</th>
-        <th>METODO</th>
+        <th>PERIODO</th>
+        <th>TIPO</th>
+        <th>CAUSANTE</th>
+        <th>IMPORTE</th>
+        <th>ESTATUS</th>        
+        <!-- <th>METODO</th> -->
         <!-- data-toggle="modal" data-target="#PaymentModal" -->
-        <th><a class="payment_modal" href="#"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
+        <!-- <th><a class="payment_modal" href="#"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
         <th><img src="img/pdf_azul.png" width="20px" height="20px" alt=""></th>
-        <th style="border: 0px;">&nbsp;<img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>
+        <th style="border: 0px;">&nbsp;<img src="img/xml_azul.png" width="20px" height="20px" alt=""></th> -->
         <!-- <th style="border: 0px;">&nbsp;</th> -->
       </tr>
     </thead>
     <tbody>
-      <? 
-      $path = SERVERNAME . '/Facturas.php?';
-      $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
-      $path = $path . "&type=" . $type . "&estatus=" . $estatus;
-
-      $path2 = SERVERNAME . '/Pagos.php?action=bancos';
-      $path2 = $path2 . "&uid=" . $uid . "&pwd=" . $pwd;      
-
-      $facturas = json_decode(file_get_contents($path), true);
-      $bancos = json_decode(file_get_contents($path2), true);
-      //var_dump($bancos);  
-      //var_dump($facturas); 
-      //count($facturas['data']) > 0
-      if ($facturas["success"] && !isset($facturas['data']['id']))
-      {
-        foreach ($facturas['data'] as $factura):
-          //var_dump($factura);
-          $estado = ($factura['state'] == "validate") ? "Validado" : "Sin Validar";
-          $id = $factura['id'];
-          $_SESSION["cfdi"][$id] = $factura;
-        ?>
-          <tr class="cfdi_row">
-            <td><input id="<?=$id;?>" name="selector" class="id_row" type="radio" style="display:block;width:auto;"></td>
-            
-            <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
-            <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
-            
-            <td><?=$factura['date_invoice']?></td>
-            <td><?=$factura['folio']?></td>
-            <td><?=$factura['partner_id']['1']?></td>
-            <td><?=$factura['amount_untaxed']?></td>
-            <td><?=$factura['discount']?></td>
-            <td><?=$factura['amount_tax']?></td>
-            <td><?=$factura['amount_total']?></td>
-            <td class="pgo_fecha"><?=$factura['pgo_fecha']?></td>
-            <td class="pgo_cuenta">Cuenta de banco de prueba</td>
-            <td class="pgo_metodo"><?=_metodo($factura['pgo_metodo'])?></td>            
-            <td><input id="<?=$id;?>" name="selector2" class="id_row2" type="radio" style="display:block;width:auto;"></td>
-            <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
-            <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
-            
-            
-          </tr>
-        <? endforeach; 
-      }?>
-      <!--tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr>
-      <tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr>
-      <tr>
-        <td>Id_poliza</td>
-        <td>14.03.2015</td>
-        <td>026</td>
-        <td>CuentaC_Nombre</td>
-        <td>Cta_SaldoInicial</td>
-        <td>Cta_Debe</td>
-        <td>Cta_Haber</td>
-        <td>Cta_SaldoFinal</td>
-        <td>UUID</td>
-        <td><input type="checkbox"></td>
-      </tr-->
+      
     </tbody>
   </table>
 </div>
@@ -329,215 +248,13 @@ function _metodo($id)
   <button class="btn btn-primary">CONTABILIZAR</button>
 </div>
 
-
-<script>
-  
+<script>  <!-- //Esto ya no se va a ocupar -->
   var uid = <?=$uid?>;
   var cid = <?=$cid[0]?>;
-  var pwd = "<?=$pwd?>";  
-  var bancos = {};
-  var cuentas = {};
-
-  obtener_bancos = function()
-  {
-    var path = "server/Master.php?cat=bancos";
-    
-    $.getJSON(path, function(res){
-      if (res.success)
-      {
-        //console.log(res)
-        bancos = res.data;
-        //return res.data;
-      }
-    });
-  }  
-
-  obtener_cuentas = function()
-  {
-    var path = "server/Master.php?cat=cuentas";
-    
-    $.getJSON(path, function(res){
-       
-      if (res.success)
-      {    
-        //console.log(res.data);    
-        cuentas = res.data;
-      }
-    });
-  }  
-
-
-
-  $(function(){
-
-    obtener_bancos();
-    obtener_cuentas();
-
-    $(".payment_modal").on("click", function(e){
-      var rows = $("[name='selector2']:checked");      
-      if (rows.length > 0)
-      {
-        $('#PaymentModal').modal("show");        
-      }
-      else
-      {
-        alert("Debe seleccionar un registro");
-      }
-    });
-
-    $('#PaymentModal').on('show.bs.modal', function (e) {      
-      
-      console.log(bancos)
-      console.log(cuentas)
-      var options = "<option selected disabled='disabled'>Seleccione una opción</option>";
-      $.each(bancos, function(i, v){
-        options += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
-      });
-      $("#pago_banco").html(options);
-
-      var optCtas = "<option selected disabled='disabled'>Seleccione una opción</option>";
-      $.each(cuentas, function(i, v){
-        optCtas += "<option value='" + v.id + "'>" + v.bank[1] + " - " + v.acc_number + "</option>" ;
-      });
-      $("#pago_ctadep").html(optCtas);
-      
-    });
-
-    $("#PaymentForm").on("submit", function(e){
-      e.preventDefault();
-
-      var metodo = $("#pago_metodo").find("option:selected").attr("class")
-      if(metodo != undefined)
-      {
-        var data = $(this).find("input").serialize();
-        var selects = $(this).find("select").not(":disabled");
-        var validate = true;
-
-        $.each(selects, function(i, v){
-          var valor = $(this).find("option:selected").val()//.attr("class")
-          if (valor != undefined)
-          {
-            if (!isNaN(valor))
-            {
-              valor = parseInt(valor);
-            }
-            data = data + "&" + $(this).attr("name") + "=" + valor;
-          }
-          else
-          {
-            alert("Debe seleccionar una opcion");
-            $(this).focus();
-            return false;
-          }
-
-          if (i == selects.length - 1 && validate){
-            var cfdi = $("[name='selector2']:checked").attr("id");
-            var vals = "&uid=" + uid + "&cid=" + cid + "&pwd=" + pwd;
-            var path = "server/Facturas.php?action=payment&cfdi="+cfdi;
-            path = path + "&" + data + vals;
-            $.getJSON(path, function(res)
-            {
-              console.log(res);
-              var active_row = $("#"+cfdi+".id_row2").parents("tr");
-              console.log("#"+cfdi+".id_row2");
-              console.log(active_row);
-              console.log($("#pago_fecha").val());
-              console.log($("#pago_metodo").text());
-              console.log($("#pago_ctadep").text());
-              active_row.find("td.pgo_fecha").text($("#pago_fecha").val());
-              active_row.find("td.pgo_metodo").text($("#pago_metodo").find("option:selected").text());
-              active_row.find("td.pgo_cuenta").text($("#pago_ctadep").find("option:selected").text());
-              $('#PaymentModal').modal("hide");
-            });         
-            //console.log(path);
-          }
-        });        
-      }
-      else
-      {
-        alert("Debe seleccionar un metodo de pago");
-        $("#pago_metodo").focus();
-      }      
-
-    });
-
-    $("#PaymentForm").find(".input").not(".def").hide()
-      .find("input").attr("disabled",true).end()
-      .find("select").attr("disabled",true);
-
-    $("#pago_metodo").on("change", function(){
-      var c = $(this).find("option:selected").attr("class");
-      var inputs_hide = $("#PaymentForm").find(".input").not(".def").not("."+c);
-      var inputs = $("#PaymentForm").find(".input."+c);
-      console.log(inputs_hide)
-      inputs_hide.find("input").attr("disabled", true).end().hide();
-      inputs_hide.find("select").attr("disabled", true).end().hide();
-      inputs.find("input").removeAttr("disabled").end().show();
-      inputs.find("select").removeAttr("disabled");
-    });
-
-    $("#pago_fecha").on("change", function(){
-      //alert($(this).val());
-    });
-
-    $(".cfdi_row td").on("dblclick", function(){
-      /*alert("LOL")*/
-      var id = $(this).parents("tr").find(".id_row").attr("id")
-      location.href = "?section=poliza_detail&cfdi=" + id;
-      /*console.log(id)*/
-     });
-
-    $("input[type='radio']").click(function()
-    {
-      var previousValue = $(this).attr('previousValue');
-      var name = $(this).attr('name');
-
-      if (previousValue == 'checked')
-      {
-        $(this).removeAttr('checked');
-        $(this).attr('previousValue', false);
-
-        if ($(this).hasClass("id_row"))
-        {
-          $(this).parents("tr").find(".id_row2")
-            .removeAttr("checked")
-            .attr('previousValue', false);
-        }
-        else
-        {
-          $(this).parents("tr").find(".id_row")
-            .removeAttr("checked")
-            .attr('previousValue', false);         
-        }
-      }
-      else
-      {
-        $("input[name="+name+"]:radio").attr('previousValue', false);
-        $(this).attr('previousValue', 'checked');
-        
-        if ($(this).hasClass("id_row"))
-        {
-          $(this).parents("tr").find(".id_row2")
-            .attr('previousValue', false)
-            .attr('previousValue', 'checked')
-            .attr("checked", true)          
-        }
-        else
-        {
-          $(this).parents("tr").find(".id_row")
-            .attr('previousValue', false)
-            .attr('previousValue', 'checked')
-            .attr("checked", true)          
-        }
-      }
-    });
-
-    
-
-  });
-
+  var pwd = "<?=$pwd?>"; 
 </script>
 
+<script src="view/polizas/poliza.js"></script>
 
 <script type="text/javascript">
 /*$('#tabla_conta td').click(function () {
