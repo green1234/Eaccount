@@ -20,6 +20,16 @@ $cid = 6;
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+
+$model = "invoice.import";		
+$method = "contabilizar_factura";
+$params = array(
+	"id" => model(14, "int"));
+$obj = new MainObject();
+$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);
+
+logg($response);
+
 $service = new AccountService($uid, $pwd);
 $res = $service->obtener_poliza_lines(1);
 logg($res["data"][0],1);
