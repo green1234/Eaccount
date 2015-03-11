@@ -20,7 +20,7 @@ mostrar_lineas = function(fn)
 		rows += "<td><input type='checkbox' id='" + line.id + "'/></td>";
 		rows += "<td>" + line.ref + "</td>";
 		rows += "<td>" + line.name + "</td>";
-		rows += "<td class='editable'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
+		rows += "<td width='200px' class='editable'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
 		/*rows += "<td>" + line.id + "</td>";*/
 		rows += "<td>-</td>";
 		rows += "<td>" + line.debit.toFixed(2) + "</td>";
@@ -44,7 +44,13 @@ asignar_eventos = function()
 		$(this).data("text", text);
 		console.log(accounts)
 		select.html(optionsAcc).show();
-		text.hide();
+		text.css("visibility", "hidden");
+	});
+
+	$("td.editable select").on("change", function()
+	{
+		var cuenta = $(this).find("option:selected").text();
+		$(this).hide().parent("td").find("span").text(cuenta).css("visibility", "visible");		
 	});
 }
 
