@@ -12,7 +12,7 @@
         margin-left: 30px;
       }
     </style>
-    <? require 'fijos/head.php'; ?>
+    <? require 'view/head.php'; ?>
     <title>INICIO</title>
   </head>
   <body>
