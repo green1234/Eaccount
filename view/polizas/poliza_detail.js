@@ -51,7 +51,7 @@ asignar_eventos = function()
 		$(this).data("html", select);
 		$(this).data("text", text);
 		console.log(accounts)
-		select.html(optionsAcc).show();
+		select.html(optionsAcc).show().focus();
 		text.css("visibility", "hidden");
 	});
 
@@ -70,6 +70,11 @@ asignar_eventos = function()
 
 		update_line(line_id, params)
 		$(this).hide().parent("td").find("span").text(cuenta).css("visibility", "visible");		
+	});
+
+	$("td.editable select").on("blur", function()
+	{
+		$(this).hide().parent("td").find("span").css("visibility", "visible");
 	});
 }
 
