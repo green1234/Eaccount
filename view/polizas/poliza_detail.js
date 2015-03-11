@@ -28,7 +28,7 @@ mostrar_lineas = function(fn)
 		rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
 		rows += "<td>" + line.ref + "</td>";
 		rows += "<td>" + line.name + "</td>";
-		rows += "<td width='200px' class='editable'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
+		rows += "<td width='200px' class='editable' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
 		/*rows += "<td>" + line.id + "</td>";*/
 		rows += "<td>-</td>";
 		rows += "<td>" + line.debit.toFixed(2) + "</td>";
@@ -45,14 +45,16 @@ asignar_eventos = function()
 {
 	$("td.editable").on("dblclick", function(){
 		
+		var id = $(this).attr("id");
 		var select = $(this).find("select");
 		var text = $(this).find("span");
 		
 		$(this).data("html", select);
 		$(this).data("text", text);
 		console.log(accounts)
-		select.html(optionsAcc).show().focus();
-		text.css("visibility", "hidden");
+		select.html(optionsAcc).val(id).show().focus();
+		text.css("visibility", "hidden");		
+		
 	});
 
 	$("td.editable select").on("change", function()
