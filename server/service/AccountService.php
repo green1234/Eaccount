@@ -303,8 +303,8 @@ class AccountService
 							$debit = $debit + $line["debit"];
 							$credit = $credit + $line["credit"];
 						}
-						if ($debit == $credit)
-							$res["data"][$index]["total"] = $debit;
+						//if ($debit == $credit)
+						$res["data"][$index]["total"] = $debit;
 					}
 				}
 

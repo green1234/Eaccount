@@ -1,16 +1,22 @@
 <?php
-	
+	session_start();
 	require_once "conf/constantes.conf";
 	require_once PROYECT_PATH . "/service/InvoiceService.php";
 
-	if (isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_GET["cid"]))
+	//if (isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_GET["cid"]))
+	if (isset($_SESSION["login"]))
 	{	
-		$uid = $_GET["uid"];
+		/*$uid = $_GET["uid"];
 		$pwd = $_GET["pwd"];
-		$cid = $_GET["cid"];
+		$cid = $_GET["cid"];*/
 		
+		$uid = $_SESSION["login"]["uid"];
+		$pwd = $_SESSION["login"]["pwd"];
+		$cid = $_SESSION["login"]["cid"];
+
 		$service = new InvoiceService($uid, $pwd);
-		$params = array("cid" => $cid);
+		//$params = array("cid" => $cid);
+		$params = array("cid" => $cid[0]);
 		 
 		if (isset($_GET["type"]))
 		{
@@ -20,8 +26,8 @@
 		{
 			$params["estatus"] = $_GET["estatus"];
 		}		
-
-		//exit();
+		
+		//exit();		
 		if (isset($_GET["action"]) && isset($_GET["cfdi"]))
 		{
 			$action = $_GET["action"];
@@ -61,7 +67,10 @@
 					echo json_encode($res);
 
 					break;
-				
+				case "conta" : 					
+					$res = $service->contabilizar($id);
+					echo json_encode($res);
+					break;
 				default:
 					# code...
 					break;

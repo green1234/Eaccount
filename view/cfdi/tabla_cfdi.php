@@ -170,7 +170,7 @@ function _metodo($id)
 
 <div class="table-responsive" id="listado_cfdi">
   
-  <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
+  <table class="table table-bordered table-striped" id="tabla_cfdi" style="border: 0px;border-radius:10px;">
     <thead>
       <tr class="title">
         <th style="border-radius: 10px 10px 0 0;" colspan="10">
@@ -326,7 +326,7 @@ function _metodo($id)
 <div class="col-md-1"></div>
 
 <div class="col-md-2" style="float:right;">
-  <button class="btn btn-primary">CONTABILIZAR</button>
+  <button class="btn btn-primary action_conta">CONTABILIZAR</button>
 </div>
 
 
@@ -337,6 +337,7 @@ function _metodo($id)
   var pwd = "<?=$pwd?>";  
   var bancos = {};
   var cuentas = {};
+  var facturas = {};
 
   obtener_bancos = function()
   {
@@ -366,18 +367,144 @@ function _metodo($id)
     });
   }  
 
+  obtener_facturas = function()
+  {
+    var path = "server/Facturas.php";
+    
+    $.getJSON(path, function(res){
+       
+      if (res.success)
+      {    
+        console.log(res.data);    
+        facturas = res.data;
+        mostrar_facturas();
+      }
+    });
+  }
 
+  contabilizar_factura = function(id)
+  {
+    var path = "server/Facturas.php?action=conta&cfdi=" + id;
+    
+    $.getJSON(path, function(res){
+       
+      if (res.success)
+      {    
+        console.log(res.data);    
+        //facturas = res.data;
+        //mostrar_facturas();
+      }
+    });
+  }
+
+  mostrar_facturas = function()
+  {
+    var cfdi_rows = "";
+    $.each(facturas, function(idx, cfdi){
+      cfdi_rows += "<tr class='cfdi_row'>";
+      cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";      
+      cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";
+      cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";            
+      cfdi_rows += "<td>" + cfdi.date_invoice + "</td>";
+      cfdi_rows += "<td>" + cfdi.folio + "</td>";
+      cfdi_rows += "<td>" + cfdi.partner_id[1] + "</td>";
+      cfdi_rows += "<td>" + cfdi.amount_untaxed + "</td>";
+      cfdi_rows += "<td>" + cfdi.discount + "</td>"; 
+      cfdi_rows += "<td>" + cfdi.amount_tax + "</td>"; 
+      cfdi_rows += "<td>" + cfdi.amount_total + "</td>"; 
+      cfdi_rows += "<td class='pgo_fecha'>" + cfdi.pgo_fecha + "</td>"; 
+      cfdi_rows += "<td class='pgo_cuenta'>Cuenta de banco de prueba</td>"; 
+      cfdi_rows += "<td class='pgo_metodo'>" + cfdi.pgo_metodo + "</td>"; 
+      cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector2' class='id_row2' type='radio' style='display:block;width:auto;'></td>"
+      cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
+      cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
+      cfdi_rows += "<tr>";
+
+    });             
+
+    $("#tabla_cfdi").append(cfdi_rows);
+    agregar_eventos();
+  }
+
+  agregar_eventos = function(){
+
+    $(".cfdi_row td").on("dblclick", function(){
+      /*alert("LOL")*/
+      var id = $(this).parents("tr").find(".id_row").attr("id")
+      location.href = "?section=cfdi_detail&cfdi=" + id;
+      /*console.log(id)*/
+     });
+
+    $("input[type='radio']").click(function()
+    {
+      var previousValue = $(this).attr('previousValue');
+      var name = $(this).attr('name');
+
+      if (previousValue == 'checked')
+      {
+        $(this).removeAttr('checked');
+        $(this).attr('previousValue', false);
+
+        if ($(this).hasClass("id_row"))
+        {
+          $(this).parents("tr").find(".id_row2")
+            .removeAttr("checked")
+            .attr('previousValue', false);
+        }
+        else
+        {
+          $(this).parents("tr").find(".id_row")
+            .removeAttr("checked")
+            .attr('previousValue', false);         
+        }
+      }
+      else
+      {
+        $("input[name="+name+"]:radio").attr('previousValue', false);
+        $(this).attr('previousValue', 'checked');
+        
+        if ($(this).hasClass("id_row"))
+        {
+          $(this).parents("tr").find(".id_row2")
+            .attr('previousValue', false)
+            .attr('previousValue', 'checked')
+            .attr("checked", true)          
+        }
+        else
+        {
+          $(this).parents("tr").find(".id_row")
+            .attr('previousValue', false)
+            .attr('previousValue', 'checked')
+            .attr("checked", true)          
+        }
+      }
+    });
+  }
 
   $(function(){
 
     obtener_bancos();
     obtener_cuentas();
+    obtener_facturas();
 
     $(".payment_modal").on("click", function(e){
       var rows = $("[name='selector2']:checked");      
       if (rows.length > 0)
       {
         $('#PaymentModal').modal("show");        
+      }
+      else
+      {
+        alert("Debe seleccionar un registro");
+      }
+    });
+
+    $(".action_conta").on("click", function(e){
+      var rows = $("[name='selector2']:checked");      
+      if (rows.length > 0)
+      {
+        var cfdi = $("[name='selector2']:checked").attr("id");
+        contabilizar_factura(cfdi);
       }
       else
       {
@@ -479,60 +606,6 @@ function _metodo($id)
     $("#pago_fecha").on("change", function(){
       //alert($(this).val());
     });
-
-    $(".cfdi_row td").on("dblclick", function(){
-      /*alert("LOL")*/
-      var id = $(this).parents("tr").find(".id_row").attr("id")
-      location.href = "?section=cfdi_detail&cfdi=" + id;
-      /*console.log(id)*/
-     });
-
-    $("input[type='radio']").click(function()
-    {
-      var previousValue = $(this).attr('previousValue');
-      var name = $(this).attr('name');
-
-      if (previousValue == 'checked')
-      {
-        $(this).removeAttr('checked');
-        $(this).attr('previousValue', false);
-
-        if ($(this).hasClass("id_row"))
-        {
-          $(this).parents("tr").find(".id_row2")
-            .removeAttr("checked")
-            .attr('previousValue', false);
-        }
-        else
-        {
-          $(this).parents("tr").find(".id_row")
-            .removeAttr("checked")
-            .attr('previousValue', false);         
-        }
-      }
-      else
-      {
-        $("input[name="+name+"]:radio").attr('previousValue', false);
-        $(this).attr('previousValue', 'checked');
-        
-        if ($(this).hasClass("id_row"))
-        {
-          $(this).parents("tr").find(".id_row2")
-            .attr('previousValue', false)
-            .attr('previousValue', 'checked')
-            .attr("checked", true)          
-        }
-        else
-        {
-          $(this).parents("tr").find(".id_row")
-            .attr('previousValue', false)
-            .attr('previousValue', 'checked')
-            .attr("checked", true)          
-        }
-      }
-    });
-
-    
 
   });
 

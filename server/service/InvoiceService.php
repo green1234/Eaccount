@@ -188,6 +188,18 @@ class InvoiceService
 		return $response;
 	}
 
+	function contabilizar($cfdi_id)
+	{
+		$model = "invoice.import";		
+		$method = "contabilizar_factura";
+		$params = array(
+			"id" => model($cfdi_id, "int"));
+		
+		$response = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $params);
+
+		return $response;
+	}
+
 	function importar_xml($params, $type=1){	
 
 		$filename = $params["filename"];
