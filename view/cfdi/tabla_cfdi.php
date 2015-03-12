@@ -369,7 +369,8 @@ function _metodo($id)
 
   obtener_facturas = function()
   {
-    var path = "server/Facturas.php";
+    var get= location.href.split("?")[1];
+    var path = "server/Facturas.php?" + get;
     
     $.getJSON(path, function(res){
        
