@@ -394,6 +394,20 @@ class AccountTplService
 			"account_paid_id" => model($isr_ret, "int"),
 		);
 
+		$tax_isr_purchase_ret_0 = array(
+			"name" => model("ISR RETENIDO 0% COMPRA", "string"),
+			"description" => model("ISR", "string"),
+			"tax_type" => model("retenido", "string"),
+			"chart_template_id" => model($chart_tpl_id, "int"),
+			"type" => model("percent", "string"),
+			"type_tax_use" => model("purchase", "string"),
+			"applicable_type" => model("true", "string"),
+			"amount" => model(0, "double"),
+			"sequence" => model(1, "int"),
+			"account_collected_id" => model($isr_ret, "int"),
+			"account_paid_id" => model($isr_ret, "int"),
+		);
+
 		$tax_tpl_purchase = array(
 			"name" => model("IVA DE COMPRA 16%", "string"),
 			"description" => model("IVA", "string"),
@@ -430,6 +444,7 @@ class AccountTplService
 		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_iva_sale_ret_0);
 		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_isr_sale_ret);
 		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_isr_sale_ret_0);
+		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_isr_purchase_ret_0);
 
 		return $this->obtener_impuestos_template($chart_tpl_id);
 	}
