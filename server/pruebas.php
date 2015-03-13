@@ -15,11 +15,15 @@ require_once PROYECT_PATH . "/service/PaymentService.php";
 // logg($res,1);
 $uid = USER_ID;
 $pwd = md5(PASS);
-$cid = 6;
+$cid = 96;
 #logg($uid, 1);
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+
+$service = new AccountService($uid, $pwd);
+$res = $service->obtener_polizas($cid);
+logg($res,1);
 
 $model = "invoice.import";		
 $method = "contabilizar_factura";
