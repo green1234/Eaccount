@@ -32,7 +32,7 @@ function sub(obj){
             if (data.success)
             {
                 alert("Facturas cargadas.");        
-                window.location = "?section=table";                
+                window.location = "?section=cfdi&estatus=vali";                
             }
             else
             {
