@@ -42,7 +42,7 @@
 require_once "server/conf/constantes.conf";
 require_once "server/lib/common.php"; 
 
-$band = false;
+/*$band = false;
 if (isset($_SESSION["login"]))
 {
 
@@ -54,10 +54,10 @@ if (isset($_SESSION["login"]))
   {
     $cfdi = $_SESSION["cfdi"][$_GET["cfdi"]];  
     $band = true;
-  }
+  }*/
   //var_dump($cfdi);
-}
-if ($band){
+/*}
+if ($band){*/
 ?>
 
 <div class="grad1">
@@ -146,11 +146,11 @@ if ($band){
   </div>
 </div>
 
-<div class="col-md-1"></div>
+<!-- <div class="col-md-1"></div> -->
 
-<div class="col-md-2" style="float:right;">
+<!-- <div class="col-md-2" style="float:right;">
   <button class="btn btn-primary">CONTABILIZAR</button>
-</div>
+</div> -->
 
 
 <script type="text/javascript">
@@ -224,8 +224,3 @@ $("#lista_sub_tabla3 li").click(function () {
   }*/
 
 </script>
-
-<? } 
-else{ ?>
-  NO SE RECIBIERON DATOS
-<?}?>
