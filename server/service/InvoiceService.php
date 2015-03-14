@@ -16,6 +16,45 @@ class InvoiceService
 		$this->obj = new MainObject();
 	}
 
+	function leer_facturas_lines($line_ids)	
+	{
+		$model = "invoice.import.line";
+		$params = array(							
+					model("name", "string"),
+					model("price_unit", "string"),
+					model("account_expense_income", "string"),
+					model("price_subtotal", "string"),
+					model("discount", "string"),
+					model("product_uom_id", "string"),
+					model("quantity", "string"),
+					model("product_id", "string"),
+					
+				);		
+		$res = $this->obj->read($this->uid, $this->pwd, $model, $line_ids, $params);
+		return $res;		
+	}
+
+	function obtener_facturas_lines($factura_id)	
+	{
+		$model = "invoice.import.line";
+		$domain = array(
+					array(
+						model("invoice_id", "string"),
+						model("=", "string"),
+						model($factura_id, "int"),
+					));
+
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+		//return $res;
+		if ($res["success"])
+		{
+			$res = $this->leer_facturas_lines($res["data"]["id"]);
+			return $res;			
+		}	
+
+		return array("success"=>false);
+	}
+
 	function obtener_facturas($params)
 	{		
 		if (isset($params["cid"]))
@@ -124,20 +163,21 @@ class InvoiceService
 						);
 
 					$res = $this->obj->read($this->uid, $this->pwd, $model, $facturas_id, $params);
-					$model = "account.invoice.line";
-					$model = "invoice.import.line";
+					/*$model = "account.invoice.line";
+					$model = "invoice.import.line";*/
 
 					foreach ($res["data"] as $idx => $factura) {
 						$res["data"][$idx]["currency_id"] = array(1, "MXN");
-						$domain = array(
+						
+						/*$domain = array(
 							array(
 								model("invoice_id", "string"),
 								model("=", "string"),
 								model($factura["id"], "int"),
-								));
+								));*/
 
 
-						$line_facturas_id = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+						/*$line_facturas_id = $this->obj->search($this->uid, $this->pwd, $model, $domain);
 						//return $line_facturas_id;
 
 						$params = array(							
@@ -152,7 +192,8 @@ class InvoiceService
 							
 						);
 						$line_ids = $line_facturas_id["data"]["id"];
-						$line_facturas = $this->obj->read($this->uid, $this->pwd, $model, $line_ids, $params);
+						$line_facturas = $this->obj->read($this->uid, $this->pwd, $model, $line_ids, $params);*/
+						$line_facturas = $this->obtener_facturas_lines($factura["id"]);
 						//return $line_facturas;
 						//logg($line_facturas["data"], 1);
 						if ($line_facturas["success"])

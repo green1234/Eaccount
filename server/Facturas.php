@@ -74,6 +74,14 @@
 				default:
 					# code...
 					break;
+			}			
+		}
+		else if (isset($_GET["section"]) && isset($_GET["cfdi"]))
+		{
+			if ($_GET["section"] == "cfdi_detail")
+			{
+				$res = $service->obtener_facturas_lines($_GET["cfdi"]);
+				echo json_encode($res);					
 			}
 		}
 		else

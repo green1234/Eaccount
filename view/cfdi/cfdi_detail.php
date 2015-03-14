@@ -70,7 +70,7 @@ if ($band){
   </p>
 </div>
 <div class="table-responsive">
-  <table class="table table-bordered table-striped" id="tabla_conta" style="border: 0px;border-radius:10px;">
+  <table class="table table-bordered table-striped" id="cfdi_detail" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
         <th style="border: 0px;">&nbsp;</th>
@@ -89,25 +89,25 @@ if ($band){
       
       <?
       //logg($cfdi['lines']);
-      foreach ($cfdi['lines'] as $factura){
+      /*foreach ($cfdi['lines'] as $factura){
         $id = $factura['id'];
-        $cuenta = split(" ", $factura['account_expense_income'][1]);
+        $cuenta = split(" ", $factura['account_expense_income'][1]);*/
         //var_dump($cuenta);
         
       ?>
-        <tr>
-          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
-          <td><?=$cfdi['id']?></td>
-          <td><?=$factura['name']?></td>          
-          <td><?=$factura['quantity']?></td>
-          <td><?=$factura['product_uom_id'][1]?></td>
-          <td><?=$factura['price_unit']?></td>
-          <td><?=$factura['discount']?></td>          
-          <td><?=$cuenta[0]?></td>
-          <td><?=$cuenta[1]?></td>          
-          <td><input id="<?=$id?>" type="checkbox" style="display:block;width:auto;"></td>
-        </tr>
-      <? }?>
+        <!-- <tr>
+          <td><input id="<?//=$id?>" type="checkbox" style="display:block;width:auto;"></td>
+          <td><?//=$cfdi['id']?></td>
+          <td><?//=$factura['name']?></td>          
+          <td><?//=$factura['quantity']?></td>
+          <td><?//=$factura['product_uom_id'][1]?></td>
+          <td><?//=$factura['price_unit']?></td>
+          <td><?//=$factura['discount']?></td>          
+          <td><?//=$cuenta[0]?></td>
+          <td><?//=$cuenta[1]?></td>          
+          <td><input id="<?//=$id?>" type="checkbox" style="display:block;width:auto;"></td>
+        </tr> -->
+      <? //}?>
       
     </tbody>
   </table>
@@ -154,6 +154,37 @@ if ($band){
 
 
 <script type="text/javascript">
+
+$(function(){
+  var path = location.href.split("?")[1];
+  var tabla = $("#cfdi_detail")
+  
+  $.getJSON("server/Facturas.php?" + path, function(res)
+  {
+    if (res.success)
+    {
+      console.log(res)
+      var rows = "";
+      $.each(res.data, function(index, v){
+        rows += "<tr>";
+        rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";
+        rows += "<td>" + v.id + "</td>";
+        rows += "<td>" + v.name + "</td>";
+        rows += "<td>" + v.quantity +"</td>";
+        rows += "<td>" + v.product_uom_id[1] + "</td>";
+        rows += "<td>" + v.price_unit + "</td>";
+        rows += "<td>" + v.discount + "</td>";
+        rows += "<td>" + v.account_expense_income[0] + "</td>";
+        rows += "<td>" + v.account_expense_income[1] + "</td>";
+        rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";
+        rows += "</tr>";
+      }); 
+      tabla.append(rows);     
+    }
+  })
+
+});
+
 /*$('#tabla_conta td').click(function () {
   var valor_input = this.innerHTML;
   if (valor_input.indexOf("<input") > -1) {
