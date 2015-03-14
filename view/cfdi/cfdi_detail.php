@@ -172,8 +172,8 @@ $(function(){
         rows += "<td>" + v.name + "</td>";
         rows += "<td>" + v.quantity +"</td>";
         rows += "<td>" + v.product_uom_id[1] + "</td>";
-        rows += "<td>" + v.price_unit + "</td>";
-        rows += "<td>" + v.discount + "</td>";
+        rows += "<td>$" + v.price_unit.toFixed(2) + "</td>";
+        rows += "<td>$" + v.discount.toFixed(2) + "</td>";
         rows += "<td>" + v.account_expense_income[0] + "</td>";
         rows += "<td>" + v.account_expense_income[1] + "</td>";
         rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";

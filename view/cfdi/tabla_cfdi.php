@@ -203,7 +203,7 @@ function _metodo($id)
     </thead>
     <tbody>
       <? 
-      $path = SERVERNAME . '/Facturas.php?';
+     /* $path = SERVERNAME . '/Facturas.php?';
       $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
       $path = $path . "&type=" . $type . "&estatus=" . $estatus;
 
@@ -211,42 +211,42 @@ function _metodo($id)
       $path2 = $path2 . "&uid=" . $uid . "&pwd=" . $pwd;      
 
       $facturas = json_decode(file_get_contents($path), true);
-      $bancos = json_decode(file_get_contents($path2), true);
+      $bancos = json_decode(file_get_contents($path2), true);*/
       //var_dump($bancos);  
       //var_dump($facturas); 
       //count($facturas['data']) > 0
-      if ($facturas["success"] && !isset($facturas['data']['id']))
+      /*if ($facturas["success"] && !isset($facturas['data']['id']))
       {
         foreach ($facturas['data'] as $factura):
           //var_dump($factura);
           $estado = ($factura['state'] == "validate") ? "Validado" : "Sin Validar";
           $id = $factura['id'];
-          $_SESSION["cfdi"][$id] = $factura;
+          $_SESSION["cfdi"][$id] = $factura;*/
         ?>
-          <tr class="cfdi_row">
+          <!-- <tr class="cfdi_row">
             <td><input id="<?=$id;?>" name="selector" class="id_row" type="radio" style="display:block;width:auto;"></td>
             
             <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
             <td><a href="#"><img src="img/check_azul.png" width="20px" height="20px" alt=""></a></td>
             
-            <td><?=$factura['date_invoice']?></td>
-            <td><?=$factura['folio']?></td>
-            <td><?=$factura['partner_id']['1']?></td>
-            <td><?=$factura['amount_untaxed']?></td>
-            <td><?=$factura['discount']?></td>
-            <td><?=$factura['amount_tax']?></td>
-            <td><?=$factura['amount_total']?></td>
-            <td class="pgo_fecha"><?=$factura['pgo_fecha']?></td>
+            <td><?//=$factura['date_invoice']?></td>
+            <td><?//=$factura['folio']?></td>
+            <td><?//=$factura['partner_id']['1']?></td>
+            <td><?//=$factura['amount_untaxed']?></td>
+            <td><?//=$factura['discount']?></td>
+            <td><?//=$factura['amount_tax']?></td>
+            <td><?//=$factura['amount_total']?></td>
+            <td class="pgo_fecha"><?//=$factura['pgo_fecha']?></td>
             <td class="pgo_cuenta">Cuenta de banco de prueba</td>
-            <td class="pgo_metodo"><?=_metodo($factura['pgo_metodo'])?></td>            
+            <td class="pgo_metodo"><?//=_metodo($factura['pgo_metodo'])?></td>            
             <td><input id="<?=$id;?>" name="selector2" class="id_row2" type="radio" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
             <td><input rid="<?=$id;?>" class="rid_pdf" type="checkbox" style="display:block;width:auto;"></td>
             
             
-          </tr>
-        <? endforeach; 
-      }?>
+          </tr> -->
+        <? /*endforeach; */
+      //}?>
       <!--tr>
         <td>Id_poliza</td>
         <td>14.03.2015</td>
@@ -332,9 +332,9 @@ function _metodo($id)
 
 <script>
   
-  var uid = <?=$uid?>;
-  var cid = <?=$cid[0]?>;
-  var pwd = "<?=$pwd?>";  
+  /*var uid = <?//=$uid?>;
+  var cid = <?//=$cid[0]?>;
+  var pwd = "<?//=$pwd?>";  */
   var bancos = {};
   var cuentas = {};
   var facturas = {};

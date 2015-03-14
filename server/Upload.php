@@ -16,7 +16,8 @@ if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_G
     //$uploaddir = 'C:\wamp\tmp';
 
     $uploaddir = TEMP . "/"; //'/tmp/';
-
+    $responses = array("success" => true, "data" => array());
+    $success = true;
     foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
     {
         //logg($file_name);
@@ -29,11 +30,19 @@ if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_G
                 "file" => $uploadfile,
                 "cid"=> $cid);
             //$response = $service->importar_xml($_FILES['userfile']['name'][$index], $uploadfile, 1);
-            $response = $service->importar_xml($params, 1);
-
-            echo json_encode($response);
+            $response = $service->importar_xml($params, 1);            
+            $responses["data"][] = $response;          
+        }
+        else
+        {
+            $responses["data"][] = array(
+                "success" => false, 
+                "data" => array(
+                    "description" => "No se pudo subir el archivo"));
         }
     }
+
+    echo json_encode($responses);
 
     exit();
 	$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);

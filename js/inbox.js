@@ -32,7 +32,17 @@ function sub(obj){
             if (data.success)
             {
                 alert("Facturas cargadas.");        
-                window.location = "?section=cfdi&estatus=vali";                
+                msj = "";
+                $.each(data.data, function(i, v)
+                {
+                    if (v.success == false)
+                    {
+                        msj += "#" + i + ": " + v.data.description + "\n";
+                    }
+                });
+                if (msj != "")                
+                    alert("Se detectaron algunos problemas con las facturas siguientes:\n" + msj);
+                //window.location = "?section=cfdi&estatus=vali";                
             }
             else
             {
