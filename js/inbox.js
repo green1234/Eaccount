@@ -40,9 +40,13 @@ function sub(obj){
                         msj += "#" + i + ": " + v.data.description + "\n";
                     }
                 });
-                if (msj != "")                
-                    alert("Se detectaron algunos problemas con las facturas siguientes:\n" + msj + "Consulte la seccion de Cfdi's Apocrifos/No Verificados para mas información.");
-                //window.location = "?section=cfdi&estatus=vali";                
+                if (msj != "")
+                {
+                    alert("Se detectaron algunos problemas con las facturas siguientes:\n" + msj + "Consulte la seccion de Cfdi's Apocrifos/No Verificados para mas información.");                    
+                    window.location = "?section=cfdi&estatus=apoc";                
+                }
+                else
+                    window.location = "?section=cfdi&estatus=vali";                
             }
             else
             {
