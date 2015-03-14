@@ -4,9 +4,16 @@ var optionsAcc, lines_rows;
 get_lines = function(pid, fn)
 {
 	$.getJSON("server/Polizas.php?action=lines&pid=" + pid, function(res)
-	{		
-		if (res.success)		
-			lines = res.data;				
+	{	
+		console.log(res.data)	
+		if (res.success)	
+		{
+			var head = "<p>Factura de honorarios <b>" + res.data[0].name + "</b> recibida con fecha <b>" + res.data[0].date + "</b><br>";
+		    head += "Recibida de <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].total.toFixed(2) + "</b></p>";
+		    $("#header_poliza_detail").html(head);
+			
+			lines = res.data[0].lines;				
+		}	
 		fn(asignar_eventos);
 	});
 }
@@ -38,7 +45,7 @@ mostrar_lineas = function(fn)
 		rows += "</tr>";
 	});
 	$("#poliza_detalle").append(rows);
-	fn();
+	//fn();
 }
 
 asignar_eventos = function()

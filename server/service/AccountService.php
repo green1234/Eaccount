@@ -16,6 +16,48 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	function obtener_datos_poliza($pid)
+	{
+		$model = "account.move";
+		$polizas_id = array($pid);
+			
+		$params = array(
+			model("name", "string"),
+			model("state", "string"),
+			model("ref", "string"),
+			model("journal_id", "string"),
+			model("period_id", "string"),
+			model("date", "string"),
+			model("partner_id", "string"),						
+			model("gl_journal_type", "string"),
+			model("gl_ban", "string"),
+			model("gl_cta", "string"),
+			model("gl_ban2", "string"),
+			model("gl_cta2", "string"),
+			model("gl_num_cheque", "string")
+		);				
+
+		$res = $this->obj->read($this->uid, $this->pwd, $model, $polizas_id, $params);			
+		$line_moves = $this->obtener_poliza_lines($res["data"][0]["id"]);
+		
+		if ($line_moves["success"])
+		{	
+			$debit = 0;
+			$credit = 0;
+			foreach ($line_moves["data"] as $id => $line) {
+				$debit = $debit + $line["debit"];
+				$credit = $credit + $line["credit"];
+			}
+			//if ($debit == $credit)
+			$res["data"][0]["lines"] = $line_moves["data"];
+			$res["data"][0]["total"] = $debit;
+			$res["data"][0]["currency_id"] = array(34, "MXN");
+
+		}		
+	
+		return $res;
+	}
+
 	function update_poliza_line($line_id, $data)
 	{
 		$model = "account.move.line";
@@ -292,7 +334,6 @@ class AccountService
 					$line_moves = $this->obj->read($this->uid, $this->pwd, $move_line_model, $line_move_ids["data"]["id"], $params);*/
 					
 					/*logg($line_move_ids["data"]["id"], 1);*/
-
 
 					if ($line_moves["success"])
 					{

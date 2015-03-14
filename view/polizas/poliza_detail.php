@@ -78,14 +78,7 @@ if (isset($_SESSION["login"]))
 if ($band){*/
 ?>
 
-<div class="grad1">
-  <p>
-    Factura de honorarios <b><?=$cfdi["folio"]?></b> recibida con fecha <b><?=$cfdi["date_invoice"]?></b>
-    <br>
-    Recibida de <b><?=$cfdi["partner_id"][1]?></b> en <b><?=$cfdi["currency_id"][1]?></b>, por un total de $<b><?=$cfdi["amount_total"]?></b> 
-    <br>
-    <!-- Concepto: <b>Concepto_poliza<b> -->
-  </p>
+<div id="header_poliza_detail" class="grad1">  
 </div>
 <div class="table-responsive">
   <table class="table table-bordered table-striped" id="poliza_detalle" style="border: 0px;border-radius:10px;">
@@ -142,11 +135,11 @@ if ($band){*/
   </div>
 </div>
 
-<div class="col-md-1"></div>
+<!-- <div class="col-md-1"></div>
 
 <div class="col-md-2" style="float:right;">
   <button class="btn btn-primary">CONTABILIZAR</button>
-</div>
+</div> -->
 <script>
   var pid = <?=$_GET["pid"]?>;
 </script>

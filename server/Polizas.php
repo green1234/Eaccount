@@ -46,9 +46,9 @@ if (isset($_SESSION["login"]))
 		}
 		else if($_GET["action"] == "lines")
 		{
-			$res = $service->obtener_poliza_lines($_GET["pid"]);
+			$res = $service->obtener_datos_poliza($_GET["pid"]);
 
-			if ($res["success"])
+			/*if ($res["success"])
 			{
 				$polizas = array();
 				foreach ($res["data"] as $index => $poliza) {
@@ -57,7 +57,7 @@ if (isset($_SESSION["login"]))
 				$res["data"] = $polizas;
 			}
 			else
-				$res = get_error();
+				$res = get_error();*/
 		}
 		else if($_GET["action"] == "update" && isset($_GET["id"]))
 		{
