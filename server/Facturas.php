@@ -80,7 +80,7 @@
 		{
 			if ($_GET["section"] == "cfdi_detail")
 			{
-				$res = $service->obtener_facturas_lines($_GET["cfdi"]);
+				$res = $service->obtener_datos_factura($_GET["cfdi"]);
 				echo json_encode($res);					
 			}
 		}

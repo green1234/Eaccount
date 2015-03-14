@@ -60,29 +60,29 @@ if (isset($_SESSION["login"]))
 if ($band){*/
 ?>
 
-<div class="grad1">
-  <p>
-    Factura de honorarios <b><?=$cfdi["folio"]?></b> recibida con fecha <b><?=$cfdi["date_invoice"]?></b>
+<div id="cfdi_header_detail" class="grad1">
+  <!-- p>
+    Factura de honorarios <b><?//=$cfdi["folio"]?></b> recibida con fecha <b><?//=$cfdi["date_invoice"]?></b>
     <br>
-    Recibida de <b><?=$cfdi["partner_id"][1]?></b> en <b><?=$cfdi["currency_id"][1]?></b>, por un total de $<b><?=$cfdi["amount_total"]?></b> 
+    Recibida de <b><?//=$cfdi["partner_id"][1]?></b> en <b><?//=$cfdi["currency_id"][1]?></b>, por un total de $<b><?//=$cfdi["amount_total"]?></b> 
     <br>
-    <!-- Concepto: <b>Concepto_poliza<b> -->
-  </p>
+    Concepto: <b>Concepto_poliza<b>
+  </p> -->
 </div>
 <div class="table-responsive">
   <table class="table table-bordered table-striped" id="cfdi_detail" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
-        <th style="border: 0px;">&nbsp;</th>
+       <!--  <th style="border: 0px;">&nbsp;</th> -->
         <th>PÓLIZA</th>
         <th>CONCEPTO</th>        
         <th>CANTIDAD</th>
         <th>UDM</th>
         <th>PRECIO UNITARIO</th>
         <th>DESCUENTO</th>        
-        <th>CUENTA</th>
-        <th>NOMBRE</th>        
-        <th style="border: 0px;">&nbsp;</th>
+        <!-- <th>CUENTA</th>
+                <th>NOMBRE</th> -->        
+        <!-- <th style="border: 0px;">&nbsp;</th> -->
       </tr>
     </thead>
     <tbody>
@@ -163,20 +163,27 @@ $(function(){
   {
     if (res.success)
     {
+      var head = "<p>Factura de honorarios <b>" + res.data[0].folio + "</b> recibida con fecha <b>" + res.data[0].date_invoice + "</b><br>";
+      head += "Recibida de <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].amount_total.toFixed(2) + "</b></p>";
+      if (res.data[0].error_sat != "Pendiente")
+        head += "<br>Mensaje SAT: <b>" + res.data[0].error_sat + "</b>"
+
+      //head += "<br>Concepto: <b>Concepto_poliza<b>";
+      $("#cfdi_header_detail").html(head);
       console.log(res)
       var rows = "";
-      $.each(res.data, function(index, v){
+      $.each(res.data[0].lines, function(index, v){
         rows += "<tr>";
-        rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";
+        /*rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";*/
         rows += "<td>" + v.id + "</td>";
         rows += "<td>" + v.name + "</td>";
         rows += "<td>" + v.quantity +"</td>";
         rows += "<td>" + v.product_uom_id[1] + "</td>";
         rows += "<td>$" + v.price_unit.toFixed(2) + "</td>";
         rows += "<td>$" + v.discount.toFixed(2) + "</td>";
-        rows += "<td>" + v.account_expense_income[0] + "</td>";
-        rows += "<td>" + v.account_expense_income[1] + "</td>";
-        rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";
+        //rows += "<td>" + v.account_expense_income[0] + "</td>";
+        //rows += "<td>" + v.account_expense_income[1] + "</td>";
+        /*rows += "<td><input type='checkbox' style='display:block;width:auto;'></td>";*/
         rows += "</tr>";
       }); 
       tabla.append(rows);     

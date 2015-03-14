@@ -55,6 +55,65 @@ class InvoiceService
 		return array("success"=>false);
 	}
 
+	function obtener_datos_factura($cfdi)
+	{
+		$model = "invoice.import";
+			//$model = "account.invoice";
+		$domain = array();
+		$domain[] = array(
+			model("id", "string"),
+			model("=", "string"),
+			model($cfdi, "int"),
+		);
+
+		$res = $this->obj->search($this->uid, $this->pwd, $model, $domain);
+			#logg($res, 1);
+		if ($res["success"])
+		{
+			$facturas_id = $res["data"]["id"];
+			#logg($facturas_id, 1);
+			if (count($facturas_id) > 0)
+			{
+				$params = array(
+					model("partner_id", "string"),
+					model("date_invoice", "string"),
+					model("currency_id", "string"),
+					model("amount_tax", "string"),
+					model("amount_untaxed", "string"),
+					model("amount_total", "string"),
+					model("type", "string"),					
+					model("state", "string"),
+					model("folio", "string"),
+					model("serie", "string"),
+					model("discount", "string"),
+					model("uuid", "string"),
+					model("state", "string"),
+					model("error_sat", "string"),
+					model("amount_untaxed", "string"),
+					model("pgo_fecha", "string"),
+					model("pgo_metodo", "string"),
+					model("pgo_banorigen", "string"),
+					model("pgo_ctaorigen", "string"),
+					model("pgo_ctadestino", "string"),
+					model("pgo_transaccion", "string"),
+					model("pgo_fechacheque", "string"),
+					model("pgo_nocheque", "string"),
+					model("error_sat", "string")
+				);				
+
+				$res = $this->obj->read($this->uid, $this->pwd, $model, $facturas_id, $params);				
+				$res["data"][0]["currency_id"] = array(1, "MXN");
+				
+				$line_facturas = $this->obtener_facturas_lines($res["data"][0]["id"]);
+				//return $line_facturas;		
+				if ($line_facturas["success"])
+					$res["data"][0]["lines"] = $line_facturas["data"];
+			}
+		}
+
+		return $res;		
+	}
+
 	function obtener_facturas($params)
 	{		
 		if (isset($params["cid"]))
