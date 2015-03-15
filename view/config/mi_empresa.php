@@ -495,7 +495,7 @@ $empresa = $res["data"];
         console.log(res.data);    
         cuentas = res.data;
         if (cuentas.length > 0)
-        {
+        {          
           $.each(cuentas, function(i,v)
           {
             var tipo = "Cuenta de Cheques ";
@@ -509,7 +509,7 @@ $empresa = $res["data"];
         }
         else
         {
-          var cta = "<div class='col-md-10'><b>Actualmente no tienes cuentas registradas.</b></div>";
+          var cta = "<div class='empty col-md-10'><b>Actualmente no tienes cuentas registradas.</b></div>";
           $(".ctas_ban_list").append(cta);
         }
       }
@@ -633,7 +633,7 @@ $empresa = $res["data"];
             var numero = $("#cta_numero").val();
             var cta = "<div class='col-md-10'>" + tipo + " " + banco + " *" + numero.substr(-4) + "</div>"
             console.log(cta)
-            $(".ctas_ban_list").append(cta);            
+            $(".ctas_ban_list").find(".empty").remove().end().append(cta);            
           }
           else
           {
