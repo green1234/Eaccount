@@ -403,30 +403,38 @@ function _metodo($id)
   mostrar_facturas = function()
   {
     var cfdi_rows = "";
-    $.each(facturas, function(idx, cfdi){
-      cfdi_rows += "<tr class='cfdi_row'>";
-      cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";      
-      cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";
-      cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";            
-      cfdi_rows += "<td>" + cfdi.date_invoice + "</td>";
-      cfdi_rows += "<td>" + cfdi.folio + "</td>";
-      cfdi_rows += "<td>" + cfdi.partner_id[1] + "</td>";
-      cfdi_rows += "<td>" + cfdi.amount_untaxed + "</td>";
-      cfdi_rows += "<td>" + cfdi.discount + "</td>"; 
-      cfdi_rows += "<td>" + cfdi.amount_tax + "</td>"; 
-      cfdi_rows += "<td>" + cfdi.amount_total + "</td>"; 
-      cfdi_rows += "<td class='pgo_fecha'>" + cfdi.pgo_fecha + "</td>"; 
-      cfdi_rows += "<td class='pgo_cuenta'>Cuenta de banco de prueba</td>"; 
-      cfdi_rows += "<td class='pgo_metodo'>" + cfdi.pgo_metodo + "</td>"; 
-      cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector2' class='id_row2' type='radio' style='display:block;width:auto;'></td>"
-      cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
-      cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
-      cfdi_rows += "<tr>";
+    console.log(facturas.id)
 
-    });             
+    if (facturas.id == undefined)
+    {
+      $.each(facturas, function(idx, cfdi){
+        cfdi_rows += "<tr class='cfdi_row'>";
+        cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";      
+        cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";
+        cfdi_rows += "<td><a href='#'><img src='img/check_azul.png' width='20px' height='20px' alt=''></a></td>";            
+        cfdi_rows += "<td>" + cfdi.date_invoice + "</td>";
+        cfdi_rows += "<td>" + cfdi.folio + "</td>";
+        cfdi_rows += "<td>" + cfdi.partner_id[1] + "</td>";
+        cfdi_rows += "<td>" + cfdi.amount_untaxed + "</td>";
+        cfdi_rows += "<td>" + cfdi.discount + "</td>"; 
+        cfdi_rows += "<td>" + cfdi.amount_tax + "</td>"; 
+        cfdi_rows += "<td>" + cfdi.amount_total + "</td>"; 
+        cfdi_rows += "<td class='pgo_fecha'>" + cfdi.pgo_fecha + "</td>"; 
+        cfdi_rows += "<td class='pgo_cuenta'>Cuenta de banco de prueba</td>"; 
+        cfdi_rows += "<td class='pgo_metodo'>" + cfdi.pgo_metodo + "</td>"; 
+        cfdi_rows += "<td><input id='" + cfdi.id + "' name='selector2' class='id_row2' type='radio' style='display:block;width:auto;'></td>"
+        cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
+        cfdi_rows += "<td><input rid='" + cfdi.id + "' class='rid_pdf' type='checkbox' style='display:block;width:auto;'></td>"
+        cfdi_rows += "<tr>";
 
-    $("#tabla_cfdi").append(cfdi_rows);
-    agregar_eventos();
+      }); 
+    }
+    else
+    {
+      cfdi_rows = "<tr><td colspan='16'>No hay resultados</td></tr>";
+    }
+     $("#tabla_cfdi").append(cfdi_rows);
+      agregar_eventos();
   }
 
   agregar_eventos = function(){

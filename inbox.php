@@ -85,27 +85,27 @@ else
                 <ul class="subLista">
                   <li>
                     <a class="cfdi vali" href="?section=cfdi&estatus=vali">
-                      Por contabilizar
+                      Por contabilizar <span>(0)</span>
                     </a>
                   </li>
                   <li>
                     <a class="cfdi apoc" href="?section=cfdi&estatus=apoc">
-                      Apocrifos
+                      Apocrifos <span>(0)</span>
                     </a>
                   </li>
                   <li>
                     <a class="cfdi inco" href="?section=cfdi&estatus=inco">
-                      Datos Incorrectos
+                      Datos Incorrectos <span>(0)</span>
                     </a>
                   </li>
                   <li>
                     <a class="cfdi erro" href="?section=cfdi&estatus=erro">
-                      Error al procesar
+                      Error al procesar <span>(0)</span>
                     </a>
                   </li>
                   <li>
                     <a class="cfdi cont" href="?section=cfdi&estatus=cont">
-                      Contabilizados
+                      Contabilizados <span>(0)</span>
                     </a>
                   </li>
               </div>

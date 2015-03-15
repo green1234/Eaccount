@@ -90,7 +90,7 @@ obtener_facturas_ini = function()
         $.each(estatus, function(i,v)
         {
             var text = $("a.cfdi."+i).text();
-            $("a.cfdi."+i).text(text + "(" + v + ")");
+            $("a.cfdi."+i).find("span").text("(" + v + ")");
         });
       }
     });
