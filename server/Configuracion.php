@@ -1,19 +1,33 @@
 <?php
-
+session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/UsuarioService.php";
 
-$admin_user = "admin";
-$admin_pw = "admin";
-$_POST["Action"] = "add";
-
-function verificar_post($data, $post)
+// $admin_user = "admin";
+// $admin_pw = "admin";
+// $_POST["Action"] = "add";
+if(isset($_SESSION["login"]))
 {
-	$tmp = array();
-	foreach ($data as $key => $value) {		
-		$tmp[$value] = isset($_POST[$value]) ? $_POST[$value] : "";		
-	}
-	return $tmp;
+	$cid = $_SESSION["login"]["cid"][0];
+}
+
+function registrar_cuenta_bancaria($cid, $p)
+{
+	$model = "res.company";		
+	$method = "registrar_cuenta_bancaria";
+	$params = array(
+		"cid" => model($cid, "int"),
+		"banco" => model($p["cta_banco"], "string"),
+		"cuenta" => model($p["cta_numero"], "string"),
+		"pais" => model($p["cta_pais"], "string"),
+		"moneda" => model($p["cta_moneda"], "string"),
+		"clabe" => model($p["cta_clabe"], "string"),
+		"tipo" => model($p["cta_tipo"], "string")
+	);
+
+	$obj = new MainObject();
+	$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);		
+	return $response;
 }
 
 function verificar_data_received($data, $type="post")
@@ -193,6 +207,32 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 	}
 
 	echo json_encode($res);	
+}
+else if (isset($_GET["add"]))
+{
+	if ($_GET["add"] == "ctaban")
+	{
+		$keys = array(
+			"cta_nac", 
+			"cta_pais", 
+			"cta_banco", 
+			"cta_moneda",
+			"cta_tipo",
+			"cta_numero",
+			"cta_clabe");
+
+		$data = verificar_datos($_GET, $keys);
+
+		if ($data)
+		{
+			$res = registrar_cuenta_bancaria($cid, $data);
+		}
+		else
+		{
+			$res = array("success"=>"error");
+		}		
+		echo json_encode($res);
+	}
 }
 else
 {

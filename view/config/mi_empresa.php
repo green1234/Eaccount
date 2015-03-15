@@ -393,60 +393,60 @@ $empresa = $res["data"];
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Nueva cuenta bancaria</h4>
       </div>
-      <form id="CtaBanForm" action="">
+      <form id="CtaBanForm" action="server/">
         <div class="modal-body">          
             <div class="input def">
               <label for="cta_nac">Nacionalidad del banco:</label>              
               <select name="cta_nac" id="cta_nac">
-                <option value="" seleced>Selecciona una opcion</option>
-                <option value="1" seleced>Mexicana</option>
-                <option value="2" seleced>Exranjera</option>
+                <option class="default" value="" selected disabled='disabled'>Selecciona una opcion</option>
+                <option value="1">Mexicana</option>
+                <option value="2">Extranjera</option>
               </select>
+              <span style="display:none;">** Requerido **</span>
             </div>
             <div class="input def">
               <label for="cta_pais">País de origen del banco:</label>              
               <select name="cta_pais" id="cta_pais">
-                <option value="" seleced>Selecciona una opcion</option>
-                <option value="1" seleced>Mexico</option>
-                <option value="2" seleced>Otro</option>
+                <option class="default" value="" selected>Selecciona una opcion</option>                
               </select>
+              <span style="display:none;">** Requerido **</span>
             </div>
             <div class="input def">
               <label for="cta_banco">Nombre del banco:</label>              
               <select name="cta_banco" id="cta_banco">
-                <option value="" seleced>Selecciona una opcion</option>
-                <option value="1" seleced>Banamex</option>
-                <option value="2" seleced>Otro</option>
+                <option class="default" value="" selected>Selecciona una opcion</option>                
               </select>
+              <span style="display:none;">** Requerido **</span>
             </div>
             <div class="input def">
               <label for="cta_moneda">Moneda:</label>              
               <select name="cta_moneda" id="cta_moneda">
-                <option value="" seleced>Selecciona una opcion</option>
-                <option value="1" seleced>MXN</option>
-                <option value="2" seleced>Otro</option>
+                <option class="default" value="" selected>Selecciona una opcion</option>                
               </select>
+              <span style="display:none;">** Requerido **</span>
             </div>
             <div class="input def">
               <label for="cta_tipo">Tipo de Cuenta:</label>              
               <select name="cta_tipo" id="cta_tipo">
-                <option value="" seleced>Selecciona una opcion</option>
-                <option value="1" seleced>Cuenta de Cheques</option>
-                <!-- <option value="2" seleced>CLABE</option> -->
-                <option value="3" seleced>Tarjeta de débito</option>
-                <option value="4" seleced>Tarjeta de crédito</option>
+                <option class="default" value="" selected disabled>Selecciona una opcion</option>
+                <option value="1">Cuenta de Cheques</option>                
+                <option value="2">Tarjeta de débito</option>
+                <option value="3">Tarjeta de crédito</option>
               </select>
+              <span style="display:none;">** Requerido **</span>
             </div>
             <div class="input def">
               <label style="color:purple;">&nbsp;</label>
             </div>
             <div class="input def">
               <label for="cta_numero">Numero de cuenta:</label>              
-              <input type="text" name="cta_numero" id="cta_numero">                
+              <input type="text" name="cta_numero" id="cta_numero" required>   
+              <!-- <span style="display:none;">** Requerido **</span>   -->           
             </div>
             <div class="input def">
               <label for="cta_clabe">CLABE:</label>              
-              <input type="text" name="cta_clabe" id="cta_clabe">                
+              <input type="text" name="cta_clabe" id="cta_clabe" required>   
+              <!-- <span style="display:none;">** Requerido **</span>     -->         
             </div>        
         </div>
         <div class="modal-footer">
@@ -536,19 +536,22 @@ $empresa = $res["data"];
 
     $('#CtaBanModal').on('show.bs.modal', function (e) {
       
-      var optMonedas = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      $("option.default").attr("selected", true);
+      // $("option.default").removeAttr("disabled");
+
+      var optMonedas = "<option class='default' selected disabled='disabled'>Seleccione una opción</option>";
       $.each(monedas, function(i, v){
         optMonedas += "<option value='" + v.id + "'>" + v.name + " - " + v.description + "</option>" ;
       });
       $("#cta_moneda").html(optMonedas);
 
-      var optBancos = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      var optBancos = "<option class='default' selected disabled='disabled'>Seleccione una opción</option>";
       $.each(bancos, function(i, v){
         optBancos += "<option value='" + v.id + "'>" + v.name + "</option>" ;
       });
       $("#cta_banco").html(optBancos);
 
-      optPaises = "<option selected disabled='disabled'>Seleccione una opción</option>";
+      optPaises = "<option class='default' selected disabled='disabled'>Seleccione una opción</option>";
       $.each(paises, function(i, v){
         optPaises += "<option value='" + v.id + "'>" + v.code + " - " + v.name + "</option>" ;
       });
@@ -557,7 +560,7 @@ $empresa = $res["data"];
     });
 
     $("#cta_nac").on("change", function()
-    {
+    {      
       var value = $(this).find("option:selected").val();
       console.log(value)
       if (value == 1)
@@ -569,6 +572,56 @@ $empresa = $res["data"];
         $("#cta_pais").html(optPaises); 
       }
 
+    });
+
+    // $("#CtaBanForm").find("select").on("change", function()
+    // {
+    //   $(this).find("option.default").attr("disabled", true);
+    // });
+
+    $("#CtaBanForm").on("submit", function(e){
+      e.preventDefault();
+      
+      var selects = $(this).find("select");
+      emptySelect = false;
+      $.each(selects, function(i,v)
+      {
+        if($(v).val() == null)
+        {
+          $(v).css("border", "1px solid red").focus().next("span").show();
+          //return false;
+          emptySelect = true;
+        }
+        else
+        {
+          $(v).css("border", "1px solid").next("span").hide();
+          console.log($(v).val());
+        }
+      });
+
+
+      if (!emptySelect)
+      {
+        var data = $(this).serialize();
+        console.log(data)
+        $.getJSON("server/Configuracion.php?add=ctaban&", data, function(res)
+        {
+          console.log(res)
+
+          if (res.success)
+          {
+            alert("La cuenta se registro correctamente");
+            
+          }
+          else
+          {
+            alert("No se pudo registrar la cuenta");
+          }
+          $('#CtaBanModal').modal("hide");
+
+        });
+      }
+      
     });
 
   });
