@@ -494,16 +494,24 @@ $empresa = $res["data"];
       {    
         console.log(res.data);    
         cuentas = res.data;
-        $.each(cuentas, function(i,v)
+        if (cuentas.length > 0)
         {
-          var tipo = "Cuenta de Cheques ";
-          
-          if (v.tipo == "2") tipo = "Tarjeta de Débito ";
-          if (v.tipo == "3") tipo = "Tarjeta de Crédito ";
+          $.each(cuentas, function(i,v)
+          {
+            var tipo = "Cuenta de Cheques ";
+            
+            if (v.tipo == "2") tipo = "Tarjeta de Débito ";
+            if (v.tipo == "3") tipo = "Tarjeta de Crédito ";
 
-          var cta = "<div class='col-md-10'>" + tipo + v.bank[1] + " *" + v.acc_number.substr(-4) + "</div>";
+            var cta = "<div class='col-md-10'>" + tipo + v.bank[1] + " *" + v.acc_number.substr(-4) + "</div>";
+            $(".ctas_ban_list").append(cta);
+          });
+        }
+        else
+        {
+          var cta = "<div class='col-md-10'><b>Actualmente no tienes cuentas registradas.</b></div>";
           $(".ctas_ban_list").append(cta);
-        });
+        }
       }
     });
   }
