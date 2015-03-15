@@ -371,9 +371,8 @@ $empresa = $res["data"];
     <br>
     <a href="#" data-toggle="modal" data-target="#CtaBanModal" class="openModal ctaban">Agregar o Editar cuentas</a>
   </div>
-  <div class="col-md-10">
-    Cuenta de Cheques BANORTE *1230.
-  </div>
+  <div class="ctas_ban_list col-md-10">    
+  </div>  
 
   <div class="col-md-12">
     <br>
@@ -493,8 +492,18 @@ $empresa = $res["data"];
       
       if (res.success)
       {    
-        //console.log(res.data);    
+        console.log(res.data);    
         cuentas = res.data;
+        $.each(cuentas, function(i,v)
+        {
+          var tipo = "Cuenta de Cheques ";
+          
+          if (v.tipo == "2") tipo = "Tarjeta de Débito ";
+          if (v.tipo == "3") tipo = "Tarjeta de Crédito ";
+
+          var cta = "<div class='col-md-10'>" + tipo + v.bank[1] + " *" + v.acc_number.substr(-4) + "</div>";
+          $(".ctas_ban_list").append(cta);
+        });
       }
     });
   }
@@ -611,7 +620,12 @@ $empresa = $res["data"];
           if (res.success)
           {
             alert("La cuenta se registro correctamente");
-            
+            var tipo = $("#cta_tipo").find("option:selected").text();
+            var banco = $("#cta_banco").find("option:selected").text();
+            var numero = $("#cta_numero").val();
+            var cta = "<div class='col-md-10'>" + tipo + " " + banco + " *" + numero.substr(-4) + "</div>"
+            console.log(cta)
+            $(".ctas_ban_list").append(cta);            
           }
           else
           {
