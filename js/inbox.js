@@ -64,7 +64,43 @@ function sub(obj){
     //event.preventDefault();
   }
 
+obtener_facturas_ini = function()
+{    
+    var path = "server/Facturas.php";
+
+    $.getJSON(path, function(res){
+       
+      if (res.success)
+      {   
+        facturas = res.data; 
+        var estatus = {
+            "veri" : 0,
+            "vali" : 0,
+            "apoc" : 0,
+            "cont" : 0,
+            "erro" : 0,
+            "inco" : 0,
+        }
+        $.each(facturas, function(i, f)
+        {
+            var st = f.savvy_estatus;
+            estatus[st] = estatus[st] + 1;
+        });
+        //console.log(estatus);
+        $.each(estatus, function(i,v)
+        {
+            var text = $("a.cfdi."+i).text();
+            $("a.cfdi."+i).text(text + "(" + v + ")");
+        });
+      }
+    });
+}
+
 $(function(){
+
+    var facturas = {}
+
+    obtener_facturas_ini();
 
     $(".close").on("click", function(){
         //window.location = "login.php";

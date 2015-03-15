@@ -219,7 +219,8 @@ class InvoiceService
 							model("pgo_transaccion", "string"),
 							model("pgo_fechacheque", "string"),
 							model("pgo_nocheque", "string"),
-							model("error_sat", "string")
+							model("error_sat", "string"),
+							model("savvy_estatus", "string"),
 						);
 
 					$res = $this->obj->read($this->uid, $this->pwd, $model, $facturas_id, $params);
