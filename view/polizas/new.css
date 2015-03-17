@@ -1,0 +1,52 @@
+h1
+{
+	margin: 0;
+	padding: 0;
+	font-size: 1.2em;
+}
+
+.p_data > div
+{
+	display: inline-block;	
+	width: 45%;
+	margin-right: 1em;
+
+}
+
+.p_data input
+{
+	height: 35px;
+	color: gray;
+}
+
+.w_100
+{
+	width: 100px;
+}
+
+.w_100 input[type=checkbox]
+{
+	display: inline-block;
+	margin-right: 1.5em;
+
+}
+
+tr td.abs
+{
+	position: relative;
+	width: 110px;
+
+}
+
+tr input
+{
+	height: 28px;
+}
+
+tr select
+{	
+	height: 28px;
+	left: 5px;
+	position: absolute;
+	width: 100px;
+}

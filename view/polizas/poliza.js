@@ -54,4 +54,9 @@ $(function(){
 	  //location.href = "?section=poliza_detail&cfdi=" + id;
 	  /*console.log(id)*/
 	 //});
+
+	/*$(".new_poliza").on("click", function(e)
+	{
+		e.preventDefault();
+	});*/
 });

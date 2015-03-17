@@ -207,7 +207,8 @@ function _metodo($id)
 </div>
 
 <div class="col-md-1">
-  <img src="img/menu_rosa.png" style="max-width: 25px;float:left;cursor:pointer;" onClick="showHideSubTabla()">
+  <a class="new_poliza" href="?section=poliza&action=new"><img src="img/menu_rosa.png" style="max-width: 25px;"></a>
+  
 </div>
 <div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
   <div class="col-md-3" id="sub_tabla1" class="sub_tablas">
@@ -249,9 +250,9 @@ function _metodo($id)
 </div>
 
 <script>  <!-- //Esto ya no se va a ocupar -->
-  var uid = <?=$uid?>;
-  var cid = <?=$cid[0]?>;
-  var pwd = "<?=$pwd?>"; 
+  /*var uid = <?//=$uid?>;
+  var cid = <?//=$cid[0]?>;
+  var pwd = "<?//=$pwd?>"; */
 </script>
 
 <script src="view/polizas/poliza.js"></script>
