@@ -53,6 +53,33 @@
     height: 100px;
     overflow: scroll;
   }
+
+  .modal_i
+  {
+    display: inline-block;
+    width: 48%;
+  }
+
+  .modal_i.modal_i_lg
+  {
+    display: inline-block;
+    width: 48%;
+  }
+
+  .modal_i.modal_i_lg select, .modal_i.modal_i_lg input
+  {    
+    font-size: 1.2em;
+    font-weight: bold;
+    height: 40px;
+    width: 100%;
+  }
+
+  .modal_i select, .modal_i input
+  {    
+    width: 100%;
+    height: 30px;
+  }
+
 </style>
 
 <? 
@@ -77,6 +104,63 @@ if (isset($_SESSION["login"]))
 /*}
 if ($band){*/
 ?>
+
+<div class="modal fade" id="new_account_modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form action="">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal_i modal_i_lg">
+            <label for="">Codigo:</label>
+            <input type="text" placeholder="CODIGO">
+          </div>
+          <div class="modal_i modal_i_lg">
+            <label for="">Nombre:</label>
+            <input type="text" placeholder="NOMBRE">
+          </div>
+          <br>
+          <br>
+          <div class="modal_i">
+            <label for="">Cuenta Padre:</label>
+            <select name="" id="">
+              <option value="" disabled>### - ############</option>
+            </select>
+          </div>          
+          <div class="modal_i">
+            <label for="">Cuentas:</label>
+            <select name="" id="">
+              <option value="" disabled>### - ############</option>
+            </select>
+          </div>    
+          <br>
+          <br>      
+          <div class="modal_i">
+            <label for="">Naturaleza:</label>
+            <select name="" id="">
+              <option value="A">Acreedora</option>
+              <option value="D">Deudora</option>
+            </select>
+          </div>
+          <div class="modal_i">
+            <label for="">SAT:</label>
+            <select name="" id="">
+              <option value="" disabled>### - ############</option>
+            </select>
+          </div>          
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div id="header_poliza_detail" class="grad1">  
 </div>

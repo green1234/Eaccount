@@ -60,9 +60,10 @@ asignar_eventos = function()
 		$(this).data("text", text);
 		console.log(accounts)
 		select.html(optionsAcc).val(id).show().focus();
-		text.css("visibility", "hidden");		
-		
+		text.css("visibility", "hidden");				
 	});
+
+	
 
 	$("td.editable select").on("change", function()
 	{
@@ -70,15 +71,20 @@ asignar_eventos = function()
 		var line_id = $(this).parents("tr").find(".line_id").attr("id");
 		var cuenta = $(this).find("option:selected").text();
 
-		console.log(cuenta_id)
-		console.log(line_id)
+		if (cuenta_id != 0)
+		{
+			var params = {
+				"account_id" : cuenta_id,			
+			}
 
-		var params = {
-			"account_id" : cuenta_id,			
+			update_line(line_id, params)
+			$(this).hide().parent("td").find("span").text(cuenta).css("visibility", "visible");			
 		}
-
-		update_line(line_id, params)
-		$(this).hide().parent("td").find("span").text(cuenta).css("visibility", "visible");		
+		else
+		{
+			$("#new_account_modal").modal("toggle");			
+		}
+		
 	});
 
 	$("td.editable select").on("blur", function()
@@ -102,10 +108,11 @@ get_accounts = function(fn)
 get_accounts_options = function()
 {
 	optionsAcc = ""
+	optionsAcc += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
 	$.each(accounts, function(index, value)
 	{
 		optionsAcc += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
-	});
+	});	
 	//console.log(optionsAcc);
 }
 
