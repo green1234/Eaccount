@@ -6,7 +6,7 @@ asignar_eventos = function()
 	$(".cfdi_row td").on("dblclick", function(){
       /*alert("LOL")*/
       var id = $(this).parents("tr").find(".id_row").attr("id")
-      location.href = "?section=poliza_detail&pid=" + id;
+      location.href = "?section=poliza&action=detail&pid=" + id;
       /*console.log(id)*/
      });
 }
@@ -48,10 +48,10 @@ $(function(){
 
 	obtener_polizas(mostrar_polizas);
 	
-	$(".cfdi_row td").on("dblclick", function(){
+	//$(".cfdi_row td").on("dblclick", function(){
 	  /*alert("LOL")*/
-	  var id = $(this).parents("tr").find(".id_row").attr("id")
-	  location.href = "?section=poliza_detail&cfdi=" + id;
+	  //var id = $(this).parents("tr").find(".id_row").attr("id")
+	  //location.href = "?section=poliza_detail&cfdi=" + id;
 	  /*console.log(id)*/
-	 });
+	 //});
 });

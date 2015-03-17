@@ -71,19 +71,26 @@
 					$res = $service->contabilizar($id);
 					echo json_encode($res);
 					break;
+				case "detail" :
+					if (isset($_GET["cfdi"]))
+					{
+						$res = $service->obtener_datos_factura($_GET["cfdi"]);
+						echo json_encode($res);
+					}
+					break;
 				default:
 					# code...
 					break;
 			}			
 		}
-		else if (isset($_GET["section"]) && isset($_GET["cfdi"]))
+		/*else if (isset($_GET["section"]) && isset($_GET["cfdi"]))
 		{
 			if ($_GET["section"] == "cfdi_detail")
 			{
 				$res = $service->obtener_datos_factura($_GET["cfdi"]);
 				echo json_encode($res);					
 			}
-		}
+		}*/
 		else
 		{
 			$res = $service->obtener_facturas($params);

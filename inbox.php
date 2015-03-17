@@ -440,17 +440,17 @@ else
               require 'fijos/cfdi_detail.php';                            
               break;*/
             case 'cfdi':              
-              require 'view/cfdi/tabla_cfdi.php';
+              require 'view/cfdi/index.php';
               break;
             case 'cfdi_detail':              
               require 'view/cfdi/cfdi_detail.php';                            
               break;
             case 'poliza':              
-              require 'view/polizas/tabla_poliza.php';
+              require 'view/polizas/index.php';
               break;
-            case 'poliza_detail':              
+            /*case 'poliza_detail':              
               require 'view/polizas/poliza_detail.php';                            
-              break;
+              break;*/
             /*case 'poliza':
               require 'fijos/poliza.php';
               break;

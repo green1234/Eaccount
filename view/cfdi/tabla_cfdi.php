@@ -442,7 +442,7 @@ function _metodo($id)
     $(".cfdi_row td").on("dblclick", function(){
       /*alert("LOL")*/
       var id = $(this).parents("tr").find(".id_row").attr("id")
-      location.href = "?section=cfdi_detail&cfdi=" + id;
+      location.href = "?section=cfdi&action=detail&cfdi=" + id;
       /*console.log(id)*/
      });
 

@@ -205,10 +205,10 @@ function _metodo($id)
     </tbody>
   </table>
 </div>
-<!-- 
+
 <div class="col-md-1">
-  <img src="../img/menu_rosa.png" style="max-width: 25px;float:left;cursor:pointer;" onClick="showHideSubTabla()">
-</div> -->
+  <img src="img/menu_rosa.png" style="max-width: 25px;float:left;cursor:pointer;" onClick="showHideSubTabla()">
+</div>
 <div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
   <div class="col-md-3" id="sub_tabla1" class="sub_tablas">
     <ul class="list-group" id="lista_sub_tabla1">
