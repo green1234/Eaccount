@@ -76,7 +76,19 @@ if (isset($_SESSION["login"]))
 			}
 			else
 				$res = get_error();
-		}		
+		}
+		else if($_GET["action"] = "new")
+		{
+			$keys = array("p_concepto", "p_fecha");
+			$data = verificar_datos($_GET, $keys);
+			//logg($data,1);
+			if ($data)
+			{
+				$res = $service->registrar_poliza($data, $cid[0]);
+			}
+			else
+				$res = get_error();
+		}	
 	}
 	echo json_encode($res);
 }

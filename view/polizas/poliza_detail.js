@@ -45,7 +45,7 @@ mostrar_lineas = function(fn)
 		rows += "</tr>";
 	});
 	$("#poliza_detalle").append(rows);
-	//fn();
+	fn();
 }
 
 asignar_eventos = function()

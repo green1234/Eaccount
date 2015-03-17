@@ -77,6 +77,28 @@ $(function(){
 	
 	get_accounts();
 
+	$("#new_poliza_form").on("submit", function(e){
+		e.preventDefault();
+		var path = $(this).attr("action");
+		var data = $(this).serialize();
+
+		$.getJSON(path, data, function(res)
+		{
+			console.log(res)
+			if (res.success)
+			{
+				alert("Se registro correctamente");
+				window.location = "?section=poliza";
+			}
+			else
+			{
+				alert(res.data.description)
+			}	
+		});
+
+		console.log(data);
+	});
+
 	$(".new_asiento").on("click", function(e)
 	{
 		e.preventDefault();
@@ -89,6 +111,7 @@ $(function(){
 		fila += "<td class='w_100 p_dc'><input type='checkbox'><input type='checkbox'></td>";
 		fila += "<td>-</td>";
 		fila += "<td><input type='text'><span></span></td>";
+		fila += "<td><input type='text'><span></span></td>";		
 		fila += "<td><input class='switch' type='checkbox'></td>";
 		fila += "</tr>";
 		$("#poliza_new").append(fila).find("tr.new").find("select").html(optionsAcc);

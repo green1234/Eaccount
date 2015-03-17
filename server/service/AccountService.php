@@ -16,6 +16,19 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	function registrar_poliza($params, $cid)
+	{
+		$model = "account.move";
+		$method = "registrar_poliza_manual";
+		$data = array(
+			"date" => model($params["p_fecha"], "string"),
+			"name" => model($params["p_concepto"], "string"),
+			"company_id" => model($cid, "int")
+			);		
+		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		return $res;
+	}
+
 	function obtener_datos_poliza($pid)
 	{
 		$model = "account.move";

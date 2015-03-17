@@ -59,17 +59,17 @@
 require_once "server/conf/constantes.conf";
 require_once "server/lib/common.php"; 
 ?>
-<form action="">
+<form action="server/Polizas.php?action=new" id="new_poliza_form">
   <div id="header_poliza_detail" class="grad1">
     <h1>GENERAR POLIZA DE DIARIO EN CAPTURA MANUAL</h1>  
     <div class="p_data">
       <div>
         <div>Concepto de Póliza</div>
-        <input type="text" name="p_concepto" id="p_concepto">
+        <input type="text" name="p_concepto" id="p_concepto" required>
       </div>
       <div>
         <div for="p_fecha">Fecha de Póliza</div>
-        <input type="date" name="p_fecha" id="p_fecha">
+        <input type="date" name="p_fecha" id="p_fecha" required>
       </div>
     </div>
   </div>
@@ -87,6 +87,7 @@ require_once "server/lib/common.php";
           <th>DEBE / HABER</th>        
           <th>SALDO NUEVO</th>
           <th>UUID</th>        
+          <th>Notas</th>                  
           <th style="border: 0px;">&nbsp;</th>
         </tr>
       </thead>
@@ -101,7 +102,7 @@ require_once "server/lib/common.php";
   </div>
 
   <div class="col-md-2" style="float:right;">
-    <button class="btn btn-primary action_conta">CONTABILIZAR</button>
+    <button class="btn btn-primary action_new">CONTABILIZAR</button>
   </div>
 </form>
 
