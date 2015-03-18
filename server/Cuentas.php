@@ -17,14 +17,21 @@ if (isset($_SESSION["login"]))
 		{
 			$service = new AccountService($uid, $pwd);
 			$res = $service->obtener_cuentas($cid[0]);
+			$res2 = $service->obtener_subcuentas($cid[0]);
 
-			if ($res["success"])
+			if ($res["success"]/* && $res2["success"]*/)
 			{
 				$cuentas = array();
 				foreach ($res["data"] as $index => $cta) {
 					$cuentas[$cta["id"]] = $cta;
 				}
-				$res["data"] = $cuentas;
+				$res["data"] = array("mayor" => $cuentas);
+
+				$subcuentas = array();
+				foreach ($res2["data"] as $index => $cta) {
+					$subcuentas[$cta["id"]] = $cta;
+				}
+				$res["data"]["subctas"] = $subcuentas;
 			}
 			else
 			{

@@ -1,4 +1,4 @@
-var accounts, lines  = {};
+var accounts, mayores, lines  = {};
 var optionsAcc, lines_rows;
 
 get_lines = function(pid, fn)
@@ -82,7 +82,16 @@ asignar_eventos = function()
 		}
 		else
 		{
-			$("#new_account_modal").modal("toggle");			
+			$("#new_account_modal").modal("toggle");
+
+			/*var options = ""
+			//options += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
+			$.each(mayores, function(index, value)
+			{
+				options += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+			});	
+
+			$("#accnew_mayor").html(options);	*/		
 		}
 		
 	});
@@ -99,7 +108,8 @@ get_accounts = function(fn)
 		//console.log(res);
 		if (res.success)
 		{
-			accounts  = res.data;
+			accounts  = res.data.subctas;
+			mayores = res.data.mayor;
 			fn();	
 		}	
 	});
@@ -116,12 +126,26 @@ get_accounts_options = function()
 	//console.log(optionsAcc);
 }
 
+get_mayores_options = function()
+{
+	optionsMayor = ""
+	//optionsMayor += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
+	$.each(mayores, function(index, value)
+	{
+		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+	});	
+	//console.log(optionsAcc);
+	$("#accnew_mayor").html(optionsMayor);
+}
+
 $(function(){
 	
 	get_lines(pid, mostrar_lineas);
 	get_accounts(get_accounts_options);
 
 	
-	
+	$('#new_account_modal').on('show.bs.modal', function (e) {
+  		get_mayores_options();
+	});
 
 });

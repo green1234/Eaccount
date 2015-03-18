@@ -126,7 +126,7 @@ if ($band){*/
           <br>
           <div class="modal_i">
             <label for="">Cuenta Padre:</label>
-            <select name="" id="">
+            <select name="accnew_mayor" id="accnew_mayor">
               <option value="" disabled>### - ############</option>
             </select>
           </div>          
