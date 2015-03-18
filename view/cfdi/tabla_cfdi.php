@@ -392,8 +392,8 @@ function _metodo($id)
       if (res.success)
       {    
         console.log(res.data);
-        alert("La factura se ha contabilizado.")
-        location.href = "?section=poliza";    
+        //alert("La factura se ha contabilizado.")
+        //location.href = "?section=poliza";    
         //facturas = res.data;
         //mostrar_facturas();
       }
