@@ -553,6 +553,15 @@ $empresa = $res["data"];
 
     $('#CtaBanModal').on('show.bs.modal', function (e) {
       
+      var button = $(e.relatedTarget) // Button that triggered the modal
+      var id = button.attr('partner')
+      var data_partner = "";
+
+      if (id != undefined) 
+        data_partner = "&partner_id="+id;
+
+      $("#CtaBanForm").data("data_partner", data_partner);        
+
       $("option.default").attr("selected", true);
       // $("option.default").removeAttr("disabled");
 
@@ -619,7 +628,10 @@ $empresa = $res["data"];
 
       if (!emptySelect)
       {
-        var data = $(this).serialize();
+        var data_partner = $("#CtaBanForm").data("data_partner");        
+        $("#CtaBanForm").data("data_partner", "");
+
+        var data = $(this).serialize() + data_partner;
         console.log(data)
         $.getJSON("server/Configuracion.php?add=ctaban&", data, function(res)
         {
@@ -631,9 +643,19 @@ $empresa = $res["data"];
             var tipo = $("#cta_tipo").find("option:selected").text();
             var banco = $("#cta_banco").find("option:selected").text();
             var numero = $("#cta_numero").val();
-            var cta = "<div class='col-md-10'>" + tipo + " " + banco + " *" + numero.substr(-4) + "</div>"
+            if (data_partner != "")
+            {
+              var partner_id = data_partner.split("=")[1];
+              //var cta = '<a partner="' + partner_id + '" href="#" data-toggle="modal" data-target="#CtaBanModal" class="openModal ctaban">' + tipo + " " + banco + " *" + numero.substr(-4) + '</a>'              
+              var cta = "<b>" + banco + " *" + numero.substr(-4) + "</b><br>";
+              $(".ctaban[partner='" + data_partner.split("=")[1] + "']").parent("td").prepend(cta);               
+            }
+            else
+            {
+              var cta = "<div class='col-md-10'>" + tipo + " " + banco + " *" + numero.substr(-4) + "</div>"
+              $(".ctas_ban_list").find(".empty").remove().end().append(cta);              
+            }
             console.log(cta)
-            $(".ctas_ban_list").find(".empty").remove().end().append(cta);            
           }
           else
           {

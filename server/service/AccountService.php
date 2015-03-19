@@ -29,12 +29,19 @@ class AccountService
 			"subcuenta" => model($params["accnew_sub"], "int"),
 			"company_id" => model($cid, "int")
 		);		
+		//exit();
 		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
-		
+		//return $res;
 		if ($res["success"])
 		{
 			$values = array();
-			foreach ($res["data"] as $index => $value) {
+
+			$res["data"] = prepare_response($res["data"]);
+
+			/*foreach ($res["data"] as $index => $value) {
+
+				logg($value,1);
+
 				$me = $value->me;
 				if (isset($me["string"]))
 				{
@@ -49,7 +56,7 @@ class AccountService
 					$values[$index] = $me["boolean"];	
 				}
 			}
-			$res["data"] = $values;
+			$res["data"] = $values;*/
 		}
 		//logg($res,1);
 		return $res;

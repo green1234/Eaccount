@@ -3,6 +3,68 @@ session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
 
+function obtener_datos_bancos($ids)
+{
+	$model = "res.partner.bank";
+	$obj = new MainObject();
+
+	$params = array(
+		model("acc_number", "string"),
+		model("bank", "string"),
+		model("tipo", "string"),		
+	);
+	$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+	return $res;
+}
+
+function obtener_partners($cid)
+{
+	$model = "res.partner";
+	$domain = array();
+	$domain[] = array(
+		model("company_id", "string"),
+		model("=", "string"),
+		model($cid, "int"));
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+	//return $res;
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+					model("name", "string"),
+					model("ref", "string"),
+					model("bank_ids", "string"),
+					model("customer", "string"),
+					model("supplier", "string"));
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$partners = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $partner) {
+					$id = $partner["id"];
+					$partners[$id] = $partner;
+					$bancos = obtener_datos_bancos($partners[$id]["bank_ids"]);
+					$partners[$id]["bank_ids"] = $bancos["data"];
+				}
+				$res["data"] = $partners;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
+
 function obtener_paises()
 {
 	$model = "res.country";
@@ -172,6 +234,7 @@ function obtener_cuentas($cid)
 
 	$obj = new MainObject();
 	$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);
+	//return $response;
 	$vals = array();
 	
 	if ($response["success"])
@@ -220,6 +283,10 @@ if (isset($_SESSION["login"]))
 		else if($_GET["cat"] == "codesat")
 		{
 			$res = obtener_sat_codes();
+		}
+		else if($_GET["cat"] == "partners")
+		{
+			$res = obtener_partners($cid[0]);
 		}
 	}
 

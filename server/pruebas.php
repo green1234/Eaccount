@@ -22,8 +22,8 @@ $cid = 96;
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
 
-$res = obtener_sat_codes();
-logg($res,1);
+$res = obtener_datos_bancos(array(1));
+logg($res["data"],1);
 
 $service = new AccountService($uid, $pwd);
 $res = $service->obtener_polizas($cid);

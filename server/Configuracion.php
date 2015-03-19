@@ -22,7 +22,8 @@ function registrar_cuenta_bancaria($cid, $p)
 		"pais" => model($p["cta_pais"], "string"),
 		"moneda" => model($p["cta_moneda"], "string"),
 		"clabe" => model($p["cta_clabe"], "string"),
-		"tipo" => model($p["cta_tipo"], "string")
+		"tipo" => model($p["cta_tipo"], "string"),
+		"partner_id" => model($p["partner_id"], "int")
 	);
 
 	$obj = new MainObject();
@@ -225,6 +226,9 @@ else if (isset($_GET["add"]))
 
 		if ($data)
 		{
+			if (isset($_GET["partner_id"]))
+				$data["partner_id"] = $_GET["partner_id"];
+
 			$res = registrar_cuenta_bancaria($cid, $data);
 		}
 		else
