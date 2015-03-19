@@ -1,5 +1,5 @@
-<div role="tabpanel" class="tab-pane fade in active" id="clientes" style="padding-top: 20px;">
-	<table class="table partners customer">
+<div role="tabpanel" class="tab-pane fade in active" id="proveedores" style="padding-top: 20px;">
+	<table class="table partners supplier">
     <tr>
     	<th>
         <img src="http://savvysystems.com.mx/img/lapiz.png" whidth="25" height="25">
@@ -8,7 +8,7 @@
         <b>Núm:</b>
       </th>
       <th>
-        <b>Razón Social del Cliente:</b>
+        <b>Razón Social del Proveedor:</b>
       </th>
       <th>
         <b>Alias: <img src="img/interrogacion.png" whidth="15" height="15" class="popover-1" title="Nombre corto para identificarlo rápidamente"></b>
@@ -24,7 +24,7 @@
     <?//TERMINA FOR DE LOS DATOS?>
   </table>
             <div class="col-md-12" style="text-align:right;">
-              <a href="#">Agregar otro Cliente manualmente</a>
+              <a href="#">Agregar otro Proveedor manualmente</a>
               <br>
               <a href="#">Importar lista de Clientes (Archivo .csv ó .xls)</a>
 			<br>

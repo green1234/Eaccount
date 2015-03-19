@@ -21,6 +21,8 @@ if (isset($_SESSION["login"]))
 
     <div class="tab-content container" style="width: auto;background: #e6e6e6;font-family: Arial;font-size: 11px;">
     	<? require 'view/config/catalogos/clientes.php' ?>
+      <? require 'view/config/catalogos/proveedores.php' ?>
+
     	<? #require 'proveedores.php' ?>
     	<? #require 'productos.php' ?>
     	<? require 'view/config/catalogos/cuentas_contables.php' ?>
