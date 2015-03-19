@@ -23,12 +23,35 @@ class AccountService
 		$data = array(
 			"code" => model($params["accnew_code"], "string"),
 			"name" => model($params["accnew_des"], "string"),
-			"parent_id" => model($params["accnew_mayor"], "string"),
+			"parent_id" => model($params["accnew_mayor"], "int"),
 			"nature" => model($params["accnew_nature"], "string"),
-			"codesat" => model($params["accnew_codesat"], "string"),
+			"codesat" => model($params["accnew_codesat"], "int"),
+			"subcuenta" => model($params["accnew_sub"], "int"),
 			"company_id" => model($cid, "int")
 		);		
 		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		
+		if ($res["success"])
+		{
+			$values = array();
+			foreach ($res["data"] as $index => $value) {
+				$me = $value->me;
+				if (isset($me["string"]))
+				{
+					$values[$index] = $me["string"];
+				}
+				else if (isset($me["int"]))
+				{
+					$values[$index] = $me["int"];	
+				}
+				else if (isset($me["boolean"]))
+				{
+					$values[$index] = $me["boolean"];	
+				}
+			}
+			$res["data"] = $values;
+		}
+		//logg($res,1);
 		return $res;
 	}
 

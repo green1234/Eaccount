@@ -28,7 +28,8 @@ if (isset($_SESSION["login"]))
 			$keys = array(
 				"accnew_code", 
 				"accnew_des", 
-				"accnew_mayor", 
+				"accnew_mayor",
+				"accnew_sub", 
 				"accnew_nature", 
 				"accnew_codesat");
 

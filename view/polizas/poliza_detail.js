@@ -22,7 +22,8 @@ update_line = function(line_id, values)
 {
 	$.getJSON("server/Polizas.php?action=update&id="+line_id, values, function(res)
 	{
-		//console.log(res)
+		console.log("Update")		
+		console.log(res)
 	})
 }
 
@@ -35,7 +36,7 @@ mostrar_lineas = function(fn)
 		rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
 		rows += "<td>" + line.ref + "</td>";
 		rows += "<td>" + line.name + "</td>";
-		rows += "<td width='200px' class='editable' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
+		rows += "<td width='200px' class='editable account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
 		/*rows += "<td>" + line.id + "</td>";*/
 		rows += "<td>-</td>";
 		rows += "<td>" + line.debit.toFixed(2) + "</td>";
@@ -52,6 +53,7 @@ asignar_eventos = function()
 {
 	$("td.editable").on("dblclick", function(){
 		
+		$(this).parents("tr").addClass("editing_select");
 		var id = $(this).attr("id");
 		var select = $(this).find("select");
 		var text = $(this).find("span");
@@ -67,10 +69,11 @@ asignar_eventos = function()
 
 	$("td.editable select").on("change", function()
 	{
+
 		var cuenta_id = $(this).val();
 		var line_id = $(this).parents("tr").find(".line_id").attr("id");
 		var cuenta = $(this).find("option:selected").text();
-
+		console.log(cuenta_id)
 		if (cuenta_id != 0)
 		{
 			var params = {
@@ -99,6 +102,7 @@ asignar_eventos = function()
 	$("td.editable select").on("blur", function()
 	{
 		$(this).hide().parent("td").find("span").css("visibility", "visible");
+		$(this).hide().parents("tr").removeClass("editing_select")
 	});
 }
 
@@ -169,7 +173,7 @@ get_accounts_options = function(acs, selector)
 
 	if(selector != null)
 	{		
-		selector.html(optionsAcc);
+		selector.html(options);
 		var last = selector.find("option").last().text();
 		selector.next("div").text(last)
 	}
@@ -206,6 +210,11 @@ $(function(){
 	
 	$('#new_account_modal').on('show.bs.modal', function (e) {
   		get_mayores_options();
+  		$("tr.editing_select").addClass("editing_modal");
+	});
+
+	$('#new_account_modal').on('hide.bs.modal', function (e) {
+  		$("tr.editing").removeClass("editing_modal");
 	});
 
 	$("#new_account_form").on("submit", function(e)
@@ -216,6 +225,25 @@ $(function(){
 
 		$.getJSON("server/Cuentas.php?action=add", data, function(res){
 			console.log(res)
+
+			if (res.success)
+			{
+				var value = res.data
+				var accName = value.code + " - "+ value.name;
+				var newOpt = "<option value='" + value.id + "'>" + accName + "</option>";
+				optionsAcc += newOpt;			
+				//var tr = $("tr.editing_modal");
+				$("tr.editing_modal").find("td.account").attr("id", value.id)					
+					.find("span").text(accName);
+
+				var line_id = $("tr.editing_modal").find(".line_id").attr("id");		
+				var params = {
+					"account_id" : value.id,			
+				}
+				update_line(line_id, params)				
+			}
+			$('#new_account_modal').modal("hide");			
+
 		});
 		//console.log(data)
 	});

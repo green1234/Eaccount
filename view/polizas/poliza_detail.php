@@ -132,7 +132,7 @@ if ($band){*/
           </div>          
           <div class="modal_i">
             <label for="">Cuentas:</label>
-            <select name="" id="accnew_sub" readonly style="display:none;">
+            <select name="accnew_sub" id="accnew_sub" style="display:none;">
               <option value="" disabled>### - ############</option>
             </select>
             <div class="accnew_sub"></div>
