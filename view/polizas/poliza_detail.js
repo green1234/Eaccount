@@ -1,11 +1,11 @@
-var accounts, mayores, lines  = {};
-var optionsAcc, lines_rows;
+var accounts, mayores, lines, codesat  = {};
+var optionsAcc, lines_rows  = "";
 
 get_lines = function(pid, fn)
 {
 	$.getJSON("server/Polizas.php?action=lines&pid=" + pid, function(res)
 	{	
-		console.log(res.data)	
+		//console.log(res.data)	
 		if (res.success)	
 		{
 			var head = "<p>Factura de honorarios <b>" + res.data[0].name + "</b> recibida con fecha <b>" + res.data[0].date + "</b><br>";
@@ -22,7 +22,7 @@ update_line = function(line_id, values)
 {
 	$.getJSON("server/Polizas.php?action=update&id="+line_id, values, function(res)
 	{
-		console.log(res)
+		//console.log(res)
 	})
 }
 
@@ -58,7 +58,7 @@ asignar_eventos = function()
 		
 		$(this).data("html", select);
 		$(this).data("text", text);
-		console.log(accounts)
+		//console.log(accounts)
 		select.html(optionsAcc).val(id).show().focus();
 		text.css("visibility", "hidden");				
 	});
@@ -102,28 +102,85 @@ asignar_eventos = function()
 	});
 }
 
-get_accounts = function(fn)
+get_sub_accounts = function(parent_id)
 {
-	$.getJSON("server/Cuentas.php?action=get", function(res){
+	var path = "server/Cuentas.php?action=get&parent_id=" + parent_id;	
+	var result =  {};
+	$.getJSON(path, function(res){
+		//console.log(res);
+		if (res.success)
+		{
+			//result  = res.data;
+			get_accounts_options(res.data, $("#accnew_sub"));			
+		}	
+	});
+}
+
+get_accounts = function(fn)
+{	
+	var path = "server/Cuentas.php?action=get";	
+
+	$.getJSON(path, function(res){
 		//console.log(res);
 		if (res.success)
 		{
 			accounts  = res.data.subctas;
 			mayores = res.data.mayor;
-			fn();	
+			fn(accounts);	
 		}	
 	});
 }
 
-get_accounts_options = function()
+get_sat_codes = function()
+{	
+	var path = "server/Master.php?cat=codesat";	
+
+	$.getJSON(path, function(res){
+		//console.log(res);
+		if (res.success)
+		{
+			codesat  = res.data;
+			get_codesat_option(codesat);
+		}	
+	});
+}
+
+get_codesat_option = function(codes)
 {
-	optionsAcc = ""
-	optionsAcc += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
-	$.each(accounts, function(index, value)
+	optionsCode = ""
+	$.each(codes, function(index, value)
 	{
-		optionsAcc += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
-	});	
-	//console.log(optionsAcc);
+		optionsCode += "<option value='" + value.id + "'>" + value.code + "</option>";
+	});
+	$("#accnew_codesat").html(optionsCode);
+}
+
+get_accounts_options = function(acs, selector)
+{
+	//console.log(accounts)	
+	if (acs == undefined)
+		acs = accounts;
+
+	options = ""
+	$.each(acs, function(index, value)
+	{
+		options += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+	});		
+
+	if(selector != null)
+	{		
+		selector.html(optionsAcc);
+		var last = selector.find("option").last().text();
+		selector.next("div").text(last)
+	}
+	else
+	{
+		var first = "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
+		options = first + options;		
+	}
+
+	if (optionsAcc == undefined || optionsAcc == null || optionsAcc == "")
+		optionsAcc = options;
 }
 
 get_mayores_options = function()
@@ -135,17 +192,37 @@ get_mayores_options = function()
 		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
 	});	
 	//console.log(optionsAcc);
-	$("#accnew_mayor").html(optionsMayor);
+	var mayor = $("#accnew_mayor").html(optionsMayor);
+
+	get_sub_accounts(mayor.val());
 }
 
 $(function(){
 	
 	get_lines(pid, mostrar_lineas);
 	get_accounts(get_accounts_options);
+	get_sat_codes();
 
 	
 	$('#new_account_modal').on('show.bs.modal', function (e) {
   		get_mayores_options();
+	});
+
+	$("#new_account_form").on("submit", function(e)
+	{
+		e.preventDefault();
+
+		var data = $(this).serialize();
+
+		$.getJSON("server/Cuentas.php?action=add", data, function(res){
+			console.log(res)
+		});
+		//console.log(data)
+	});
+
+	$("#accnew_mayor").on("change", function()
+	{		
+		get_sub_accounts($(this).val())
 	});
 
 });

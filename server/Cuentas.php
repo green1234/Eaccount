@@ -3,6 +3,14 @@ session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/AccountService.php";
 
+function get_error()
+{
+	return array(
+		"success"=>false, 
+		"data"=>array(
+				"description" => "No se encontraron datos"));
+}
+
 if (isset($_SESSION["login"]))
 {
 	$uid = $_SESSION["login"]["uid"];
@@ -13,32 +21,74 @@ if (isset($_SESSION["login"]))
 
 	if (isset($_GET["action"]))
 	{
-		if ($_GET["action"] == "get")
+		$service = new AccountService($uid, $pwd);
+
+		if ($_GET["action"] == "add")
 		{
-			$service = new AccountService($uid, $pwd);
-			$res = $service->obtener_cuentas($cid[0]);
-			$res2 = $service->obtener_subcuentas($cid[0]);
+			$keys = array(
+				"accnew_code", 
+				"accnew_des", 
+				"accnew_mayor", 
+				"accnew_nature", 
+				"accnew_codesat");
 
-			if ($res["success"]/* && $res2["success"]*/)
+			$data = verificar_datos($_GET, $keys);
+			//$res = $data;
+			if ($data)
 			{
-				$cuentas = array();
-				foreach ($res["data"] as $index => $cta) {
-					$cuentas[$cta["id"]] = $cta;
+				$res = $service->registrar_cuenta($data, $cid[0]);
+			}
+			else
+				$res = get_error();
+		}
+		else if ($_GET["action"] == "get")
+		{
+			if (isset($_GET["parent_id"]))
+			{
+				$res = $service->obtener_sub_cuentas($_GET["parent_id"]);				
+/*
+				if ($res["success"])
+				{
+					$cuentas = array();
+					foreach ($res["data"] as $index => $cta) {
+						$cuentas[$cta["id"]] = $cta;
+					}
+					$res["data"] = $cuentas;
 				}
-				$res["data"] = array("mayor" => $cuentas);
-
-				$subcuentas = array();
-				foreach ($res2["data"] as $index => $cta) {
-					$subcuentas[$cta["id"]] = $cta;
-				}
-				$res["data"]["subctas"] = $subcuentas;
+				else
+				{
+					$res = array(
+						"success"=>false, 
+						"data"=>array(
+							"description" => "No se encontraron datos"));
+				}*/
 			}
 			else
 			{
-				$res = array(
-					"success"=>false, 
-					"data"=>array(
-						"description" => "No se encontraron datos"));
+				$res = $service->obtener_cuentas($cid[0]);
+				$res2 = $service->obtener_subcuentas($cid[0]);
+
+				if ($res["success"]/* && $res2["success"]*/)
+				{
+					$cuentas = array();
+					foreach ($res["data"] as $index => $cta) {
+						$cuentas[$cta["id"]] = $cta;
+					}
+					$res["data"] = array("mayor" => $cuentas);
+
+					$subcuentas = array();
+					foreach ($res2["data"] as $index => $cta) {
+						$subcuentas[$cta["id"]] = $cta;
+					}
+					$res["data"]["subctas"] = $subcuentas;
+				}
+				else
+				{
+					$res = array(
+						"success"=>false, 
+						"data"=>array(
+							"description" => "No se encontraron datos"));
+				}
 			}
 		}
 	}

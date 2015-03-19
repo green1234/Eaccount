@@ -16,6 +16,22 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	function registrar_cuenta($params, $cid)
+	{
+		$model = "account.account";
+		$method = "registrar_nueva_cuenta";
+		$data = array(
+			"code" => model($params["accnew_code"], "string"),
+			"name" => model($params["accnew_des"], "string"),
+			"parent_id" => model($params["accnew_mayor"], "string"),
+			"nature" => model($params["accnew_nature"], "string"),
+			"codesat" => model($params["accnew_codesat"], "string"),
+			"company_id" => model($cid, "int")
+		);		
+		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		return $res;
+	}
+
 	function registrar_poliza($params, $cid)
 	{
 		$model = "account.move";
@@ -133,7 +149,7 @@ class AccountService
 				"description" => "No se encontraron datos"));
 	}
 
-	// Devuelve el Id de un codigo SAT a paartir de su codigo.
+	// Devuelve el Id de un codigo SAT a partir de su codigo.
 	function obtener_codesat_id($codesat)
 	{		
 		$name = array(
@@ -173,6 +189,50 @@ class AccountService
 			"data" => array(
 				"id" => 0,
 				"description" => "No se encontraron datos"));
+	}
+
+	function obtener_sub_cuentas($parent_id)
+	{
+		//return "LOL";
+		$domain = array(					
+					array(
+						model("type", "string"),
+						model("!=", "string"),
+						model("view", "string"),
+						),
+					array(
+						model("parent_id", "string"),
+						model("=", "string"),
+						model(intval($parent_id), "int"),
+						));
+
+		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
+		/*logg($res,1);*/
+		if ($res["success"])
+		{
+			$account_ids = $res["data"]["id"];
+			#logg($facturas_id, 1);
+			if (count($account_ids) > 0)
+			{
+				$params = array(
+						model("name", "string"),
+						model("code", "string"),
+						model("codagrup", "string"),
+						model("level", "string"),
+						model("nature", "string"),
+						model("parent_id", "string"),
+						model("type", "string"),						
+						model("user_type", "string"),
+						model("reconcile", "string"),										
+					);
+
+				$res = $this->obj->read($this->uid, $this->pwd, $this->model, $account_ids, $params);
+				
+				/*logg($res["data"],1);*/
+			} 
+		}
+		/*logg($res,1);*/
+		return $res;
 	}
 
 	function obtener_cuentas($empresa_id)

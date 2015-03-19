@@ -108,7 +108,7 @@ if ($band){*/
 <div class="modal fade" id="new_account_modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form action="">
+      <form action="" id="new_account_form">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Modal title</h4>
@@ -116,11 +116,11 @@ if ($band){*/
         <div class="modal-body">
           <div class="modal_i modal_i_lg">
             <label for="">Codigo:</label>
-            <input type="text" placeholder="CODIGO">
+            <input type="text" name="accnew_code" id="accnew_code" placeholder="CODIGO" required>
           </div>
           <div class="modal_i modal_i_lg">
             <label for="">Nombre:</label>
-            <input type="text" placeholder="NOMBRE">
+            <input type="text" name="accnew_des" id="accnew_des" placeholder="NOMBRE" required>
           </div>
           <br>
           <br>
@@ -132,22 +132,23 @@ if ($band){*/
           </div>          
           <div class="modal_i">
             <label for="">Cuentas:</label>
-            <select name="" id="">
+            <select name="" id="accnew_sub" readonly style="display:none;">
               <option value="" disabled>### - ############</option>
             </select>
+            <div class="accnew_sub"></div>
           </div>    
           <br>
           <br>      
           <div class="modal_i">
             <label for="">Naturaleza:</label>
-            <select name="" id="">
+            <select name="accnew_nature" id="accnew_nature">
               <option value="A">Acreedora</option>
               <option value="D">Deudora</option>
             </select>
           </div>
           <div class="modal_i">
             <label for="">SAT:</label>
-            <select name="" id="">
+            <select name="accnew_codesat" id="accnew_codesat">
               <option value="" disabled>### - ############</option>
             </select>
           </div>          
@@ -155,7 +156,7 @@ if ($band){*/
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
       </form>
     </div><!-- /.modal-content -->

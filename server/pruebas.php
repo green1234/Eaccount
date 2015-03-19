@@ -9,6 +9,7 @@ require_once PROYECT_PATH . "/service/EmpresaService.php";
 require_once PROYECT_PATH . "/service/AccountService.php";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
 require_once PROYECT_PATH . "/service/PaymentService.php";
+require_once PROYECT_PATH . "/Master.php";
 
 // $usuario = new UsuarioService(1, "21232f297a57a5a743894a0e4a801fc3");
 // $res = $usuario->obtener_datos(58);
@@ -20,6 +21,9 @@ $cid = 96;
 #$login = new LoginService();
 #$res = $login->acceder("admin", $pwd);
 #$uid = $res["data"][0]["id"];
+
+$res = obtener_sat_codes();
+logg($res,1);
 
 $service = new AccountService($uid, $pwd);
 $res = $service->obtener_polizas($cid);
