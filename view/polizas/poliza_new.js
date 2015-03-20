@@ -72,7 +72,11 @@ $(function(){
 	{
 		$.getJSON("server/Polizas.php?action=process&pid=" + pid, function(res)
 		{
-			console.log(pid)
+			if (res.success)
+			{
+				alert("Se ha procesado correctamente")
+				window.location = "?section=poliza";				
+			}
 		});
 	}
 

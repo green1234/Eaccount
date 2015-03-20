@@ -57,7 +57,11 @@ $(function(){
         	var move = rows.attr("id");
         	$.getJSON("server/Polizas.php?action=process&pid=" + move, function(res)
 			{
-				console.log(res)
+				if (res.success)
+				{
+					alert("Se ha procesado correctamente")
+					window.location = "?section=poliza";				
+				}
 			});
       	}
       	else
