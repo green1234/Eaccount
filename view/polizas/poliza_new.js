@@ -115,10 +115,10 @@ $(function(){
 			$(this).removeClass("new");
 		});
 
-		if ($(obj).parents("form").attr("new") != "")
+		/*if ($(obj).parents("form").attr("new") != "")
 		{
 			guardar_filas();
-		}
+		}*/
 	}
 	
 	get_accounts();
@@ -134,6 +134,7 @@ $(function(){
 			if (res.success)
 			{
 				$("#new_poliza_form").attr("new", res.data[0]);
+				guardar_filas();
 				//alert("Se registro correctamente");
 				//window.location = "?section=poliza";
 			}
@@ -149,8 +150,8 @@ $(function(){
 	$(".new_asiento").on("click", function(e)
 	{
 		e.preventDefault();
-		if($("#new_poliza_form").attr("new") == "")		
-			$("#new_poliza_form").find(":submit").click();
+		/*if($("#new_poliza_form").attr("new") == "")		
+			$("#new_poliza_form").find(":submit").click();*/
 
 		console.log($('tr.new').length)
 
