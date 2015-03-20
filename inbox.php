@@ -196,7 +196,13 @@ else
                     </div>
                     <div id="subCollapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                       <div class="panel-body">
-                        
+                        <ul class="subLista">
+                          <li>
+                            <a href="?section=poliza&action=new">
+                              Capturar Nuevo
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
