@@ -51,9 +51,10 @@ $(function(){
 			{
 				console.log(res)
 				$(fila).removeClass("new");
-			});
-
+			});			
 		});
+
+		procesar_poliza(form_id);
 
 		/*var form = $(obj).parents("form");
 		var form_id = form.attr("new");
@@ -65,6 +66,14 @@ $(function(){
 		{
 			console.log(res)
 		});*/
+	}
+
+	procesar_poliza = function(pid)
+	{
+		$.getJSON("server/Polizas.php?action=process&pid=" + pid, function(res)
+		{
+			console.log(pid)
+		});
 	}
 
 	asignar_evento = function(obj)

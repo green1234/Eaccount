@@ -114,6 +114,13 @@ if (isset($_SESSION["login"]))
 			else
 				$res = get_error();		
 			
+		}
+		else if ($_GET["action"] == "process")
+		{
+			if (isset($_GET["pid"]))
+				$res = $service->procesar_poliza($_GET["pid"]);
+			else
+				$res = get_error();
 		}	
 	}
 	echo json_encode($res);

@@ -62,6 +62,17 @@ class AccountService
 		return $res;
 	}
 
+	function procesar_poliza($pid)
+	{
+		$model = "account.move";
+		$method = "procesar_poliza";
+		$data = array(
+			"move_id" => model($pid, "int")			
+		);		
+		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		return $res;
+	}	
+
 	function registrar_poliza($params, $cid)
 	{
 		$model = "account.move";

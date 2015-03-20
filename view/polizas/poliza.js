@@ -47,6 +47,24 @@ mostrar_polizas = function(fn){
 $(function(){
 
 	obtener_polizas(mostrar_polizas);
+
+	$(".poliza_button").on("click", function()
+	{
+		var rows = $("[name='selector']:checked");      
+      	if (rows.length > 0)
+      	{
+      		console.log(rows)
+        	var move = rows.attr("id");
+        	$.getJSON("server/Polizas.php?action=process&pid=" + move, function(res)
+			{
+				console.log(res)
+			});
+      	}
+      	else
+      	{
+        	alert("Debe seleccionar un registro");
+      	}
+	});
 	
 	//$(".cfdi_row td").on("dblclick", function(){
 	  /*alert("LOL")*/
