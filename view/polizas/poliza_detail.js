@@ -1,5 +1,5 @@
 var accounts, mayores, lines, codesat  = {};
-var optionsAcc, lines_rows  = "";
+var optionsAcc, lines_rows, estatus_poliza  = "";
 
 get_lines = function(pid, fn)
 {
@@ -11,7 +11,7 @@ get_lines = function(pid, fn)
 			var head = "<p>Factura de honorarios <b>" + res.data[0].name + "</b> recibida con fecha <b>" + res.data[0].date + "</b><br>";
 		    head += "Recibida de <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].total.toFixed(2) + "</b></p>";
 		    $("#header_poliza_detail").html(head);
-			
+			estatus_poliza = res.data[0].state
 			lines = res.data[0].lines;				
 		}	
 		fn(asignar_eventos);
@@ -30,13 +30,18 @@ update_line = function(line_id, values)
 mostrar_lineas = function(fn)
 {
 	var rows = ""
+	var editable = ""
+
+	if (estatus_poliza=="draft")
+		editable = "editable";
+
 	$.each(lines, function(index, line)
 	{
 		rows += "<tr>";
 		rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
 		rows += "<td>" + line.ref + "</td>";
 		rows += "<td>" + line.name + "</td>";
-		rows += "<td width='200px' class='editable account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
+		rows += "<td width='200px' class='" + editable + " account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
 		/*rows += "<td>" + line.id + "</td>";*/
 		rows += "<td>-</td>";
 		rows += "<td>" + line.debit.toFixed(2) + "</td>";
