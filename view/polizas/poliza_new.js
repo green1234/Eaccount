@@ -141,6 +141,13 @@ $(function(){
 		var path = $(this).attr("action");
 		var data = $(this).serialize();
 		//obtener_filas($("#poliza_new"));
+
+		if ($("tr.new").length == 0)
+		{
+			alert("No puede procesar una poliza sin asientos.");
+			return false;
+		}
+
 		$.getJSON(path, data, function(res)
 		{
 			console.log(res)
