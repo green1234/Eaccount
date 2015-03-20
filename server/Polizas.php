@@ -17,6 +17,8 @@ function get_error()
 				"description" => "No se encontraron datos"));
 }
 
+//var_dump($_GET);
+
 if (isset($_SESSION["login"]))
 {
 	$uid = $_SESSION["login"]["uid"];
@@ -77,7 +79,7 @@ if (isset($_SESSION["login"]))
 			else
 				$res = get_error();
 		}
-		else if($_GET["action"] = "new")
+		else if($_GET["action"] == "new")
 		{
 			$keys = array("p_concepto", "p_fecha");
 			$data = verificar_datos($_GET, $keys);
@@ -88,6 +90,30 @@ if (isset($_SESSION["login"]))
 			}
 			else
 				$res = get_error();
+		}
+		else if($_GET["action"] == "newline")
+		{
+			$keys = array("poliza", "concepto", "cuenta", "monto", "uuid", "notas");
+			$data = verificar_datos($_GET, $keys);
+			if ($data)
+			{
+				if (isset($_GET["debit"]) && isset($_GET["monto"]))
+				{
+					$data["debit"] = $_GET["monto"];
+					$data["credit"] = 0;
+				}
+				else if (isset($_GET["credit"]) && isset($_GET["monto"]))
+				{
+					$data["credit"] = $_GET["monto"];
+					$data["debit"] = 0;
+				}
+
+				$res = $service->registrar_poliza_line($data, $cid[0]);
+				unset($data["monto"]);
+			}
+			else
+				$res = get_error();		
+			
 		}	
 	}
 	echo json_encode($res);

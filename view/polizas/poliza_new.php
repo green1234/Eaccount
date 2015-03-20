@@ -59,7 +59,7 @@
 require_once "server/conf/constantes.conf";
 require_once "server/lib/common.php"; 
 ?>
-<form action="server/Polizas.php?action=new" id="new_poliza_form">
+<form action="server/Polizas.php?action=new" id="new_poliza_form" new="">
   <div id="header_poliza_detail" class="grad1">
     <h1>GENERAR POLIZA DE DIARIO EN CAPTURA MANUAL</h1>  
     <div class="p_data">
@@ -96,7 +96,7 @@ require_once "server/lib/common.php";
       </tbody>
     </table>
   </div>
-  <div class="col-md-1">
+  <div class="col-md-1">    
     <a class="new_asiento" href="#">
       <img src="img/mas_rosa.png" style="max-width: 25px;"></a>  
   </div>

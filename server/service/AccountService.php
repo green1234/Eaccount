@@ -75,6 +75,24 @@ class AccountService
 		return $res;
 	}
 
+	function registrar_poliza_line($params, $cid)
+	{
+		$model = "account.move";
+		$method = "registrar_poliza_line";
+		$data = array(		
+			"name" => model($params["concepto"], "string"),
+			"debit" => model($params["debit"], "int"),
+			"credit" => model($params["credit"], "int"),
+			"account_id" => model($params["cuenta"], "int"),
+			"uuid" => model($params["uuid"], "string"),
+			"notes" => model($params["notes"], "string"),
+			"move_id" => model($params["poliza"], "int"),
+			"company_id" => model($cid, "int"),
+			);		
+		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		return $res;	
+	}
+
 	function obtener_datos_poliza($pid)
 	{
 		$model = "account.move";
