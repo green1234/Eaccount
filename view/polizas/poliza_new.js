@@ -147,6 +147,24 @@ $(function(){
 			alert("No puede procesar una poliza sin asientos.");
 			return false;
 		}
+		else
+		{
+			var debit = 0, credit = 0;	
+			$("tr.new").each(function(i, v){				
+				var monto = $(v).find("[name='monto']").val();
+				if ($(v).find("[name='debit']").is(":checked"))
+					debit += parseInt(monto);
+				else
+					credit += parseInt(monto);
+			});
+			console.log(debit)
+			console.log(credit)
+			if (debit != credit)
+			{
+				alert("No puede procesar debido a que los saldos no son iguales.\n debito=" + debit + " credito=" + credit);
+				return false;
+			}
+		}
 
 		$.getJSON(path, data, function(res)
 		{
