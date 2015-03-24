@@ -304,6 +304,30 @@ class InvoiceService
 
 	function importar_xml($params, $type=1){	
 
+
+		$model = "invoice.import";		
+		$method = "importar_cfdi";
+
+		$filename = $params["filename"];
+		$file = $params["file"];
+		$cid = $params["cid"];
+
+		$file_data = fopen($file,'rb');
+		$data = fread($file_data,filesize($file));
+		fclose($file_data);
+
+		$encodedFile = base64_encode($data);  
+		
+		$params = array(
+			"string_file" => model($encodedFile, "string"),
+			"file" => model($file, "string"),
+			"type" => model($type, "int"),
+			"cid" => model($cid, "int"));
+		
+		$response = $this->obj->call($this->uid, $this->pwd, $model, $method, null, $params);
+
+		return $response;
+
 		$filename = $params["filename"];
 		$file = $params["file"];
 		$cid = $params["cid"];
