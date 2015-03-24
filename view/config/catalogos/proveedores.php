@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade in active" id="proveedores" style="padding-top: 20px;">
+<div role="tabpanel" class="tab-pane fade in" id="proveedores" style="padding-top: 20px;">
 	<table class="table partners supplier">
     <tr>
     	<th>
