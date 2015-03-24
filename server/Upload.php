@@ -1,8 +1,45 @@
 <?php	
-
+session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
-// logg($_FILES); exit();
+//logg($_SESSION); exit();
+
+if(isset($_SESSION["login"]) && count($_FILES) > 0)
+{
+    $uid = $_SESSION["login"]["uid"];
+    $pwd = $_SESSION["login"]["pwd"];
+    $cid = $_SESSION["login"]["cid"];
+
+    $uploaddir = TEMP . "/"; //'/tmp/';
+    $responses = array("success" => true, "data" => array());
+    $success = true;
+    foreach ($_FILES["userfile"]["name"] as $index => $file_name) 
+    {
+        //logg($file_name);
+        $uploadfile = $uploaddir . basename($_FILES['userfile']['name'][$index]);        
+        if (move_uploaded_file($_FILES['userfile']['tmp_name'][$index], $uploadfile)) { 
+            $type = 1;
+            $service = new InvoiceService($uid, $pwd); 
+            $params = array(
+                "filename" => $_FILES['userfile']['name'][$index],
+                "file" => $uploadfile,
+                "cid"=> $cid[0]);
+            //$response = $service->importar_xml($_FILES['userfile']['name'][$index], $uploadfile, 1);
+            $response = $service->importar_xml($params, 1);            
+            $responses["data"][] = $response;          
+        }
+        else
+        {
+            $responses["data"][] = array(
+                "success" => false, 
+                "data" => array(
+                    "description" => "No se pudo subir el archivo"));
+        }
+    }
+
+    echo json_encode($responses);
+}
+exit();
 if(count($_FILES) > 0 && isset($_GET["uid"]) && isset($_GET["pwd"]) && isset($_GET["cid"]))
 {    
     // logg($_FILES); exit();

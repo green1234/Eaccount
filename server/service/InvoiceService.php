@@ -317,14 +317,14 @@ class InvoiceService
 		fclose($file_data);
 
 		$encodedFile = base64_encode($data);  
-		
+
 		$params = array(
 			"string_file" => model($encodedFile, "string"),
 			"file" => model($file, "string"),
 			"type" => model($type, "int"),
 			"cid" => model($cid, "int"));
 		
-		$response = $this->obj->call($this->uid, $this->pwd, $model, $method, null, $params);
+		$response = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $params);
 
 		return $response;
 
