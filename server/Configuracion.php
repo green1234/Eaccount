@@ -23,8 +23,11 @@ function registrar_cuenta_bancaria($cid, $p)
 		"moneda" => model($p["cta_moneda"], "string"),
 		"clabe" => model($p["cta_clabe"], "string"),
 		"tipo" => model($p["cta_tipo"], "string"),
-		"partner_id" => model($p["partner_id"], "int")
+		// "partner_id" => model($p["partner_id"], "int")
 	);
+
+	if (isset($p["partner_id"]))	
+		$params["partner_id"] = model($p["partner_id"], "int");	
 
 	$obj = new MainObject();
 	$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);		
