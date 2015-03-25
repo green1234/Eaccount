@@ -1,4 +1,5 @@
 <style type="text/css">
+ 
   td, th{
     text-align: center;
   }
@@ -62,6 +63,7 @@
     height: 30px;
     width: 100%;
   }
+ 
 </style>
 
 <? 
@@ -502,6 +504,8 @@ function _metodo($id)
       var rows = $("[name='selector2']:checked");      
       if (rows.length > 0)
       {
+        var cfdi = $("[name='selector2']:checked").attr("id");
+        $(".payment_modal").attr("cfdi", cfdi);
         $('#PaymentModal').modal("show");        
       }
       else
@@ -525,11 +529,21 @@ function _metodo($id)
 
     $('#PaymentModal').on('show.bs.modal', function (e) {      
       
-      console.log(bancos)
-      console.log(cuentas)
+      console.log($(".payment_modal").attr("cfdi"))
+      console.log(facturas)
+      var cfdi = $(".payment_modal").attr("cfdi")
+      $.each(facturas, function(i, f)
+      {
+        if (f.id == cfdi)
+        {
+          $("#pago_fecha").val(f.date_invoice);
+          return false;
+        }
+      });
+
       var options = "<option selected disabled='disabled'>Seleccione una opción</option>";
       $.each(bancos, function(i, v){
-        options += "<option value='" + v.id + "'>" + v.bic + " - " + v.name + "</option>" ;
+        options += "<option value='" + v.id + "'>" + v.name + "</option>" ;
       });
       $("#pago_banco").html(options);
 
@@ -553,7 +567,7 @@ function _metodo($id)
 
         $.each(selects, function(i, v){
           var valor = $(this).find("option:selected").val()//.attr("class")
-          if (valor != undefined)
+          if (valor !== undefined)
           {
             if (!isNaN(valor))
             {

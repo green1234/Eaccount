@@ -3,6 +3,8 @@ body {
 }
 .navbar {
   background: #cc3366;
+  position: fixed;
+  width: 100%;
 }
 .tab_sucursales {
   display: none !important;
@@ -111,4 +113,28 @@ span[id="^_closed"] {
 .container
 {
   width: 80%;
+}
+
+.sidebar
+{  
+  position: fixed;
+  z-index: 1;
+  position: fixed;  
+  bottom: 0;  
+  overflow: auto;
+  top: 120px;
+  margin-bottom: 30px;
+}
+
+.contenido
+{
+  margin-top: 100px;
+  margin-left: 250px;
+}
+
+footer
+{
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
 }

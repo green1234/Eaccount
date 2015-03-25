@@ -42,7 +42,7 @@ else
     </div>
 
     <div class="container" style="padding:30px 0px;">
-      <div class="col-md-2">
+      <div class="col-md-2 sidebar">
         <i><a class="file_upload" href="#"></a></i>
         <div style="text-align:center;margin-bottom:15px;">
           
@@ -70,7 +70,6 @@ else
             <!-- <img src="img/actualizar_naranja.png" style="max-width:50px;"> -->
           </form>
         </div>
-
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
@@ -207,10 +206,6 @@ else
                     </div>
                   </div>
                 </div>
-
-
-
-
               </div>
             </div>
           </div>
@@ -288,8 +283,6 @@ else
                     </div>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -303,10 +296,6 @@ else
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
               <div class="panel-body">
-
-
-
-
                 <div class="panel-group" id="subAccordionPolEgre" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading subPanel" role="tab" id="headingOne">
@@ -338,11 +327,7 @@ else
                       </div>
                     </div>
                   </div>
-                </div>
-
-
-
-                
+                </div> 
               </div>
             </div>
           </div>
@@ -359,8 +344,6 @@ else
                 <button class="btn btn-primary" style="margin-bottom:10px;">
                   IMPORTAR .XLS
                 </button>
-
-
                 <div class="panel-group" id="subAccordionBanco" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div class="panel-heading subPanel" role="tab" id="headingOne">
@@ -393,8 +376,6 @@ else
                     </div>
                   </div>
                 </div>
-
-                
               </div>
             </div>
           </div>
@@ -413,16 +394,11 @@ else
             </div>
           </div>
         </div>
-
-
         <button class="submit_main btn btn-primary">
           GUARDAR Y SALIR
         </button>
-
-
       </div>
-
-      <div class="col-md-10">
+      <div class="col-md-10 contenido" >
         <?
         if (isset($_GET['section'])):
 
@@ -483,7 +459,6 @@ else
         ?>
       </div>
     </div>
-
     <footer>
         <? require 'view/footer.php'; ?>
     </footer>
