@@ -14,6 +14,7 @@ if (isset($_SESSION["login"]))
       <li role="presentation" class="tab_clientes subTab"><a href="#clientes" role="tab" data-toggle="tab">CLIENTES</a></li>
       <li role="presentation" class="tab_proveedores subTab"><a href="#proveedores" role="tab" data-toggle="tab">PROVEEDORES</a></li>
       <li role="presentation" class="tab_productos subTab"><a href="#productos" role="tab" data-toggle="tab">PRODUCTOS</a></li>
+      <li role="presentation" class="tab_insumos subTab"><a href="#insumos" role="tab" data-toggle="tab">INSUMOS</a></li>
       <li role="presentation" class="tab_cuentas_contables subTab"><a href="#cuentas_contables" role="tab" data-toggle="tab">CUENTAS CONTABLES</a></li>
       <li role="presentation" class="tab_otros_causantes subTab"><a href="#otros_causantes" role="tab" data-toggle="tab">OTROS CAUSANTES</a></li>
       <li role="presentation" class="tab_sucursales subTab"><a href="#sucursales" role="tab" data-toggle="tab">SUCURSALES</a></li>
@@ -24,7 +25,8 @@ if (isset($_SESSION["login"]))
       <? require 'view/config/catalogos/proveedores.php' ?>
 
     	<? #require 'proveedores.php' ?>
-    	<? #require 'productos.php' ?>
+    	<? require 'view/config/catalogos/productos.php' ?>
+      <? require 'view/config/catalogos/insumos.php' ?>
     	<? require 'view/config/catalogos/cuentas_contables.php' ?>
     	<? #require 'otros_causantes.php' ?>
     	<? #require 'sucursales.php' ?>

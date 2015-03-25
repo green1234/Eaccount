@@ -2,6 +2,7 @@
 session_start();
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/InvoiceService.php";
+require_once PROYECT_PATH . "/service/AccountService.php";
 
 function obtener_datos_bancos($ids)
 {
@@ -15,6 +16,67 @@ function obtener_datos_bancos($ids)
 	);
 	$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
 	return $res;
+}
+
+function obtener_datos_producto($prod_id)
+{
+	$model = "product.template";
+	$obj = new MainObject();
+
+	$params = array(
+		model("name", "string"),		
+		model("list_price", "string"),
+		model("standard_price", "string"),
+		model("sale_ok", "string"),
+		model("purchase_ok", "string"),
+	);
+	$res = $obj->read(USER_ID, md5(PASS), $model, array($prod_id), $params);
+	return $res;	
+}
+
+function obtener_productos($cid)
+{
+	$model = "product.product";
+	$domain = array();
+	$domain[] = array(
+		model("company_id", "string"),
+		model("=", "string"),
+		model($cid, "int"));
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+	//return $res;
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+				model("name", "string"),				
+			);
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$productos = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $producto) {
+					$id = $producto["id"];
+					$prodata = obtener_datos_producto($id);
+					//logg($prodata,1);
+					$producto["tpl"] = $prodata["data"][0];
+					$productos[$id] = $producto;
+				}
+				$res["data"] = $productos;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
 }
 
 function obtener_partners($cid)
@@ -226,6 +288,13 @@ function obtener_sat_codes()
 	
 }
 
+function obtener_accounts($cid)
+{
+	$service = new AccountService(USER_ID, md5(PASS));
+	$res = $cuentas = $service->obtener_cuentas($cid);
+	return $res;
+}
+
 function obtener_cuentas($cid)
 {
 	$model = "res.company";		
@@ -287,6 +356,14 @@ if (isset($_SESSION["login"]))
 		else if($_GET["cat"] == "partners")
 		{
 			$res = obtener_partners($cid[0]);
+		}
+		else if($_GET["cat"] == "accounts")
+		{
+			$res = obtener_accounts($cid[0]);
+		}
+		else if($_GET["cat"] == "productos")
+		{
+			$res = obtener_productos($cid[0]);
 		}
 	}
 
