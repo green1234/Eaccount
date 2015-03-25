@@ -14,7 +14,7 @@ get_lines = function(pid, fn)
 			estatus_poliza = res.data[0].state
 			lines = res.data[0].lines;				
 		}	
-		fn(asignar_eventos);
+		fn(asignar_eventos, pid);
 	});
 }
 
@@ -27,7 +27,7 @@ update_line = function(line_id, values)
 	})
 }
 
-mostrar_lineas = function(fn)
+mostrar_lineas = function(fn, pid)
 {
 	var rows = ""
 	var editable = ""
@@ -39,7 +39,7 @@ mostrar_lineas = function(fn)
 	{
 		rows += "<tr>";
 		rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
-		rows += "<td>" + line.ref + "</td>";
+		rows += "<td>" + pid + "</td>";
 		rows += "<td>" + line.name + "</td>";
 		rows += "<td width='200px' class='" + editable + " account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
 		/*rows += "<td>" + line.id + "</td>";*/
