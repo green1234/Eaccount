@@ -134,7 +134,7 @@ span[id="^_closed"] {
 
 footer
 {
-  position: absolute;
-  bottom: -40px;
+  position: fixed;
+  bottom: 0;
   width: 100%;
 }

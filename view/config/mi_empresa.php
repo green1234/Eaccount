@@ -32,6 +32,19 @@ $empresa = $res["data"];
     height: 30px;
     width: 100%;
   }
+
+  ._50
+  {    
+    width: 48%;
+    display: inline-block;
+    margin-bottom:0.5em; 
+  }
+
+  .modal label
+  {
+    font-size: 0.8em; 
+  }
+
 </style>
 <div role="tabpanel" class="tab-pane fade" id="empresas" style="padding-top: 20px;">
   <div class="col-md-2">
@@ -56,26 +69,56 @@ $empresa = $res["data"];
             </div>
             <div class="modal-body">
               <div class="hid_input profile">
-                <label for="empresa_name">Ingrese un alias o el nombre comercial de su empresa:</label>
+                <label for="empresa_name">Ingrese un alias o el nombre comercial de empresa:</label>
                 <input type="text" name="empresa_name" placeholder="Nombre Empresa">
                 <br><br>
               </div>
               <div class="hid_input fiscales">
-                <label for="razon_social">Ingrese su Razon Social:</label>
+                <label for="razon_social">Ingrese su Razon Social: <b style="color:red;">*</b></label>
                 <input type="text" name="razon_social" placeholder="Razon Social">
-                <br><br>
-                <label for="rfc">RFC:</label>
-                <input type="text" name="rfc" placeholder="RFC">
-                <br><br>
-                <label for="regimen">Regimen:</label>
-                <input type="text" name="regimen" placeholder="Regimen">
-                <br><br>
-                <label for="giro">Giro:</label>
-                <input type="text" name="giro" placeholder="Giro">
-                <br><br>
-                <label for="domicilio">Domicilio:</label>
-                <input type="text" name="domicilio" placeholder="Domicilio">
-                <br><br>
+                
+                <div class="_50">
+                    <label for="rfc">RFC: <b style="color:red;">*</b></label>
+                    <input type="text" name="rfc" placeholder="RFC">                  
+                </div>
+                <div class="_50">
+                  <label for="regimen">Regimen Fiscal:</label>
+                  <input type="text" name="regimen" placeholder="Regimen">
+                </div>
+                <div class="_50">
+                  <label for="giro">Actividad Principal o Giro:</label>
+                  <input type="text" name="giro" placeholder="Giro">
+                </div>
+                <div class="_50">
+                  <label for="empresa_name">Alias o nombre comercial de empresa:</label>
+                  <input type="text" name="empresa_name" placeholder="Nombre Empresa">
+                </div>
+                <b>DOMICILIO FISCAL</b><br>
+                <div class="_50">                  
+                  <input type="text" name="calle" placeholder="Calle">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="numero" placeholder="Numero">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="colonia" placeholder="Colonia">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="cp" placeholder="Codigo Postal">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="municipio" placeholder="Municipio">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="estado" placeholder="Estado">                  
+                </div>
+                <div style="width:100%;">                  
+                  <label for="tipo_registro">
+                    <input type="checkbox" id="tipo_registro" style="width:auto;display:inline-block">
+                    Utilizar mismos datos fiscales para facurar mi pago
+                  </label>
+                </div>
+                
               </div>
 
               <div class="hid_input representante">
@@ -216,10 +259,9 @@ $empresa = $res["data"];
       </tr>
     </table>              
   </div>
-
   <div class="col-md-12">
     <br>
-  </div>
+  </div> 
 
   <div class="col-md-2">
     <b>Representante Legal:</b>

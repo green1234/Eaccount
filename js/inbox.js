@@ -168,7 +168,7 @@ $(function(){
         {
             $('#empresaModal').data("tipo", "fiscales");        
             var tipo = "fiscales";
-        }
+        }        
         else if ($(this).hasClass("representante"))
         {
             $('#empresaModal').data("tipo", "representante");        
