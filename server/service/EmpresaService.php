@@ -50,6 +50,7 @@ class EmpresaService
 				model("gl_rfc", "string"),
 				model("street", "string"),
 				model("street2", "string"),
+				model("no_ext", "string"),
 				model("city", "string"),
 				model("state_id", "string"),
 				model("country_id", "string"),

@@ -253,10 +253,36 @@ $empresa = $res["data"];
         <td style="width: 50%;">
           Domicilio Fiscal:
         </td>
-        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_domicilio">
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_calle">
           <? echo $empresa["street"];?>
         </td>
       </tr>
+      <tr style="display:none">        
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_numero">
+          <? echo $empresa["no_ext"];?>
+        </td>
+      </tr>
+      <tr style="display:none">        
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_colonia">
+          <? echo $empresa["street2"];?>
+        </td>
+      </tr>
+      <tr style="display:none">        
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_cp">
+          <? echo $empresa["zip"];?>
+        </td>
+      </tr>
+      <tr style="display:none">        
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_municipio">
+          <? echo $empresa["city"];?>
+        </td>
+      </tr>
+      <tr style="display:none">        
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_estado">
+          <? echo $empresa["state_id"][1];?>
+        </td>
+      </tr>
+
     </table>              
   </div>
   <div class="col-md-12">
