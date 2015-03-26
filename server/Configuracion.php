@@ -173,7 +173,14 @@ else if(isset($_GET["update"]) && isset($_GET["uid"]) && isset($_GET["pwd"]))
 	  					$params["gl_rfc"] = $_GET["rfc"];
 	  					$params["gl_regimen"] = $_GET["regimen"];
 	  					$params["gl_giro"] = $_GET["giro"];
-	  					$params["street"] = $_GET["domicilio"];	  					
+	  					$params["street"] = $_GET["calle"];
+	  					$params["no_ext"] = $_GET["numero"];
+	  					$params["street2"] = $_GET["colonia"];
+	  					$params["zip"] = $_GET["cp"];
+	  					$params["city"] = $_GET["municipio"];
+	  					$params["state_id"] = $_GET["estado"];
+	  					$params["datos_pago"] = (isset($_GET["tipo"])) ? true : false;
+
 	  					break;
 
 	  				case 'representante':
