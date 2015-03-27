@@ -171,7 +171,7 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 	  				$params["id"] = $_GET["cid"];
 	  			else if(isset($_SESSION["login"]["cid"]))
 	  				$params["id"] = $_SESSION["login"]["cid"][0];	  			 
-
+	  			logg($params,1);
 	  			switch ($_GET["tipo"]) 
 	  			{
 	  				case 'profile':
