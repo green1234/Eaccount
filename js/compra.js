@@ -7,7 +7,7 @@ var confirmar_compra = function(values)
 {	
 	var action = "server/Configuracion?action=compra";
 	console.log(values);
-	return;
+	//return;
 	$.get(action, values, function(result){
 
 		console.log(result)
