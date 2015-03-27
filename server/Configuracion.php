@@ -4,12 +4,12 @@ require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/UsuarioService.php";
 
 
-// if(isset($_SESSION["login"]))
-// {
-// //var_dump($_SESSION);
-// 	$uid = $_SESSION["login"]["uid"];
-// 	$pwd = $_SESSION["login"]["pwd"];
-// 	$cid = $_SESSION["login"]["cid"][0];
+if(isset($_SESSION["login"]))
+{
+	$uid = $_SESSION["login"]["uid"];
+	$pwd = $_SESSION["login"]["pwd"];
+	$cid = $_SESSION["login"]["cid"][0];
+}
 
 	function registrar_cuenta_bancaria($cid, $p)
 	{
@@ -171,8 +171,8 @@ require_once PROYECT_PATH . "/service/UsuarioService.php";
 	  				$params["id"] = $_GET["cid"];
 	  			else if(isset($_SESSION["login"]["cid"]))
 	  				$params["id"] = $_SESSION["login"]["cid"][0];	  			 
-				logg($_SESSION);
-	  			logg($params,1);
+				// logg($_SESSION);
+	  	// 		logg($params,1);
 	  			switch ($_GET["tipo"]) 
 	  			{
 	  				case 'profile':

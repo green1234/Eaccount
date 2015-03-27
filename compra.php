@@ -6,7 +6,7 @@ if (!isset($_SESSION["login"]))
 $uid = $_SESSION["login"]["uid"];
 $pwd = $_SESSION["login"]["pwd"];
 $cid = $_SESSION["login"]["cid"];
-var_dump($cid);
+
 $plan = $name = $resume = $costo = $key = $partner = "";  
 if (isset($_POST["plan"]))
   $plan = $_POST['plan'];
