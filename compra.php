@@ -1,31 +1,35 @@
 <? require_once "server/conf/constantes.conf"; ?>
 <? session_start();
-   // var_dump($_SESSION["login"]);
-  #require_once "server/lib/common.php"; ?>
-<?
-  $plan = $name = $resume = $costo = $key = $partner = "";  
-  if (isset($_POST["plan"]))
-    $plan = $_POST['plan'];
-  if (isset($_POST["name"]))
-    $name = $_POST['name'];
-  if (isset($_POST["resume"]))
-    $resume = $_POST['resume'];
-  if (isset($_POST["costo"]))
-    $costo = $_POST['costo'];
-  if (isset($_POST["key"]))
-    $key = $_POST['key'];
-  if (isset($_POST["ptr"]))
-    $partner = $_POST['ptr'];
+if (!isset($_SESSION["login"]))
+  header('Location: index.php');
 
-  $var = 'uid=' . $_SESSION["login"]["uid"] . '&pwd=' . $_SESSION["login"]["pwd"];
-  $res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos&'.$var), true);
+$uid = $_SESSION["login"]["uid"];
+$pwd = $_SESSION["login"]["pwd"];
+$cid = $_SESSION["login"]["cid"];
+var_dump($cid);
+$plan = $name = $resume = $costo = $key = $partner = "";  
+if (isset($_POST["plan"]))
+  $plan = $_POST['plan'];
+if (isset($_POST["name"]))
+  $name = $_POST['name'];
+if (isset($_POST["resume"]))
+  $resume = $_POST['resume'];
+if (isset($_POST["costo"]))
+  $costo = $_POST['costo'];
+if (isset($_POST["key"]))
+  $key = $_POST['key'];
+if (isset($_POST["ptr"]))
+  $partner = $_POST['ptr'];
+
+$var = 'uid=' . $uid . '&pwd=' . $pwd;
+$res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos&'.$var), true);
   
-  $descuentos = array();
-  if ($res["success"])
-  {
-    // var_dump($res);
-    $descuentos = $res["data"][0];
-  }
+$descuentos = array();
+if ($res["success"] && count($res["data"]) > 0)
+{
+  //var_dump($res);
+  $descuentos = $res["data"][0];
+}
 
 
   // var_dump($res); exit();
@@ -41,7 +45,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <? require 'fijos/head.php'; ?>    
+    <? require 'view/head.php'; ?>    
     <title>Orden de Compra</title>
     <link href="css/base.css" rel="stylesheet">
     <link href="css/compra.css" rel="stylesheet">
@@ -66,10 +70,9 @@
         };
 
         return periodos[id];
-      }      
+      }
+      
 
-      var uid = <? echo $_SESSION["login"]["uid"]; ?>;
-      var pwd = "<? echo $_SESSION['login']['pwd']; ?>";
       var plan_id = <? echo $plan; ?> ;      
 
       var ptr = "<? echo $partner; ?>" ; 
@@ -92,17 +95,108 @@
       var descuento_rate = <? echo $descuentos["porcentaje"]; ?>;
       var desc = "Ahorra el <b>" + descuento_rate + "%</b> al hacer tu compra en <b>" + desc_periodo + "</b>.";
       
-      <? } ?>
-
-
-
-      //var desc = "<? echo $descuentos['description']; ?>";
+      <? } ?>     
 
     </script>
   </head>
   <body>
+
+    <div class="modal fade" id="empresaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <?
+          $path = SERVERNAME . "/Configuracion.php?update=empresa";
+          $path = $path . "&uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
+          ?>
+          <form id="EmpresaForm" class="form-modal" action="<? echo $path; ?>">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Configuración de mi Empresa</h4>
+            </div>
+            <div class="modal-body">
+              
+              <div class="hid_input fiscales">
+                <label for="razon_social">Ingrese su Razon Social: <b style="color:red;">*</b></label>
+                <input type="text" name="razon_social" placeholder="Razon Social" required>
+                
+                <div class="_50">
+                    <label for="rfc">RFC: <b style="color:red;">*</b></label>
+                    <input type="text" name="rfc" placeholder="RFC" required>                  
+                </div>
+                <div class="_50">
+                  <label for="regimen">Regimen Fiscal:</label>
+                  <!-- <input type="text" name="regimen" placeholder="Regimen"> -->
+                  <select name="regimen" id="regimen">
+                    <option value="1">Sociedad de Nombre Colectivo</option>
+                    <option value="2">Sociedad en Comandita Simple</option>
+                    <option value="3">Sociedad de Responsabilidad Limitada</option>
+                    <option value="4">Sociedad Anonima</option>
+                    <option value="5">Sociedad en Comandita por Acciones</option>
+                    <option value="6">Sociedad Cooperativa</option>
+                    <option value="7">Sociedad Civil</option>
+                    <option value="8">Persona Fisica con Actividad Empresarial</option>
+                  </select>
+                </div>
+                <div class="_50">
+                  <label for="giro">Actividad Principal o Giro:</label>
+                  <input type="text" name="giro" placeholder="Giro">
+                </div>
+                <div class="_50">
+                  <label for="empresa_name">Alias o nombre comercial de empresa:</label>
+                  <input type="text" name="empresa_name" placeholder="Nombre Empresa">
+                </div>
+                <b>DOMICILIO FISCAL</b><br>
+                <div class="_50">                  
+                  <input type="text" name="calle" placeholder="Calle">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="numero" placeholder="Numero">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="colonia" placeholder="Colonia">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="cp" placeholder="Codigo Postal">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="municipio" placeholder="Municipio">                  
+                </div>
+                <div class="_50">                  
+                  <!-- <input type="text" name="estado" placeholder="Estado">   -->
+                  <select name="estado" id="estado" >
+                    <option value="1">Monterrey</option>
+                    <option value="2">Guerrero</option>
+                    <option value="3">Distrito Federal</option>
+                    <option value="4">Guadalajara</option>
+                    <option value="5">Puebla</option>
+                    <option value="6">Queretaro</option>
+                    <option value="7">Cancun</option>
+                    <option value="8">Sinaloa</option>
+                  </select>                
+                </div>
+                <div style="width:100%;">                  
+                  <label for="tipo_registro">
+                    <input type="checkbox" id="tipo_registro" style="width:auto;display:inline-block">
+                    Utilizar mismos datos fiscales para facurar mi pago
+                  </label>
+                </div>
+                
+              </div>
+           
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
     <div class="navbar-wrapper">
-      <? require 'fijos/header.php' ?>
+      <? require 'view/header.php' ?>
       <div class="titulo_pagina">
         <div class="container_titulo_pagina">
           ORDEN DE COMPRA
@@ -182,7 +276,7 @@
       </div>
     </div>
     <footer>
-        <? require 'fijos/footer.php'; ?>
+        <? require 'view/footer.php'; ?>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

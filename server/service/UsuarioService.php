@@ -32,8 +32,8 @@ class UsuarioService
 
 	function actualizar_empresa($params)
 	{
-		//return $params;
 		$ids = array($params["id"]);
+		//return $ids;
 		// $attrs = array("name" => $params["name"]);
 		$attrs = prepare_params($params);
 		$model = "res.company";

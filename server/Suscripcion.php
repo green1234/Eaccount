@@ -1,6 +1,16 @@
 <?php
+
 $a = session_id();
 if(empty($a)) session_start();
+// if (!isset($_SESSION["login"]))
+// {
+// 	echo json_encode(array("success"=>false, "data"=>array("description"=>"Datos de Acceso Incorrectos")));
+// 	exit();	
+// }
+
+// $uid = $_SESSION["login"]["uid"];
+// $pwd = $_SESSION["login"]["pwd"];
+// $cid = $_SESSION["login"]["cid"];
 
 require_once "conf/constantes.conf";
 require_once PROYECT_PATH . "/service/LoginService.php";
@@ -69,49 +79,40 @@ if (isset($_GET["action"]))
 							
 		break;
 
-		case "activacion": 
-			// $res = login(); #$loginService->acceder(USER, md5(PASS));
-			
-			if ($res = login(1))
-			{
-				$usuario_id = $res["data"][0]["id"];
-				$usuario_pwd = $res["data"][0]["pwd"];
-			
-				$suscriptionService = new SuscriptionService($usuario_id, $usuario_pwd);
+		case "activacion": 			
+		
+			$suscriptionService = new SuscriptionService(USER_ID, md5(PASS));
 
-				if (!verificar_datos($_GET, array("fk")))
-				{
-					$res = array("success"=>false,
-							"data" => array(
-								"description" => "No hay ningun registro previo")
-							);
-				}
-				else
-				{
-					$res = $suscriptionService->confirmar_suscripcion($_GET["fk"]);					
-					$suscriptionService = NULL;
-				}
+			if (!verificar_datos($_GET, array("fk")))
+			{
+				$res = array("success"=>false,
+						"data" => array(
+							"description" => "No hay ningun registro previo")
+						);
 			}
+			else
+			{
+				$res = $suscriptionService->confirmar_suscripcion($_GET["fk"]);					
+				$suscriptionService = NULL;
+			}
+			
 			
 		break;
 
-		case "compra": 
+		case "compra":
 
-			if (isset($_GET["uid"]) && isset($_GET["pwd"]))
+			if (!isset($_SESSION["login"]))
 			{
-				$uid = $_GET["uid"];
-				$pwd = $_GET["pwd"];
-
-				// $loginService = new LoginService();
-				// $res = $loginService->acceder($uid, $pwd);
-				// echo "<pre>";
-				// var_dump($res); 
-				// echo "</pre>";
-			// }
-			// if ($res = login(1))
-			// {	
-			// 	$usuario_id = $res["data"][0]["id"];
-			// 	$usuario_pwd = $res["data"][0]["pwd"];
+				$res = array(
+					"success"=>false, 
+					"data"=>array(
+						"description"=>"Datos de Acceso Incorrectos"));				
+			}
+			else
+			{
+				$uid = $_SESSION["login"]["uid"];
+				$pwd = $_SESSION["login"]["pwd"];
+				$cid = $_SESSION["login"]["cid"]; 			
 
 				$suscriptionService = new SuscriptionService($uid, $pwd);
 
@@ -120,24 +121,23 @@ if (isset($_GET["action"]))
 					$res = array("success"=>false,
 							"data" => array(
 								"description" => "Ocurrio un error al verificar los datos de la compra.")
-							);
+						);
 				}
 				else
 				{
-					// $partner_id = $_GET["ptr"];
+						// $partner_id = $_GET["ptr"];
 					$params = array(
 						"application" => "EACCOUNT",
 						"period" => $_GET["period"], 					
 						"plan_id" => $_GET["plan"]);
-						// "suscription_id" => $_GET["key"]); 
-					
+							// "suscription_id" => $_GET["key"]); 
+						
 					if (isset($_GET["discount"]))
 						$params["discount_id"] = array($_GET["discount"]);
 
 					$res = $suscriptionService->comprar_plan($params);								
-					// $res = $suscriptionService->comprar_plan($params, $partner_id);					
-				}			
-
+						// $res = $suscriptionService->comprar_plan($params, $partner_id);					
+				}
 			}
 
 		break;
@@ -147,30 +147,20 @@ if (isset($_GET["action"]))
 }
 
 else if(isset($_GET["get"]))
-{	
-	// if(isset($_GET["uid"]) && isset($_GET["pwd"]))
-	// {		
-	// 	$usuario_id = $_GET["uid"];
-	// 	$usuario_pw = $_GET["pwd"];
+{		
+	$suscriptionService = new SuscriptionService(USER_ID, md5(PASS));
 
-	if($res = login(1))
-	{		
-		$usuario_id = $res["data"][0]["id"];
-		$usuario_pw = $res["data"][0]["pwd"];
-		$suscriptionService = new SuscriptionService($usuario_id, $usuario_pw);
-
-		switch($_GET["get"])
-		{
-			case "descuentos": 				
-				$res = $suscriptionService->obtener_descuentos();
-			break;
-			case "planes":
-				$res = $suscriptionService->obtener_planes_suscription("EACCOUNT");
-			break;
-		}
-
-		echo json_encode($res);
+	switch($_GET["get"])
+	{
+		case "descuentos": 				
+			$res = $suscriptionService->obtener_descuentos();
+		break;
+		case "planes":
+			$res = $suscriptionService->obtener_planes_suscription("EACCOUNT");
+		break;
 	}
+
+	echo json_encode($res);	
 }
 
 // else

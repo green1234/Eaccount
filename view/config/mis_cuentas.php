@@ -496,3 +496,20 @@ if (isset($_SESSION["login"]))
       <button class="btn btn-primary">Salir sin Cambios</button>
     </div>
 </div>
+
+<script>
+  // var usuario = {};
+  
+  // cargar_info_usuario = function()
+  // {
+  //   console.log(usuario)
+  // }
+
+  // $.getJSON("server/Configuracion.php?get=usuario", function(res){
+  //   if(res.success)
+  //   {
+  //     usuario = res.data;
+  //     cargar_info_usuario();
+  //   }
+  // });
+</script>

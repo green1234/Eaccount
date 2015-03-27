@@ -40,6 +40,12 @@ $empresa = $res["data"];
     margin-bottom:0.5em; 
   }
 
+  .modal input, .modal select 
+  {
+    font-size: 0.8em;
+    width: 100%;
+  }
+
   .modal label
   {
     font-size: 0.8em; 
@@ -83,7 +89,17 @@ $empresa = $res["data"];
                 </div>
                 <div class="_50">
                   <label for="regimen">Regimen Fiscal:</label>
-                  <input type="text" name="regimen" placeholder="Regimen">
+                  <!-- <input type="text" name="regimen" placeholder="Regimen"> -->
+                  <select name="regimen" id="regimen" >
+                    <option value="1">Sociedad de Nombre Colectivo</option>
+                    <option value="2">Sociedad en Comandita Simple</option>
+                    <option value="3">Sociedad de Responsabilidad Limitada</option>
+                    <option value="4">Sociedad Anonima</option>
+                    <option value="5">Sociedad en Comandita por Acciones</option>
+                    <option value="6">Sociedad Cooperativa</option>
+                    <option value="7">Sociedad Civil</option>
+                    <option value="8">Persona Fisica con Actividad Empresarial</option>
+                  </select>
                 </div>
                 <div class="_50">
                   <label for="giro">Actividad Principal o Giro:</label>
@@ -110,7 +126,17 @@ $empresa = $res["data"];
                   <input type="text" name="municipio" placeholder="Municipio">                  
                 </div>
                 <div class="_50">                  
-                  <input type="text" name="estado" placeholder="Estado">                  
+                  <!-- <input type="text" name="estado" placeholder="Estado">    -->
+                  <select name="estado" id="estado" >
+                    <option value="1">Monterrey</option>
+                    <option value="2">Guerrero</option>
+                    <option value="3">Distrito Federal</option>
+                    <option value="4">Guadalajara</option>
+                    <option value="5">Puebla</option>
+                    <option value="6">Queretaro</option>
+                    <option value="7">Cancun</option>
+                    <option value="8">Sinaloa</option>
+                  </select>               
                 </div>
                 <div style="width:100%;">                  
                   <label for="tipo_registro">
@@ -279,7 +305,7 @@ $empresa = $res["data"];
       </tr>
       <tr style="display:none">        
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_estado">
-          <? echo $empresa["state_id"][1];?>
+          <? echo $empresa["state_id"][0];?>
         </td>
       </tr>
 

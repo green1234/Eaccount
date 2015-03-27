@@ -121,7 +121,7 @@ $(function(){
         
         // var data = $(this).serialize();
         var form = $(this);
-        var inputs = form.find("input[type=text]:enabled");
+        var inputs = form.find("input[type=text]:enabled,select");
         
         vals = "";
         var results = [];

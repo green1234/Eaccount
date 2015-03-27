@@ -216,3 +216,41 @@ ul
   margin-top: 0.8em;
   margin-bottom: 5em;
 }
+
+.input
+{
+  display: inline-block;  
+  font-size: 1.2em;  
+  margin: 0.6em 1.5em;
+  width: 40%;
+}
+
+.input label
+{
+  display: block;
+}
+
+.input select, .input input
+{
+  height: 30px;
+  width: 100%;
+}
+
+._50
+{    
+  width: 48%;
+  display: inline-block;
+  margin-bottom:0.5em; 
+}
+
+.modal input, .modal select
+{
+  width: 100%;
+} 
+
+.modal label
+{
+  font-size: 0.8em; 
+}
+
+

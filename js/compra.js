@@ -3,6 +3,28 @@ var log = function(msg)
     console.log();
 }
 
+var confirmar_compra = function(values)
+{	
+	var action = "server/Configuracion?action=compra";
+	console.log(values);
+	return;
+	$.get(action, values, function(result){
+
+		console.log(result)
+		result = JSON.parse(result);
+		
+		if (result.success)
+		{
+			alert("Se ha enviado un correo con los datos para el deposito");
+			window.location.href = "inbox.php";
+		}
+		else
+		{
+			alert(result.data.description);
+		}
+	});
+}
+
 $(function(){
 	descuento_rate = descuento_rate / 100;
 	var subtotal = costo.toFixed(2);
@@ -79,41 +101,62 @@ $(function(){
 		e.preventDefault();
 	});
 
+	$("#EmpresaForm").on("submit", function(e){
+		e.preventDefault();
+
+		var data = $(this).serialize();
+		var path = "server/Configuracion.php?update=empresa&tipo=fiscales&"+data;
+
+		$.getJSON(path, function(res){
+			if (res.success)
+			{
+				var period_id = $("select[name=period]").val();
+				var values = {"key" : key, "ptr" : ptr, "plan" : plan_id, "period" : period_id}				
+				if (desc_id != 0)
+					values["discount"] = desc_id;
+				confirmar_compra(values);
+				$("#empresaModal").modal("hide");
+			}
+		});
+	});
+
 	$("a.confirm_compra").on("click", function(e)
 	{
 		e.preventDefault();
 		
 		var period_id = $("select[name=period]").val();
 		var values = 
-			{
-				"key" : key, 
-				"ptr" : ptr, 
-				"plan" : plan_id, 
-				"period" : period_id				
-			}
+		{
+			"key" : key, 
+			"ptr" : ptr, 
+			"plan" : plan_id, 
+			"period" : period_id				
+		}
 		
 		if (desc_id != 0)
 			values["discount"] = desc_id;
 
 		//var values = '&key=' + key + '&ptr=' + ptr + '&plan=' + plan_id + '&period=' + period_id + '&discount=' + desc_id; 
-		var action = "server/Suscripcion.php?action=compra&uid="+uid+"&pwd="+pwd;
-		$.get(action, values, function(result){
+		var action = "server/Suscripcion.php?action=compra";
+		$("#empresaModal").modal("show");
+		//confirmar_compra(values);
+		// $.get(action, values, function(result){
 
-			console.log(result)
+		// 	console.log(result)
 
-			result = JSON.parse(result);
+		// 	result = JSON.parse(result);
 			
-			if (result.success)
-			{
-				alert("Se ha enviado un correo con los datos para el deposito");
+		// 	if (result.success)
+		// 	{
+		// 		alert("Se ha enviado un correo con los datos para el deposito");
 
-				window.location.href = "inbox.php";
-			}
-			else
-			{
-				log(result.data);
-			}
-		});
+		// 		window.location.href = "inbox.php";
+		// 	}
+		// 	else
+		// 	{
+		// 		log(result.data);
+		// 	}
+		// });
 	})
 
 
