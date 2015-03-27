@@ -5,7 +5,7 @@ var log = function(msg)
 
 var confirmar_compra = function(values)
 {	
-	var action = "server/Configuracion?action=compra";
+	var action = "server/Suscripcion.php?action=compra";
 	console.log(values);
 	//return;
 	$.get(action, values, function(result){
