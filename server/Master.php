@@ -164,6 +164,42 @@ function obtener_paises()
 			"description" => "No se encontraron registros"));
 }
 
+function obtener_estados()
+{
+	$model = "res.country.state";
+	$domain = array();	
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+					model("name", "string"));
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$estados = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $estado) {
+					$id = $estado["id"];
+					$estados[$id] = $estado;
+				}
+				$res["data"] = $estados;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
 function obtener_monedas()
 {
 	$model = "gl.cat.sat";
@@ -348,6 +384,10 @@ if (isset($_SESSION["login"]))
 		else if($_GET["cat"] == "paises")
 		{
 			$res = obtener_paises();	
+		}
+		else if($_GET["cat"] == "estados")
+		{
+			$res = obtener_estados();	
 		}
 		else if($_GET["cat"] == "codesat")
 		{

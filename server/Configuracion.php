@@ -10,7 +10,32 @@ if(isset($_SESSION["login"]))
 	$pwd = $_SESSION["login"]["pwd"];
 	$cid = $_SESSION["login"]["cid"][0];
 }
+	function obtener_direccion($cp)
+	{
+		$model = "res.country.zip";		
+		$method = "obtener_direccion_zip";
+		$params = array(			
+			"cp"  => model($cp, "string")			
+		);		
 
+		$obj = new MainObject();
+		$response = $obj->call(USER_ID, md5(PASS), $model, $method, null, $params);		
+		//logg("LOL");
+		//logg($response,1);
+		if ($response["success"] && $response["data"])
+		{
+			foreach ($response["data"] as $index => $value) 
+			{
+				$data = $value->me["struct"];					
+				$vals[$index] = prepare_response($data);										
+			}
+			$response["data"] = $vals;
+			return $response;
+		}
+
+		return array("success"=>false, "data"=>array("description"=>"No se encontraron datos"));
+	}
+	
 	function registrar_cuenta_bancaria($cid, $p)
 	{
 		$model = "res.company";		
@@ -191,6 +216,7 @@ if(isset($_SESSION["login"]))
 	  					$params["zip"] = $_GET["cp"];
 	  					$params["city"] = $_GET["municipio"];
 	  					$params["state_id"] = $_GET["estado"];
+	  					$params["country_id"] = 157;
 
 	  					if (isset($_GET["empresa_name"]) && $_GET["empresa_name"] != "")
 	  						$params["name"] = $_GET["empresa_name"];
@@ -257,6 +283,23 @@ if(isset($_SESSION["login"]))
 			}		
 			echo json_encode($res);
 		}
+	}
+	else if(isset($_GET["get"]))
+	{
+		switch ($_GET["get"]) {
+			case 'direccion':
+				if (isset($_GET["cp"]))
+				{
+					$res = obtener_direccion($_GET["cp"]);
+					//logg($res,1);
+					echo json_encode($res);
+				}
+				break;
+			
+			default:
+				# code...
+				break;
+		}		
 	}
 	
 	// else if(isset($_GET["get"]))

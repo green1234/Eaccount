@@ -207,8 +207,6 @@ $(function(){
             input_name = form.find("[name=" + id + "]");
             input_name.val(text).data("valor", text);
         });
-
-        
         
     });
 

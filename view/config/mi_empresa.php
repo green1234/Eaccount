@@ -117,10 +117,20 @@ $empresa = $res["data"];
                   <input type="text" name="numero" placeholder="Numero">                  
                 </div>
                 <div class="_50">                  
-                  <input type="text" name="colonia" placeholder="Colonia">                  
+                  <!-- <input type="text" name="colonia" placeholder="Colonia"> -->
+                  <select name="colonia" id="colonia" >
+                    <option value="0">No se encontraron datos</option>
+                    <!--<option value="2">Guerrero</option>
+                    <option value="3">Distrito Federal</option>
+                    <option value="4">Guadalajara</option>
+                    <option value="5">Puebla</option>
+                    <option value="6">Queretaro</option>
+                    <option value="7">Cancun</option>
+                    <option value="8">Sinaloa</option> -->
+                  </select>                     
                 </div>
                 <div class="_50">                  
-                  <input type="text" name="cp" placeholder="Codigo Postal">                  
+                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
                 </div>
                 <div class="_50">                  
                   <input type="text" name="municipio" placeholder="Municipio">                  
@@ -128,14 +138,7 @@ $empresa = $res["data"];
                 <div class="_50">                  
                   <!-- <input type="text" name="estado" placeholder="Estado">    -->
                   <select name="estado" id="estado" >
-                    <option value="1">Monterrey</option>
-                    <option value="2">Guerrero</option>
-                    <option value="3">Distrito Federal</option>
-                    <option value="4">Guadalajara</option>
-                    <option value="5">Puebla</option>
-                    <option value="6">Queretaro</option>
-                    <option value="7">Cancun</option>
-                    <option value="8">Sinaloa</option>
+                    <option value="">Seleccione una opción</option>                    
                   </select>               
                 </div>
                 <div style="width:100%;">                  
@@ -560,8 +563,11 @@ $empresa = $res["data"];
   var bancos = {};
   var monedas = {};
   var paises = {};
+  var estados = {};
 
   var optPaises = "";
+  var direcciones = {};
+  var colonias = {};
 
   obtener_bancos = function()
   {
@@ -638,12 +644,88 @@ $empresa = $res["data"];
     });
   }
 
+  obtener_estados = function()
+  {
+    var path = "server/Master.php?cat=estados";
+    
+    $.getJSON(path, function(res){
+      
+      if (res.success)
+      {    
+        //console.log(res.data);    
+        estados = res.data;
+      }
+    });
+  }
+  
+  function obtener_direccion(cp, fn, params)
+  {
+    var path = "server/Configuracion.php?get=direccion&cp=" + cp;
+
+    $.getJSON(path, function(res)
+    {
+      if(res.success)
+      {
+        direcciones = res.data;        
+        fn(params); 
+      }       
+
+    });
+  }
+
+  function mostrar_direccion()
+  { 
+    var col = $.trim($("#empresas").find("[id='idata_colonia']").text())
+    var colOptions = "";
+    $.each(direcciones, function(i, dir){   
+      colonias[i] = dir.name; 
+      if (col == dir.name)
+        colOptions += "<option selected val='" + dir.name + "'>" + dir.name +"</option>"
+      else
+        colOptions += "<option val='" + dir.name + "'>" + dir.name +"</option>"
+    });
+    $("#colonia").val("").html(colOptions);
+
+    
+    //$("#colonia").val(col)
+  }  
+
+
   $(function(){
 
     obtener_cuentas();
     obtener_bancos();
     obtener_monedas();
     obtener_paises();
+    obtener_estados();
+
+
+    $('#empresaModal').on('shown.bs.modal', function () 
+    {
+      var edo = $.trim($("#empresas").find("[id='idata_estado']").text())      
+      var cp = $.trim($("#empresas").find("[id='idata_cp']").text())
+
+      obtener_direccion(cp, mostrar_direccion);
+
+      //$("#colonia").html("<option val='" + col + "'>" + col + "</option>");
+      
+      var optEstados = "";
+      var idx = 0;
+      $.each(estados, function(i, v){
+        if (v.name == edo)
+        {
+          optEstados += "<option selected value='" + v.id + "'>" + v.name + "</option>" ;
+        }
+        optEstados += "<option value='" + v.id + "'>" + v.name + "</option>" ;
+        //console.log("Index: " + idx)
+        //console.log(estados)        
+        if (idx == Object.keys(estados).length - 1)
+          $("#estado").html(optEstados);
+
+        idx++;
+      });
+
+    });
 
     $('#CtaBanModal').on('show.bs.modal', function (e) {
       
@@ -677,6 +759,14 @@ $empresa = $res["data"];
       });
       $("#cta_pais").html(optPaises);
 
+    });
+
+    $("#cp").on("change", function(){
+      //console.log($(this).val().length)
+      if($(this).val().length == 5)
+      {
+        obtener_direccion($(this).val(), mostrar_direccion);
+      }
     });
 
     $("#cta_nac").on("change", function()
