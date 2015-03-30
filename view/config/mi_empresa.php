@@ -568,6 +568,7 @@ $empresa = $res["data"];
   var optPaises = "";
   var direcciones = {};
   var colonias = {};
+  var municipios = {};
 
   obtener_bancos = function()
   {
@@ -677,15 +678,23 @@ $empresa = $res["data"];
   { 
     var col = $.trim($("#empresas").find("[id='idata_colonia']").text())
     var colOptions = "";
+    var estado_id = 0;
+
     $.each(direcciones, function(i, dir){   
+      municipios[i] = dir.municipio; 
       colonias[i] = dir.name; 
       if (col == dir.name)
         colOptions += "<option selected val='" + dir.name + "'>" + dir.name +"</option>"
       else
         colOptions += "<option val='" + dir.name + "'>" + dir.name +"</option>"
+
+      if (estado_id == 0)         
+        estado_id = dir.state_id[0];
+
     });
     $("#colonia").val("").html(colOptions);
-
+    $("#municipio").val(municipios[0]);
+    $("#estado").val(estado_id);
     
     //$("#colonia").val(col)
   }  
@@ -761,7 +770,7 @@ $empresa = $res["data"];
 
     });
 
-    $("#cp").on("change", function(){
+    $("#cp").on("keyup", function(){
       //console.log($(this).val().length)
       if($(this).val().length == 5)
       {
