@@ -1,3 +1,7 @@
+var estados = {};
+var colonias = {};
+var municipios = {};
+
 var log = function(msg)
 {
     console.log();
@@ -25,7 +29,57 @@ var confirmar_compra = function(values)
 	});
 }
 
+obtener_estados = function()
+{
+	var path = "server/Master.php?cat=estados";
+
+	$.getJSON(path, function(res){
+	  
+	  if (res.success)
+	  {    
+	    //console.log(res.data);    
+	    estados = res.data;
+	  }
+	});
+}
+
+function obtener_direccion(cp, fn, params)
+  {
+    var path = "server/Configuracion.php?get=direccion&cp=" + cp;
+
+    $.getJSON(path, function(res)
+    {
+      if(res.success)
+      {
+        direcciones = res.data;        
+        fn(params); 
+      }       
+
+    });
+  }
+
+  function mostrar_direccion()
+  {     
+    var colOptions = ""; 
+    var estado_id = 0;  
+    $.each(direcciones, function(i, dir){   
+      colonias[i] = dir.name; 
+      municipios[i] = dir.municipio;     
+      colOptions += "<option val='" + dir.name + "'>" + dir.name +"</option>"
+
+      if (estado_id == 0)      		
+      	estado_id = dir.state_id[0];
+
+    });
+    $("#colonia").val("").html(colOptions);
+    $("#municipio").val(municipios[0]);
+    $("#estado").val(estado_id);
+  } 
+
 $(function(){
+
+	obtener_estados();
+
 	descuento_rate = descuento_rate / 100;
 	var subtotal = costo.toFixed(2);
 	var descuento = (subtotal * descuento_rate).toFixed(2);	
@@ -159,5 +213,43 @@ $(function(){
 		// });
 	})
 
+	$("#cp").on("keyup", function(){
+      //console.log($(this).val().length)
+      if($(this).val().length == 5)
+      {
+        obtener_direccion($(this).val(), mostrar_direccion);
+      }
+      else
+      {
+      	$(this).focus();
+      }
+    });
+
+    $('#empresaModal').on('shown.bs.modal', function () 
+    {
+      // var edo = $.trim($("#empresas").find("[id='idata_estado']").text())      
+      // var cp = $.trim($("#empresas").find("[id='idata_cp']").text())
+
+      // obtener_direccion(cp, mostrar_direccion);
+
+      //$("#colonia").html("<option val='" + col + "'>" + col + "</option>");
+      
+      var optEstados = "";
+      var idx = 0;
+      $.each(estados, function(i, v){
+        // if (v.name == edo)
+        // {
+        //   optEstados += "<option selected value='" + v.id + "'>" + v.name + "</option>" ;
+        // }
+        optEstados += "<option value='" + v.id + "'>" + v.name + "</option>" ;
+        //console.log("Index: " + idx)
+        //console.log(estados)        
+        if (idx == Object.keys(estados).length - 1)
+          $("#estado").html(optEstados);
+
+        idx++;
+      });
+
+    });
 
 });

@@ -153,25 +153,27 @@ if ($res["success"] && count($res["data"]) > 0)
                   <input type="text" name="numero" placeholder="Numero">                  
                 </div>
                 <div class="_50">                  
-                  <input type="text" name="colonia" placeholder="Colonia">                  
-                </div>
-                <div class="_50">                  
-                  <input type="text" name="cp" placeholder="Codigo Postal">                  
-                </div>
-                <div class="_50">                  
-                  <input type="text" name="municipio" placeholder="Municipio">                  
-                </div>
-                <div class="_50">                  
-                  <!-- <input type="text" name="estado" placeholder="Estado">   -->
-                  <select name="estado" id="estado" >
-                    <option value="1">Monterrey</option>
-                    <option value="2">Guerrero</option>
+                  <select name="colonia" id="colonia" >
+                    <option value="0">No se encontraron datos</option>
+                    <!--<option value="2">Guerrero</option>
                     <option value="3">Distrito Federal</option>
                     <option value="4">Guadalajara</option>
                     <option value="5">Puebla</option>
                     <option value="6">Queretaro</option>
                     <option value="7">Cancun</option>
-                    <option value="8">Sinaloa</option>
+                    <option value="8">Sinaloa</option> -->
+                  </select>
+                </div>
+                <div class="_50">                  
+                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="municipio" id="municipio" placeholder="Municipio">                  
+                </div>
+                <div class="_50">                  
+                  <!-- <input type="text" name="estado" placeholder="Estado">   -->
+                  <select name="estado" id="estado" >
+                    <option value="">Seleccione una opción</option>                    
                   </select>                
                 </div>
                 <div style="width:100%;">                  
