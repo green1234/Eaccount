@@ -68,6 +68,7 @@ class EmpresaService
 				model("gl_cer", "string"),
 				model("gl_key", "string"),
 				model("gl_fiel", "string"),
+				model("datos_pago", "string"),
 		);
 		$res = $this->obj->read($this->uid, $this->pwd, $this->model, $ids, $params);
 		
