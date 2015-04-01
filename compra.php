@@ -168,10 +168,7 @@ if ($res["success"] && count($res["data"]) > 0)
                     <option value="7">Cancun</option>
                     <option value="8">Sinaloa</option> -->
                   </select>
-                </div>
-                <div class="_50">                  
-                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
-                </div>
+                </div>                
                 <div class="_50">                  
                   <input type="text" name="municipio" id="municipio" placeholder="Municipio">                  
                 </div>
