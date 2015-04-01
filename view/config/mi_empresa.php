@@ -243,7 +243,7 @@ $empresa = $res["data"];
           Razón Social:
         </td>
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_razon_social">
-          <? echo $empresa["gl_razon_social"];?>
+          <? echo utf8_decode($empresa["gl_razon_social"]);?>
         </td>
       </tr>
     </table>
@@ -283,17 +283,17 @@ $empresa = $res["data"];
           Domicilio Fiscal:
         </td>
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_calle">
-          <? echo $empresa["street"];?>
+          <? echo utf8_decode($empresa["street"]);?>
         </td>
       </tr>
       <tr style="display:none">        
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_numero">
-          <? echo $empresa["no_ext"];?>
+          <? echo utf8_decode($empresa["no_ext"]);?>
         </td>
       </tr>
       <tr style="display:none">        
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_colonia">
-          <? echo $empresa["street2"];?>
+          <? echo utf8_decode($empresa["street2"]);?>
         </td>
       </tr>
       <tr style="display:none">        
@@ -303,7 +303,7 @@ $empresa = $res["data"];
       </tr>
       <tr style="display:none">        
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_municipio">
-          <? echo $empresa["city"];?>
+          <? echo utf8_decode($empresa["city"]);?>
         </td>
       </tr>
       <tr style="display:none">        
