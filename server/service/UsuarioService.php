@@ -36,7 +36,7 @@ class UsuarioService
 		//return $ids;
 		// $attrs = array("name" => $params["name"]);
 
-		if (isset($params["name"]))
+		if (isset($params["empresa_name"]))
 		{
 			$empService = new EmpresaService(USER_ID, md5(PASS));
 			$res = $empService->obtener_empresa_id($params["name"]);				
