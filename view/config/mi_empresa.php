@@ -716,7 +716,7 @@ $empresa = $res["data"];
     {
       var edo = $.trim($("#empresas").find("[id='idata_estado']").text())      
       var cp = $.trim($("#empresas").find("[id='idata_cp']").text())
-
+      //console.log("==>" + edo)
       obtener_direccion(cp, mostrar_direccion);
 
       //$("#colonia").html("<option val='" + col + "'>" + col + "</option>");
@@ -724,7 +724,7 @@ $empresa = $res["data"];
       var optEstados = "";
       var idx = 0;
       $.each(estados, function(i, v){
-        if (v.name == edo)
+        if (v.id == edo)
         {
           optEstados += "<option selected value='" + v.id + "'>" + v.name + "</option>" ;
         }
