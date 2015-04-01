@@ -36,10 +36,10 @@ class UsuarioService
 		//return $ids;
 		// $attrs = array("name" => $params["name"]);
 
-		if (isset($params["empresa_name"]))
+		if (isset($params["name"]))
 		{
 			$empService = new EmpresaService(USER_ID, md5(PASS));
-			$res = $empService->obtener_empresa_id($params["empresa_name"]);				
+			$res = $empService->obtener_empresa_id($params["name"]);				
 			
 			if ($res["success"] && count($res["data"]["id"]) > 0){
 				return array(
