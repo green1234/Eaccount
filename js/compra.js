@@ -171,6 +171,10 @@ $(function(){
 				confirmar_compra(values);
 				$("#empresaModal").modal("hide");
 			}
+			else
+			{
+				alert(res.data.description)
+			}
 		});
 	});
 
