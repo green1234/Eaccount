@@ -256,4 +256,10 @@ $(function(){
 
     });
 
+    $("#rfc").on("blur", function()
+    {      
+      var valor = $(this).val().toUpperCase();
+      $(this).val(valor);
+    });
+
 });

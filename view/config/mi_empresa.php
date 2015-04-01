@@ -85,7 +85,7 @@ $empresa = $res["data"];
                 
                 <div class="_50">
                     <label for="rfc">RFC: <b style="color:red;">*</b></label>
-                    <input type="text" name="rfc" placeholder="RFC">                  
+                    <input type="text" name="rfc" id="rfc" placeholder="RFC">                  
                 </div>
                 <div class="_50">
                   <label for="regimen">Regimen Fiscal:</label>
@@ -771,6 +771,12 @@ $empresa = $res["data"];
       });
       $("#cta_pais").html(optPaises);
 
+    });
+
+    $("#rfc").on("blur", function()
+    {      
+      var valor = $(this).val().toUpperCase();
+      $(this).val(valor);
     });
 
     $("#cp").on("keyup", function(){

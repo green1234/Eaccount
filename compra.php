@@ -121,7 +121,7 @@ if ($res["success"] && count($res["data"]) > 0)
                 
                 <div class="_50">
                     <label for="rfc">RFC: <b style="color:red;">*</b></label>
-                    <input type="text" name="rfc" placeholder="RFC" required>                  
+                    <input type="text" name="rfc" id="rfc" placeholder="RFC" required>                  
                 </div>
                 <div class="_50">
                   <label for="regimen">Regimen Fiscal:</label>
