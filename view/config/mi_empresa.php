@@ -88,19 +88,19 @@ $empresa = $res["data"];
                     <input type="text" name="rfc" id="rfc" placeholder="RFC">                  
                 </div>
                 <div class="_50">
-                  <label for="regimen">Regimen Fiscal:</label>
+                  <label for="regimen">Regimen Social:</label>
                   <!-- <input type="text" name="regimen" placeholder="Regimen"> -->
                   <select name="regimen" id="regimen" >
-                    <option value="1">Sociedad de Nombre Colectivo</option>
-                    <option value="2">Sociedad en Comandita Simple</option>
-                    <option value="3">Sociedad de Responsabilidad Limitada</option>
-                    <option value="4">Sociedad Anonima</option>
-                    <option value="5">Sociedad en Comandita por Acciones</option>
-                    <option value="6">Sociedad Cooperativa</option>
-                    <option value="7">Sociedad Civil</option>
-                    <option value="8">Persona Fisica con Actividad Empresarial</option>
-                    <option value="9">Persona Moral</option>
-                    <option value="10">Regimen General</option>
+                    <option value="Sociedad de Nombre Colectivo">Sociedad de Nombre Colectivo</option>
+                    <option value="Sociedad en Comandita Simple">Sociedad en Comandita Simple</option>
+                    <option value="Sociedad de Responsabilidad Limitada">Sociedad de Responsabilidad Limitada</option>
+                    <option value="Sociedad Anonima">Sociedad Anonima</option>
+                    <option value="Sociedad en Comandita por Acciones">Sociedad en Comandita por Acciones</option>
+                    <option value="Sociedad Cooperativa">Sociedad Cooperativa</option>
+                    <option value="Sociedad Civil">Sociedad Civil</option>
+                    <option value="Persona Fisica con Actividad Empresarial">Persona Fisica con Actividad Empresarial</option>
+                    <option value="Persona Moral">Persona Moral</option>
+                    <option value="Regimen General">Regimen General</option>
                   </select>
                 </div>
                 <div class="_50">

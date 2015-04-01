@@ -35,17 +35,19 @@ class UsuarioService
 		$ids = array($params["id"]);
 		//return $ids;
 		// $attrs = array("name" => $params["name"]);
-
+		
 		if (isset($params["name"]))
 		{
 			$empService = new EmpresaService(USER_ID, md5(PASS));
 			$res = $empService->obtener_empresa_id(array("name"=>$params["name"]));
 			
 			if ($res["success"] && count($res["data"]["id"]) > 0){
-				return array(
-					"success"=>false, 
-					"data" => array(
-						"description" => "Ya existe una empresa con ese nombre comercial"));
+				unset($params["name"]);
+				
+				// return array(
+				// 	"success"=>false, 
+				// 	"data" => array(
+				// 		"description" => "Ya existe una empresa con ese nombre comercial"));
 			}
 		}
 

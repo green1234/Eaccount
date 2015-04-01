@@ -124,7 +124,7 @@ if ($res["success"] && count($res["data"]) > 0)
                     <input type="text" name="rfc" id="rfc" placeholder="RFC" required>                  
                 </div>
                 <div class="_50">
-                  <label for="regimen">Regimen Fiscal:</label>
+                  <label for="regimen">Regimen Social:</label>
                   <!-- <input type="text" name="regimen" placeholder="Regimen"> -->
                   <select name="regimen" id="regimen">
                     <option value="1">Sociedad de Nombre Colectivo</option>

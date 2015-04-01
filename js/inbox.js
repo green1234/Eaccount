@@ -1,3 +1,15 @@
+var regimen = {
+    "Sociedad de Nombre Colectivo" : "Sociedad de Nombre Colectivo",
+    "Sociedad en Comandita Simple" : "Sociedad en Comandita Simple",
+    "Sociedad de Responsabilidad Limitada" : "Sociedad de Responsabilidad Limitada",
+    "Sociedad Anonima" : "Sociedad Anonima",
+    "Sociedad en Comandita por Acciones" : "Sociedad en Comandita por Acciones",
+    "Sociedad Cooperativa" : "Sociedad Cooperativa",
+    "Sociedad Civil" : "Sociedad Civil",
+    "Persona Fisica con Actividad Empresarial" : "Persona Fisica con Actividad Empresarial",
+    "Persona Moral" : "Persona Moral",
+    "Regimen General" : "Regimen General",
+};
 function sub(obj){
     /*var file = obj.value;
     var fileName = file.split("\\");*/
@@ -141,6 +153,7 @@ $(function(){
         var path = $(this).attr("action");
         path = path + vals + "&tipo=" + tipo;
         console.log(path);
+        
         //return
         $.getJSON(path, function(data){
             console.log(data)
@@ -150,7 +163,9 @@ $(function(){
 
                 // console.log("#idata_" + results[i])
                 // console.log(rvals[i])
-                $("#idata_" + results[i]).text(rvals[i])
+                
+                $("#idata_" + results[i]).text(rvals[i]);                   
+                
                 // $('#profileModal').modal("hide");
                 form.parents(".modal").modal("hide");
             });
