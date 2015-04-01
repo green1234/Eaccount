@@ -45,7 +45,7 @@ class UsuarioService
 				return array(
 					"success"=>false, 
 					"data" => array(
-						"description" => "Ya existe una empresa con ese nombre"));
+						"description" => "Ya existe una empresa con ese nombre comercial"));
 			}
 		}
 
