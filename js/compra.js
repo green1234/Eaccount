@@ -168,7 +168,7 @@ $(function(){
 				var values = {"key" : key, "ptr" : ptr, "plan" : plan_id, "period" : period_id}				
 				if (desc_id != 0)
 					values["discount"] = desc_id;
-				confirmar_compra(values);
+				//confirmar_compra(values);
 				$("#empresaModal").modal("hide");
 			}
 			else
