@@ -117,6 +117,9 @@ $empresa = $res["data"];
                   <input type="text" name="numero" placeholder="Numero">                  
                 </div>
                 <div class="_50">                  
+                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
+                </div>
+                <div class="_50">                  
                   <!-- <input type="text" name="colonia" placeholder="Colonia"> -->
                   <select name="colonia" id="colonia" >
                     <option value="0">No se encontraron datos</option>
@@ -129,9 +132,7 @@ $empresa = $res["data"];
                     <option value="8">Sinaloa</option> -->
                   </select>                     
                 </div>
-                <div class="_50">                  
-                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
-                </div>
+                
                 <div class="_50">                  
                   <input type="text" name="municipio" placeholder="Municipio">                  
                 </div>

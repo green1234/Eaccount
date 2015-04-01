@@ -406,6 +406,9 @@ else
             case 'config':
               require 'view/config/index.php';
               break;
+            case 'instrucciones':
+              require 'view/config/catalogos/instrucciones.php';
+              break;
             /*case 'agregar_empresa':
               require 'fijos/agregar_empresa_conta.php';
               break;

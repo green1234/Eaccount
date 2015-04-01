@@ -201,6 +201,7 @@ $(function(){
         $.each(valores, function(index, value){
             var valor = $(this);
             var text = $.trim(valor.text());
+            if (text == "Pendiente") text = "";
             var id = valor.attr("id");
             id = id.replace("idata_", "");
             console.log(id)
