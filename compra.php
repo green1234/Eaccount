@@ -135,6 +135,8 @@ if ($res["success"] && count($res["data"]) > 0)
                     <option value="6">Sociedad Cooperativa</option>
                     <option value="7">Sociedad Civil</option>
                     <option value="8">Persona Fisica con Actividad Empresarial</option>
+                    <option value="9">Persona Moral</option>
+                    <option value="10">Regimen General</option>
                   </select>
                 </div>
                 <div class="_50">
@@ -151,6 +153,9 @@ if ($res["success"] && count($res["data"]) > 0)
                 </div>
                 <div class="_50">                  
                   <input type="text" name="numero" placeholder="Numero">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  
                 </div>
                 <div class="_50">                  
                   <select name="colonia" id="colonia" >
