@@ -39,7 +39,7 @@ class UsuarioService
 		if (isset($params["empresa_name"]))
 		{
 			$empService = new EmpresaService(USER_ID, md5(PASS));
-			$res = $empService->obtener_empresa_id($params["name"]);				
+			$res = $empService->obtener_empresa_id($params["empresa_name"]);				
 			
 			if ($res["success"] && count($res["data"]["id"]) > 0){
 				return array(
