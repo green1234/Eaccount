@@ -99,6 +99,8 @@ $empresa = $res["data"];
                     <option value="6">Sociedad Cooperativa</option>
                     <option value="7">Sociedad Civil</option>
                     <option value="8">Persona Fisica con Actividad Empresarial</option>
+                    <option value="9">Persona Moral</option>
+                    <option value="10">Regimen General</option>
                   </select>
                 </div>
                 <div class="_50">
