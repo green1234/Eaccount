@@ -716,7 +716,7 @@ $empresa = $res["data"];
     {
       var edo = $.trim($("#empresas").find("[id='idata_estado']").text())      
       var cp = $.trim($("#empresas").find("[id='idata_cp']").text())
-      //console.log("==>" + edo)
+      console.log("==>" + edo)
       obtener_direccion(cp, mostrar_direccion);
 
       //$("#colonia").html("<option val='" + col + "'>" + col + "</option>");
