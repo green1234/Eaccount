@@ -184,7 +184,7 @@ if ($res["success"] && count($res["data"]) > 0)
                 <div style="width:100%;">                  
                   <label for="tipo_registro">
                     <input type="checkbox" id="tipo_registro" style="width:auto;display:inline-block">
-                    Utilizar mismos datos fiscales para facurar mi pago
+                    Utilizar mismos datos fiscales para facturar mi pago
                   </label>
                 </div>
                 
