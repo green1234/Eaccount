@@ -148,8 +148,11 @@ if ($res["success"] && count($res["data"]) > 0)
                   <input type="text" name="empresa_name" placeholder="Nombre Empresa">
                 </div>
                 <b>DOMICILIO FISCAL</b><br>
-                <div class="_50">                  
+                <div class="">                  
                   <input type="text" name="calle" placeholder="Calle">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="interior" placeholder="Numero">                  
                 </div>
                 <div class="_50">                  
                   <input type="text" name="numero" placeholder="Numero">                  

@@ -112,11 +112,14 @@ $empresa = $res["data"];
                   <input type="text" name="empresa_name" placeholder="Nombre Empresa">
                 </div>
                 <b>DOMICILIO FISCAL</b><br>
-                <div class="_50">                  
+                <div class="">                  
                   <input type="text" name="calle" placeholder="Calle">                  
                 </div>
                 <div class="_50">                  
-                  <input type="text" name="numero" placeholder="Numero">                  
+                  <input type="text" name="interior" placeholder="Numero Interior">                  
+                </div>
+                <div class="_50">                  
+                  <input type="text" name="numero" placeholder="Numero Exterior">                  
                 </div>
                 <div class="_50">                  
                   <input type="text" id="cp" name="cp" required pattern="[0-9]{5}" placeholder="Codigo Postal" minlength="5" maxlength="5">                  

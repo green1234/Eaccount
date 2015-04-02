@@ -211,6 +211,7 @@ if(isset($_SESSION["login"]))
 	  					$params["gl_regimen"] = $_GET["regimen"];
 	  					$params["gl_giro"] = $_GET["giro"];
 	  					$params["street"] = $_GET["calle"];
+	  					$params["no_int"] = $_GET["interior"];
 	  					$params["no_ext"] = $_GET["numero"];
 	  					$params["street2"] = $_GET["colonia"];
 	  					$params["zip"] = $_GET["cp"];
