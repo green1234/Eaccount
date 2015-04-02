@@ -288,7 +288,7 @@ $empresa = $res["data"];
         <td style="width: 50%;">
           Domicilio Fiscal:
         </td>
-        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_calle">
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_dir">
           <? 
 
           $calle = "Calle " . utf8_decode($empresa["street"]);

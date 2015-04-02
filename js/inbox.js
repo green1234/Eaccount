@@ -138,11 +138,16 @@ $(function(){
         vals = "";
         var results = [];
         var rvals = [];
+        var direccion = false;
         $.each(inputs, function(idx, val){
             
             //console.log(idx)
             var name = $(this).attr("name");
             var val = $(this).val();
+
+            if (name == "calle")
+                direccion = true;
+
             results[idx] = name;
             rvals[idx] = $.trim(val);
             var value = name + "=" + $.trim(val);
@@ -159,16 +164,37 @@ $(function(){
             console.log(data)
             // console.log(results.length)
             // console.log(rvals.length)
+            var dirText = ""
+
             $.each(results, function(i){
 
                 // console.log("#idata_" + results[i])
                 // console.log(rvals[i])
+                
+                if (direccion)
+                {   
+                    if (results[i] == "calle")
+                        dirText += "Calle " + rvals[i];
+                    else if(results[i] == "numero")
+                        dirText += " No. " + rvals[i];
+                    else if(results[i] == "cp")
+                        dirText += " CP " + rvals[i];
+                    else if(results[i] == "colonia")
+                        dirText += " Col. " + rvals[i];
+                    else if(results[i] == "ciudad")
+                        dirText += " " + rvals[i];
+                    else if(results[i] == "estado")
+                        dirText += ", " + $("#estado").find("option:selected").text();
+                }
                 
                 $("#idata_" + results[i]).text(rvals[i]);                   
                 
                 // $('#profileModal').modal("hide");
                 form.parents(".modal").modal("hide");
             });
+
+            if(direccion)
+                $("#idata_dir").text(dirText);
         });
     });
 
