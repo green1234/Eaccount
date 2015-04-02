@@ -139,7 +139,7 @@ $empresa = $res["data"];
                 </div>
                 
                 <div class="_50">                  
-                  <input type="text" name="municipio" placeholder="Municipio">                  
+                  <input type="text" name="municipio" id="municipio" placeholder="Municipio">                  
                 </div>
                 <div class="_50">                  
                   <!-- <input type="text" name="estado" placeholder="Estado">    -->
