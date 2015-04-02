@@ -1,4 +1,4 @@
-var accounts, mayores, lines, codesat  = {};
+var accounts, mayores, lines, codesat, levels  = {};
 var optionsAcc, lines_rows, estatus_poliza  = "";
 
 get_lines = function(pid, fn)
@@ -125,16 +125,90 @@ get_sub_accounts = function(parent_id)
 	});
 }
 
+prepare_lista_cuentas = function(id,level)
+{
+	var cuentas = levels[level];
+	cuentas = cuentas[id];
+	var listaCtas = "";
+	var i = 0;
+	console.log(id)
+	console.log(level)
+	console.log(levels)
+	console.log(cuentas)
+	$.each(cuentas, function(idx, cta)
+	{
+		console.log("=>" + cta.id)
+		listaCtas += "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"'>" + cta.code + " " + cta.name;
+		listaCtas += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
+		listaCtas += "</li>";		
+	});
+
+	$("#sub_tabla"+level).removeClass("hidden").find("#lista_sub_tabla"+ level).html(listaCtas)
+		.find(".cta_lista").on("click", function()
+				{
+					var id = $(this).attr("id");
+					var lvl = $(this).attr("level");
+					var nxtLvl = parseInt(lvl) + 1;
+					
+					prepare_lista_cuentas(id, nxtLvl);
+						
+				});	
+}
+
 get_accounts = function(fn)
 {	
 	var path = "server/Cuentas.php?action=get";	
-
+	var listaMayores = "";
 	$.getJSON(path, function(res){
 		//console.log(res);
 		if (res.success)
 		{
 			accounts  = res.data.subctas;
 			mayores = res.data.mayor;
+			//console.log(mayores)
+
+			$.each(mayores, function(idx, cta)
+			{
+				var id = cta.id;
+				var lv = cta.level;
+				var parent = cta.parent_id[0];
+
+				//console.log(lv)
+				if (levels[lv] != undefined)
+				{
+					//console.log(lv)
+					if (levels[lv][parent] !== undefined)
+						levels[lv][parent][id] = cta;
+					else
+						levels[lv][parent] = {id : cta}
+				}
+				else
+				{
+					//console.log(lv)
+					
+					levels[lv] = {};
+					levels[lv][parent] = {};
+					levels[lv][parent][id] = cta;
+				}
+
+				if (lv == 1)
+				{
+					listaMayores += "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"'>" + cta.code + " " + cta.name;
+					listaMayores += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
+					listaMayores += "</li>";					
+				}
+				
+			});
+			$("#lista_sub_tabla1").html(listaMayores).find(".cta_lista").on("click", function()
+			{
+				var id = $(this).attr("id");
+				var lvl = $(this).attr("level");
+				var nxtLvl = parseInt(lvl) + 1;
+				
+				prepare_lista_cuentas(id, nxtLvl);
+					
+			});
+
 			fn(accounts);	
 		}	
 	});
@@ -174,6 +248,34 @@ get_accounts_options = function(acs, selector)
 	$.each(acs, function(index, value)
 	{
 		options += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+		//levels[value.level] = value;
+
+		var id = value.id;
+		var lv = value.level;
+		var parent = value.parent_id[0];
+
+		console.log(lv)
+		if (levels[lv] !== undefined)
+		{
+			if (levels[lv][parent] !== undefined)
+			{
+				levels[lv][parent][id] = value;
+			}
+			else
+			{
+				levels[lv][parent] = {};
+				levels[lv][parent][id] = value
+
+			}			
+		}
+		else
+		{
+			//console.log(id)
+			
+			levels[lv] = {};
+			levels[lv][parent] = {};
+			levels[lv][parent][id] = value;
+		}
 	});		
 
 	if(selector != null)
@@ -195,10 +297,14 @@ get_accounts_options = function(acs, selector)
 get_mayores_options = function()
 {
 	optionsMayor = ""
+	var filasMayor = "";
+	
 	//optionsMayor += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
 	$.each(mayores, function(index, value)
 	{
 		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+		levels[value.level] = value;
+				
 	});	
 	//console.log(optionsAcc);
 	var mayor = $("#accnew_mayor").html(optionsMayor);

@@ -250,6 +250,7 @@ class AccountService
 				"description" => "No se encontraron datos"));
 	}
 
+	/*DEVUELVE LAS SUB CTAS DE UN PADRE EN ESPECIFICO*/
 	function obtener_sub_cuentas($parent_id)
 	{
 		//return "LOL";
@@ -294,6 +295,7 @@ class AccountService
 		return $res;
 	}
 
+	/* Devuelve Cuentas de la empresa*/
 	function obtener_cuentas($empresa_id)
 	{		
 		$domain = array(
@@ -341,7 +343,7 @@ class AccountService
 		/*logg($res,1);*/
 		return $res;
 	}
-
+	/*Devuelve Sub Ctas de la empresa*/
 	function obtener_subcuentas($empresa_id)
 	{		
 		$domain = array(
