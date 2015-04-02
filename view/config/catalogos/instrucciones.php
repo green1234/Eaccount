@@ -15,7 +15,7 @@
 	{
 		background-color: #2c6494;
 		color: white;
-		/*font-size: 1em;*/
+		font-size: 1.4em;
 		margin: 0;
 		padding: 0.5em 0;
 		text-align: center;
