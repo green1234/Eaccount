@@ -57,7 +57,7 @@ $empresa = $res["data"];
     <b>Nombre de mi Empresa:</b>
   </div>
   <div class="col-md-10">
-    Nombre comercial: <b id="idata_empresa_name"><? echo $empresa["name"];?></b> - 
+    Nombre comercial: <b id="idata_empresa_name"><? echo utf8_decode($empresa["name"]);?></b> - 
     <a href="#" data-toggle="modal" data-target="#empresaModal" class="openModal profile">Cambiar</a>
     
     <!-- Modal -->
@@ -288,6 +288,24 @@ $empresa = $res["data"];
         <td style="width: 50%;">
           Domicilio Fiscal:
         </td>
+        <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_calle">
+          <? 
+
+          $calle = "Calle " . utf8_decode($empresa["street"]);
+          $colonia = " Col. " . utf8_decode($empresa["street2"]);
+          $numero = " No. " . utf8_decode($empresa["no_ext"]);
+          $cp = " CP " . $empresa["zip"];
+          $ciudad = " " . utf8_decode($empresa["city"]);
+          $estado = ", " . $empresa["state_id"][1];
+
+          $dir = $calle . $numero . $cp . $colonia . $ciudad . $estado;
+
+          echo $dir;          
+
+          ?>
+        </td>
+      </tr>
+      <tr style="display:none">        
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_calle">
           <? echo utf8_decode($empresa["street"]);?>
         </td>
