@@ -46,7 +46,7 @@
 <h2><p>
 	Descargue el Catalogo de Ejemplo de la siguiente liga.
 	<br>
-	<a href="fijos/catalogos/cat1.csv">Descargar</a>
+	<a href="view/config/catalogos/cat1.csv">Descargar</a>
 </p></h2>
 <h2 style="text-align:left;">Descripcion de Columnas:</h2>
 <div class="columna">

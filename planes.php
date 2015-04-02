@@ -21,7 +21,8 @@ if (isset($_GET["fk"]) && isset($_GET["ptr"]))
       "uid" => $usuario_id,
       "username" => $usuario_username,    
       "pwd" => $usuario_pwd,
-      "cid" => array($usuario_cid, $usuario_username)
+      "cid" => array($usuario_cid, $usuario_username),
+      "config" => false
     );
   }
   else
