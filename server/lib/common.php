@@ -156,7 +156,7 @@
 				else if(isset($val->me["boolean"]))
 				{
 					if (!$val->me["boolean"])
-						$vals[$idx] = "Pendiente";
+						$vals[$idx] = "";
 					else
 						$vals[$idx] = $val->me["boolean"];	
 				}
@@ -190,7 +190,7 @@
 				else if(isset($val["boolean"]))
 				{
 					if (!$val["boolean"])
-						$vals = "Pendiente";
+						$vals = "";
 					else
 						$vals = $val["boolean"];	
 				}

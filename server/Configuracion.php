@@ -220,7 +220,10 @@ if(isset($_SESSION["login"]))
 	  					$params["country_id"] = 157;
 
 	  					if (isset($_GET["empresa_name"]) && $_GET["empresa_name"] != "")
+	  					{
 	  						$params["name"] = $_GET["empresa_name"];
+	  						$_SESSION["login"]["cid"][1] = $params["name"];	  						
+	  					}
 	  					
 	  					$params["datos_pago"] = (isset($_GET["tipo"])) ? true : false;
 

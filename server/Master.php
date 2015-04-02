@@ -86,8 +86,16 @@ function obtener_partners($cid)
 	$domain[] = array(
 		model("company_id", "string"),
 		model("=", "string"),
-		model($cid, "int"));
+		model($cid[0], "int"));
+
+	$domain[] = array(
+		model("name", "string"),
+		model("!=", "string"),
+		model($cid[1], "string"));
 	
+
+	//logg($domain,1);
+
 	$obj = new MainObject();
 	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
 	//return $res;
@@ -395,7 +403,7 @@ if (isset($_SESSION["login"]))
 		}
 		else if($_GET["cat"] == "partners")
 		{
-			$res = obtener_partners($cid[0]);
+			$res = obtener_partners($cid);
 		}
 		else if($_GET["cat"] == "accounts")
 		{
