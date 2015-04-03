@@ -50,19 +50,19 @@
 </p></h2>
 <h2 style="text-align:left;">Descripcion de Columnas:</h2>
 <div class="columna">
-<h3>Code</h3>
+<h3>Código</h3>
 <p>
 	Aqui colocaremos el codigo que vamos a utilizar en nuestra cuenta contable.
 </p>
 </div>
 <div class="columna">
-<h3>Name</h3>
+<h3>Nombre</h3>
 <p>
 	Aqui colocaremos el nombre que vamos a utilizar en nuestra cuenta contable.
 </p>
 </div>
 <div class="columna">
-<h3>Type</h3>
+<h3>Tipo</h3>
 <p>
 	Aqui colocaremos el codigo que corresponda a la cuenta:
 	<br>
@@ -78,13 +78,13 @@
 </p>
 </div>
 <div class="columna">
-<h3>Parent</h3>
+<h3>Padre</h3>
 <p>
 	Aqui colocaremos el nombre de la cuenta de mayor inmediata superior de nuestra cuenta, si no tuviera padre, la dejan vacia.
 </p>
 </div>
 <div class="columna">
-<h3>Class</h3>
+<h3>Clase</h3>
 <p>
 	Aqui colocaremos la letra que corresponda a la clase de la cuenta.
 	<br>
@@ -108,7 +108,7 @@
 </p>
 </div>
 <div class="columna">
-<h3>Nature</h3>
+<h3>Naturaleza</h3>
 <p>
 	Aqui colocaremos la naturaleza de la cuenta
 	<br>
