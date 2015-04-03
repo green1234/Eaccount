@@ -158,8 +158,8 @@ class AccountTplService
 				return false;
 			if (!isset($registros[$i]["codigo"]) || $registros[$i]["codigo"] == "")			
 				return false;
-			if (!isset($registros[$i]["padre"]) || $registros[$i]["padre"] == "")			
-				return false;
+			// if (!isset($registros[$i]["padre"]) || $registros[$i]["padre"] == "")			
+			// 	return 3;
 			if (!isset($registros[$i]["sat"]) || $registros[$i]["sat"] == "")			
 				return false;
 			if (!isset($registros[$i]["tipo"]) || $registros[$i]["tipo"] == "")			
@@ -180,14 +180,17 @@ class AccountTplService
 		$columns = $registros[0];
 
 		//array("nombre", "padre", "sat", "codigo", "tipo", "mayor", "clase", "naturaleza")
-		if (!$this->validar_catalogo($registros))
+		$validacion = $this->validar_catalogo($registros);
+		// return $a;
+		if (!$validacion)
 		{
+			// return $a; 
 			return array(
 				"success"=>false, 
 				"data"=>array(
 					"description"=>"El Archivo no cumple con el formato"));
 		}
-		exit();
+		
 		if(count($registros) > 0)
 		{
 			$chart = array();
