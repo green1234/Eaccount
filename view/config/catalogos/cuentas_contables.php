@@ -201,7 +201,7 @@ $path = SERVERNAME . "/Catalogo.php?";
 <script>
 
   $("#userfile").on("change", function(){
-    alert($(this).val())
+    //alert($(this).val())
 
   });
   
@@ -214,7 +214,8 @@ $path = SERVERNAME . "/Catalogo.php?";
     var path = $(this).attr("action")
     /*console.log("p:" + path)
     console.log(formData)
-    return*/
+    return*/    
+
     $.ajax({
         url : path,
         message : "",
@@ -223,10 +224,17 @@ $path = SERVERNAME . "/Catalogo.php?";
         contentType: false,
         cache : false,
         method : "POST",
+        dataType: 'json',
         success: function(data){            
+            //var data = $.parseJSON(data);
             console.log(data)
-            alert("Facturas cargadas.");        
-            location.reload();
+            console.log(data.success)
+            console.log(data.description)
+            if(data.success)
+              alert("Catalogo Cargado");
+            else
+              alert("El archivo no cumple con el formato");
+            //location.reload();
         },
         error: function(data){            
             console.log("data");
