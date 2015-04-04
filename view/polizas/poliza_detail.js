@@ -56,6 +56,29 @@ mostrar_lineas = function(fn, pid)
 
 asignar_eventos = function()
 {
+	$(".line_id").on("click", function(){
+		
+		var fila = $(this).parents("tr").addClass("editing_select");		
+		var celda = fila.find("td.editable.account");
+
+		if ($(this).is(":checked"))
+		{
+			var id = celda.attr("id");
+			var select = celda.find("select");
+			var text = celda.find("span");
+
+			select.html(optionsAcc).val(id).show().focus();
+			text.css("visibility", "hidden");
+		}
+		else
+		{
+
+			celda.find("select").hide().parent("td").find("span").css("visibility", "visible");
+			celda.find("select").hide().parents("tr").removeClass("editing_select")
+		}
+
+	});
+
 	$("td.editable").on("dblclick", function(){
 		
 		$(this).parents("tr").addClass("editing_select");
@@ -104,11 +127,11 @@ asignar_eventos = function()
 		
 	});
 
-	$("td.editable select").on("blur", function()
-	{
-		$(this).hide().parent("td").find("span").css("visibility", "visible");
-		$(this).hide().parents("tr").removeClass("editing_select")
-	});
+	// $("td.editable select").on("blur", function()
+	// {
+	// 	$(this).hide().parent("td").find("span").css("visibility", "visible");
+	// 	$(this).hide().parents("tr").removeClass("editing_select")
+	// });
 }
 
 get_sub_accounts = function(parent_id)
@@ -127,32 +150,47 @@ get_sub_accounts = function(parent_id)
 
 prepare_lista_cuentas = function(id,level)
 {
+	console.log("====LEVELS====")
+	console.log(levels);
+	console.log("========")
 	var cuentas = levels[level];
 	cuentas = cuentas[id];
 	var listaCtas = "";
 	var i = 0;
+	console.log("====ID/LEVEL====")
 	console.log(id)
 	console.log(level)
-	console.log(levels)
+	console.log("========")
+	// console.log(levels)
 	console.log(cuentas)
 	$.each(cuentas, function(idx, cta)
 	{
 		console.log("=>" + cta.id)
-		listaCtas += "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"'>" + cta.code + " " + cta.name;
-		listaCtas += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
+		listaCtas += "<li parent='" + id + "' id='"+cta.id+"' class='cta_lista_sub' level='"+cta.level+"'>" + cta.code + " " + cta.name;
+		//listaCtas += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
 		listaCtas += "</li>";		
 	});
+	listaCtas += "<li data-toggle='modal' data-target='#new_account_modal' parent='" + id + "' class='new_account cta_lista_sub'>Nueva Cuenta</li>"
 
-	$("#sub_tabla"+level).removeClass("hidden").find("#lista_sub_tabla"+ level).html(listaCtas)
-		.find(".cta_lista").on("click", function()
-				{
-					var id = $(this).attr("id");
-					var lvl = $(this).attr("level");
-					var nxtLvl = parseInt(lvl) + 1;
-					
-					prepare_lista_cuentas(id, nxtLvl);
-						
-				});	
+	console.log(listaCtas)
+
+	$("#sub_tabla"+level).removeClass("hidden")
+		.find("#lista_sub_tabla"+ level).html(listaCtas)
+		.find(".cta_lista_sub").off("click").on("click", function()
+		{				
+			if ($(this).hasClass("new_account")){
+				//alert("new")
+				//$("#new_account_modal").modal("show");
+			}
+			// else
+			// {
+			// 	var id = $(this).attr("id");
+			// 	var lvl = $(this).attr("level");
+			// 	var nxtLvl = parseInt(lvl) + 1;
+			// 	//alert("LOL")
+			// 	//prepare_lista_cuentas(id, nxtLvl);
+			// }		
+		});	
 }
 
 get_accounts = function(fn)
@@ -193,18 +231,24 @@ get_accounts = function(fn)
 
 				if (lv == 1)
 				{
-					listaMayores += "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"'>" + cta.code + " " + cta.name;
-					listaMayores += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
-					listaMayores += "</li>";					
+					listaMayores = "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"' style='position:relative'>";
+					listaMayores += "<span>" + cta.code + " " + cta.name + "</span>";					
+					listaMayores += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='right:0;position:absolute;'></span>";
+					listaMayores += "</li>";	
+					$("#lista_sub_tabla1").append(listaMayores);				
 				}
 				
 			});
-			$("#lista_sub_tabla1").html(listaMayores).find(".cta_lista").on("click", function()
+			$("#lista_sub_tabla1")
+				.find(".cta_lista")
+				.on("click", function()
 			{
 				var id = $(this).attr("id");
 				var lvl = $(this).attr("level");
 				var nxtLvl = parseInt(lvl) + 1;
 				
+				//alert("LOL")
+
 				prepare_lista_cuentas(id, nxtLvl);
 					
 			});
@@ -294,7 +338,7 @@ get_accounts_options = function(acs, selector)
 		optionsAcc = options;
 }
 
-get_mayores_options = function()
+get_mayores_options = function(parent)
 {
 	optionsMayor = ""
 	var filasMayor = "";
@@ -303,12 +347,11 @@ get_mayores_options = function()
 	$.each(mayores, function(index, value)
 	{
 		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
-		levels[value.level] = value;
+		//levels[value.level] = value;
 				
 	});	
 	//console.log(optionsAcc);
-	var mayor = $("#accnew_mayor").html(optionsMayor);
-
+	var mayor = $("#accnew_mayor").html(optionsMayor).val(parent);
 	get_sub_accounts(mayor.val());
 }
 
@@ -320,7 +363,10 @@ $(function(){
 
 	
 	$('#new_account_modal').on('show.bs.modal', function (e) {
-  		get_mayores_options();
+		console.log(e)
+		var button = $(e.relatedTarget);
+		var parent = button.attr("parent");
+  		get_mayores_options(parent);
   		$("tr.editing_select").addClass("editing_modal");
 	});
 
