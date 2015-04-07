@@ -57,12 +57,12 @@ class AccountTplService
 		$grupo_cuenta = $registro["Genero"];	
 		//$tipo_cuenta = $registro["tipo"];//$tipo_cuenta = $registro["type"];
 		//$clase_cuenta = $registro["clase"];//$clase_cuenta = $registro["class"];
-		$mayor = $registro["SubCuentaDe"];
+		$mayor = $registro["Cuenta_mayor"];
 
 		$tipos = $this->tipos;
 		$result = array();
 
-		if ($mayor == "1")
+		if ($mayor == "SI")
 		{
 			$result["type"] = "view";
 			switch ($grupo_cuenta) {				//switch ($clase_cuenta) {				
