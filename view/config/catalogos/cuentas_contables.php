@@ -1,5 +1,10 @@
 <? 
+// session_start();
+// require_once "../../../server/conf/constantes.conf";
+// require_once "../../../server/lib/common.php";
+
 $cfg = $_SESSION["login"]["config"];
+
 $path = SERVERNAME . "/Catalogo.php?";
 //$path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
 
@@ -97,10 +102,15 @@ $path = SERVERNAME . "/Catalogo.php?";
   color: white;
 }
 
+.row_view
+{
+  color: blue;
+}
+
 </style>
 <div role="tabpanel" class="tab-pane fade in" id="cuentas_contables" style="padding-top: 20px;">
   
-  <? if (!$cfg){ ?>
+  <? /*$cfg = false;*/ if (!$cfg){ ?>
 
   <form id="chart_form" action="<?=$path?>" enctype="multipart/form-data"  method="POST">
       <!-- MAX_FILE_SIZE debe preceder el campo de entrada de archivo -->
@@ -138,67 +148,51 @@ $path = SERVERNAME . "/Catalogo.php?";
   <? } 
 
   else{
-    $path = SERVERNAME . '/Catalogo.php?get=cuentas';
-    $path = $path . "&uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
-    //var_dump($path);
-    $cuentas = json_decode(file_get_contents($path), true);
-    //var_dump($cuentas["data"][1]);
-    if ($cuentas["success"] && count($cuentas["data"]) > 0)
-    {
+
     ?>
   
-      <table class="table">
+      <table id="cat_cuentas" class="table">
         <tr>
-          <td>Codigo</td>
-          <td>Nombre</td>
-          <td>Padre</td>
-          <td>Naturaleza</td>
-          <td>Tipo</td>
-          <td>Clase</td>
-          <td>SAT</td>
-        </tr>
-
-        <? foreach ($cuentas["data"] as $idx => $value) { 
-
-          $parent = $value["parent_id"];
-          if (is_array($parent))
-          {
-            $parent = $parent[1];
-          }
-
-          $clase = $value["user_type"];
-          if (is_array($clase))
-          {
-            $clase = $clase[1];
-          }
-
-          $code = (is_array($value["codagrup"])) ? $value["codagrup"][1] : $value["codagrup"];
-
-        ?>
-          
-          <tr>
-            <td><?=$value["code"]?></td>
-            <td><?=$value["name"]?></td>
-            <td><?=$parent?></td>
-            <td><?=$value["nature"]?></td>            
-            <td><?=$value["type"]?></td>
-            <td><?=$clase?></td>            
-            <td><?=$code?></td>            
-          </tr>
-
-        <?}?>
-
-        
+          <!-- <th>ID</th> -->
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Padre</th>
+          <th>Naturaleza</th>
+          <!-- <th>Tipo</th> -->
+          <th>Nevel</th>
+          <th>SAT</th>
+        </tr>        
       </table>
 
-  <?
-    }
-
-
-  }?> <!-- ELSE -->
+<?}?> <!-- ELSE -->
 </div>
 
 <script>
+
+  $.getJSON("server/Cuentas.php?action=get&all=1", function(res){
+
+    if(res.success)
+    {
+      var filas = "";
+      $.each(res.data, function(idx, cta){
+        if (cta.type == "view")
+          filas+= "<tr class='row_view'>";
+        else
+          filas+= "<tr>";
+        // filas+= "<td>" + cta.id + "</td>";
+        filas+= "<td>" + cta.code + "</td>";
+        filas+= "<td>" + cta.name + "</td>";
+        filas+= "<td>" + cta.parent_id[1].split(" ", 1)[0] + "</td>";
+        filas+= "<td>" + cta.nature + "</td>";
+        // filas+= "<td>" + cta.type + "</td>";
+        filas+= "<td>" + cta.level+ "</td>";
+        filas+= "<td>" + cta.codagrup[1].split(" ", 1)[0] + "</td>";
+        filas+= "</tr>";
+      });
+      $("#cat_cuentas").append(filas);
+    }
+
+  });
 
   $("#userfile").on("change", function(){
     //alert($(this).val())
@@ -234,7 +228,7 @@ $path = SERVERNAME . "/Catalogo.php?";
               alert("Catalogo Cargado");
             else
               alert("El archivo no cumple con el formato");
-            //location.reload();
+            location.reload();
         },
         error: function(data){            
             console.log("data");

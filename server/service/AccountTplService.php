@@ -53,9 +53,10 @@ class AccountTplService
 	}
 
 	function obtener_tipo_cuenta($registro)
-	{		
-		$tipo_cuenta = $registro["tipo"];//$tipo_cuenta = $registro["type"];
-		$clase_cuenta = $registro["clase"];//$clase_cuenta = $registro["class"];
+	{	
+		$grupo_cuenta = $registro["grupo"];	
+		//$tipo_cuenta = $registro["tipo"];//$tipo_cuenta = $registro["type"];
+		//$clase_cuenta = $registro["clase"];//$clase_cuenta = $registro["class"];
 		$mayor = $registro["mayor"];
 
 		$tipos = $this->tipos;
@@ -64,11 +65,12 @@ class AccountTplService
 		if ($mayor == "1")
 		{
 			$result["type"] = "view";
-			switch ($clase_cuenta) {				
+			switch ($grupo_cuenta) {				//switch ($clase_cuenta) {				
 				case 'A':
 					$result["user_type"] = $tipos["Vista de Activo"];
 					break;
 				case 'P':
+				case 'C':
 					$result["user_type"] = $tipos["Vista de Pasivo"];
 					break;
 				case 'I':
@@ -81,34 +83,50 @@ class AccountTplService
 		}
 		else
 		{
-			switch ($tipo_cuenta) {				
-				case 'caja':
-					$result["user_type"] = $tipos["Caja"];
-					$result["type"] = "liquidity";
+			$result["type"] = "other";
+			switch ($grupo_cuenta) { //switch ($tipo_cuenta) {				
+				
+				case 'A':
+					$result["user_type"] = $tipos["Activo"];
 					break;
-				case 'banco':
-					$result["user_type"] = $tipos["Banco"];
-					$result["type"] = "liquidity";
+				case 'P':
+				case 'C':
+					$result["user_type"] = $tipos["Pasivo"];
 					break;
-				case 'cliente':
-					$result["user_type"] = $tipos["Cliente"];
-					$result["type"] = "receivable";
+				case 'I':
+					$result["user_type"] = $tipos["Ingreso"];
 					break;
-				case 'proveedor':
-					$result["user_type"] = $tipos["Proveedor"];
-					$result["type"] = "payable";
+				case 'G':
+					$result["user_type"] = $tipos["Gasto"];
 					break;
-				default:
-					$result["type"] = "other";					
-					if ($clase_cuenta == "A")
-						$result["user_type"] = $tipos["Activo"];				
-					else if ($clase_cuenta == "P")
-						$result["user_type"] = $tipos["Pasivo"];					
-					else if ($clase_cuenta == "I")
-						$result["user_type"] = $tipos["Ingreso"];
-					else
-						$result["user_type"] = $tipos["Gasto"];					
-					break;
+
+				// case 'caja':
+				// 	$result["user_type"] = $tipos["Caja"];
+				// 	$result["type"] = "liquidity";
+				// 	break;
+				// case 'banco':
+				// 	$result["user_type"] = $tipos["Banco"];
+				// 	$result["type"] = "liquidity";
+				// 	break;
+				// case 'cliente':
+				// 	$result["user_type"] = $tipos["Cliente"];
+				// 	$result["type"] = "receivable";
+				// 	break;
+				// case 'proveedor':
+				// 	$result["user_type"] = $tipos["Proveedor"];
+				// 	$result["type"] = "payable";
+				// 	break;
+				// default:
+				// 	$result["type"] = "other";					
+				// 	if ($clase_cuenta == "A")
+				// 		$result["user_type"] = $tipos["Activo"];				
+				// 	else if ($clase_cuenta == "P")
+				// 		$result["user_type"] = $tipos["Pasivo"];					
+				// 	else if ($clase_cuenta == "I")
+				// 		$result["user_type"] = $tipos["Ingreso"];
+				// 	else
+				// 		$result["user_type"] = $tipos["Gasto"];					
+				// 	break;
 			}
 		}
 		return $result;		
@@ -117,10 +135,10 @@ class AccountTplService
 	// Funcion que va registrando las cuentas en el template
 	// el parametro chart es un array que va guardando los registros 
 	// cada vez que se crea unn nuevo registro, se agrega al chart
-	function crear_cuenta_template($empresa, $account, $chart)
+	function crear_cuenta_template($account, $chart)
 	{
 		$model = $this->model;
-		$name = $account["name"];
+		$name = $account["code"];
 		$account_tpl = array(
 			"code" => model($account["code"], "string"),
 			"name" => model($account["name"], "string"),
@@ -144,7 +162,7 @@ class AccountTplService
 		if ($response["success"])
 		{
 			$chart[$name] = $response["data"]["id"];
-			$response = array("id" => $chart[$name], "name" => $name, "chart" => $chart);
+			$response = array("id" => $chart[$name], "name" => $account["code"], "code"=>$name, "chart" => $chart);
 		}		
 		
 		return $response;
@@ -152,6 +170,7 @@ class AccountTplService
 
 	function validar_catalogo($registros)
 	{
+		return true;
 		for ($i = 0; $i < count($registros); $i++)
 		{			
 			if (!isset($registros[$i]["nombre"]) || $registros[$i]["nombre"] == "")			
@@ -160,11 +179,13 @@ class AccountTplService
 				return false;
 			// if (!isset($registros[$i]["padre"]) || $registros[$i]["padre"] == "")			
 			// 	return 3;
+			if (!isset($registros[$i]["afectable"]) || $registros[$i]["afectable"] == "")			
+				return false;
 			if (!isset($registros[$i]["sat"]) || $registros[$i]["sat"] == "")			
 				return false;
 			if (!isset($registros[$i]["tipo"]) || $registros[$i]["tipo"] == "")			
 				return false;
-			if (!isset($registros[$i]["clase"]) || $registros[$i]["clase"] == "")			
+			if (!isset($registros[$i]["grupo"]) || $registros[$i]["grupo"] == "")			
 				return false;
 			if (!isset($registros[$i]["naturaleza"]) || $registros[$i]["naturaleza"] == "")			
 				return false;
@@ -174,7 +195,7 @@ class AccountTplService
 		return true;
 	}
 
-	function crear_catalogo_template($empresa, $uploadfile)
+	function crear_catalogo_template($empresa_id, $uploadfile)
 	{
 		$registros = CommonService::leer_catalogo_csv($uploadfile);
 		$columns = $registros[0];
@@ -193,16 +214,21 @@ class AccountTplService
 		
 		if(count($registros) > 0)
 		{
+			$empresaService = new EmpresaService(USER_ID, md5(PASS));
+			$empresaData = $empresaService->obtener_datos_empresa($empresa_id)["data"];
+			//logg($empresaData,1);
+			$e_name = $empresaData["name"];
+			$e_rfc = $empresaData["gl_rfc"];
 			$chart = array();
 			$main_account = array(
 				"code" => "0", #model("0", "string"),
-	        	"name" => $empresa, #model($empresa, "string"),
+	        	"name" => $e_rfc, #model($empresa, "string"),
 	        	"type" => "view", #model("view", "string"),
 	        	"user_type" => 1); #model(1, "int"));
 				// "parent_id" => null);
 			
 			// Crear Primera Cuenta del Template
-			$response = $this->crear_cuenta_template($empresa, $main_account, $chart);
+			$response = $this->crear_cuenta_template($main_account, $chart);
 			//return $response;
 			$chart = $response["chart"];
 			$defaults = array();
@@ -216,7 +242,7 @@ class AccountTplService
 				if (isset($chart[$parent]))
 					$parent_id = $chart[$parent];
 				else
-					$parent_id = $chart[$empresa];			
+					$parent_id = $chart[0];			
 
 
 				// logg($parent_id);
@@ -234,25 +260,27 @@ class AccountTplService
 		        	"codagrup" => $code_id,
 		        );
 
-		        $response = $this->crear_cuenta_template($empresa, $account, $chart);
+		        $response = $this->crear_cuenta_template($account, $chart);
 		        //logg($response);
 		        //return $response;
 		        $chart = $response["chart"];
 
-		        if ($registros[$i]["default"] != "")
-	    		{		   
-	    			$default_type = $registros[$i]["default"];
-	    			$defaults[$default_type] = $response["id"];
-	    		}
+		     //    if ($registros[$i]["default"] != "")
+	    		// {		   
+	    		// 	$default_type = $registros[$i]["default"];
+	    		// 	$defaults[$default_type] = $response["id"];
+	    		// }
 			}
 			
-			$response = $this->crear_account_chart_tpl($chart[$empresa], $empresa, $defaults);
+			//logg($chart,1);
+			$defaults = array();
+			$response = $this->crear_account_chart_tpl($chart[0], $e_name, $defaults);
 
 			if ($response["success"])
 			{				
 				$chart_id = $response["data"]["id"];
 				$tax_tpl_ids = $this->crear_tax_tpl($chart_id, $defaults);
-				
+
 				$eService = new EmpresaService($this->uid, $this->pwd);
 				$res = $eService->contabilidad_empresa($chart_id, $this->cid, $tax_tpl_ids);
 				return $res;
@@ -273,15 +301,15 @@ class AccountTplService
 			$account_chart_tpl = array(
 				"name" => model($empresa_account_name, "string"),	
 				"account_root_id" => model($empresa_account_id, "int"),
-				"bank_account_view_id" => model($defaults["bancos"], "int"),
+				//"bank_account_view_id" => model($defaults["bancos"], "int"),
 				"tax_code_root_id" => model($tax_code_tpl_id, "int"),
 				"visible" => model(true, "boolean"),
-				"property_account_receivable" => model($defaults["cliente"], "int"),
-				"property_account_payable" => model($defaults["proveedor"], "int"),
-				"property_account_expense_categ" => model($defaults["ingreso"], "int"),
-				"property_account_income_categ" => model($defaults["gasto"], "int"),
-				"property_account_income_opening" => model($defaults["apertura"], "int"),
-				"property_account_expense_opening" => model($defaults["apertura"], "int"),
+				// "property_account_receivable" => model($defaults["cliente"], "int"),
+				// "property_account_payable" => model($defaults["proveedor"], "int"),
+				// "property_account_expense_categ" => model($defaults["ingreso"], "int"),
+				// "property_account_income_categ" => model($defaults["gasto"], "int"),
+				// "property_account_income_opening" => model($defaults["apertura"], "int"),
+				// "property_account_expense_opening" => model($defaults["apertura"], "int"),
 			);
 
 			$model = "account.chart.template";
@@ -341,10 +369,10 @@ class AccountTplService
 
 	function crear_tax_tpl($chart_tpl_id, $defaults)
 	{
-		$iva_venta = $defaults["iva_venta"];
-		$iva_compra = $defaults["iva_compra"];
-		$iva_ret = $defaults["iva_ret"];
-		$isr_ret = $defaults["isr_ret"];
+		// $iva_venta = $defaults["iva_venta"];
+		// $iva_compra = $defaults["iva_compra"];
+		// $iva_ret = $defaults["iva_ret"];
+		// $isr_ret = $defaults["isr_ret"];
 
 		$tax_tpl_model = "account.tax.template";
 		$tax_tpl_sale = array(
@@ -357,8 +385,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_venta, "int"),
-			"account_paid_id" => model($iva_venta, "int"),
+			// "account_collected_id" => model($iva_venta, "int"),
+			// "account_paid_id" => model($iva_venta, "int"),
 		);
 
 		$tax_tpl_sale_0 = array(
@@ -371,8 +399,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_venta, "int"),
-			"account_paid_id" => model($iva_venta, "int"),
+			// "account_collected_id" => model($iva_venta, "int"),
+			// "account_paid_id" => model($iva_venta, "int"),
 		);
 
 		$tax_iva_sale_ret = array(
@@ -385,8 +413,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.1066667, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_ret, "int"),
-			"account_paid_id" => model($iva_ret, "int"),
+			// "account_collected_id" => model($iva_ret, "int"),
+			// "account_paid_id" => model($iva_ret, "int"),
 		);
 
 		$tax_iva_sale_ret_0 = array(
@@ -399,8 +427,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_ret, "int"),
-			"account_paid_id" => model($iva_ret, "int"),
+			// "account_collected_id" => model($iva_ret, "int"),
+			// "account_paid_id" => model($iva_ret, "int"),
 		);
 
 		$tax_isr_sale_ret = array(
@@ -413,8 +441,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.10, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($isr_ret, "int"),
-			"account_paid_id" => model($isr_ret, "int"),
+			// "account_collected_id" => model($isr_ret, "int"),
+			// "account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_isr_sale_ret_0 = array(
@@ -427,8 +455,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($isr_ret, "int"),
-			"account_paid_id" => model($isr_ret, "int"),
+			// "account_collected_id" => model($isr_ret, "int"),
+			// "account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_isr_purchase_ret_0 = array(
@@ -441,8 +469,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($isr_ret, "int"),
-			"account_paid_id" => model($isr_ret, "int"),
+			// "account_collected_id" => model($isr_ret, "int"),
+			// "account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_tpl_purchase = array(
@@ -455,8 +483,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_compra, "int"),
-			"account_paid_id" => model($iva_compra, "int"),
+			// "account_collected_id" => model($iva_compra, "int"),
+			// "account_paid_id" => model($iva_compra, "int"),
 		);
 
 		$tax_tpl_purchase_0 = array(
@@ -469,8 +497,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			"account_collected_id" => model($iva_compra, "int"),
-			"account_paid_id" => model($iva_compra, "int"),
+			// "account_collected_id" => model($iva_compra, "int"),
+			// "account_paid_id" => model($iva_compra, "int"),
 		);
 
 		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_sale);

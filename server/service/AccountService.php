@@ -296,6 +296,50 @@ class AccountService
 	}
 
 	/* Devuelve Cuentas de la empresa*/
+	function obtener_all_cuentas($empresa_id)
+	{		
+		$domain = array(
+					array(
+						model("company_id", "string"),
+						model("=", "string"),
+						model($empresa_id, "int"),
+						),					
+					array(
+						model("parent_id", "string"),
+						model("!=", "string"),
+						model(false, "boolean"),
+						));
+
+		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
+		/*logg($res,1);*/
+		if ($res["success"])
+		{
+			$account_ids = $res["data"]["id"];
+			#logg($facturas_id, 1);
+			if (count($account_ids) > 0)
+			{
+				$params = array(
+						model("name", "string"),
+						model("code", "string"),
+						model("codagrup", "string"),
+						model("level", "string"),
+						model("nature", "string"),
+						model("parent_id", "string"),
+						model("type", "string"),						
+						model("user_type", "string"),
+						model("reconcile", "string"),										
+					);
+
+				$res = $this->obj->read($this->uid, $this->pwd, $this->model, $account_ids, $params);
+				
+				/*logg($res["data"],1);*/
+			} 
+		}
+		/*logg($res,1);*/
+		return $res;
+	}
+
+	/* Devuelve Cuentas de la empresa*/
 	function obtener_cuentas($empresa_id)
 	{		
 		$domain = array(

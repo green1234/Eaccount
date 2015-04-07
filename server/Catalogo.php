@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "conf/constantes.conf";
+require_once PROYECT_PATH . "/service/EmpresaService.php";
 require_once PROYECT_PATH . "/service/AccountService.php";
 require_once PROYECT_PATH . "/service/AccountTplService.php";
 //var_dump("LOL"); exit();
@@ -18,7 +19,7 @@ if (isset($_SESSION["login"]))
 
 		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {			
 			$service = new AccountTplService($uid, $pwd, $cid);
-			$response = $service->crear_catalogo_template($cname, $uploadfile);		
+			$response = $service->crear_catalogo_template($cid, $uploadfile);		
 			if ($response["success"])
 			{
 				$_SESSION["login"]["config"] = $cid;
