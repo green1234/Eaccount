@@ -233,6 +233,7 @@ class AccountTplService
 			// Crear Primera Cuenta del Template
 			$response = $this->crear_cuenta_template($main_account, $chart);
 			//return $response;
+			logg($response);
 			$chart = $response["chart"];
 			$defaults = array();
 
