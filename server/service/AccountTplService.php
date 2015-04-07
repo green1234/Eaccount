@@ -156,6 +156,9 @@ class AccountTplService
 		if(isset($account["nature"]))
 			$account_tpl["nature"] = model($account["nature"], "string");
 
+		if(isset($account["default"]))
+			$account_tpl["default"] = model($account["default"], "boolean");
+
 		$response = $this->obj->create($this->uid, $this->pwd, $model, $account_tpl);
 		$result = array();
 
@@ -273,7 +276,7 @@ class AccountTplService
 			}
 			
 			//logg($chart,1);
-			$defaults = array();
+			$defaults = $this->crear_defaults($e_rfc, $chart);
 			$response = $this->crear_account_chart_tpl($chart[0], $e_name, $defaults);
 
 			if ($response["success"])
@@ -291,6 +294,33 @@ class AccountTplService
 		return $chart;
 	}
 
+	function crear_defaults($rfc, $chart)
+	{
+		$defaults = array();
+
+		$def["bancos"] = array("name"=>"Bancos View Default", "code" => $rfc."_1_", "type"=>"view", "user_type"=>12, "parent_id"=>$chart[0], "default"=>true);
+		$def["apertura"] = array("name"=>"Apertura Default", "code" => $rfc."_2_", "type"=>"other", "user_type"=>7, "parent_id"=>$chart[0], "default"=>true);
+		// $banco = array("name"=>"Banco Default", "code" => $rfc."_2_", "type"=>"liquidity", "user_type"=>4, "parent_id"=>$chart[0], "default"=>true);
+		// $caja = array("name"=>"Caja Default", "code" => $rfc."_3_", "type"=>"liquidity", "user_type"=>5, "parent_id"=>$chart[0], "default"=>true);
+		$def["ingreso"] = array("name"=>"Ventas Default", "code" => $rfc."_3_", "type"=>"other", "user_type"=>8, "parent_id"=>$chart[0], "default"=>true);
+		$def["gasto"] = array("name"=>"Compras Default", "code" => $rfc."_4_", "type"=>"other", "user_type"=>9, "parent_id"=>$chart[0], "default"=>true);
+		$def["cliente"] = array("name"=>"Cliente Default", "code" => $rfc."_5_", "type"=>"receivable", "user_type"=>2, "parent_id"=>$chart[0], "default"=>true);
+		$def["proveedor"] = array("name"=>"Proveedor Default", "code" => $rfc."_6_", "type"=>"payable", "user_type"=>3, "parent_id"=>$chart[0], "default"=>true);
+
+		$def["iva_venta"] = array("name"=>"IVA Ventas Default", "code" => $rfc."_7_", "type"=>"other", "user_type"=>7, "parent_id"=>$chart[0], "default"=>true);
+		$def["iva_compra"] = array("name"=>"IVA Compra Default", "code" => $rfc."_8_", "type"=>"other", "user_type"=>6, "parent_id"=>$chart[0], "default"=>true);
+		$def["iva_ret"] = array("name"=>"IVA Retenido Default", "code" => $rfc."_9_", "type"=>"other", "user_type"=>6, "parent_id"=>$chart[0], "default"=>true);
+		$def["isr_ret"] = array("name"=>"ISR Retenido Default", "code" => $rfc."_10_", "type"=>"other", "user_type"=>6, "parent_id"=>$chart[0], "default"=>true);
+
+
+		foreach ($def as $key => $account) {
+			$res = $this->crear_cuenta_template($account, $chart);
+			$defaults[$key] = $res["id"];
+		}
+
+		return $defaults;
+	}
+
 	function crear_account_chart_tpl($empresa_account_id, $empresa_account_name, $defaults)
 	{		
 		$response = $this->crear_tax_code_tpl($empresa_account_name);
@@ -301,15 +331,15 @@ class AccountTplService
 			$account_chart_tpl = array(
 				"name" => model($empresa_account_name, "string"),	
 				"account_root_id" => model($empresa_account_id, "int"),
-				//"bank_account_view_id" => model($defaults["bancos"], "int"),
+				"bank_account_view_id" => model($defaults["bancos"], "int"),
 				"tax_code_root_id" => model($tax_code_tpl_id, "int"),
 				"visible" => model(true, "boolean"),
-				// "property_account_receivable" => model($defaults["cliente"], "int"),
-				// "property_account_payable" => model($defaults["proveedor"], "int"),
-				// "property_account_expense_categ" => model($defaults["ingreso"], "int"),
-				// "property_account_income_categ" => model($defaults["gasto"], "int"),
-				// "property_account_income_opening" => model($defaults["apertura"], "int"),
-				// "property_account_expense_opening" => model($defaults["apertura"], "int"),
+				"property_account_receivable" => model($defaults["cliente"], "int"),
+				"property_account_payable" => model($defaults["proveedor"], "int"),
+				"property_account_expense_categ" => model($defaults["ingreso"], "int"),
+				"property_account_income_categ" => model($defaults["gasto"], "int"),
+				"property_account_income_opening" => model($defaults["apertura"], "int"),
+				"property_account_expense_opening" => model($defaults["apertura"], "int"),
 			);
 
 			$model = "account.chart.template";
@@ -369,10 +399,10 @@ class AccountTplService
 
 	function crear_tax_tpl($chart_tpl_id, $defaults)
 	{
-		// $iva_venta = $defaults["iva_venta"];
-		// $iva_compra = $defaults["iva_compra"];
-		// $iva_ret = $defaults["iva_ret"];
-		// $isr_ret = $defaults["isr_ret"];
+		$iva_venta = $defaults["iva_venta"];
+		$iva_compra = $defaults["iva_compra"];
+		$iva_ret = $defaults["iva_ret"];
+		$isr_ret = $defaults["isr_ret"];
 
 		$tax_tpl_model = "account.tax.template";
 		$tax_tpl_sale = array(
@@ -385,8 +415,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_venta, "int"),
-			// "account_paid_id" => model($iva_venta, "int"),
+			"account_collected_id" => model($iva_venta, "int"),
+			"account_paid_id" => model($iva_venta, "int"),
 		);
 
 		$tax_tpl_sale_0 = array(
@@ -399,8 +429,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_venta, "int"),
-			// "account_paid_id" => model($iva_venta, "int"),
+			"account_collected_id" => model($iva_venta, "int"),
+			"account_paid_id" => model($iva_venta, "int"),
 		);
 
 		$tax_iva_sale_ret = array(
@@ -413,8 +443,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.1066667, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_ret, "int"),
-			// "account_paid_id" => model($iva_ret, "int"),
+			"account_collected_id" => model($iva_ret, "int"),
+			"account_paid_id" => model($iva_ret, "int"),
 		);
 
 		$tax_iva_sale_ret_0 = array(
@@ -427,8 +457,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_ret, "int"),
-			// "account_paid_id" => model($iva_ret, "int"),
+			"account_collected_id" => model($iva_ret, "int"),
+			"account_paid_id" => model($iva_ret, "int"),
 		);
 
 		$tax_isr_sale_ret = array(
@@ -441,8 +471,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.10, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($isr_ret, "int"),
-			// "account_paid_id" => model($isr_ret, "int"),
+			"account_collected_id" => model($isr_ret, "int"),
+			"account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_isr_sale_ret_0 = array(
@@ -455,8 +485,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($isr_ret, "int"),
-			// "account_paid_id" => model($isr_ret, "int"),
+			"account_collected_id" => model($isr_ret, "int"),
+			"account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_isr_purchase_ret_0 = array(
@@ -469,8 +499,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($isr_ret, "int"),
-			// "account_paid_id" => model($isr_ret, "int"),
+			"account_collected_id" => model($isr_ret, "int"),
+			"account_paid_id" => model($isr_ret, "int"),
 		);
 
 		$tax_tpl_purchase = array(
@@ -483,8 +513,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_compra, "int"),
-			// "account_paid_id" => model($iva_compra, "int"),
+			"account_collected_id" => model($iva_compra, "int"),
+			"account_paid_id" => model($iva_compra, "int"),
 		);
 
 		$tax_tpl_purchase_0 = array(
@@ -497,8 +527,8 @@ class AccountTplService
 			"applicable_type" => model("true", "string"),
 			"amount" => model(0.16, "double"),
 			"sequence" => model(1, "int"),
-			// "account_collected_id" => model($iva_compra, "int"),
-			// "account_paid_id" => model($iva_compra, "int"),
+			"account_collected_id" => model($iva_compra, "int"),
+			"account_paid_id" => model($iva_compra, "int"),
 		);
 
 		$this->obj->create($this->uid, $this->pwd, $tax_tpl_model, $tax_tpl_sale);

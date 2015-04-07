@@ -303,7 +303,12 @@ class AccountService
 						model("company_id", "string"),
 						model("=", "string"),
 						model($empresa_id, "int"),
-						),					
+						),
+					array(
+						model("default", "string"),
+						model("=", "string"),
+						model(false, "boolean"),
+						),				
 					array(
 						model("parent_id", "string"),
 						model("!=", "string"),
