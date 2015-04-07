@@ -114,7 +114,7 @@ $path = SERVERNAME . "/Catalogo.php?";
 
   <form id="chart_form" action="<?=$path?>" enctype="multipart/form-data"  method="POST">
       <!-- MAX_FILE_SIZE debe preceder el campo de entrada de archivo -->
-      <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+      <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
       <!-- El nombre del elemento de entrada determina el nombre en el array $_FILES -->
       <!-- Enviar este archivo: <input name="userfile" type="file" /> -->
       
@@ -228,7 +228,7 @@ $path = SERVERNAME . "/Catalogo.php?";
               alert("Catalogo Cargado");
             else
               alert("El archivo no cumple con el formato");
-            location.reload();
+            //location.reload();
         },
         error: function(data){            
             console.log("data");

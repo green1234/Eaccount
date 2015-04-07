@@ -54,10 +54,10 @@ class AccountTplService
 
 	function obtener_tipo_cuenta($registro)
 	{	
-		$grupo_cuenta = $registro["grupo"];	
+		$grupo_cuenta = $registro["Genero"];	
 		//$tipo_cuenta = $registro["tipo"];//$tipo_cuenta = $registro["type"];
 		//$clase_cuenta = $registro["clase"];//$clase_cuenta = $registro["class"];
-		$mayor = $registro["mayor"];
+		$mayor = $registro["SubCuentaDe"];
 
 		$tipos = $this->tipos;
 		$result = array();
@@ -66,17 +66,19 @@ class AccountTplService
 		{
 			$result["type"] = "view";
 			switch ($grupo_cuenta) {				//switch ($clase_cuenta) {				
-				case 'A':
+				case 'Activo':
 					$result["user_type"] = $tipos["Vista de Activo"];
 					break;
-				case 'P':
-				case 'C':
+				case 'Pasivo':
+				case 'Capital':
 					$result["user_type"] = $tipos["Vista de Pasivo"];
 					break;
-				case 'I':
+				case 'Ingreso':
 					$result["user_type"] = $tipos["Vista de Ingreso"];
 					break;
-				case 'G':
+				case 'Gasto':
+				case 'Financiero':
+				case 'Orden':
 					$result["user_type"] = $tipos["Vista de Gasto"];
 					break;
 			}
@@ -86,17 +88,19 @@ class AccountTplService
 			$result["type"] = "other";
 			switch ($grupo_cuenta) { //switch ($tipo_cuenta) {				
 				
-				case 'A':
+				case 'Activo':
 					$result["user_type"] = $tipos["Activo"];
 					break;
-				case 'P':
-				case 'C':
+				case 'Pasivo':
+				case 'Capital':
 					$result["user_type"] = $tipos["Pasivo"];
 					break;
-				case 'I':
+				case 'Ingreso':
 					$result["user_type"] = $tipos["Ingreso"];
 					break;
-				case 'G':
+				case 'Gasto':
+				case 'Financiero':
+				case 'Orden':
 					$result["user_type"] = $tipos["Gasto"];
 					break;
 
@@ -173,27 +177,46 @@ class AccountTplService
 
 	function validar_catalogo($registros)
 	{
-		return true;
-		for ($i = 0; $i < count($registros); $i++)
+		//return true;
+		for ($i = 1; $i < count($registros); $i++)
 		{			
-			if (!isset($registros[$i]["nombre"]) || $registros[$i]["nombre"] == "")			
-				return false;
-			if (!isset($registros[$i]["codigo"]) || $registros[$i]["codigo"] == "")			
-				return false;
-			// if (!isset($registros[$i]["padre"]) || $registros[$i]["padre"] == "")			
-			// 	return 3;
-			if (!isset($registros[$i]["afectable"]) || $registros[$i]["afectable"] == "")			
-				return false;
-			if (!isset($registros[$i]["sat"]) || $registros[$i]["sat"] == "")			
-				return false;
-			if (!isset($registros[$i]["tipo"]) || $registros[$i]["tipo"] == "")			
-				return false;
-			if (!isset($registros[$i]["grupo"]) || $registros[$i]["grupo"] == "")			
-				return false;
-			if (!isset($registros[$i]["naturaleza"]) || $registros[$i]["naturaleza"] == "")			
-				return false;
-			// if (!isset($registros[$i]["mayor"]) || $registros[$i]["mayor"] == "")			
-			// 	return false;
+			if (!isset($registros[$i]["Codigo_SAT"]))			
+				return array("error"=>"Codigo_SAT", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Nivel_de_Cuenta"]) || ((int)$registros[$i]["Nivel_de_Cuenta"]) < 1 )			
+				return array("error"=>"Nivel_de_Cuenta", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Numero_de_ Cuenta"]) || $registros[$i]["Numero_de_ Cuenta"] == "")			
+				return array("error"=>"Numero_de_ Cuenta", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Nombre_cuenta"]) || $registros[$i]["Nombre_cuenta"] == "")			
+				return array("error"=>"Nombre_cuenta", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Genero"])) 
+				if($registros[$i]["Genero"] != "Activo" 
+					&& $registros[$i]["Genero"] != "Pasivo"
+					&& $registros[$i]["Genero"] != "Capital"
+					&& $registros[$i]["Genero"] != "Ingreso"
+					&& $registros[$i]["Genero"] != "Gasto")			
+				return array("error"=>"Genero", "row"=> $i+1, "valor" => $registros[$i]["Genero"]);
+			
+			if (!isset($registros[$i]["Naturaleza"]) || ($registros[$i]["Naturaleza"] != "A" 
+				&& $registros[$i]["Naturaleza"] != "D"))
+				return array("error"=>"Naturaleza", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["SubCuentaDe"]) || $registros[$i]["SubCuentaDe"] == "")			
+			 	return array("error"=>"SubCuentaDe", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Cuenta_mayor"]) || ($registros[$i]["Cuenta_mayor"] != "SI" 
+				&& $registros[$i]["Cuenta_mayor"] != "NO"))			
+				return array("error"=>"Cuenta_mayor", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Afectable"]) || ($registros[$i]["Afectable"] != "SI" 
+				&& $registros[$i]["Afectable"] != "NO"))			
+				return array("error"=>"Afectable", "row"=> $i+1);
+			
+			if (!isset($registros[$i]["Moneda"]) || $registros[$i]["Moneda"] != "1")			
+				return array("error"=>"Moneda", "row"=> $i+1);
 		}
 		return true;
 	}
@@ -201,22 +224,25 @@ class AccountTplService
 	function crear_catalogo_template($empresa_id, $uploadfile)
 	{
 		$registros = CommonService::leer_catalogo_csv($uploadfile);
-		$columns = $registros[0];
-
-		//array("nombre", "padre", "sat", "codigo", "tipo", "mayor", "clase", "naturaleza")
-		$validacion = $this->validar_catalogo($registros);
-		// return $a;
-		if (!$validacion)
-		{
-			// return $a; 
-			return array(
-				"success"=>false, 
-				"data"=>array(
-					"description"=>"El Archivo no cumple con el formato"));
-		}
 		
 		if(count($registros) > 0)
 		{
+			$validacion = $this->validar_catalogo($registros);
+		
+			if ($validacion!==true)
+			{
+				// return $a; 
+				return array(
+					"success"=>false, 
+					"data"=>array(
+						"description"=>"El Archivo no cumple con el formato",
+						"error" => $validacion["error"],
+						"row" => $validacion["row"]),
+					);
+			}
+
+			//logg("LOL",1);
+
 			$empresaService = new EmpresaService(USER_ID, md5(PASS));
 			$empresaData = $empresaService->obtener_datos_empresa($empresa_id)["data"];
 			//logg($empresaData,1);
@@ -239,9 +265,9 @@ class AccountTplService
 
 			for ($i = 0; $i < count($registros); $i++)
 			{				
-				$name = $registros[$i]["nombre"];//$name = $registros[$i]["name"];
-				$parent = $registros[$i]["padre"];	//$parent = $registros[$i]["parent"];	
-				$sat_code = $registros[$i]["sat"];			
+				$name = $registros[$i]["Nombre_cuenta"];//$name = $registros[$i]["name"];
+				$parent = $registros[$i]["SubCuentaDe"];	//$parent = $registros[$i]["parent"];	
+				$sat_code = $registros[$i]["Codigo_SAT"];			
 
 				if (isset($chart[$parent]))
 					$parent_id = $chart[$parent];
@@ -255,12 +281,12 @@ class AccountTplService
 				$code_id = $this->obtener_sat_id($sat_code);
 
 				$account = array(
-		        	"code" => $registros[$i]["codigo"], //"code" => $registros[$i]["code"], 
+		        	"code" => $registros[$i]["Numero_de_ Cuenta"], //"code" => $registros[$i]["code"], 
 		        	"name" => $name, 
 		        	"type" => $result["type"], 
 		        	"user_type" => $result["user_type"], 
 		        	"parent_id" => $parent_id, 
-		        	"nature" => $registros[$i]["naturaleza"],//"nature" => $registros[$i]["nature"],
+		        	"nature" => $registros[$i]["Naturaleza"],//"nature" => $registros[$i]["nature"],
 		        	"codagrup" => $code_id,
 		        );
 

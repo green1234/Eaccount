@@ -14,6 +14,7 @@ if (isset($_SESSION["login"]))
 
 	if(count($_FILES) > 0)
 	{	
+		//var_dump($_FILES["userfile"]); exit();
 		$uploaddir = PROYECT_PATH . '/tmp/';
 		$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 
@@ -22,12 +23,16 @@ if (isset($_SESSION["login"]))
 			$response = $service->crear_catalogo_template($cid, $uploadfile);		
 			if ($response["success"])
 			{
-				$_SESSION["login"]["config"] = $cid;
+			 	$_SESSION["login"]["config"] = $cid;
 			}
 			echo json_encode($response);
+			//echo json_encode("Todo OK");
 		}
 		else
 		{
+			//logg($uploadfile);
+			//logg($uploadfile,1);
+			//echo json_encode($_FILES['userfile']['tmp_name']);
 			echo json_encode(array(
 				"success"=>false, 
 				"data"=>array(
