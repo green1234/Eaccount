@@ -19,4 +19,4 @@
     <?//TERMINA FOR DE LOS DATOS?>
   </table>
             
-</div>
+</div> 

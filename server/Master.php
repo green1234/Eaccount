@@ -42,6 +42,59 @@ function obtener_productos($cid)
 		model("company_id", "string"),
 		model("=", "string"),
 		model($cid, "int"));
+	// $domain[] = array(
+	// 	model("sale_ok", "string"),
+	// 	model("=", "string"),
+	// 	model(true, "boolean"));
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+	//return $res;
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+				model("name", "string"),				
+			);
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			$productos = array();
+			if ($res["success"])
+			{
+				foreach ($res["data"] as $index => $producto) {
+					$id = $producto["id"];
+					$prodata = obtener_datos_producto($id);
+					//logg($prodata,1);
+					$producto["tpl"] = $prodata["data"][0];
+					$productos[$id] = $producto;
+				}
+				$res["data"] = $productos;
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
+function obtener_insumos($cid)
+{
+	$model = "product.product";
+	$domain = array();
+	$domain[] = array(
+		model("company_id", "string"),
+		model("=", "string"),
+		model($cid, "int"));
+	$domain[] = array(
+		model("purchase_ok", "string"),
+		model("=", "string"),
+		model(true, "boolean"));
 	
 	$obj = new MainObject();
 	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
@@ -410,8 +463,12 @@ if (isset($_SESSION["login"]))
 			$res = obtener_accounts($cid[0]);
 		}
 		else if($_GET["cat"] == "productos")
-		{
+		{			
 			$res = obtener_productos($cid[0]);
+		}
+		else if($_GET["cat"] == "insumos")
+		{			
+			$res = obtener_insumos($cid[0]);
 		}
 	}
 
