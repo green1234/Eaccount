@@ -1,3 +1,4 @@
 *.conf
 server/tmp/*
 *.csv
+*.xlsx
