@@ -32,7 +32,7 @@
 	}
 	h2
 	{
-		font-size: 1.5em;
+		font-size: 1.3em;
 		text-align: center;
 	}
 	div
@@ -44,114 +44,112 @@
 <div class="table-responsive" id="listado_cfdi">
 <h1>INSTRUCCIONES PARA EL LLENADO DEL CATALOGO DE CUENTAS</h1>
 <h2><p>
-	Descargue el Catalogo de Ejemplo de la siguiente liga.
 	<br>
-	<a href="view/config/catalogos/cat1.csv">Descargar</a>
+	El archivo a importar debe contener SOLAMENTE un (1) catalogo de cuentas. El formato de tu archivo debe ser (*.csv). 
+	Debe tener 10 campos (columnas) con el siguiente orden:
+	En el renglon 1: El nombre de las columnas, indicado en negritas: 	
+	<a href="view/config/catalogos/cat1.csv">Descargar Ejemplo</a>
 </p></h2>
 <h2 style="text-align:left;">Descripcion de Columnas:</h2>
 <div class="columna">
-<h3>Código</h3>
+<h4>A1:  Codigo_SAT</h4>
 <p>
-	Aqui colocaremos el codigo que vamos a utilizar en nuestra cuenta contable.
+	Es el código agrupador definido por el SAT en el Anexo 24.
 </p>
 </div>
 <div class="columna">
-<h3>Nombre</h3>
+<h4>B1:  Nivel_de_cuenta.</h4>
 <p>
-	Aqui colocaremos el nombre que vamos a utilizar en nuestra cuenta contable.
+	Es el nivel de la cuenta, Número entero iniciando en 1 (mas alto).
 </p>
 </div>
 <div class="columna">
-<h3>Tipo</h3>
+<h4>C1:  Numero_de_cuenta.</h4>
 <p>
-	Aqui colocaremos el codigo que corresponda a la cuenta:
-	<br>
-	<b>caja</b> : Para las cuentas de mayor y subcuentas que sean de caja.
-	<br>
-	<b>banco</b> : Para las cuentas de mayor y subcuentas que sean de banco.
-	<br>
-	<b>cliente</b> : Para las cuentas de mayor y subcuentas que sean de cliente.
-	<br>
-	<b>proveedor</b> : Para las cuentas de mayor y subcuentas que sean de proveedor.
-	<br>
-	<b>otro</b> : Para las cuentas de mayor y subcuentas que sean de otro.
+	Es la clave de la cuenta. Asignado por el contador. Puede tener cualquier estructura (3-4-4; 4-4, otra).
 </p>
 </div>
 <div class="columna">
-<h3>Padre</h3>
+<h4>D1:  Nombre_cuenta.</h4>
 <p>
-	Aqui colocaremos el nombre de la cuenta de mayor inmediata superior de nuestra cuenta, si no tuviera padre, la dejan vacia.
+	Nombre de la cuenta contable. 
 </p>
 </div>
 <div class="columna">
-<h3>Clase</h3>
+<h4>E1: Genero</h4>
 <p>
-	Aqui colocaremos la letra que corresponda a la clase de la cuenta.
+	Es el género de la cuenta. Solo debe tener un (1) caracter: los valores válidos son:  
 	<br>
-	<b>A</b>: Activos
-	<br>
-	<b>P</b>: Pasivos / Capital
-	<br>
-	<b>I</b>: Ingresos
-	<br>
-	<b>G</b>: Gastos
+	<ul>
+		<li><b>A : </b><i>Cuentas de Activos</i></li>
+		<li><b>P : </b><i>Cuentas de Pasivos</i></li>
+		<li><b>K : </b><i>Cuentas de Capital</i></li>
+		<li><b>I : </b><i>Cuentas de Ingresos</i></li>
+		<li><b>C : </b><i>Cuentas de Costos</i></li>
+		<li><b>G : </b><i>Cuentas de Gastos</i></li>
+		<li><b>F : </b><i>Cuentas de Financieros</i></li>
+		<li><b>O : </b><i>Cuentas de Orden</i></li>
+	</ul>
+
 </p>
 </div>
 <div class="columna">
-<h3>Mayor</h3>
+<h4>F1:  Naturaleza.</h4>
 <p>
-	Aqui colocaremos el numero que corresponda a la cuenta.
+	Naturaleza de la cuenta. Solo debe tener un (1) caracter: los valores válidos son:
 	<br>
-	<b>0</b>: Subcuentas
-	<br>
-	<b>1</b>: Cuentas de Mayor	
+	<ul>
+		<li><b>A</b>: Acreedora</li>
+		<li><b>D</b>: Deudora</li>
+	</ul>
 </p>
 </div>
 <div class="columna">
-<h3>Naturaleza</h3>
+<h4>G1:  SubCuentaDe.</h4>
 <p>
-	Aqui colocaremos la naturaleza de la cuenta
-	<br>
-	<b>A</b>: Acreedora
-	<br>
-	<b>D</b>: Deudora
+	Es la clave de la cuenta. Asignado por el contador. Puede tener cualquier estructura (3-4-4; 4-4, otra). 
 </p>
 </div>
 <div class="columna">
-<h3>SAT</h3>
+<h4>H1:  Cuenta_mayor.</h4>
 <p>
-	Aqui colocaremos el codigo agrupador proporcionado por el SAT para este tipo de cuenta.
-	<a href="fijos/catalogos/cat2.xlsx">Ver aqui</a>
+	Identifica si la cuenta es de Mayor o no. los valores válidos son:
+	<br>
+	<ul>
+		<li><b>SI</b></li>
+		<li><b>NO</b></li>
+	</ul>	
 </p>
 </div>
 <div class="columna">
-<h3>Default</h3>
+<h4>I1:  Afectable.</h4>
 <p>
-	Aqui debemos indicar las cuentas que seran por default. Es decir debemos de asignar los siguientes valores a 1 sola cuenta en cada caso.
+	Identifica si la cuenta es afectable o no. los valores válidos son:
 	<br>
-	<b>caja</b>: Para la cuenta de caja por default
-	<br>
-	<b>banco</b>: Para la cuenta de banco por default
-	<br>
-	<b>bancos</b>: Para la cuenta de mayor de los bancos
-	<br>
-	<b>cliente</b>: Para la cuenta de cliente por default
-	<br>
-	<b>proveedor</b>: Para la cuenta de cliente por default
-	<br>
-	<b>iva_venta</b>: Para la cuenta de IVA de Venta por default
-	<br>
-	<b>iva_compra</b>: Para la cuenta de IVA de Compra por default
-	<br>
-	<b>iva_ret</b>: Para la cuenta de IVA Retenido por default
-	<br>
-	<b>isr_ret</b>: Para la cuenta de ISR de Retenido por default
-	<br>
-	<b>apertura</b>: Para la cuenta de Apertura de Capital por default
-	<br>
-	<b>ingreso</b>: Para la cuenta de Ingreso por default
-	<br>
-	<b>gasto</b>: Para la cuenta de Gasto por default
+	<ul>
+		<li><b>SI</b></li>
+		<li><b>NO</b></li>
+	</ul>	
 </p>
 </div>
+
+<div class="columna">
+<h4>J1:  Moneda.</h4>
+<p>
+	Identifica los si datos a registrar en la cuenta son en pesos (valor por defecto) o en otra moneda, debe tener las 3 letras aceptadas 
+	en el catálogo de moneda publicado por el SAT. Los valores válidos son:
+	<ul>
+		<li><b>MXP</b>: Para el caso de pesos mexicanos.</li>
+		<li><b>USD</b>: Para el caso de dolares de EUA.</li>
+	</ul>
+	<br>
+	<a href="view/config/catalogos/Cat_Monedas.xlsx">Consulte el catalogo de monedas para los demás casos. </a>
+</p>
+</div>
+<p>
+	A partir del renglón 2 los datos correspondientes a las cuentas. 
+	<br><br>
+	<b>Nota: </b>NO debe contener espacios vacios (celdas vacias) ya que si las contiene, 
+	NO se importará el catalogo.
+</p>
 </div>
