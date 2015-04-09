@@ -181,42 +181,42 @@ class AccountTplService
 		for ($i = 1; $i < count($registros); $i++)
 		{			
 			if (!isset($registros[$i]["Codigo_SAT"]))			
-				return array("error"=>"Codigo_SAT", "row"=> $i+1);
+				return array("error"=>"El valor de la Columna Codigo_SAT no es correcto, fila " . $i + 1, "row"=> $i+1);
 			
 			if (!isset($registros[$i]["Nivel_de_Cuenta"]) || ((int)$registros[$i]["Nivel_de_Cuenta"]) < 1 )			
-				return array("error"=>"Nivel_de_Cuenta", "row"=> $i+1);
+				return array("error"=>"El valor de la Columna Nivel_de_Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);
 			
 			if (!isset($registros[$i]["Numero_de_ Cuenta"]) || $registros[$i]["Numero_de_ Cuenta"] == "")			
-				return array("error"=>"Numero_de_ Cuenta", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Numero_de_ Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);
 			
 			if (!isset($registros[$i]["Nombre_cuenta"]) || $registros[$i]["Nombre_cuenta"] == "")			
-				return array("error"=>"Nombre_cuenta", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Nombre_cuenta Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);				
 			
 			if (!isset($registros[$i]["Genero"])) 
 				if($registros[$i]["Genero"] != "Activo" 
 					&& $registros[$i]["Genero"] != "Pasivo"
 					&& $registros[$i]["Genero"] != "Capital"
 					&& $registros[$i]["Genero"] != "Ingreso"
-					&& $registros[$i]["Genero"] != "Gasto")			
-				return array("error"=>"Genero", "row"=> $i+1, "valor" => $registros[$i]["Genero"]);
+					&& $registros[$i]["Genero"] != "Gasto")				
+				return array("error"=>"El valor de la columna Genero Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);				
 			
 			if (!isset($registros[$i]["Naturaleza"]) || ($registros[$i]["Naturaleza"] != "A" 
 				&& $registros[$i]["Naturaleza"] != "D"))
-				return array("error"=>"Naturaleza", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Naturaleza Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);								
 			
 			if (!isset($registros[$i]["SubCuentaDe"]) || $registros[$i]["SubCuentaDe"] == "")			
-			 	return array("error"=>"SubCuentaDe", "row"=> $i+1);
+				return array("error"=>"El valor de la columna SubCuentaDe Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);			 	
 			
 			if (!isset($registros[$i]["Cuenta_mayor"]) || ($registros[$i]["Cuenta_mayor"] != "SI" 
 				&& $registros[$i]["Cuenta_mayor"] != "NO"))			
-				return array("error"=>"Cuenta_mayor", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Cuenta_mayor Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);				
 			
 			if (!isset($registros[$i]["Afectable"]) || ($registros[$i]["Afectable"] != "SI" 
 				&& $registros[$i]["Afectable"] != "NO"))			
-				return array("error"=>"Afectable", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Afectable Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);				
 			
 			if (!isset($registros[$i]["Moneda"]) || $registros[$i]["Moneda"] != "1")			
-				return array("error"=>"Moneda", "row"=> $i+1);
+				return array("error"=>"El valor de la columna Moneda Cuenta no es correcto, fila " . $i + 1, "row"=> $i+1);								
 		}
 		return true;
 	}

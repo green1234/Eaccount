@@ -227,8 +227,12 @@ $path = SERVERNAME . "/Catalogo.php?";
             if(data.success)
               alert("Catalogo Cargado");
             else
-              alert("El archivo no cumple con el formato");
-            //location.reload();
+            {
+              var msj = data.data.description + ", " + data.data.error;
+              alert(msj);              
+            }
+
+            location.reload();
         },
         error: function(data){            
             console.log("data");
