@@ -363,8 +363,8 @@ class AccountTplService
 				"visible" => model(true, "boolean"),
 				"property_account_receivable" => model($defaults["cliente"], "int"),
 				"property_account_payable" => model($defaults["proveedor"], "int"),
-				"property_account_expense_categ" => model($defaults["ingreso"], "int"),
-				"property_account_income_categ" => model($defaults["gasto"], "int"),
+				"property_account_expense_categ" => model($defaults["gasto"], "int"),
+				"property_account_income_categ" => model($defaults["ingreso"], "int"),
 				"property_account_income_opening" => model($defaults["apertura"], "int"),
 				"property_account_expense_opening" => model($defaults["apertura"], "int"),
 			);

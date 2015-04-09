@@ -88,7 +88,7 @@ $empresa = $res["data"];
                     <input type="text" name="rfc" id="rfc" placeholder="RFC">                  
                 </div>
                 <div class="_50">
-                  <label for="regimen">Regimen Social:</label>
+                  <label for="regimen">Regimen Fiscal:</label>
                   <!-- <input type="text" name="regimen" placeholder="Regimen"> -->
                   <select name="regimen" id="regimen" >
                     <option value="Sociedad de Nombre Colectivo">Sociedad de Nombre Colectivo</option>
