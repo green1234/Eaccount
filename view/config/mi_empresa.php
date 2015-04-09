@@ -266,7 +266,7 @@ $empresa = $res["data"];
     <table class="table">
       <tr>
         <td style="width: 50%;">
-          Régimen Social:
+          Régimen Fiscal:
         </td>
         <td style="font-weight:bold;text-align:left;width: 50%;" id="idata_regimen">
           <? echo $empresa["gl_regimen"];?>
