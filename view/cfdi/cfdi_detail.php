@@ -159,13 +159,59 @@ $(function(){
   var path = location.href.split("?")[1];
   var tabla = $("#cfdi_detail")
   
-  $.getJSON("server/Facturas.php?" + path, function(res)
-  {
+  $.getJSON("server/Facturas.php?b=1&" + path, function(res)
+  { 
+    if (res.data[0].type == "out_invoice" && res.data[0].tipo_comprobante == "ingreso")
+    {
+      var tipo = "La factura";
+      var accion = "emitida";
+      var causa = "a";
+
+      if (res.data[0].retenciones === true)
+      {
+        var tipo = "El recibo de honorarios";
+        var accion = "emitido";
+        var causa = "a";
+      }
+    }
+    else if (res.data[0].type == "in_invoice" && res.data[0].tipo_comprobante == "ingreso")
+    {
+      var tipo = "La Factura";
+      var accion = "recibida";
+      var causa = "de";
+
+      if (res.data[0].retenciones === true)
+      {
+        var tipo = "El recibo de honorarios";
+        var accion = "recibido";
+        var causa = "de";
+      }
+    }
+    else if (res.data[0].type == "out_invoice" && res.data[0].tipo_comprobante == "egreso")
+    {
+      var tipo = "La nota de credito";
+      var accion = "emitida";
+      var causa = "a";
+    }
+    else if (res.data[0].type == "in_invoice" && res.data[0].tipo_comprobante == "egreso")
+    {
+      var tipo = "La nota de debito";
+      var accion = "recibida";
+      var causa = "de";
+
+      if (res.data[0].complemento_nomina_id != "")
+      {
+        var tipo = "El recibo de nómina";
+        var accion = "emitida";
+        var causa = "a";
+      }
+    }
+   
     if (res.success)
     {
-      var head = "<p>Factura de honorarios <b>" + res.data[0].folio + "</b> recibida con fecha <b>" + res.data[0].date_invoice + "</b><br>";
-      head += "Recibida de <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].amount_total.toFixed(2) + "</b></p>";
-      if (res.data[0].error_sat != "Pendiente")
+      var head = "<p>" + tipo +" <b>" + res.data[0].folio + "</b> " + accion + " con fecha <b>" + res.data[0].date_invoice + "</b><br>";
+      head += causa + " <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].amount_total.toFixed(2) + "</b></p>";
+      if (res.data[0].error_sat != "")
         head += "<br>Mensaje SAT: <b>" + res.data[0].error_sat + "</b>"
 
       //head += "<br>Concepto: <b>Concepto_poliza<b>";
