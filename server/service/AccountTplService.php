@@ -66,19 +66,20 @@ class AccountTplService
 		{
 			$result["type"] = "view";
 			switch ($grupo_cuenta) {				//switch ($clase_cuenta) {				
-				case 'Activo':
+				case 'A':
 					$result["user_type"] = $tipos["Vista de Activo"];
 					break;
-				case 'Pasivo':
-				case 'Capital':
+				case 'P':
+				case 'K':
 					$result["user_type"] = $tipos["Vista de Pasivo"];
 					break;
-				case 'Ingreso':
+				case 'I':
 					$result["user_type"] = $tipos["Vista de Ingreso"];
 					break;
-				case 'Gasto':
-				case 'Financiero':
-				case 'Orden':
+				case 'C':
+				case 'G':
+				case 'F':
+				case 'O':
 					$result["user_type"] = $tipos["Vista de Gasto"];
 					break;
 			}
@@ -88,19 +89,20 @@ class AccountTplService
 			$result["type"] = "other";
 			switch ($grupo_cuenta) { //switch ($tipo_cuenta) {				
 				
-				case 'Activo':
+				case 'A':
 					$result["user_type"] = $tipos["Activo"];
 					break;
-				case 'Pasivo':
-				case 'Capital':
+				case 'P':
+				case 'K':
 					$result["user_type"] = $tipos["Pasivo"];
 					break;
-				case 'Ingreso':
+				case 'I':
 					$result["user_type"] = $tipos["Ingreso"];
 					break;
-				case 'Gasto':
-				case 'Financiero':
-				case 'Orden':
+				case 'C':
+				case 'G':
+				case 'F':
+				case 'O':
 					$result["user_type"] = $tipos["Gasto"];
 					break;
 
