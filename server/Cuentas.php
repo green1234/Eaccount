@@ -66,7 +66,18 @@ if (isset($_SESSION["login"]))
 			}
 			else if(isset($_GET["all"]))
 			{
-				$res = $service->obtener_all_cuentas($cid[0]);
+
+				if (isset($_GET["number"]))
+				{
+					$limit = 25;
+					$offset = ((int)$_GET["number"] * 25) - 25;
+					$res = $service->obtener_all_cuentas($cid[0], $offset, $limit);					
+				}
+				else
+				{
+					$res = $service->obtener_all_cuentas($cid[0], 0, 0);					
+				}
+
 				if($res["success"])
 				{
 					$cuentas = array();

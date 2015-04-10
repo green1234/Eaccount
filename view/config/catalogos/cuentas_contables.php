@@ -150,26 +150,155 @@ $path = SERVERNAME . "/Catalogo.php?";
   else{
 
     ?>
+      <div class="paginas" >
+        <ul class="pagination pull-right">
+          <li class="active first"><a href="#" number="1">1</a></li>
+          <li><a href="#" number="2">2</a></li>
+          <li><a href="#" number="3">3</a></li>
+          <li><a href="#" number="4">4</a></li>
+          <li class="last"><a href="#" number="5">5</a></li>
+        </ul>
+      </div>
   
       <table id="cat_cuentas" class="table">
-        <tr>
-          <!-- <th>ID</th> -->
-          <th>Codigo</th>
-          <th>Nombre</th>
-          <th>Padre</th>
-          <th>Naturaleza</th>
-          <!-- <th>Tipo</th> -->
-          <th>Nevel</th>
-          <th>SAT</th>
-        </tr>        
+        <thead>
+          <tr>
+            <!-- <th>ID</th> -->
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Padre</th>
+            <th>Naturaleza</th>
+            <!-- <th>Tipo</th> -->
+            <th>Nivel</th>
+            <th>SAT</th>
+          </tr>                  
+        </thead>
       </table>
+      <div class="paginas">
+        <ul class="pagination pull-right">
+          <li class="active first"><a href="#" number="1">1</a></li>
+          <li><a href="#" number="2">2</a></li>
+          <li><a href="#" number="3">3</a></li>
+          <li><a href="#" number="4">4</a></li>
+          <li class="last"><a href="#" number="5">5</a></li>
+        </ul>
+      </div>
 
 <?}?> <!-- ELSE -->
 </div>
 
 <script>  
 
-  $.getJSON("server/Cuentas.php?action=get&all=1", function(res){
+  function last_pagination(selector, number)
+  {
+    console.log($(selector).parent().find("li a[number='"+number+"']").length)
+    // console.log(number)
+
+    if($(selector).parent().find("li a[number='"+number+"']").length == 0)
+    {      
+      $(selector).removeClass("last")
+      $(".pagination")
+        .append("<li class='last'><a href='#' number='"+number+"'>"+number+"</a></li>")
+        .find("li.first").removeClass("first").hide().next("li").addClass("first");
+      
+      active_pagination();
+    }
+    else
+    {
+      $(selector).parent().find("li.first").removeClass("first").hide().next("li").addClass("first");
+      $(selector).parent().find("li.last").removeClass("last").next("li").addClass("last").show();
+    }
+  }
+
+  function first_pagination(selector, number)
+  {
+    //console.log($(selector))
+    // console.log(number)
+    if($(selector).prev("li").length > 0)
+    {      
+      $(selector).removeClass("first").prev("li").addClass("first").show()
+      .end().parent().find("li.last").removeClass("last").hide().prev("li").addClass("last");
+    }
+    else
+    {
+      $(selector).addClass("active");
+    }
+  }
+
+  function active_pagination()
+  { 
+    $(".pagination a").off("click").on("click", function(e){
+      e.preventDefault();
+      
+      var number = parseInt($(this).attr("number"));
+
+      if(!$(this).parent().hasClass("active"))
+      {      
+        $(".pagination li.active").removeClass("active");
+        $(".pagination li a[number='"+number+"']").parent().addClass("active");      
+      } 
+      
+      if($(this).parent().hasClass("last"))
+      {        
+        last_pagination($(this).parent(), number+1)     
+      }
+
+      if($(this).parent().hasClass("first"))
+      {        
+        first_pagination($(this).parent())     
+      }  
+
+      $.getJSON("server/Cuentas.php?action=get&all=1&number="+number, function(res){
+
+        if(res.success)
+        {
+          var filas = "";
+          $.each(res.data, function(idx, cta){
+            if (cta.type == "view")
+              filas+= "<tr class='row_view'>";
+            else
+              filas+= "<tr>";
+            // filas+= "<td>" + cta.id + "</td>";
+            filas+= "<td>" + cta.code + "</td>";
+            filas+= "<td>" + utf8_decode(cta.name) + "</td>";
+            filas+= "<td>" + cta.parent_id[1].split(" ", 1)[0] + "</td>";
+            filas+= "<td>" + cta.nature + "</td>";
+            // filas+= "<td>" + cta.type + "</td>";
+            filas+= "<td>" + cta.level+ "</td>";
+            filas+= "<td>" + cta.codagrup[1].split(" ", 1)[0] + "</td>";
+            filas+= "</tr>";
+          });
+          $("#cat_cuentas tbody").html(filas);
+        }
+
+      });   
+
+    });
+
+  }
+
+  active_pagination();
+
+  // $(".pagination a").on("click", function(e){
+  //   e.preventDefault();
+    
+  //   var number = parseInt($(this).attr("number"));
+
+  //   if(!$(this).parent().hasClass("active"))
+  //   {      
+  //     $(".pagination li.active").removeAttr("class");
+  //     $(".pagination li a[number='"+number+"']").parent().addClass("active");      
+  //   }
+  //   if($(this).parent().hasClass("last"))
+  //   {
+  //     $(this).parent().removeClass("last")
+  //     $(".pagination").append("<li class='last new'><a href='#' number='"+(number+1)+"'>"+(number+1)+"</a></li>")
+  //       .find("li.new a").on("click", function())
+  //   }
+
+  // })
+
+  $.getJSON("server/Cuentas.php?action=get&all=1&number=1", function(res){
 
     if(res.success)
     {

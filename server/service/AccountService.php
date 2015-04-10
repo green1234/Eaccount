@@ -296,7 +296,7 @@ class AccountService
 	}
 
 	/* Devuelve Cuentas de la empresa*/
-	function obtener_all_cuentas($empresa_id)
+	function obtener_all_cuentas($empresa_id, $offset, $limit)
 	{		
 		$domain = array(
 					array(
@@ -315,8 +315,8 @@ class AccountService
 						model(false, "boolean"),
 						));
 
-		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain);
-		/*logg($res,1);*/
+		$res = $this->obj->search($this->uid, $this->pwd, $this->model, $domain, $offset, $limit);
+		//logg($res,1);
 		if ($res["success"])
 		{
 			$account_ids = $res["data"]["id"];

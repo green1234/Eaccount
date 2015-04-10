@@ -99,13 +99,16 @@
  			return $msg;		
 		}
 
-		function prepare_search_msg($uid, $pwd, $model, $domain)
+		function prepare_search_msg($uid, $pwd, $model, $domain, $offset=0, $limit=0)
 		{
 			$domain = prepare_domain($domain);
 			$msg = $this->prepare_msg($uid, $pwd);
 			$msg->addParam(model($model, "string"));
  			$msg->addParam(model("search", "string")); 			
- 			$msg->addParam(model($domain, "array")); 			
+ 			$msg->addParam(model($domain, "array"));  			
+ 			$msg->addParam(model($offset, "int")); 
+ 			if ($limit != 0)
+ 				$msg->addParam(model($limit, "int")); 			
  			return $msg;
 		}
 
@@ -233,9 +236,9 @@
 			return $response;
 		}
 
-		function search($uid, $pwd, $model, $domain)
+		function search($uid, $pwd, $model, $domain, $offset=0, $limit=0)
 		{			
-			$msg = $this->prepare_search_msg($uid, $pwd, $model, $domain);
+			$msg = $this->prepare_search_msg($uid, $pwd, $model, $domain, $offset, $limit);
 			$response = $this->ejecutar($msg);	
 
 			if ($response["success"])
