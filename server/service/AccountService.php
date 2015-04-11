@@ -1,6 +1,7 @@
 <?php
 
 require_once PROYECT_PATH . "/server/Main.php";
+require_once PROYECT_PATH . "/service/InvoiceService.php";
 
 class AccountService
 {
@@ -122,12 +123,22 @@ class AccountService
 			model("gl_cta", "string"),
 			model("gl_ban2", "string"),
 			model("gl_cta2", "string"),
-			model("gl_num_cheque", "string")
+			model("gl_num_cheque", "string"),
+			model("invoice_id", "string"),
 		);				
 
 		$res = $this->obj->read($this->uid, $this->pwd, $model, $polizas_id, $params);			
-		$line_moves = $this->obtener_poliza_lines($res["data"][0]["id"]);
 		
+		$cfdi_id = $res["data"][0]["invoice_id"]; 
+		if (is_array($cfdi_id))
+		{
+			$invoiceService = new InvoiceService(USER_ID, md5(PASS));
+			$cfdi_data = $invoiceService->obtener_datos_factura($cfdi_id[0]);
+			$res["data"][0]["invoice_id"] = $cfdi_data["data"][0];						
+		}
+
+		$line_moves = $this->obtener_poliza_lines($res["data"][0]["id"]);
+
 		if ($line_moves["success"])
 		{	
 			$debit = 0;
@@ -527,6 +538,7 @@ class AccountService
 						model("gl_ban2", "string"),
 						model("gl_cta2", "string"),
 						model("gl_num_cheque", "string"),
+						model("invoice_id", "string"),
 					);
 
 				$res = $this->obj->read($this->uid, $this->pwd, $move_model, $acc_move_ids, $params);
@@ -539,6 +551,13 @@ class AccountService
 							model("=", "string"),
 							model($move_line["id"], "int"),
 							));*/
+					$cfdi_id = $res["data"][$index]["invoice_id"]; 
+					if (is_array($cfdi_id))
+					{
+						$invoiceService = new InvoiceService(USER_ID, md5(PASS));
+						$cfdi_data = $invoiceService->obtener_datos_factura($cfdi_id[0]);
+						$res["data"][$index]["invoice_id"] = $cfdi_data["data"][0];						
+					}
 
 					//$line_move_ids = $this->obj->search($this->uid, $this->pwd, $move_line_model, $domain);
 					$line_moves = $this->obtener_poliza_lines($move_line["id"]);

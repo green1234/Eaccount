@@ -5,11 +5,67 @@ get_lines = function(pid, fn)
 {
 	$.getJSON("server/Polizas.php?action=lines&pid=" + pid, function(res)
 	{	
-		//console.log(res.data)	
-		if (res.success)	
+
+		if (res.data[0].invoice_id)
+		{
+			if (res.data[0].invoice_id.type == "out_invoice" && res.data[0].invoice_id.tipo_comprobante == "ingreso")
+		    {
+		      var tipo = "La factura";
+		      var accion = "emitida";
+		      var causa = "a";
+
+		      if (res.data[0].invoice_id.retenciones === true)
+		      {
+		        var tipo = "El recibo de honorarios";
+		        var accion = "emitido";
+		        var causa = "a";
+		      }
+		    }
+		    else if (res.data[0].invoice_id.type == "in_invoice" && res.data[0].invoice_id.tipo_comprobante == "ingreso")
+		    {
+		      var tipo = "La Factura";
+		      var accion = "recibida";
+		      var causa = "de";
+
+		      if (res.data[0].invoice_id.retenciones === true)
+		      {
+		        var tipo = "El recibo de honorarios";
+		        var accion = "recibido";
+		        var causa = "de";
+		      }
+		    }
+		    else if (res.data[0].invoice_id.type == "out_invoice" && res.data[0].invoice_id.tipo_comprobante == "egreso")
+		    {
+		      var tipo = "La nota de credito";
+		      var accion = "emitida";
+		      var causa = "a";
+		    }
+		    else if (res.data[0].invoice_id.type == "in_invoice" && res.data[0].invoice_id.tipo_comprobante == "egreso")
+		    {
+		      var tipo = "La nota de debito";
+		      var accion = "recibida";
+		      var causa = "de";
+
+		      if (res.data[0].invoice_id.complemento_nomina_id != "")
+		      {
+		        var tipo = "El recibo de nómina";
+		        var accion = "emitida";
+		        var causa = "a";
+		      }
+		    }
+
+		    var head = "<p>" + tipo +" <b>" + res.data[0].invoice_id.folio + "</b> " + accion + " con fecha <b>" + res.data[0].invoice_id.date_invoice + "</b><br>";
+      		head += causa + " <b>" + res.data[0].invoice_id.partner_id[1] + "</b> en <b>" + res.data[0].invoice_id.currency_id[1] + "</b>, por un total de $<b>" + res.data[0].invoice_id.amount_total.toFixed(2) + "</b></p>";
+		}
+		else
 		{
 			var head = "<p>Factura de honorarios <b>" + res.data[0].name + "</b> recibida con fecha <b>" + res.data[0].date + "</b><br>";
 		    head += "Recibida de <b>" + res.data[0].partner_id[1] + "</b> en <b>" + res.data[0].currency_id[1] + "</b>, por un total de $<b>" + res.data[0].total.toFixed(2) + "</b></p>";
+		}
+
+		//console.log(res.data)	
+		if (res.success)	
+		{		    
 		    $("#header_poliza_detail").html(head);
 			estatus_poliza = res.data[0].state
 			lines = res.data[0].lines;				

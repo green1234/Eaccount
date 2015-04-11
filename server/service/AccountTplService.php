@@ -180,8 +180,23 @@ class AccountTplService
 	function validar_catalogo($registros)
 	{
 		//return true;
+		$catalogo = array();
 		for ($i = 1; $i < count($registros); $i++)
-		{			
+		{	
+			$codigo = $registros[$i]["Numero_de_ Cuenta"];
+
+			if (count($catalogo) > 0)
+			{
+				if (isset($catalogo[$codigo]))
+					return array("error"=>"El numero de la cuenta debe ser unico, fila " . $i + 1, "row"=> $i+1);
+
+				$catalogo[$codigo] = true;
+			}
+			else
+			{
+				$catalogo[$codigo] = true;	
+			}
+
 			if (!isset($registros[$i]["Codigo_SAT"]))			
 				return array("error"=>"El valor de la Columna Codigo_SAT no es correcto, fila " . $i + 1, "row"=> $i+1);
 			
