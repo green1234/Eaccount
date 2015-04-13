@@ -184,11 +184,11 @@ function _metodo($id)
         <th style="border: 0px;">&nbsp;</th>
        <!--  <th>VER</th>
        <th>VAL</th> -->
-        <th>FOLIO</th>
-        <th>CONCEPTO</th>
+        <th>POLIZA</th>
+        <th>REFERENCIA</th>
         <th>FECHA</th>
-        <th>PERIODO</th>
-        <th>TIPO</th>
+        <!-- <th>PERIODO</th>
+        <th>TIPO</th> -->
         <th>CAUSANTE</th>
         <th>IMPORTE</th>
         <th>ESTATUS</th>        

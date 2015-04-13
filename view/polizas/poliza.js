@@ -29,11 +29,11 @@ mostrar_polizas = function(fn){
 	$.each(polizas, function(index, value){
 		html_polizas += "<tr class='cfdi_row'>";
 		html_polizas += "<td><input id='" + value.id + "'name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";
-		html_polizas += "<td>" + value.name + "</td>";
+		html_polizas += "<td>" + value.id + "</td>";
 		html_polizas += "<td>" + value.ref + "</td>";
 		html_polizas += "<td>" + value.date + "</td>";
-		html_polizas += "<td>" + value.period_id[1] + "</td>";
-		html_polizas += "<td>" + value.journal_id[1] + "</td>";
+		// html_polizas += "<td>" + value.period_id[1] + "</td>";
+		// html_polizas += "<td>" + value.journal_id[1] + "</td>";
 		html_polizas += "<td>" + value.partner_id[1] + "</td>";
 		html_polizas += "<td>$" + value.total.toFixed(2) + "</td>";
 		html_polizas += "<td>" + (value.state == "posted" ? "Contabilizado" : "Pendiente") + "</td>";

@@ -328,7 +328,7 @@ function _metodo($id)
 <div class="col-md-1"></div>
 
 <div class="col-md-2" style="float:right;">
-  <button class="btn btn-primary action_conta">CONTABILIZAR</button>
+  <button class="btn btn-primary action_conta">Generar Póliza</button>
 </div>
 
 

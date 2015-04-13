@@ -1,5 +1,5 @@
 var accounts, mayores, lines, codesat, levels  = {};
-var optionsAcc, lines_rows, estatus_poliza  = "";
+var optionsAcc, lines_rows, estatus_poliza, uuid  = "";
 
 get_lines = function(pid, fn)
 {
@@ -67,8 +67,9 @@ get_lines = function(pid, fn)
 		if (res.success)	
 		{		    
 		    $("#header_poliza_detail").html(head);
-			estatus_poliza = res.data[0].state
-			lines = res.data[0].lines;				
+			estatus_poliza = res.data[0].state;
+			lines = res.data[0].lines;
+			uuid = res.data[0].invoice_id.uuid;				
 		}	
 		fn(asignar_eventos, pid);
 	});
@@ -103,7 +104,7 @@ mostrar_lineas = function(fn, pid)
 		rows += "<td>" + line.debit.toFixed(2) + "</td>";
 		rows += "<td>" + line.credit.toFixed(2) + "</td>";
 		rows += "<td>-</td>";
-		rows += "<td>-</td>";
+		rows += "<td>*"+uuid.substr(-4)+"</td>";
 		rows += "</tr>";
 	});
 	$("#poliza_detalle").append(rows);
@@ -205,48 +206,71 @@ get_sub_accounts = function(parent_id)
 }
 
 prepare_lista_cuentas = function(id,level)
-{
-	console.log("====LEVELS====")
-	console.log(levels);
-	console.log("========")
+{	
+	$("#sub_tabla"+level).remove();
 	var cuentas = levels[level];
 	cuentas = cuentas[id];
 	var listaCtas = "";
 	var i = 0;
-	console.log("====ID/LEVEL====")
-	console.log(id)
-	console.log(level)
-	console.log("========")
-	// console.log(levels)
-	console.log(cuentas)
+	
 	$.each(cuentas, function(idx, cta)
-	{
-		console.log("=>" + cta.id)
-		listaCtas += "<li parent='" + id + "' id='"+cta.id+"' class='cta_lista_sub' level='"+cta.level+"'>" + cta.code + " " + cta.name;
-		//listaCtas += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='float:right;'></span>";
-		listaCtas += "</li>";		
+	{	
+		if (cta.type == "view")
+		{
+			listaCtas += "<li parent='" + id + "' id='"+cta.id+"' class='cta_lista' level='"+cta.level+"' style='position:relative'>" + utf8_decode(cta.code + " " + cta.name);
+			listaCtas += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='right:0;position:absolute;'></span>";
+			listaCtas += "</li>";
+		}	
+		else
+		{
+			listaCtas += "<li parent='" + id + "' id='"+cta.id+"' class='cta_lista_sub' level='"+cta.level+"'>" + utf8_decode(cta.code + " " + cta.name);			
+			listaCtas += "</li>";	
+		}	
 	});
 	listaCtas += "<li data-toggle='modal' data-target='#new_account_modal' parent='" + id + "' class='new_account cta_lista_sub'>Nueva Cuenta</li>"
 
-	console.log(listaCtas)
+	var container_accs = '<div class="col-md-4" id="sub_tabla'+level+'" ><ul class="list-group" id="lista_sub_tabla'+level+'">'+listaCtas+'</ul></div>'
+	$("#sub_tabla").append(container_accs)
+	.find("#sub_tabla"+level)
+	.find(".cta_lista_sub").off("click").on("click", function(){
+		if ($(this).hasClass("new_account")){
+			alert("new")
+			//$("#new_account_modal").modal("show");
+		}
+	})
+	.end()
+	.find(".cta_lista").on("click", function(){
 
-	$("#sub_tabla"+level).removeClass("hidden")
-		.find("#lista_sub_tabla"+ level).html(listaCtas)
-		.find(".cta_lista_sub").off("click").on("click", function()
-		{				
-			if ($(this).hasClass("new_account")){
-				//alert("new")
-				//$("#new_account_modal").modal("show");
-			}
-			// else
-			// {
-			// 	var id = $(this).attr("id");
-			// 	var lvl = $(this).attr("level");
-			// 	var nxtLvl = parseInt(lvl) + 1;
-			// 	//alert("LOL")
-			// 	//prepare_lista_cuentas(id, nxtLvl);
-			// }		
-		});	
+		var id = $(this).attr("id");
+		var lvl = $(this).attr("level");
+		var nxtLvl = parseInt(lvl) + 1;
+		
+		//alert("LOL")
+
+		prepare_lista_cuentas(id, nxtLvl);
+	})	
+
+	// $("#sub_tabla"+level).removeClass("hidden")
+	// 	.find("#lista_sub_tabla"+ level).html(listaCtas)
+	// 	.find(".cta_lista_sub").off("click").on("click", function()
+	// 	{				
+	// 		if ($(this).hasClass("new_account")){
+	// 			alert("new")
+	// 			//$("#new_account_modal").modal("show");
+	// 		}
+				
+	// 	})
+	// 	.end()
+	// 	.find(".cta_lista").on("click", function(){
+
+	// 		var id = $(this).attr("id");
+	// 		var lvl = $(this).attr("level");
+	// 		var nxtLvl = parseInt(lvl) + 1;
+			
+	// 		//alert("LOL")
+
+	// 		prepare_lista_cuentas(id, nxtLvl);
+	// 	})	
 }
 
 get_accounts = function(fn)
@@ -288,7 +312,7 @@ get_accounts = function(fn)
 				if (lv == 1)
 				{
 					listaMayores = "<li id='"+cta.id+"' class='cta_lista' level='"+cta.level+"' style='position:relative'>";
-					listaMayores += "<span>" + cta.code + " " + cta.name + "</span>";					
+					listaMayores += "<span>" + utf8_decode(cta.code + " " + cta.name) + "</span>";					
 					listaMayores += "<span class='glyphicon glyphicon-play' id='icon_estatus_open' style='right:0;position:absolute;'></span>";
 					listaMayores += "</li>";	
 					$("#lista_sub_tabla1").append(listaMayores);				

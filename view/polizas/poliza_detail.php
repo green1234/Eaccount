@@ -189,35 +189,9 @@ if ($band){*/
 
 <div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
   <div class="col-md-4" id="sub_tabla1" class="sub_tablas">
-    <ul class="list-group" id="lista_sub_tabla1">
-      <!-- <li>001 Activos <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>002 Pasivos <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>003 ... <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li> -->
+    <ul class="list-group" id="lista_sub_tabla1">      
     </ul>
-  </div>
-  <div class="col-md-4 hidden" id="sub_tabla2" >
-    <ul class="list-group" id="lista_sub_tabla2">
-      <!-- <li>011 Circulantes <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>... <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>... <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li> -->
-    </ul>
-  </div>
-  <div class="col-md-4 hidden" id="sub_tabla3">
-    <ul class="list-group" id="lista_sub_tabla3">
-      <!-- <li>111 Cajas <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>112 Bancos <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>113 Clientes Nacionales <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li>
-      <li>... <span class="glyphicon glyphicon-play" id="icon_estatus_open" style="float:right;"></span></li> -->
-    </ul>
-  </div>
-  <div class="col-md-3 hidden" id="sub_tabla4" >
-    <ul class="list-group" id="lista_sub_tabla4">
-      <!-- <li>0054 Cliente 1</li>
-      <li>0084 Cliente 2</li>
-      <li>0167 Cliente 3</li>
-      <li>...</li> -->
-    </ul>
-  </div>
+  </div> 
 </div>
 
 <!-- <div class="col-md-1"></div>
