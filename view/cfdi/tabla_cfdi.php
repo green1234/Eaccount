@@ -399,6 +399,10 @@ function _metodo($id)
         //facturas = res.data;
         //mostrar_facturas();
       }
+      else
+      {
+        alert(res.data.description);
+      }
     });
   }
 
