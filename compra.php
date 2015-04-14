@@ -22,7 +22,7 @@ if (isset($_POST["ptr"]))
   $partner = $_POST['ptr'];
 
 $var = 'uid=' . $uid . '&pwd=' . $pwd;
-$res = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?get=descuentos&'.$var), true);
+$res = json_decode(file_get_contents('server/Suscripcion.php?get=descuentos&'.$var), true);
   
 $descuentos = array();
 if ($res["success"] && count($res["data"]) > 0)
@@ -105,7 +105,7 @@ if ($res["success"] && count($res["data"]) > 0)
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <?
-          $path = SERVERNAME . "/Configuracion.php?update=empresa";
+          $path = "server/Configuracion.php?update=empresa";
           $path = $path . "&uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
           ?>
           <form id="EmpresaForm" class="form-modal" action="<? echo $path; ?>">

@@ -8,7 +8,7 @@ if (isset($_GET["fk"]) && isset($_GET["ptr"]))
   $key = $_GET["fk"];
   $partner = $_GET["ptr"];    
   
-  $activacion = json_decode(file_get_contents(SERVERNAME . '/Suscripcion.php?action=activacion&fk='.$key), true);   
+  $activacion = json_decode(file_get_contents('server/Suscripcion.php?action=activacion&fk='.$key), true);   
   if ($activacion["success"])
   {
     $usuario_id = $activacion["data"]["uid"];

@@ -2,7 +2,7 @@
 	<table class="table partners supplier">
     <tr>
     	<th>
-        <img src="http://savvysystems.com.mx/img/lapiz.png" whidth="25" height="25">
+        <img src="img/lapiz.png" whidth="25" height="25">
       </th>
       <th>
         <b>Núm:</b>
