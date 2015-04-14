@@ -426,7 +426,7 @@ get_mayores_options = function(parent)
 	//optionsMayor += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
 	$.each(mayores, function(index, value)
 	{
-		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+		optionsMayor += "<option value='" + value.id + "'>" + utf8_decode(value.code + " - "+ value.name) + "</option>";
 		//levels[value.level] = value;
 				
 	});	
