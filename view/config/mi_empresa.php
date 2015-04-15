@@ -493,7 +493,7 @@ $empresa = $res["data"];
   </div>
 
   <div class="col-md-2">
-    <b>Cuenta de Pago:</b>
+    <b>Cuenta Bancaria:</b>
     <br>
     <a href="#" data-toggle="modal" data-target="#CtaBanModal" class="openModal ctaban">Agregar o Editar cuentas</a>
   </div>
