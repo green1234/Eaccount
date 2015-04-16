@@ -235,42 +235,72 @@ function _metodo($id)
       </tr>
   </table> 
 </div>
-  
-<div class="table-responsive" id="listado_cfdi">
-  
-  <table class="table table-bordered table-striped" id="tabla_cfdi" style="border: 0px;border-radius:10px;">
+<style>
+  #resumen_pago
+  {
+    float: right;
+    border: 1px solid gray;
+    border-radius: 25px;
+  }
+  #resumen_pago p
+  {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0 1em;
+    height: 50px;
+    margin: 0;
+  }
+
+  #resumen_pago p.total
+  {
+    padding: 0;
+  }
+ 
+  #resumen_pago p.total a
+  {    
+    /*position: absolute;
+    top: 10px;*/
+    color: white;
+    padding:18px 11px;
+    text-decoration: none;
+    background-color: gray;
+    border-radius: 0 25px 25px 0;
+  }
+
+  #resumen_pago p.total a:hover
+  {    
+    font-weight: bold;
+  }
+}
+</style>
+<div class="table-responsive" id="resumen_pago">
+  <p>IMPORTE PAGADO<br><span>$340.00</span></p>
+  <p>IMPORTE PAGADO<br><span>$340.00</span></p>
+  <p>IMPORTE PAGADO<br><span>$340.00</span></p>
+  <p class="total"><a href="#">PROCESAR AJUSTE</a></p>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped" id="cfdi_detail" style="border: 0px;border-radius:10px;">
     <thead>
-      <tr class="title">
-        <th style="border-radius: 10px 10px 0 0;" colspan="10">
-          DATOS DEL COMPROBANTE FISCAL
-        </th>
-        <th style="border-radius: 10px 10px 0 0;" colspan="6">
-          DATOS DEL PAGO
-        </th>
-      </tr>
       <tr>
-        <th style="border: 0px;">&nbsp;</th>
-        <th>VER</th>
-        <th>VAL</th>
-        <th>EMISION</th>
-        <th>FOLIO</th>
-        <th>EMISOR</th>
-        <th>SUBTOTAL</th>
-        <th>DESCUENTO</th>
-        <th>IMPUESTOS</th>
-        <th>TOTAL</th>
-        <th>FECHA</th>
-        <th>CUENTA</th>
-        <th>METODO</th>
-        <!-- data-toggle="modal" data-target="#PaymentModal" -->
-        <th><a class="payment_modal" href="#"><img src="img/lapiz_azul.png" width="20px" height="20px" alt=""></a></th>
-        <th><img src="img/pdf_azul.png" width="20px" height="20px" alt=""></th>
-        <th style="border: 0px;">&nbsp;<img src="img/xml_azul.png" width="20px" height="20px" alt=""></th>        
+        
+        <th>PÓLIZA</th>
+        <th>CONCEPTO</th>        
+        <th>CUENTA</th>        
+        <th>SALDO ANTERIOR</th>
+        <th>DEBE</th>        
+        <th>HABER</th>
+        <th>SALDO NUEVO</th>
+        <th>UUID</th>    
+        <th><a href="#"><img src="img/check_negro.png" width="20px" height="20px" alt=""></a></th>
+        
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-</div>
+</div> 
 
 <div class="col-md-1"></div>
 
