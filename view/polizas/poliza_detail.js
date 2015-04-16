@@ -193,13 +193,12 @@ asignar_eventos = function()
 
 get_sub_accounts = function(parent_id)
 {
-	var path = "server/Cuentas.php?action=get&parent_id=" + parent_id;	
+	var path = "server/Cuentas.php?action=get&parent_id=" + parent_id;		
 	var result =  {};
 	$.getJSON(path, function(res){
-		//console.log(res);
-		if (res.success)
+		
+		if (res.success && res.data.length > 0)
 		{
-			//result  = res.data;
 			get_accounts_options(res.data, $("#accnew_sub"));			
 		}	
 	});
@@ -227,14 +226,14 @@ prepare_lista_cuentas = function(id,level)
 			listaCtas += "</li>";	
 		}	
 	});
-	listaCtas += "<li data-toggle='modal' data-target='#new_account_modal' parent='" + id + "' class='new_account cta_lista_sub'>Nueva Cuenta</li>"
+	if (level > 3)
+		listaCtas += "<li data-toggle='modal' data-target='#new_account_modal' level='" + level + "' parent='" + id + "' class='new_account'>Nueva Cuenta</li>"
 
-	var container_accs = '<div class="col-md-4" id="sub_tabla'+level+'" ><ul class="list-group" id="lista_sub_tabla'+level+'">'+listaCtas+'</ul></div>'
+	var container_accs = '<div class="col-md-3" id="sub_tabla'+level+'" ><ul class="list-group" id="lista_sub_tabla'+level+'">'+listaCtas+'</ul></div>'
 	$("#sub_tabla").append(container_accs)
 	.find("#sub_tabla"+level)
 	.find(".cta_lista_sub").off("click").on("click", function(){
-		if ($(this).hasClass("new_account")){
-			alert("new")
+		if ($(this).hasClass("new_account")){			
 			//$("#new_account_modal").modal("show");
 		}
 	})
@@ -373,7 +372,7 @@ get_accounts_options = function(acs, selector)
 	{
 		options += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
 		//levels[value.level] = value;
-
+		
 		var id = value.id;
 		var lv = value.level;
 		var parent = value.parent_id[0];
@@ -421,18 +420,17 @@ get_accounts_options = function(acs, selector)
 get_mayores_options = function(parent)
 {
 	optionsMayor = ""
-	var filasMayor = "";
-	
+	var filasMayor = "";	
 	//optionsMayor += "<option value='0' class='new_account'>Agregar Nueva Cuenta</option>";
 	$.each(mayores, function(index, value)
 	{
-		optionsMayor += "<option value='" + value.id + "'>" + value.code + " - "+ value.name + "</option>";
+		optionsMayor += "<option value='" + value.id + "'>" + utf8_decode(value.code + " - "+ value.name) + "</option>";
 		//levels[value.level] = value;
 				
 	});	
 	//console.log(optionsAcc);
 	var mayor = $("#accnew_mayor").html(optionsMayor).val(parent);
-	get_sub_accounts(mayor.val());
+	get_sub_accounts(parent);
 }
 
 $(function(){
@@ -443,15 +441,25 @@ $(function(){
 
 	
 	$('#new_account_modal').on('show.bs.modal', function (e) {
-		console.log(e)
-		var button = $(e.relatedTarget);
+		var button = $(e.relatedTarget);		
 		var parent = button.attr("parent");
   		get_mayores_options(parent);
+  		$("#accnew_level").val(button.attr("level"));
   		$("tr.editing_select").addClass("editing_modal");
 	});
 
 	$('#new_account_modal').on('hide.bs.modal', function (e) {
   		$("tr.editing").removeClass("editing_modal");
+  		
+		var level = $("#accnew_level").val();
+		var code = $("#accnew_code").val();
+		var name = $("#accnew_des").val();
+		var parent = $("#accnew_mayor").val();
+		
+		var html = "<li parent='"+parent+"' ";		
+		html += "class='cta_lista_sub' level='"+level+"'>" + code + " " + name + "</li>"		
+		$("#sub_tabla"+level).find("li:last").before(html);
+		//$(html).insertBefore("#sub_tabla"+level+ " > li:last");
 	});
 
 	$("#new_account_form").on("submit", function(e)

@@ -29,7 +29,7 @@
           <div class="box_form">
             <div class="left">Ingresar con mi cuenta:</div>
             <br><br>
-            <form id="form_login" action="<? echo SERVERNAME.'/Login.php?'; ?>">              
+            <form id="form_login" action="server/Login.php?">              
               <input type="text" id="username" name="username" pattern="^[a-zA-Z0-9_-]{5,15}$" required="true" title="min. 6 Caracteres a-z, A-Z, 0-9, _ -" placeholder="Username" />
               <br><br>              
               <input required="true" type="password" id="password" name="password" placeholder="Confirmar Contraseña" />

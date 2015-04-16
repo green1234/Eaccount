@@ -28,7 +28,7 @@
         <div class="col-md-6">
           <div class="box_form">
             
-            <form id="form_registro" action="<? echo SERVERNAME.'/Suscripcion.php?action='; ?>"
+            <form id="form_registro" action="<? echo 'server/Suscripcion.php?action='; ?>"
               method="POST">
 
               <input type="hidden" id="action" name="action" value="registro"/>

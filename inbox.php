@@ -52,7 +52,7 @@ else
             $uid = $_SESSION["login"]["uid"];
             $pwd = $_SESSION["login"]["pwd"];
             $cid = $_SESSION["login"]["cid"];
-            $path = SERVERNAME . "/Upload.php?";
+            $path = "server/Upload.php?";
             $path = $path . "uid=" . $uid . "&pwd=" . $pwd . "&cid=" . $cid[0];
             //var_dump($_SESSION["login"]);
           }

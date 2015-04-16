@@ -111,34 +111,40 @@ if ($band){*/
       <form action="" id="new_account_form">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Modal title</h4>
+          <h4 class="modal-title">Nueva Cuenta</h4>
         </div>
         <div class="modal-body">
+          <div class="modal_i">
+            <label for="">Código SAT:</label>
+            <select name="accnew_codesat" id="accnew_codesat">
+              <option value="" disabled>### - ############</option>
+            </select>
+          </div>
+          <div class="modal_i">
+            <label for="">Nivel Cuenta:</label>
+            <input type="text" id="accnew_level" placeholder="NIVEL" required>
+          </div>  
           <div class="modal_i modal_i_lg">
-            <label for="">Codigo:</label>
+            <label for="">Número Cuenta:</label>
             <input type="text" name="accnew_code" id="accnew_code" placeholder="CODIGO" required>
           </div>
           <div class="modal_i modal_i_lg">
-            <label for="">Nombre:</label>
+            <label for="">Nombre Cuenta:</label>
             <input type="text" name="accnew_des" id="accnew_des" placeholder="NOMBRE" required>
           </div>
-          <br>
-          <br>
           <div class="modal_i">
-            <label for="">Cuenta Padre:</label>
-            <select name="accnew_mayor" id="accnew_mayor">
-              <option value="" disabled>### - ############</option>
+            <label for="">Genero:</label>
+            <select id="accnew_genero">
+              <option value="A">Activo</option>
+              <option value="P">Pasivo</option>
+              <option value="K">Capital</option>
+              <option value="I">Ingreso</option>
+              <option value="C">Costo</option>
+              <option value="G">Gasto</option>
+              <option value="F">Financieros</option>
+              <option value="O">Orden</option>
             </select>
-          </div>          
-          <div class="modal_i">
-            <label for="">Cuentas:</label>
-            <select name="accnew_sub" id="accnew_sub" style="display:none;">
-              <option value="" disabled>### - ############</option>
-            </select>
-            <div class="accnew_sub"></div>
-          </div>    
-          <br>
-          <br>      
+          </div> 
           <div class="modal_i">
             <label for="">Naturaleza:</label>
             <select name="accnew_nature" id="accnew_nature">
@@ -147,11 +153,39 @@ if ($band){*/
             </select>
           </div>
           <div class="modal_i">
-            <label for="">SAT:</label>
-            <select name="accnew_codesat" id="accnew_codesat">
+            <label for="">Subcuenta de:</label>
+            <select name="accnew_mayor" id="accnew_mayor">
               <option value="" disabled>### - ############</option>
             </select>
-          </div>          
+          </div>    
+          <div class="modal_i">
+            <label for="">Cuenta Mayor:</label>
+            <select id="accnew_esMayor">
+              <option value="1" disabled>SI</option>
+              <option value="2" disabled>NO</option>
+            </select>
+          </div>        
+          <div class="modal_i">
+            <label for="">Afectable:</label>
+            <select id="accnew_afectable">
+              <option value="1" disabled>SI</option>
+              <option value="2" disabled>NO</option>
+            </select>
+          </div>  
+          <div class="modal_i">
+            <label for="">Moneda:</label>
+            <select id="accnew_moneda">
+              <option value="1" disabled>MXP</option>
+              <option value="2" disabled>USD</option>
+            </select>
+          </div>   
+          <div class="modal_i">            
+            <select name="accnew_sub" id="accnew_sub" style="display:none;">
+              <option value="" disabled>### - ############</option>
+            </select>            
+          </div>    
+          <br>
+          <br>         
         </div>
 
         <div class="modal-footer">
@@ -187,9 +221,9 @@ if ($band){*/
   </table>
 </div>
 
-<div class="col-md-8" id="sub_tabla" style="font-size: 10px;">
-  <div class="col-md-4" id="sub_tabla1" class="sub_tablas">
-    <ul class="list-group" id="lista_sub_tabla1">      
+<div class="col-md-16" id="sub_tabla" style="font-size: 10px;">
+  <div class="col-md-3" id="sub_tabla1" class="sub_tablas">
+    <ul class="list-group" id="lista_sub_tabla1">
     </ul>
   </div> 
 </div>
