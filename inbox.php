@@ -398,7 +398,7 @@ else
           GUARDAR Y SALIR
         </button>
       </div>
-      <div class="col-md-10 contenido" >
+      <div class="col-md-10 contenido" >       
         <?
         if (isset($_GET['section'])):
 

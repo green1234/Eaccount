@@ -10,6 +10,22 @@ var regimen = {
     "Persona Moral" : "Persona Moral",
     "Regimen General" : "Regimen General",
 };
+
+function alerta(msj, tipo, redir)
+{
+    $(".alert").hide();
+    var aler = '<div class="alert alert-'+tipo+' alert-dismissible" role="alert">';
+        aler += '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>'
+        aler += '<span class="text">'+msj+'</span></div>';
+
+    $(".contenido").prepend(aler).find(".alert .close").on("click", function(){
+        if (redir != undefined)
+        {
+            window.location = redir;
+        }
+    });
+}
+
 function sub(obj){
     /*var file = obj.value;
     var fileName = file.split("\\");*/
@@ -42,8 +58,9 @@ function sub(obj){
             //console.log(data.success);
             $("#upfile").val(null);
             if (data.success)
-            {
-                alert("Facturas cargadas.");        
+            {                
+                //$(".alert-success").show().find("span.text").text("Facturas cargadas.")
+                
                 msj = "";
                 $.each(data.data, function(i, v)
                 {
@@ -54,16 +71,24 @@ function sub(obj){
                 });
                 if (msj != "")
                 {
-                    alert("Se detectaron algunos problemas con las facturas siguientes:\n" + msj + "Consulte la seccion de Cfdi's Apocrifos/No Verificados para mas información.");                    
-                    window.location = "?section=cfdi&estatus=apoc";                
+                    var redir = "?section=cfdi&estatus=apoc";
+                    alerta("Detalle:\n" + msj, "warning", redir);
+                    //$(".alert-success").show().find("span.text").text("Detalle:\n" + msj);
+                    //alert("Se detectaron algunos problemas con las facturas siguientes:\n" + msj + "Consulte la seccion de Cfdi's Apocrifos/No Verificados para mas información.");                    
+                    
                 }
                 else
-                    window.location = "?section=cfdi&estatus=vali";                
+                {
+                    var redir = "?section=cfdi&estatus=vali";
+                    alerta("Facturas cargadas.", "success", redir);
+                    //window.location = "?section=cfdi&estatus=vali";                                    
+                }
             }
             else
             {
                 console.log(data.data.description);
-                alert(data.data.description);
+                alerta(data.data.description, "danger")
+                //$(".alert-success").show().find("span.text").text(data.data.description);
             }
         },
         error: function(data){            
