@@ -166,7 +166,7 @@ $path = SERVERNAME . "/Catalogo.php?";
             <!-- <th>ID</th> -->
             <th>Codigo</th>
             <th>Nombre</th>
-            <th>Padre</th>
+            <th>Subcuenta de</th>
             <th>Naturaleza</th>
             <!-- <th>Tipo</th> -->
             <th>Nivel</th>
