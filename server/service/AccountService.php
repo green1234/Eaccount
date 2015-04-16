@@ -503,7 +503,7 @@ class AccountService
 
 	}
 
-	function obtener_polizas($empresa_id)
+	function obtener_polizas($empresa_id, $type = "all")
 	{
 		$move_model = "account.move";
 		$move_line_model = "account.move.line";
@@ -515,10 +515,18 @@ class AccountService
 						model("=", "string"),
 						model($empresa_id, "int"),
 						));
+		if ($type != "all")
+		{			
+			$domain[] = array(
+							model("tipo_poliza", "string"),
+							model("=", "string"),
+							model($type, "string"),
+						);
+		}
 
 		$res = $this->obj->search($this->uid, $this->pwd, $move_model, $domain);
 
-		if ($res["success"])
+		if ($res["success"] && count($res["data"]["id"]) > 0)
 		{
 			$acc_move_ids = $res["data"]["id"];
 			#logg($facturas_id, 1);
@@ -607,9 +615,11 @@ class AccountService
 
 				//logg($res["data"][0]["lines"],1);
 			} 
+
+			return $res;
 		}
 		/*logg($res,1);*/
-		return $res;
+		return array("success" => false, "data" => array("description" => "No se encontraron datos."));
 
 		//logg($res["data"],1);
 	}

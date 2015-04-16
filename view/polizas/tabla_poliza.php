@@ -253,6 +253,7 @@ function _metodo($id)
   /*var uid = <?//=$uid?>;
   var cid = <?//=$cid[0]?>;
   var pwd = "<?//=$pwd?>"; */
+  var type="<?=$type;?>"
 </script>
 
 <script src="view/polizas/poliza.js"></script>

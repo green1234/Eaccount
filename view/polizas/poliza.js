@@ -13,35 +13,53 @@ asignar_eventos = function()
 
 obtener_polizas = function(fn)
 {
-	$.getJSON("server/Polizas.php?action=get", function(res)
+	var path = "server/Polizas.php?action=get"; 
+
+	if (type != "")
+		path = path + "&type=" + type;
+
+	$.getJSON(path, function(res)
 	{
 		console.log(res)
 		if (res.success)
 		{		
 			polizas = res.data;
-		}
+		}	
+		else
+		{
+			polizas = null;
+		}	
 		fn(asignar_eventos); // Mostrar Polizas
 	});
 }
 
 mostrar_polizas = function(fn){
 
-	$.each(polizas, function(index, value){
-		html_polizas += "<tr class='cfdi_row'>";
-		html_polizas += "<td><input id='" + value.id + "'name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";
-		html_polizas += "<td>" + value.id + "</td>";
-		html_polizas += "<td>" + value.ref + "</td>";
-		html_polizas += "<td>" + value.date + "</td>";
-		// html_polizas += "<td>" + value.period_id[1] + "</td>";
-		// html_polizas += "<td>" + value.journal_id[1] + "</td>";
-		html_polizas += "<td>" + value.partner_id[1] + "</td>";
-		html_polizas += "<td>$" + value.total.toFixed(2) + "</td>";
-		html_polizas += "<td>" + (value.state == "posted" ? "Contabilizado" : "Pendiente") + "</td>";
-		html_polizas += "</tr>";		
-	});
+	if (polizas != null){
 
-	$("#tabla_polizas").append(html_polizas);
-	fn(); //Asignar Eventos
+		$.each(polizas, function(index, value){
+			html_polizas += "<tr class='cfdi_row'>";
+			html_polizas += "<td><input id='" + value.id + "'name='selector' class='id_row' type='radio' style='display:block;width:auto;'></td>";
+			html_polizas += "<td>" + value.id + "</td>";
+			html_polizas += "<td>" + value.ref + "</td>";
+			html_polizas += "<td>" + value.date + "</td>";
+			// html_polizas += "<td>" + value.period_id[1] + "</td>";
+			// html_polizas += "<td>" + value.journal_id[1] + "</td>";
+			html_polizas += "<td>" + value.partner_id[1] + "</td>";
+			html_polizas += "<td>$" + value.total.toFixed(2) + "</td>";
+			html_polizas += "<td>" + (value.state == "posted" ? "Contabilizado" : "Pendiente") + "</td>";
+			html_polizas += "</tr>";		
+		});
+		
+		$("#tabla_polizas").append(html_polizas);
+		fn(); //Asignar Eventos
+	}
+	else
+	{
+		var row = "<tr><td colspan='7'>No se encontraron datos</td></tr>";
+		$("#tabla_polizas").append(row);
+	}
+
 }
 
 $(function(){

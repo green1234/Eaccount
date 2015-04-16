@@ -32,7 +32,10 @@ if (isset($_SESSION["login"]))
 	{
 		if ($_GET["action"] == "get")
 		{
-			$res = $service->obtener_polizas($cid[0]);
+			$type = "all";
+			if (isset($_GET["type"]))
+				$type = $_GET["type"];
+			$res = $service->obtener_polizas($cid[0], $type);
 
 			if ($res["success"])
 			{

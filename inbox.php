@@ -137,12 +137,12 @@ else
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=nc">
+                            <a href="?section=poliza&type=credit">
                               Notas de Credito (0)
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=nomina">
+                            <a href="?section=poliza&type=payslip">
                               Nomina (0)
                             </a>
                           </li>
@@ -167,17 +167,17 @@ else
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=honorarios">
+                            <a href="?section=poliza&type=honorario">
                               Honorarios (0)
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=nd">
+                            <a href="?section=poliza&type=debit">
                               Notas de Cargo (0)
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=imps">
+                            <a href="?section=poliza&type=taxes">
                               Impuestos Locales (0)
                             </a>
                           </li>
