@@ -137,6 +137,11 @@ else
                             </a>
                           </li>
                           <li>
+                            <a href="?section=poliza&type=honorario">
+                              Honorarios (0)
+                            </a>
+                          </li>
+                          <li>
                             <a href="?section=poliza&type=credit">
                               Notas de Credito (0)
                             </a>
@@ -167,7 +172,7 @@ else
                             </a>
                           </li>
                           <li>
-                            <a href="?section=poliza&type=honorario">
+                            <a href="?section=poliza&type=honorario_compra">
                               Honorarios (0)
                             </a>
                           </li>
