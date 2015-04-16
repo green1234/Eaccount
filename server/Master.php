@@ -18,6 +18,51 @@ function obtener_datos_bancos($ids)
 	return $res;
 }
 
+function obtener_pagos($cid)
+{
+	$model = "gl.addenda.ebc.move";
+	$domain = array();
+	$domain[] = array(
+		model("company_id", "string"),
+		model("=", "string"),
+		model($cid, "int"));
+	// $domain[] = array(
+	// 	model("sale_ok", "string"),
+	// 	model("=", "string"),
+	// 	model(true, "boolean"));
+	
+	$obj = new MainObject();
+	$res = $obj->search(USER_ID, md5(PASS), $model, $domain);
+	//return $res;
+
+	if ($res["success"])
+	{
+		$ids = $res["data"]["id"];
+		if (count($ids)>0)
+		{
+			$params = array(
+				model("referencia", "string"),
+				model("descripcion", "string"),				
+				model("fecha", "string"),
+				model("importe", "string"),
+				model("saldo", "string"),
+			);
+
+			$res = $obj->read(USER_ID, md5(PASS), $model, $ids, $params);
+			
+			if ($res["success"])
+			{				
+				return $res;
+			}
+		}
+	}
+
+	return array(
+		"success"=>false, 
+		"data"=>array(
+			"description" => "No se encontraron registros"));
+}
+
 function obtener_datos_producto($prod_id)
 {
 	$model = "product.template";
@@ -469,6 +514,10 @@ if (isset($_SESSION["login"]))
 		else if($_GET["cat"] == "insumos")
 		{			
 			$res = obtener_insumos($cid[0]);
+		}
+		else if($_GET["cat"] == "pagos")
+		{			
+			$res = obtener_pagos($cid[0]);
 		}
 	}
 

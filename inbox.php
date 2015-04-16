@@ -234,7 +234,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="#">
+                            <a href="?section=fin&tipo=ingreso">
                               Cliente 1
                             </a>
                           </li>
@@ -309,7 +309,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="#">
+                            <a href="?section=fin&tipo=ingreso">
                               Proveedor 1
                             </a>
                           </li>
@@ -409,10 +409,13 @@ else
             case 'instrucciones':
               require 'view/config/catalogos/instrucciones.php';
               break;
-            /*case 'agregar_empresa':
-              require 'fijos/agregar_empresa_conta.php';
+            case 'fin':
+              require 'view/finance/index.php';
               break;
-            case 'progress':
+            /*
+            case 'agregar_empresa':
+              require 'fijos/agregar_empresa_conta.php';
+              break;case 'progress':
               require 'fijos/progress_bar.php';
               break;
             case 'alerts':
