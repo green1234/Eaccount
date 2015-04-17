@@ -171,19 +171,19 @@ function _metodo($id)
 
 <div class="table-responsive" style="text-align:center;margin-bottom:1em;">
 
-  <table cellspacing="0" cellpadding="0" border="0" width="325" style="margin-right:1em;vertical-align:top;display:inline-block;">
+  <table cellspacing="0" cellpadding="0" border="0" width="40%" style="margin-right:1em;vertical-align:top;display:inline-block;">
     <tr>
       <td>
-        <table cellspacing="0" cellpadding="1" width="300" class="table table-bordered table-striped">          
+        <table cellspacing="0" cellpadding="1" width="600" class="table table-bordered table-striped">          
           <thead>
             <tr class="title">        
               <th style="border-radius: 10px 10px 0 0;" colspan="5">
-                INFORMACIÓN DE PAGOS RECIBIDOS
+                INFORMACIÓN DE MOVIMIENTOS BANCARIOS
               </th>
             </tr>          
             <tr>        
               <th>FECHA</th>
-              <th>METODO</th>
+              <th>DESCRIPCIÓN</th>
               <th>REFERENCIA</th>
               <th>CUENTA</th>
               <th>IMPORTE</th>              
@@ -203,17 +203,18 @@ function _metodo($id)
       </tr>
   </table>
 
-  <table cellspacing="0" cellpadding="0" border="0" width="325" style="vertical-align:top;display:inline-block;">
+  <table cellspacing="0" cellpadding="0" border="0" width="49%" style="vertical-align:top;display:inline-block;">
     <tr>
       <td>
-        <table cellspacing="0" cellpadding="1" width="300" class="table table-bordered table-striped">          
+        <table cellspacing="0" cellpadding="1" width="600" class="table table-bordered table-striped">          
           <thead>
             <tr class="title">        
-              <th style="border-radius: 10px 10px 0 0;" colspan="5">
-                FACTURAS PAGADAS POR
+              <th style="border-radius: 10px 10px 0 0;" colspan="6">
+                INFORMACIÓN DE FACTURAS
               </th>
             </tr>
             <tr>                
+              <th>CAUSANTE</th>
               <th>TOTAL</th>
               <th>IVA</th>
               <th>SUBTOTAL</th>
@@ -268,9 +269,20 @@ function _metodo($id)
     border-radius: 0 25px 25px 0;
   }
 
-  #resumen_pago p.total a:hover
+  #resumen_pago p.total a.enabled:hover
   {    
     font-weight: bold;
+  }
+  .cfdi_row.selected td
+  {
+    background-color: #2D6595 !important;
+    color: white;
+  }
+
+  .move_row.selected td
+  {
+    background-color: #2D6595 !important;
+    color: white;
   }
 }
 </style>
@@ -278,11 +290,11 @@ function _metodo($id)
   <p>IMPORTE PAGADO<br><span>$340.00</span></p>
   <p>IMPORTE PAGADO<br><span>$340.00</span></p>
   <p>IMPORTE PAGADO<br><span>$340.00</span></p>
-  <p class="total"><a href="#">PROCESAR AJUSTE</a></p>
+  <p class="total"><a href="#" class="">PROCESAR AJUSTE</a></p>
 </div>
 
 <div class="table-responsive">
-  <table class="table table-bordered table-striped" id="cfdi_detail" style="border: 0px;border-radius:10px;">
+  <table class="table table-bordered table-striped" id="lines_detail" style="border: 0px;border-radius:10px;">
     <thead>
       <tr>
         
@@ -313,8 +325,9 @@ function _metodo($id)
 
   var bancos = {};
   var cuentas = {};
-  var facturas = {};
-  var pagos = {};
+  var facturas, facturas_ = {};
+  var pagos, pagos_ = {};
+  var lines = {};
 
   obtener_pagos = function()
   {
@@ -334,23 +347,36 @@ function _metodo($id)
   mostrar_pagos = function(){
         
     $.each(pagos, function(idx, move){
-      var row = "<tr class='move_row'>";      
+      var row = "<tr id_pago='"+move.id+"' class='move_row'>";      
       row += "<td>" + move.fecha + "</td>";
-      row += "<td>-</td>";
+      row += "<td title='"+move.descripcion+"'>"+move.descripcion.substr(0,10)+"</td>";
       row += "<td>" + move.referencia + "</td>";
       row += "<td>-</td>";
       row += "<td>" + move.importe + "</td>";           
       row += "<tr>";
+      pagos_[move.id] = move;
       $("#moves_table").append(row)
     }); 
     
-    /*else
-    {
-      cfdi_rows = "<tr><td colspan='16'>No hay resultados</td></tr>";
-    }
-     $("#tabla_cfdi").append(cfdi_rows);
-      agregar_eventos();*/
+    eventos_pagos();
   
+  }
+
+  eventos_pagos = function()
+  {
+    $(".move_row").on("click", function(){     
+      
+      if ($(this).hasClass("selected"))
+      {
+        $(this).removeClass("selected");
+      }
+      
+      else
+      {
+        $(".move_row").removeClass("selected");
+        $(this).addClass("selected");
+      }
+    });
   }
 
   obtener_bancos = function()
@@ -382,17 +408,16 @@ function _metodo($id)
   }  
 
   obtener_facturas = function()
-  {
-    var get= location.href.split("?")[1];
-    var path = "server/Facturas.php?" + get;
+  {    
+    var path = "server/Facturas.php?estatus=cont";
     
     $.getJSON(path, function(res){
        
       if (res.success)
       {    
-        console.log(res.data);    
+        //console.log(res.data);    
         facturas = res.data;
-        mostrar_facturas();
+        //mostrar_facturas();
         mostrar_facturas_pago();
       }
     });
@@ -422,16 +447,95 @@ function _metodo($id)
   mostrar_facturas_pago = function()
   {   
     $.each(facturas, function(idx, cfdi){
-      var row = "<tr class='cfdi_row'>";      
+      var row = "<tr cfdi='"+cfdi.id+"' class='cfdi_row'>";      
+      row += "<td>" + cfdi.partner_id[1] + "</td>";  
       row += "<td>" + cfdi.amount_total + "</td>";       
       row += "<td>" + cfdi.amount_tax + "</td>"; 
       row += "<td>" + cfdi.amount_untaxed + "</td>";
       row += "<td>" + cfdi.folio + "</td>";
       row += "<td>" + cfdi.date_invoice + "</td>";      
       row += "<tr>";
+      facturas_[cfdi.id] = cfdi;
       $("#invoice_table").append(row);
     }); 
+
+    eventos_facturas();
     
+  }
+
+  eventos_facturas = function()
+  {
+    $(".cfdi_row").on("click", function(){     
+      
+      if ($(this).hasClass("selected"))
+      {
+        $(this).removeClass("selected");
+      }
+      
+      else
+      {
+        $(".cfdi_row").removeClass("selected");
+        $(this).addClass("selected");
+        var cfdi = $(this).attr("cfdi");
+        var f_cfdi = facturas_[cfdi].date_invoice;
+        if ($(".move_row.selected").length > 0)
+        {
+          var id_pago = $(".move_row.selected").attr("id_pago");
+          var f_pago = pagos_[id_pago].fecha;
+
+          var f_pago_ = new Date(f_pago);
+          var f_cfdi_ = new Date(f_cfdi);
+
+          if (f_pago_ < f_cfdi_)
+          {              
+            var diference = (f_cfdi_-f_pago_)/(1000*60*60*24)
+            
+            if (confirm("Has seleccionado una factura de " + f_cfdi + " con un pago " + f_pago + " realizado " + diference + " días antes que la emisión de la factura ¿desear procesar este pago así?"))
+            {
+              obtener_lineas(cfdi);            
+            }            
+          }
+          else
+          {
+            alert("La fecha de la factura es mayor o igual que la fecha del pago");
+            obtener_lineas(cfdi);
+          }
+        }        
+      }
+    });
+  }
+
+  obtener_lineas = function(cfdi)
+  {
+    var path = "server/Polizas.php?action=cfdi&id="+cfdi; 
+    $.getJSON(path, function(res){
+      if (res.success)
+      {
+        lines = res.data[0].lines;
+        mostrar_lineas(res.data[0].invoice_id.uuid);
+      }
+    });
+  }
+
+  mostrar_lineas = function(uuid)
+  {
+    var rows = "";
+    $.each(lines, function(index, line)
+    {
+      rows += "<tr>";
+      rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
+      rows += "<td>" + line.move_id[0] + "</td>";
+      rows += "<td>" + line.name + "</td>";
+      rows += "<td width='200px' class='editable account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
+      /*rows += "<td>" + line.id + "</td>";*/
+      rows += "<td>-</td>";
+      rows += "<td>" + line.debit.toFixed(2) + "</td>";
+      rows += "<td>" + line.credit.toFixed(2) + "</td>";
+      rows += "<td>-</td>";
+      rows += "<td>*"+uuid.substr(-4)+"</td>";
+      rows += "</tr>";
+    });
+    $("#lines_detail tbody").html("").append(rows);    
   }
 
   mostrar_facturas = function()
@@ -585,6 +689,10 @@ function _metodo($id)
       });
       $("#pago_ctadep").html(optCtas);
       
+    });
+
+    $("a").on("click", function(e){
+      e.preventDefault();
     });
 
     $("#PaymentForm").on("submit", function(e){

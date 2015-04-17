@@ -49,6 +49,13 @@ if (isset($_SESSION["login"]))
 				$res = get_error();
 			
 		}
+		else if ($_GET["action"] == "cfdi")
+		{
+			if (isset($_GET["id"]))
+				$res = $service->obtener_poliza($_GET["id"]);
+			else
+				$res = get_error();
+		}
 		else if($_GET["action"] == "lines")
 		{
 			$res = $service->obtener_datos_poliza($_GET["pid"]);
@@ -124,7 +131,7 @@ if (isset($_SESSION["login"]))
 				$res = $service->procesar_poliza($_GET["pid"]);
 			else
 				$res = get_error();
-		}	
+		}			
 	}
 	echo json_encode($res);
 }

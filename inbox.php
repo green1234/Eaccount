@@ -241,24 +241,14 @@ else
                         <ul class="subLista">
                           <li>
                             <a href="?section=fin&tipo=ingreso">
-                              Cliente 1
+                              Clientes
                             </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              Cliente 2
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              Cliente 3
-                            </a>
-                          </li>
+                          </li>                          
                         </ul>
                       </div>
                     </div>
                   </div>
-                  <div class="panel panel-default">
+                  <!-- <div class="panel panel-default">
                     <div class="panel-heading subPanel" role="tab" id="headingOne">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#subAccordionPoliza" href="#subCollapseTwoPoliza" aria-expanded="true" aria-controls="subCollapseTwoPoliza">
@@ -287,7 +277,7 @@ else
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -316,10 +306,10 @@ else
                         <ul class="subLista">
                           <li>
                             <a href="?section=fin&tipo=ingreso">
-                              Proveedor 1
+                              Proveedores
                             </a>
                           </li>
-                          <li>
+                          <!-- <li>
                             <a href="#">
                               Proveedor 2
                             </a>
@@ -328,7 +318,7 @@ else
                             <a href="#">
                               Proveedor 3
                             </a>
-                          </li>
+                          </li> -->
                         </ul>
                       </div>
                     </div>

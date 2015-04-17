@@ -464,6 +464,7 @@ class AccountService
 			model("ref", "string"),
 			model("date", "string"),
 			model("name", "string"),
+			model("move_id", "string"),
 			model("tax_amount", "string"),
 			model("product_id", "string"),
 			model("account_tax_id", "string"),
@@ -495,12 +496,76 @@ class AccountService
 
 		if ($res["success"])
 		{
-			$res = $this->leer_poliza_lines($res["data"]["id"]);
+			$res = $this->leer_poliza_lines($res["data"]["id"]);			
 			return $res;			
 		}	
 
 		return array("success"=>false);
 
+	}
+
+	function obtener_poliza($cfdi)
+	{
+		$move_model = "account.move";
+		$move_line_model = "account.move.line";
+		
+		$domain = array(
+					array(
+						model("invoice_id", "string"),
+						model("=", "string"),
+						model($cfdi, "int"),
+						));		
+
+		$res = $this->obj->search($this->uid, $this->pwd, $move_model, $domain);
+
+		if ($res["success"] && count($res["data"]["id"]) > 0)
+		{
+			$acc_move_ids = $res["data"]["id"];			
+			
+			$params = array(
+				model("name", "string"),
+				model("state", "string"),
+				model("ref", "string"),
+				model("journal_id", "string"),
+				model("period_id", "string"),
+				model("date", "string"),
+				model("partner_id", "string"),						
+				model("gl_journal_type", "string"),
+				model("gl_ban", "string"),
+				model("gl_cta", "string"),
+				model("gl_ban2", "string"),
+				model("gl_cta2", "string"),
+				model("gl_num_cheque", "string"),				
+			);
+
+			$res = $this->obj->read($this->uid, $this->pwd, $move_model, $acc_move_ids, $params);
+
+			foreach ($res["data"] as $index => $move_line) {				
+				
+				$invoiceService = new InvoiceService(USER_ID, md5(PASS));
+				$cfdi_data = $invoiceService->obtener_datos_factura($cfdi);
+				$res["data"][$index]["invoice_id"] = $cfdi_data["data"][0];		
+
+				$line_moves = $this->obtener_poliza_lines($move_line["id"]);					
+
+				if ($line_moves["success"])
+				{				
+					$debit = 0;
+					$credit = 0;
+					foreach ($line_moves["data"] as $id => $line) 
+					{
+						$debit = $debit + $line["debit"];
+						$credit = $credit + $line["credit"];
+					}
+					$res["data"][$index]["total"] = $debit;
+					$res["data"][$index]["lines"] = $line_moves["data"];
+					//$res["data"][$index]["lines"]["uuid"] = $cfdi_data["data"][0]["uuid"];
+				}
+			}
+			return $res;
+		}
+		
+		return array("success" => false, "data" => array("description" => "No se encontraron datos."));		
 	}
 
 	function obtener_polizas($empresa_id, $type = "all")
@@ -557,9 +622,8 @@ class AccountService
 						array(
 							model("move_id", "string"),
 							model("=", "string"),
-							model($move_line["id"], "int"),
-							));*/
-					$cfdi_id = $res["data"][$index]["invoice_id"]; 
+							model($move_line["id"], "int"),							));*/
+					
 					if (is_array($cfdi_id))
 					{
 						$invoiceService = new InvoiceService(USER_ID, md5(PASS));
