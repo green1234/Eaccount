@@ -20,6 +20,7 @@ else
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/site.css">
     <link rel="stylesheet" href="css/inbox_custom.css"/> 
+    <link rel="stylesheet" href="css/inbox_custom_angela.css"/> 
     <title>INICIO</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>    
     <script>
