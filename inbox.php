@@ -76,7 +76,7 @@ else
             <div class="panel-heading" role="tab" id="headingOne">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
-                  ESTATUS CFDI
+                  POR CONTABILIZAR
                 </a>
               </h4>
             </div>
@@ -84,16 +84,16 @@ else
               <div class="panel-body">
                 <ul class="subLista">
                   <li>
-                    <a class="cfdi vali" href="?section=cfdi&estatus=vali">
-                      Por contabilizar <span>(0)</span>
+                    <a class="cfdi vali out" href="?section=cfdi&estatus=vali&type=sale">
+                      Emitidos <span>(0)</span>
                     </a>
                   </li>
                   <li>
-                    <a class="cfdi apoc" href="?section=cfdi&estatus=apoc">
-                      Apocrifos <span>(0)</span>
+                    <a class="cfdi vali in" href="?section=cfdi&estatus=vali&type=purchase">
+                      Recibidos <span>(0)</span>
                     </a>
                   </li>
-                  <li>
+                  <!-- <li>
                     <a class="cfdi inco" href="?section=cfdi&estatus=inco">
                       Datos Incorrectos <span>(0)</span>
                     </a>
@@ -107,7 +107,7 @@ else
                     <a class="cfdi cont" href="?section=cfdi&estatus=cont">
                       Contabilizados <span>(0)</span>
                     </a>
-                  </li>
+                  </li> -->
               </div>
             </div>           
                 

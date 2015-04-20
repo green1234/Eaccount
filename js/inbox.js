@@ -118,13 +118,26 @@ obtener_facturas_ini = function()
             "erro" : 0,
             "inco" : 0,
         }
+        var tipos = {
+            "in" : 0,
+            "out" : 0
+        }
+
         $.each(facturas, function(i, f)
         {
             var st = f.savvy_estatus;
-            estatus[st] = estatus[st] + 1;
+            if (st == "vali")
+            {
+                var tp = f.type;
+                if (tp == "out_invoice")
+                    tipos["out"] = tipos["out"] + 1;
+                else
+                    tipos["in"] = tipos["in"] + 1;
+            }
+            //estatus[st] = estatus[st] + 1;
         });
         //console.log(estatus);
-        $.each(estatus, function(i,v)
+        $.each(tipos, function(i,v)
         {
             var text = $("a.cfdi."+i).text();
             $("a.cfdi."+i).find("span").text("(" + v + ")");
