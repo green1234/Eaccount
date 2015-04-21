@@ -153,7 +153,7 @@ class InvoiceService
 
 			if (isset($params["type"]))
 			{				
-				if ($params["type"] == "sale")
+				if ($params["type"] == "sale" || $params["type"] == "ingreso")
 				{
 					$domain[] = array(
 						model("type", "string"),
@@ -161,7 +161,7 @@ class InvoiceService
 						model("out_invoice", "string"),
 					);					
 				}
-				else if ($params["type"] == "purchase")
+				else if ($params["type"] == "purchase" || $params["type"] == "egreso")
 				{
 					$domain[] = array(
 						model("type", "string"),

@@ -408,8 +408,9 @@ function _metodo($id)
   }  
 
   obtener_facturas = function()
-  {    
-    var path = "server/Facturas.php?estatus=cont";
+  { 
+    var url = location.search.split('?')[1];
+    var path = "server/Facturas.php?" + url + "&estatus=cont";
     
     $.getJSON(path, function(res){
        
@@ -492,27 +493,26 @@ function _metodo($id)
             
             if (confirm("Has seleccionado una factura de " + f_cfdi + " con un pago " + f_pago + " realizado " + diference + " días antes que la emisión de la factura ¿desear procesar este pago así?"))
             {              
-              generar_poliza(cfdi)
-              obtener_lineas(cfdi);
+              generar_poliza(cfdi, id_pago)              
             }            
           }
           else
           {
-            alert("La fecha de la factura es mayor o igual que la fecha del pago");
-            obtener_lineas(cfdi);
+            //alert("La fecha de la factura es mayor o igual que la fecha del pago");
+            generar_poliza(cfdi, id_pago);
           }
         }        
       }
     });
   }
 
-  generar_poliza = function(cfdi){
-    var path = "server/Polizas.php?action=gen&id="+cfdi; 
+  generar_poliza = function(cfdi, id_pago){
+    var path = "server/Polizas.php?action=gen&id="+cfdi+"&id_pago="+id_pago; 
     $.getJSON(path, function(res){
       if (res.success)
       {
         lines = res.data[0].lines;
-        //mostrar_lineas(res.data[0].invoice_id.uuid);
+        mostrar_lineas(res.data[0].gl_uuid);
       }
     });
   }
@@ -524,7 +524,8 @@ function _metodo($id)
       if (res.success)
       {
         lines = res.data[0].lines;
-        mostrar_lineas(res.data[0].invoice_id.uuid);
+        console.log(gl_uuid)
+        mostrar_lineas(res.data[0].gl_uuid);
       }
     });
   }
@@ -534,8 +535,7 @@ function _metodo($id)
     var rows = "";
     $.each(lines, function(index, line)
     {
-      rows += "<tr>";
-      rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
+      rows += "<tr>";      
       rows += "<td>" + line.move_id[0] + "</td>";
       rows += "<td>" + line.name + "</td>";
       rows += "<td width='200px' class='editable account' id='" + line.account_id[0] + "'><select style='display:none'></select><span>" + line.account_id[1] + "</span></td>";
@@ -545,6 +545,7 @@ function _metodo($id)
       rows += "<td>" + line.credit.toFixed(2) + "</td>";
       rows += "<td>-</td>";
       rows += "<td>*"+uuid.substr(-4)+"</td>";
+      rows += "<td><input class='line_id' type='checkbox' id='" + line.id + "'/></td>";
       rows += "</tr>";
     });
     $("#lines_detail tbody").html("").append(rows);    
@@ -703,9 +704,9 @@ function _metodo($id)
       
     });
 
-    $("a").on("click", function(e){
+   /* $("a").on("click", function(e){
       e.preventDefault();
-    });
+    });*/
 
     $("#PaymentForm").on("submit", function(e){
       e.preventDefault();

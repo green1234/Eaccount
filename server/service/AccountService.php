@@ -22,14 +22,22 @@ class AccountService
 	* UUID, los asientos copiados se registraran en una nueva poliza pero con los montos
 	* de debito en credito y viceversa.
 	*/
-	function generar_poliza_cp($uuid)
+	function generar_poliza_cp($uuid, $id_pago)
 	{
 		$model = "account.move";
 		$method = "generar_poliza_cp";
 		$data = array(
-			"cfdi" => model($uuid, "string")			
+			"cfdi" => model($uuid, "int"),
+			"pago" => model($id_pago, "int"),			
 		);		
 		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		if ($res["success"])
+		{
+			$pid = $res["data"][0];
+			$poliza = $this->obtener_datos_poliza($pid);
+			return $poliza;
+		}	
+		return $res;
 	}
 
 	function registrar_cuenta($params, $cid)
@@ -99,6 +107,7 @@ class AccountService
 			"company_id" => model($cid, "int")
 			);		
 		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+		
 		return $res;
 	}
 
@@ -138,6 +147,7 @@ class AccountService
 			model("gl_cta", "string"),
 			model("gl_ban2", "string"),
 			model("gl_cta2", "string"),
+			model("gl_uuid", "string"),
 			model("gl_num_cheque", "string"),
 			model("invoice_id", "string"),
 		);				

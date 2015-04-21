@@ -59,7 +59,7 @@ if (isset($_SESSION["login"]))
 		else if ($_GET["action"] == "gen")
 		{
 			if (isset($_GET["id"]))
-				$res = $service->generar_poliza_cp($_GET["id"]);
+				$res = $service->generar_poliza_cp($_GET["id"], $_GET["id_pago"]);
 			else
 				$res = get_error();
 		}

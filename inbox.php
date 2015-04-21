@@ -240,7 +240,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="?section=fin&tipo=ingreso">
+                            <a href="?section=fin&type=ingreso">
                               Clientes
                             </a>
                           </li>                          
@@ -305,7 +305,7 @@ else
                       <div class="panel-body">
                         <ul class="subLista">
                           <li>
-                            <a href="?section=fin&tipo=ingreso">
+                            <a href="?section=fin&type=egreso">
                               Proveedores
                             </a>
                           </li>
