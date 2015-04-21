@@ -56,6 +56,13 @@ if (isset($_SESSION["login"]))
 			else
 				$res = get_error();
 		}
+		else if ($_GET["action"] == "gen")
+		{
+			if (isset($_GET["id"]))
+				$res = $service->generar_poliza_cp($_GET["id"]);
+			else
+				$res = get_error();
+		}
 		else if($_GET["action"] == "lines")
 		{
 			$res = $service->obtener_datos_poliza($_GET["pid"]);

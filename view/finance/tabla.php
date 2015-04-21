@@ -491,8 +491,9 @@ function _metodo($id)
             var diference = (f_cfdi_-f_pago_)/(1000*60*60*24)
             
             if (confirm("Has seleccionado una factura de " + f_cfdi + " con un pago " + f_pago + " realizado " + diference + " días antes que la emisión de la factura ¿desear procesar este pago así?"))
-            {
-              obtener_lineas(cfdi);            
+            {              
+              generar_poliza(cfdi)
+              obtener_lineas(cfdi);
             }            
           }
           else
@@ -501,6 +502,17 @@ function _metodo($id)
             obtener_lineas(cfdi);
           }
         }        
+      }
+    });
+  }
+
+  generar_poliza = function(cfdi){
+    var path = "server/Polizas.php?action=gen&id="+cfdi; 
+    $.getJSON(path, function(res){
+      if (res.success)
+      {
+        lines = res.data[0].lines;
+        //mostrar_lineas(res.data[0].invoice_id.uuid);
       }
     });
   }

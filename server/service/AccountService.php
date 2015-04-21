@@ -17,6 +17,21 @@ class AccountService
 		$this->obj = new MainObject();		
 	}
 
+	/*
+	* Esta funcion sirve para copiar una poliza ya existente por medio de su folio fiscal
+	* UUID, los asientos copiados se registraran en una nueva poliza pero con los montos
+	* de debito en credito y viceversa.
+	*/
+	function generar_poliza_cp($uuid)
+	{
+		$model = "account.move";
+		$method = "generar_poliza_cp";
+		$data = array(
+			"cfdi" => model($uuid, "string")			
+		);		
+		$res = $this->obj->call(USER_ID, md5(PASS), $model, $method, null, $data);
+	}
+
 	function registrar_cuenta($params, $cid)
 	{
 		$model = "account.account";
